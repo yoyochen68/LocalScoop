@@ -82,11 +82,26 @@ margin:4% 5% 2% 5%
 
 }
 
+.product-box{
 
-.form-control{
+    margin: 30% 0;
+    font-size:20px;
+    padding: 3% 5%;
+    text-align: center;
+
+}
+
+.clicked{
+    background-color: #D4E6B5;
+    /*color: #E3974F;*/
+}
+
+
+.form-control {
     height: 48px;
     width: 335px;
     border-color: black;
+}
 
 .xl-font{
     font-size:30px ;

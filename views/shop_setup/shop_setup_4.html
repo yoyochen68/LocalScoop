@@ -35,13 +35,13 @@
 
     <h3>What kinds of product do you offer?</h3>
     <div class = "options">
-        <button class="btn-white">Fashion/Beauty</button>
-        <button class="btn-white">Home Appliances</button>
-        <button class="btn-white">Stationary</button>
-        <button class="btn-white">Art</button>
-    <button class="btn-white">Handmaid goods</button>
+        <button class="btn-white"  value="fashion_beauty">Fashion/Beauty</button>
+        <button class="btn-white"  value="home_appliances">Home Appliances</button>
+        <button class="btn-white"  value="stationary">Stationary</button>
+        <button class="btn-white"  value="art">Art</button>
+        <button class="btn-white" value="handmaid_goods">Handmaid goods</button>
     </div>
-    <button type="button" class="yellow-bn" >Next ></button>
+    <button type="button" class="yellow-bn nextBtn" >Next ></button>
 
 </div>
 
@@ -49,30 +49,65 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<!--<script>-->
-<!--    let options = document.querySelector(".options").children-->
-<!--    document.addEventListener("click", ()=> {-->
+<script>
+    let sellerProductList = []
 
-<!--        for (let opt of options) {-->
-<!--            opt.addEventListener("click", () => {-->
-<!--                console.log("clicked on ", opt.classList)-->
+    //Adding the buttons interctivity
+    document.addEventListener("DOMContentLoaded", ()=>{
 
-<!--                //     if (opt.classList.includes("clicked")){-->
-<!--                //     opt.classList.remove("clicked")-->
-<!--                //     console.log("removed: ", opt.classList)-->
-<!--                // }else{-->
-<!--                opt.addEventListener("click", () => {-->
-<!--                    opt.classList.add("clicked")-->
-<!--                    console.log("Added: ", opt.classList)-->
+        let options = document.querySelector(".options").children
 
-<!--                });-->
-<!--                -->
-<!--            })-->
+        for (let opt of options) {
+            opt.addEventListener("click", () => {
 
-<!--        }-->
-<!--    })-->
+                //Action based on btn being clicked or not
+                if ( opt.classList[1]==="clicked") {
+                    opt.classList.remove("clicked")
+                    let  index = sellerProductList.indexOf(opt.value);
+                    if (index !== -1) sellerProductList.splice(index, 1);
 
-<!--</script>-->
+                }else{
+                    opt.classList.add("clicked")
+                    sellerProductList.push(opt.value)
+                }
+
+            })
+        }
+
+
+
+        let nextButton = document.querySelector(".nextBtn")
+
+        if ( !sellerProductList)
+        nextButton.addEventListener("click", ()=>{
+                console.log(sellerProductList)
+
+
+                axios.post('/product_type ', {productTypeList:sellerProductList})
+                    .then(response => {
+                        console.log("frontend: ",response)
+
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+
+
+            }
+        )
+
+    })
+
+
+
+
+
+
+
+
+
+</script>
 </body>
 </html>
