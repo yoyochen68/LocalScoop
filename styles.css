@@ -65,9 +65,20 @@ margin:4% 5% 2% 5%
 
 /*Yasmina*/
 
+.btn-white{
+    border:solid 2px black;
+    border-radius: 5px;
+    background-color: white;
+    color:black ;
+    font-size: 18px;
+    width: 355px;
+    height:55px;
+    margin-top: 10px;
+}
+
 .form-box{
 
-    margin: 15% 0%;
+    margin: 15% 0;
     font-size:20px;
     padding: 3% 5%;
 }
@@ -75,7 +86,7 @@ margin:4% 5% 2% 5%
 
 .address-box{
 
-    margin: 40% 0%;
+    margin: 40% 0;
     font-size:20px;
     padding: 3% 5%;
     text-align: center;
@@ -83,10 +94,26 @@ margin:4% 5% 2% 5%
 }
 
 
-.form-control{
+.product-box{
+
+    margin: 30% 0;
+    font-size:20px;
+    padding: 3% 5%;
+    text-align: center;
+
+}
+
+.clicked{
+    background-color: darkred;
+    color: yellow;
+}
+
+.form-control {
     height: 48px;
-    width: 335px;
+    /*width: 335px;*/
+    width: 90%;
     border-color: black;
+}
 
 .xl-font{
     font-size:30px ;
