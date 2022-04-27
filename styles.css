@@ -104,8 +104,8 @@ margin:4% 5% 2% 5%
 }
 
 .clicked{
-    background-color: darkred;
-    color: yellow;
+    background-color: #D4E6B5;
+    /*color: #E3974F;*/
 }
 
 .form-control {
