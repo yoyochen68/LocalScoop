@@ -8,3 +8,15 @@ step3:after solved the conflict in your gitbub. Pull a request from your GitHub 
 
 step4:merge the **IDSP develop** to the **IDSP main** weekly.
 
+
+
+## Naming Conventions ##
+
+variables use camelCase. This includes variables that are related to paths. 
+    ex. let theChair = "asdf"
+
+file paths use underscores
+    ex. localhost:8080/shopSetup_1
+
+file names also use underscores
+    ex. localhost:8080/shop_setup_7.ejs

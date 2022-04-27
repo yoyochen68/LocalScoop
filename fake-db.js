@@ -271,6 +271,10 @@ function getWishList(){
   
 }
 
+function return1(){
+  return 1;
+}
+
 module.exports = {
   debug,
   addUser,
@@ -282,5 +286,6 @@ module.exports = {
   editProduct,
   deleteProduct,
   getCategory,
+  return1
 };
 
