@@ -19,4 +19,4 @@ file paths use underscores
     ex. localhost:8080/shopSetup_1
 
 file names also use underscores
-    ex. localhost:8080/shop_setup_7.ejs
+    ex. views/shop_setup_7.ejs

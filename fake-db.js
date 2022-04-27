@@ -40,7 +40,7 @@ const shopInfo = {
     pickUp: true,
     kmRadius: 20,
     rating:4.94,
-    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   102: {
@@ -55,7 +55,7 @@ const shopInfo = {
     pickUp: true,
     kmRadius: 20,
     rating:4.85,
-    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   103: {
@@ -70,7 +70,7 @@ const shopInfo = {
     pickUp: true,
     kmRadius: 30,
     rating:4.76,
-    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
+    shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   }
 }
 
@@ -249,6 +249,21 @@ function deleteProduct(productId) {
   delete products[productId];
 }
 
+/**
+ * 
+ * @param {number} storeID 
+ * @returns {string} profilePhotoFileName
+ */
+function getShopProfilePhotoFilename(storeID) {
+  // look 
+  let profilePhotoFileName = storeID;
+
+  return profilePhotoFileName;
+}
+
+
+
+
 function getCategory() {
   return Array.from(new Set(Object.values(products).map(product => product.category)))
 }
@@ -274,9 +289,7 @@ function getWishList(){
   
 }
 
-function return1(){
-  return 1;
-}
+
 
 module.exports = {
   debug,
@@ -289,6 +302,6 @@ module.exports = {
   editProduct,
   deleteProduct,
   getCategory,
-  return1
+  getShopProfilePhotoFilename
 };
 
