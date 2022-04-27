@@ -1,32 +1,137 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,wght@1,200&family=Playfair+Display:ital,wght@1,500&family=Poppins&display=swap');
+
+
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,wght@1,200&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@100;200;300;400;500;600&display=swap');
 
 
 
 body{
     background-color: #F7F5F3;
     font-family: 'Poppins', sans-serif;
-    /* align-content: center; */
-    text-align: center;
+    margin: 0;
+    font-weight: 300;
 }
+
+.shop-setup-header{
+padding-top: 10%;
+margin:4% 5% 2% 5%
+}
+
+.centerBox{
+    text-align: center;
+
+}
+
 
 .shopReady{
-    font-size: 21pt;
- 
+    font-weight: 400;
 }
 
-.shopReadyMessage{
-    font-size: 18pt;
-    line-height:20pt;
-}
 
-.headToDashboard{
+.yellow-bn{
     border:solid 2px;
-    border-radius: 20px;
-    background-color: #E3974F;
+    border-radius: 15px;
+    background-color: #E3974F;  
     color:white ;
     font-size: 18px;
-    width: 80%;
-    height:50px ;
+    width: 355px;
+    height:55px;
+    margin-top: 40px;
+}
+
+.l-bn{
+    width: 286px;
+    height:52px ;
+}
+
+.m-bn{
+
+    width: 250px;
+    height:48px ;
+}
+
+.s-bn{
+    width: 184px;
+    height:45px ;
+
+}
+.xs-bn{
+    width: 150px;
+    height:38px ;
+    border-radius: 10px;
+}
+
+
+
+/*Yasmina*/
+
+.form-box{
+
+    margin: 15% 0%;
+    font-size:20px;
+    padding: 3% 5%;
+}
+
+
+.address-box{
+
+    margin: 40% 0%;
+    font-size:20px;
+    padding: 3% 5%;
+    text-align: center;
+
+}
+
+
+.form-control{
+    height: 48px;
+    width: 335px;
+    border-color: black;
+
+.xl-font{
+    font-size:30px ;
+}
+
+.l-font{
+    font-size:24px ;
+}
+
+.m-font{
+    font-size:20px ;
+}
+
+.s-font{
+    font-size:18px ;
+}
+
+.xs-font{
+    font-size:16px ;
+}
+
+
+.delivery_pickUp{
+    display: flex;
+    justify-content: center;
+  
+}
+
+.delivery{
+    border:solid black 1px;
+    width:160px;
+    height: 189px;
+    background-color: white;
+    margin: 10px;
     
+  
+}
+
+.pickUp{
+    border:solid black 1px;
+    width:160px;
+    height: 189px;
+    background-color: white;
+    margin: 10px;
+
+
+
 }
