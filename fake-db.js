@@ -39,7 +39,8 @@ const shopInfo = {
     delivery: true,
     pickUp: true,
     kmRadius: 20,
-    rating:4.94
+    rating:4.94,
+    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   102: {
@@ -53,7 +54,8 @@ const shopInfo = {
     delivery: true,
     pickUp: true,
     kmRadius: 20,
-    rating:4.85
+    rating:4.85,
+    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
   103: {
@@ -67,7 +69,8 @@ const shopInfo = {
     delivery: false,
     pickUp: true,
     kmRadius: 30,
-    rating:4.76
+    rating:4.76,
+    shopProfilePhoto:"public/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   }
 }
 
@@ -271,6 +274,10 @@ function getWishList(){
   
 }
 
+function return1(){
+  return 1;
+}
+
 module.exports = {
   debug,
   addUser,
@@ -282,5 +289,6 @@ module.exports = {
   editProduct,
   deleteProduct,
   getCategory,
+  return1
 };
 
