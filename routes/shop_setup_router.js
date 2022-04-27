@@ -11,11 +11,11 @@ const router = express.Router();
 
 // GET /shop_setup/a
 router.get("/a", (req, res) => {
-   let shopProfilePhotoFilename;
+   let expShopProfilePhotoFilename = db.getShopProfilePhotoFilename(101);
+    
+   // res.render("index", {
 
-    res.render("index", {
-
-    })
+    // })
 })
 
 
