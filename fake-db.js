@@ -249,19 +249,27 @@ function deleteProduct(productId) {
   delete products[productId];
 }
 
+
 /**
  * 
  * @param {number} storeID 
- * @returns {string} profilePhotoFileName
+ * @returns {string} profilePhotoFileName. undefined if no shop with given storeID exists
  */
-function getShopProfilePhotoFilename(storeID) {
-  // look 
-  let profilePhotoFileName = storeID;
+function getShopProfilePhotoFilename(givenStoreID) {
+  // check if givenStoreID is number, if not, return undefined
+  if(typeof(givenStoreID) !== 'number' && givenStoreID > 0){
+    return;
+  }
+  
+  let shop = shopInfo[givenStoreID];
 
-  return profilePhotoFileName;
+  // no shop exists with the given ID
+  if(shop == undefined){
+    return;
+  }
+
+  return shop.shopProfilePhoto;
 }
-
-
 
 
 function getCategory() {
