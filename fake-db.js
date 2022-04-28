@@ -188,8 +188,8 @@ function addUser(username, password) {
 // }
 
 /**
- * @param {*} n how many posts to get, defaults to 5
- * @param {*} category which sub to fetch, defaults to all categories
+ * @param {number} n how many posts to get, defaults to 5
+ * @param {string} category which sub to fetch, defaults to all categories
  */
 function getProducts(n = 5, category = undefined) {
   let allProducts = Object.values(products);
@@ -248,7 +248,6 @@ function editProduct(productId, changes = {}) {
 
 
 /**
- * 
  * @param {number} shopId, id of the shop you want to edit. ex. 102
  * @param {object} changes, object with changes you wish to make. parameter key name must match 
  * shopInfo {} in fake-db.js exactly. 
@@ -256,7 +255,6 @@ function editProduct(productId, changes = {}) {
 function editShop(shopId, changes = {}){
   let product = shopInfo[shopId];
 
-  
   if (changes.phoneNum) {
     product.phoneNum = changes.phoneNum;
   }

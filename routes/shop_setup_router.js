@@ -25,11 +25,7 @@ router.get("/a", (req, res) => {
     // })
 })
 
-router.get("/shop_setup_4", (req, res) => {
-    res.render("shop_setup/shop_setup_4", {
 
-    })
-})
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setUp_1", (req, res) => {
