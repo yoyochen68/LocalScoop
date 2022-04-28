@@ -6,7 +6,10 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
+const axios = require('axios')
+
 // const path = require('path')  is for app.use(express.static())
+
 
 
 /* Global Variables */
@@ -15,13 +18,18 @@ const router = express.Router();
 
 // GET /shop_setup/a
 router.get("/a", (req, res) => {
-   let shopProfilePhotoFilename;
+   let expShopProfilePhotoFilename = db.getShopProfilePhotoFilename(101);
+    
+   // res.render("index", {
 
-    res.render("index", {
+    // })
+})
+
+router.get("/shop_setup_4", (req, res) => {
+    res.render("shop_setup/shop_setup_4", {
 
     })
 })
-
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setUp_1", (req, res) => {
@@ -143,4 +151,15 @@ const storage = multer.diskStorage({
   });
 
 
-module.exports = router;
+
+// "shop_setup/product_type"
+router.post('/shop_setup/product_type', (req, res) => {
+    //
+    // let data = req.body.productTypeList
+    // console.log("backEnd: ", data)
+    // res.send(data)
+
+
+})
+
+    module.exports = router;
