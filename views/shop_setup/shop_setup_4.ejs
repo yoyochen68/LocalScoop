@@ -33,7 +33,7 @@
 
 <div class = "product-box">
 
-    <h3>What kinds of product do you offer?</h3>
+    <h1>What kinds of product do you offer?</h1>
     <div class = "options">
         <button class="btn-white"  value="fashion_beauty">Fashion/Beauty</button>
         <button class="btn-white"  value="home_appliances">Home Appliances</button>
@@ -49,28 +49,32 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!--<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>-->
 
 <script>
+
+    //The list of clicked values
     let sellerProductList = []
 
-    //Adding the buttons interctivity
+    //---------Adding the interactivity to product type buttons & store values
+    
     document.addEventListener("DOMContentLoaded", ()=>{
 
-        let options = document.querySelector(".options").children
+        let allProductTypeBtn = document.querySelector(".options").children
 
-        for (let opt of options) {
-            opt.addEventListener("click", () => {
+        for (let typeBtn of allProductTypeBtn) {
+            typeBtn.addEventListener("click", () => {
 
-                //Action based on btn being clicked or not
-                if ( opt.classList[1]==="clicked") {
-                    opt.classList.remove("clicked")
-                    let  index = sellerProductList.indexOf(opt.value);
+                //if the product type btn  was chosen before
+                if ( typeBtn.classList[1]==="clicked") {
+                    typeBtn.classList.remove("clicked")
+                    let  index = sellerProductList.indexOf(typeBtn.value);
                     if (index !== -1) sellerProductList.splice(index, 1);
 
+                    //if product type was not clicked before
                 }else{
-                    opt.classList.add("clicked")
-                    sellerProductList.push(opt.value)
+                    typeBtn.classList.add("clicked")
+                    sellerProductList.push(typeBtn.value)
                 }
 
             })
@@ -78,33 +82,29 @@
 
 
 
+
+        //---------Adding the interactivity to next button & send values to back end ?
+        
         let nextButton = document.querySelector(".nextBtn")
 
-        if ( !sellerProductList)
-        nextButton.addEventListener("click", ()=>{
+        if ( sellerProductList) {
+            nextButton.addEventListener("click", () => {
                 console.log(sellerProductList)
 
+                //Sending it to the back:
 
-                axios.post('/product_type ', {productTypeList:sellerProductList})
-                    .then(response => {
-                        console.log("frontend: ",response)
+                // axios.post('/shop_setup/product_type',{productTypeList: sellerProductList})
+                //     .then(response => {
+                //         console.log("frontend: ",response)
+                //
+                //     })
+                //     .catch(error => {
+                //         console.log(error);
+                //     })
 
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    })
-
-
-            }
-        )
-
+            })
+        }
     })
-
-
-
-
-
-
 
 
 
