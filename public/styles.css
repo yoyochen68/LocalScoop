@@ -158,6 +158,38 @@ margin:4% 5% 2% 5%
     background-color: white;
     margin: 10px;
 
+}
 
 
+
+
+/*Components*/
+
+
+
+.mobile-nav {
+    background: red;
+    position: fixed;
+    bottom: 0;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    /*box-shadow: 0 -8px 8px -4px rgba(0 0 0 2);*/
+
+}
+
+.bloc-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bloc-icon img {
+    /*width: 30px;*/
+}
+
+.fa-solid{
+    width:20px;
+    height:auto
 }

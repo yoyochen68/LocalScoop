@@ -16,10 +16,12 @@ const shopSetupRouter = require("./routes/shop_setup_router")
 
 // use express
 const app = express();
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({extended: false}))
+// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 app.use(express.static("public")); // allow front end to use the /public folder
+app.use(express.json());
 
 
 // router routes, set beginning of path
