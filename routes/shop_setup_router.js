@@ -6,7 +6,10 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
+const axios = require('axios')
+
 // const path = require('path')  is for app.use(express.static())
+
 
 
 /* Global Variables */
@@ -142,11 +145,16 @@ const storage = multer.diskStorage({
     });
   });
 
-router.post('/product_type', (req, res) => {
 
-    let data = req.body.productTypeList
-    console.log("backEnd: ", data)
-    res.send(data)
+
+// "shop_setup/product_type"
+router.post('/shop_setup/product_type', (req, res) => {
+    //
+    // let data = req.body.productTypeList
+    // console.log("backEnd: ", data)
+    // res.send(data)
+
+
 })
 
     module.exports = router;
