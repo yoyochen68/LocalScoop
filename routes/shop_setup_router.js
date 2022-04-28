@@ -72,6 +72,10 @@ router.get("/shop_setup_7", (req, res) => {
     })
 })
 
+router.post("#",(req,res)=>{
+    
+})
+
 
 //=============handling the store image uploading========
 
@@ -79,7 +83,7 @@ router.get("/shop_setup_7", (req, res) => {
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
-    destination: './public/storeImageUploads/',
+    destination: './public/uploads/',
     filename: function (req, file, cb) {
       const bytes = crypto.randomBytes(16).toString('hex')
       cb(null, bytes + path.extname(file.originalname));
@@ -120,11 +124,11 @@ const storage = multer.diskStorage({
   // Public Folder
 //   router.use(express.static(path.join(__dirname, 'public')));
   
-  router.get('/', (req, res) => res.render('index'));
+//   router.get('/', (req, res) => res.render('index'));
   
   router.post('/upload', upload, (req, res) => {
     if (req.file == undefined) {
-      res.render('shop_setup/shop_setup_6', {
+      res.render('shop_setup/shop_setup_5', {
         msg: 'Error: No File Selected!'
       });
       return 
@@ -133,7 +137,8 @@ const storage = multer.diskStorage({
     // store some info in the database
     res.render('shop_setup/shop_setup_6', {
       msg: 'File Uploaded!',
-      file: `storeImageUploads/${req.file.filename}`
+      message:'Your store looks amazing!',
+      file: `uploads/${req.file.filename}`
     });
   });
 
