@@ -87,10 +87,9 @@
         
         let nextButton = document.querySelector(".nextBtn")
 
-        // if (sellerProductList) {
+        if (sellerProductList) {
             nextButton.addEventListener("click", () => {
                 console.log(sellerProductList)
-                console.log('line93, shopsetup4')
 
                 //Sending it to the back:
                 axios.post('/shop_setup/product_type',{ productTypeList: sellerProductList})
@@ -104,7 +103,7 @@
                         console.log(error);
                     })
             })
-        // }
+        }
     })
 
 

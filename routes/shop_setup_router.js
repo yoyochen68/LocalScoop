@@ -150,12 +150,12 @@ const storage = multer.diskStorage({
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
 
-    let sellerProductTypes = req.body.productTypeList
-    console.log(sellerProductTypes)
-    console.log(req.body)
-    // console.log("!backend check!")
+    // let sellerProductTypes = req.body.productTypeList
+    // console.log(sellerProductTypes)
+    // console.log(req.body)
+    console.log("!backend check!")
 
-    res.status(200).send(sellerProductTypes)
+    res.status(200).send(req.body.productTypeList)
     // rn it sends array on first request,
     // then object on second request
 })

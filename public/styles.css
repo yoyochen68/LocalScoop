@@ -165,10 +165,10 @@ margin:4% 5% 2% 5%
 
 /*Components*/
 
-
+/*footer*/
 
 .mobile-nav {
-    background: red;
+    background: antiquewhite;
     position: fixed;
     bottom: 0;
     height: 10%;
