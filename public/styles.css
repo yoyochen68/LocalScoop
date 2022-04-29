@@ -8,6 +8,11 @@ body{
     font-weight: 300;
 }
 
+.fontFamily{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
 .shop-setup-header{
     padding-top: 10%;
     margin:4% 5% 2% 5%
@@ -200,7 +205,7 @@ body{
 
 .fa-solid{
     width:20px;
-    height:auto
+    height:auto;
 
     font-size: 20px;
     font-weight: 300;
@@ -225,3 +230,29 @@ body{
     /*color: #E3974F;*/
 
 }
+
+ .logoImage{
+    max-width: 60%;
+}
+
+
+.homebox{
+    display: flex;
+    flex-direction: column;
+    position:absolute;
+    align-items: center;
+    top:20%;
+  
+}
+
+.homebox button{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+.responsive-img{
+    max-width: 70%;
+    margin-top: 10px;
+}
+
+

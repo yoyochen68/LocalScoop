@@ -43,9 +43,9 @@
 
   <div class="container">
 
-    <%= typeof msg != 'undefined' ? msg : '' %>
     
-    <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img">
+    
+    <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img" style="max-width: 70%; margin-top: 10px;">
     <form action="/upload" method="POST" enctype="multipart/form-data">
       <div class="file-field input-field">
         <div class="">
@@ -57,17 +57,18 @@
           </span>
           <input name="myImage" type="file" accept="image/*">
         </div>
+        <%= typeof msg != 'undefined' ? msg : '' %>
         <div class="file-path-wrapper">
           <input class="file-path validate" type="text">
         </div>
       </div>
       <button type="submit" class="btn">Upload</button>
     </form>
-
   </div>
 
-
+<a href="/shop_setup/shop_setup_7">
   <button class="yellow-bn s-bn">Finish Up</button>
+</a>
 <!-- <img src="/uploads/myImage-1651002480271.jpg"> -->
 </div>
   <script
