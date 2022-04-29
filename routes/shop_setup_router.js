@@ -132,20 +132,20 @@ function checkFileType(file, cb) {
 // User uploads photo on shop_setup/shop_setup_6
 router.post('/upload', upload, (req, res) => {
   // console.log(req.file)
-  console.log(1111111111)
+  res.send("router.post('/upload', upload, (req, res) => {")
 
-  // if (req.file == undefined) {
-  //   res.render('shop_setup/shop_setup_5', {
-  //     msg: 'Error: No File Selected!'
-  //   });
-  //   return
-  // }
+  if (req.file == undefined) {
+    res.render('shop_setup/shop_setup_5', {
+      msg: 'Error: No File Selected!'
+    });
+    return
+  }
   // store some info in the database
-  // res.render('shop_setup/shop_setup_6', {
-  //   msg: 'Image Uploaded!',
-  //   message: 'Your store looks amazing!',
-  //   file: `uploads/${req.file.filename}`
-  // });
+  res.render('shop_setup/shop_setup_6', {
+    msg: 'Image Uploaded!',
+    message: 'Your store looks amazing!',
+    file: `uploads/${req.file.filename}`
+  });
 });
 
 //=============above: handling the store image uploading========
@@ -153,13 +153,14 @@ router.post('/upload', upload, (req, res) => {
 
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
+  res.send("router.post('/product_type', (req, res) => {")
 
-  // let sellerProductTypes = req.body.productTypeList
-  // console.log(sellerProductTypes)
-  // console.log(req.body)
+  let sellerProductTypes = req.body.productTypeList
+  console.log(sellerProductTypes)
+  console.log(req.body)
   console.log("!backend  !!")
 
-  // res.status(200).send(req.body.productTypeList)
+  res.status(200).send(req.body.productTypeList)
 
   // rn it sends array on first request,
   // then object on second request
