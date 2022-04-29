@@ -6,7 +6,11 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
-const axios = require('axios')
+const axios = require('axios');
+const { append } = require("express/lib/response");
+
+const app = express();
+app.use(express.json())
 
 // const path = require('path')  is for app.use(express.static())
 
@@ -39,6 +43,13 @@ router.get("/shop_setup_2", (req, res) => {
     res.render("shop_setup/shop_setup_2", {
 
     })
+})
+
+// POST /shop_setUp/shop_setUp_2
+router.post("/shop_setup_2", (req, res) => {
+  console.log('aaaaa')
+  console.log(req.body)
+  res.redirect("/shop_setup/shop_setup_3")
 })
 
 // GET /shop_setUp/shop_setUp_3
