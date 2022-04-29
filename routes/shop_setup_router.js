@@ -154,7 +154,7 @@ const storage = multer.diskStorage({
     console.log(req.file)
     // store some info in the database
     res.render('shop_setup/shop_setup_6', {
-      msg: 'File Uploaded!',
+      msg: 'Image Uploaded!',
       message:'Your store looks amazing!',
       file: `uploads/${req.file.filename}`
     });
