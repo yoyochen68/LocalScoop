@@ -6,11 +6,15 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
+
 const axios = require('axios');
 const { append } = require("express/lib/response");
 
 const app = express();
 app.use(express.json())
+
+
+
 
 // const path = require('path')  is for app.use(express.static())
 
@@ -134,15 +138,6 @@ const storage = multer.diskStorage({
     }
   }
   
-
-  
-  // EJS
-//   app.set('view engine', 'ejs');
-  
-  // Public Folder
-//   router.use(express.static(path.join(__dirname, 'public')));
-  
-//   router.get('/', (req, res) => res.render('index'));
   
   router.post('/upload', upload, (req, res) => {
     if (req.file == undefined) {
@@ -160,6 +155,7 @@ const storage = multer.diskStorage({
     });
   });
 
+//=============above: handling the store image uploading========
 
 
 // "shop_setup/product_type"
