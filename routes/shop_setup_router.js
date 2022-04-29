@@ -26,11 +26,7 @@ app.use(express.json())
 
 // GET /shop_setup/a
 router.get("/a", (req, res) => {
-   let expShopProfilePhotoFilename = db.getShopProfilePhotoFilename(101);
-    
-   // res.render("index", {
-
-    // })
+  
 })
 
 
