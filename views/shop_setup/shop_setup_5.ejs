@@ -69,44 +69,69 @@
 
   <script>
 
-// document.getElementById('radius').style.pointerEvents = 'none';
-//  document.getElementById("radius").style.display = "block"
-// console.log(document.getElementById("radius"))
-
-// var nodes = document.getElementById("radius").getElementsByTagName('*');
-// for(var i = 0; i < nodes.length; i++){
-//      nodes[i].disabled = true;
-// }
-
-
+    console.log("???", document.getElementsByClassName("deliveryBtn"))
     let deliveryMethodList = []
-    document.addEventListener("DOMContentLoaded", () => {
-      // let deliveryMethodType = document.getElementsByClassName("delivery_pickUp").querySelectorAll(".deliveryBtn")
-      let deliveryMethodType = document.querySelector(".delivery_pickUp").children
-// console.log("pppp",document.querySelector(".delivery_pickUp").children)
-      for (let typeBtn of deliveryMethodType) {
-        typeBtn.addEventListener("click", () => {
-          console.log("classList",typeBtn.classList)
-          //if the product type btn  was chosen before
-          if (typeBtn.classList.contains("clicked")) {
-            typeBtn.classList.remove("clicked")
-            let index = deliveryMethodList.indexOf(typeBtn.value);
-            if (index !== -1) {
-              deliveryMethodList.splice(index, 1);
-              console.log("no", deliveryMethodList)
-            }
-            //if product type was not clicked before
-          } else {
+
+    let buttonList = document.getElementsByClassName("deliveryBtn")
+    for (var i = 0; i < buttonList.length; i++) {
+      buttonList[i].addEventListener("click", () => {
+        if (buttonList[i].classList.contains("clicked")) {
+          buttonList[i].classList.remove("clicked")
+          let index = deliveryMethodList.indexOf(buttonList[i].value);
+          if (index !== -1) {
+            deliveryMethodList.splice(index, 1);
+
+          }
+          else {
             typeBtn.classList.add("clicked")
             deliveryMethodList.push(typeBtn.value)
-            if(deliveryMethodList.includes("delivery")){
+            if (deliveryMethodList.includes("delivery")) {
               document.getElementById("radius").style.display = "block";
             }
-            console.log("yes", deliveryMethodList)
           }
-        })
-      }
-    })
+        }
+      })
+    }
+
+
+    // document.getElementById('radius').style.pointerEvents = 'none';
+    //  document.getElementById("radius").style.display = "block"
+    // console.log(document.getElementById("radius"))
+
+    // var nodes = document.getElementById("radius").getElementsByTagName('*');
+    // for(var i = 0; i < nodes.length; i++){
+    //      nodes[i].disabled = true;
+    // }
+
+
+    // let deliveryMethodList = []
+    // document.addEventListener("DOMContentLoaded", () => {
+    //   // let deliveryMethodType = document.getElementsByClassName("delivery_pickUp").querySelectorAll(".deliveryBtn")
+    //   let deliveryMethodType = document.querySelector(".delivery_pickUp").children
+    //   // console.log("pppp",document.querySelector(".delivery_pickUp").children)
+    //   for (let typeBtn of deliveryMethodType) {
+    //     typeBtn.addEventListener("click", () => {
+    //       // console.log("classList",typeBtn.classList)
+    //       //if the product type btn  was chosen before
+    //       if (typeBtn.classList.contains("clicked")) {
+    //         typeBtn.classList.remove("clicked")
+    //         let index = deliveryMethodList.indexOf(typeBtn.value);
+    //         if (index !== -1) {
+    //           deliveryMethodList.splice(index, 1);
+    //           // console.log("no", deliveryMethodList)
+    //         }
+    //         //if product type was not clicked before
+    //       } else {
+    //         typeBtn.classList.add("clicked")
+    //         deliveryMethodList.push(typeBtn.value)
+    //         if (deliveryMethodList.includes("delivery")) {
+    //           document.getElementById("radius").style.display = "block";
+    //         }
+    //         // console.log("yes", deliveryMethodList)
+    //       }
+    //     })
+    //   }
+    // })
 
 
     //pick one of the radius,selectedDistance will be the value of selected radius.
