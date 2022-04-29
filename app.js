@@ -13,7 +13,6 @@ const crypto = require('crypto')
 // fake-database
 const db = require("./fake-db")
 
-
 // router files. require the router js files
 const shopSetupRouter = require("./routes/shop_setup_router")
 
@@ -25,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 app.use(express.static("public")); // allow front end to use the /public folder
+app.use(express.json());
 
 
 // router routes, set beginning of path
