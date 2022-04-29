@@ -175,14 +175,14 @@ function addUser(username, password) {
   return user;
 }
 
-
+/**
+ * @param {object} shopObj: takes an object and adds key/value pairs into shopInfo {} 
+ */
 function addShop(shopObj){
+  // the next storeId
   let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
-
+  // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
-  // console.log(shopObj)
-  // console.log(shopInfo)
-  console.log()
 }
 
 
