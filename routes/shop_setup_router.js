@@ -47,8 +47,12 @@ router.get("/shop_setup_2", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_2
 router.post("/shop_setup_2", (req, res) => {
-  console.log('aaaaa')
-  console.log(req.body)
+  // let doesShopExist = db.doesShopExist("Les Basics")
+  
+  // console.log(req.body)
+
+  db.addShop(req.body)
+
   res.redirect("/shop_setup/shop_setup_3")
 })
 

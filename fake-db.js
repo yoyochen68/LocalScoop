@@ -176,6 +176,16 @@ function addUser(username, password) {
 }
 
 
+function addShop(shopObj){
+  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+
+  shopInfo[newStoreId] = shopObj;
+  // console.log(shopObj)
+  // console.log(shopInfo)
+  console.log()
+}
+
+
 
 // function decoratePost(post) {
 //   post = {
@@ -323,6 +333,24 @@ function getShopProfilePhotoFilename(givenStoreID) {
   return shop.shopProfilePhoto;
 }
 
+/**
+ * @param {string} inputShopName 
+ * @returns {boolean} false if no shop with given name exists. Returns true if shop with given name exists
+ */
+function doesShopExist(inputShopName){
+  for(shopIndex in shopInfo){
+    let storeNameDB =  shopInfo[shopIndex].storeName
+    
+    if (inputShopName == storeNameDB){
+      return true;
+    } 
+  }
+
+  return false;
+}
+
+
+
 
 function getCategory() {
   return Array.from(new Set(Object.values(products).map(product => product.category)))
@@ -363,6 +391,8 @@ module.exports = {
   deleteProduct,
   getCategory,
   getShopProfilePhotoFilename,
-  editShop
+  editShop,
+  doesShopExist,
+  addShop
 };
 
