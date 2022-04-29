@@ -176,6 +176,16 @@ function addUser(username, password) {
 }
 
 
+function addShop(shopObj){
+  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+
+  shopInfo[newStoreId] = shopObj;
+  // console.log(shopObj)
+  // console.log(shopInfo)
+  console.log()
+}
+
+
 
 // function decoratePost(post) {
 //   post = {
@@ -188,8 +198,8 @@ function addUser(username, password) {
 // }
 
 /**
- * @param {*} n how many posts to get, defaults to 5
- * @param {*} category which sub to fetch, defaults to all categories
+ * @param {number} n how many posts to get, defaults to 5
+ * @param {string} category which sub to fetch, defaults to all categories
  */
 function getProducts(n = 5, category = undefined) {
   let allProducts = Object.values(products);
@@ -245,6 +255,58 @@ function editProduct(productId, changes = {}) {
   }
 }
 
+
+
+/**
+ * @param {number} shopId, id of the shop you want to edit. ex. 102
+ * @param {object} changes, object with changes you wish to make. parameter key name must match 
+ * shopInfo {} in fake-db.js exactly. 
+ */
+function editShop(shopId, changes = {}){
+  let product = shopInfo[shopId];
+
+  if (changes.phoneNum) {
+    product.phoneNum = changes.phoneNum;
+  }
+  
+  if (changes.email) {
+    product.email = changes.email;
+  }
+
+  if (changes.password) {
+    product.password = changes.password;
+  }
+
+  if (changes.address) {
+    product.address = changes.address;
+  }
+
+  if (changes.product) {
+    product.product = changes.product;
+  }
+
+  if (changes.delivery) {
+    product.delivery = changes.delivery;
+  }
+
+  if (changes.pickUp) {
+    product.pickUp = changes.pickUp;
+  }
+
+  if (changes.kmRadius) {
+    product.kmRadius = changes.kmRadius;
+  }
+
+  if (changes.rating) {
+    product.rating = changes.rating;
+  }
+
+  if (changes.shopProfilePhoto) {
+    product.shopProfilePhoto = changes.shopProfilePhoto;
+  }
+}
+
+
 function deleteProduct(productId) {
   delete products[productId];
 }
@@ -270,6 +332,24 @@ function getShopProfilePhotoFilename(givenStoreID) {
 
   return shop.shopProfilePhoto;
 }
+
+/**
+ * @param {string} inputShopName 
+ * @returns {boolean} false if no shop with given name exists. Returns true if shop with given name exists
+ */
+function doesShopExist(inputShopName){
+  for(shopIndex in shopInfo){
+    let storeNameDB =  shopInfo[shopIndex].storeName
+    
+    if (inputShopName == storeNameDB){
+      return true;
+    } 
+  }
+
+  return false;
+}
+
+
 
 
 function getCategory() {
@@ -310,6 +390,9 @@ module.exports = {
   editProduct,
   deleteProduct,
   getCategory,
-  getShopProfilePhotoFilename
+  getShopProfilePhotoFilename,
+  editShop,
+  doesShopExist,
+  addShop
 };
 
