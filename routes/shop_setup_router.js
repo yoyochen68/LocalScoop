@@ -7,7 +7,7 @@ const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
 
-const axios = require('axios');
+// const axios = require('axios');
 const { append } = require("express/lib/response");
 
 const app = express();
@@ -66,6 +66,11 @@ router.get("/shop_setup_3", (req, res) => {
 
     })
 })
+
+router.post("/shop_setup_3", (req, res) => {
+  res.redirect("/shop_setup/shop_setup_4")
+})
+
 
 // GET /shop_setUp/shop_setUp_4
 router.get("/shop_setup_4", (req, res) => {
@@ -167,6 +172,7 @@ router.post('/product_type', (req, res) => {
     console.log("!backend check!")
 
     res.status(200).send(req.body.productTypeList)
+    
     // rn it sends array on first request,
     // then object on second request
 })
