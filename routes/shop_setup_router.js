@@ -39,21 +39,12 @@ router.get("/shop_setup_1", (req, res) => {
 
 // GET /shop_setUp/shop_setUp_2
 router.get("/shop_setup_2", (req, res) => {
+  db.addShop(req.body)
   res.render("shop_setup/shop_setup_2", {
 
   })
 })
 
-// POST /shop_setUp/shop_setUp_2
-router.post("/shop_setup_2", (req, res) => {
-  // let doesShopExist = db.doesShopExist("Les Basics")
-
-  // console.log(req.body)
-
-  db.addShop(req.body)
-
-  res.redirect("/shop_setup/shop_setup_3")
-})
 
 // GET /shop_setUp/shop_setUp_3
 router.get("/shop_setup_3", (req, res) => {
@@ -166,9 +157,9 @@ router.post('/product_type', (req, res) => {
   // let sellerProductTypes = req.body.productTypeList
   // console.log(sellerProductTypes)
   // console.log(req.body)
-  console.log("!backend check!")
+  console.log("!backend  !!")
 
-  res.status(200).send(req.body.productTypeList)
+  // res.status(200).send(req.body.productTypeList)
 
   // rn it sends array on first request,
   // then object on second request
