@@ -30,25 +30,25 @@
 
 
 <div class="form-box">
-    <form class=" p-3"  action="/shop_setup/shop_setup_2" method="post">
+    <form class=" p-3"  action="/shop_setup/shop_setup_2" method="POST">
         <h5>Enter contact Info</h5>
         <div class=" m-4 ">
             <label for="inputStoreName">Store Name</label>
-            <input type="text" class="form-control" id="inputStoreName" >
+            <input type="text" class="form-control" id="inputStoreName" name="inputStoreName">
         </div>
         <div class=" m-4">
             <label for="inputPhoneNumber">Phone Number</label>
-            <input type="tel" class="form-control" id="inputPhoneNumber"  >
+            <input type="tel" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber">
         </div>
         <div class=" m-4">
             <label for="inputEmail">Email Address</label>
-            <input type="email" class="form-control" id="inputEmail" >
+            <input type="email" class="form-control" id="inputEmail" name="inputEmail">
         </div>
         <br>
         <h5>Create Password</h5>
         <div class=" m-4">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" >
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="inputPassword">
         </div>
         <button type="submit" class="yellow-bn m-3" >Create Account</button>
     </form>
