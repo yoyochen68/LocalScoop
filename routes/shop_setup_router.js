@@ -6,7 +6,15 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
-// const axios = require('axios')
+
+const axios = require('axios');
+const { append } = require("express/lib/response");
+
+const app = express();
+app.use(express.json())
+
+
+
 
 // const path = require('path')  is for app.use(express.static())
 
@@ -25,11 +33,7 @@ router.get("/a", (req, res) => {
     // })
 })
 
-router.get("/shop_setup_4", (req, res) => {
-    res.render("shop_setup/shop_setup_4", {
 
-    })
-})
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setUp_1", (req, res) => {
@@ -43,6 +47,17 @@ router.get("/shop_setup_2", (req, res) => {
     res.render("shop_setup/shop_setup_2", {
 
     })
+})
+
+// POST /shop_setUp/shop_setUp_2
+router.post("/shop_setup_2", (req, res) => {
+  // let doesShopExist = db.doesShopExist("Les Basics")
+  
+  // console.log(req.body)
+
+  db.addShop(req.body)
+
+  res.redirect("/shop_setup/shop_setup_3")
 })
 
 // GET /shop_setUp/shop_setUp_3
@@ -144,13 +159,16 @@ const storage = multer.diskStorage({
 
 
 // "shop_setup/product_type"
-router.post('/shop_setup/product_type', (req, res) => {
-    //
-    // let data = req.body.productTypeList
-    // console.log("backEnd: ", data)
-    // res.send(data)
+router.post('/product_type', (req, res) => {
 
+    // let sellerProductTypes = req.body.productTypeList
+    // console.log(sellerProductTypes)
+    // console.log(req.body)
+    console.log("!backend check!")
 
+    res.status(200).send(req.body.productTypeList)
+    // rn it sends array on first request,
+    // then object on second request
 })
 
     module.exports = router;
