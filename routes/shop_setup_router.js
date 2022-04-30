@@ -148,22 +148,20 @@ router.post('/upload', upload, (req, res) => {
   });
 });
 
+
+
 //=============above: handling the store image uploading========
 
 
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
-  res.send("router.post('/product_type', (req, res) => {")
 
-  let sellerProductTypes = req.body.productTypeList
-  console.log(sellerProductTypes)
-  console.log(req.body)
-  console.log("!backend  !!")
+    let sellerProductTypes = req.body.productTypeList
+    //I will assign the "sellerProductTypes" value to the cookies.
 
-  res.status(200).send(req.body.productTypeList)
+    console.log("back End:", sellerProductTypes)
+    res.status(200).send(sellerProductTypes)
 
-  // rn it sends array on first request,
-  // then object on second request
 })
 
 module.exports = router;

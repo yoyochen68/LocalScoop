@@ -60,10 +60,7 @@
 
 <script>
 
-    //The list of clicked values
     let sellerProductList = []
-
-    document.addEventListener("DOMContentLoaded", ()=>{
 
         //---------Adding the interactivity to product type buttons & store values
 
@@ -89,8 +86,6 @@
         }
 
 
-
-
         //---------Adding the interactivity to next button & send values to back end ?
         
         let nextButton = document.querySelector(".nextBtn")
@@ -101,18 +96,15 @@
 
                 //Sending it to the back:
                 axios.post('/shop_setup/product_type',{ productTypeList: sellerProductList})
-
                     .then(response => {
-                        //Idono why is not working
-                        console.log( `${response} is now in backend!!` )
-                        console.log("!frontend check!")
+                        console.log( response.data, "has been successfully saved in cookies")
                     })
                     .catch(error => {
                         console.log(error);
                     })
+
             })
         }
-    })
 
 
 
