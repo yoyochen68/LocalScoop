@@ -235,6 +235,7 @@ function addProduct(storeId, productName, category, description,price, deliveryF
 
 function editProduct(productId, changes = {}) {
   let product = products[productId];
+  
   if (changes.productName) {
     product.productName = changes.productName;
   }
