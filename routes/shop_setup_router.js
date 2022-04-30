@@ -146,18 +146,14 @@ const storage = multer.diskStorage({
   });
 
 
-
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
+    let sellerProductTypes = req.body.productTypeList
+    //I will assign the "sellerProductTypes" value to the cookies.
 
-    // let sellerProductTypes = req.body.productTypeList
-    // console.log(sellerProductTypes)
-    // console.log(req.body)
-    console.log("!backend check!")
+    console.log("back End:", sellerProductTypes)
+    res.status(200).send(sellerProductTypes)
 
-    res.status(200).send(req.body.productTypeList)
-    // rn it sends array on first request,
-    // then object on second request
 })
 
     module.exports = router;
