@@ -1,27 +1,25 @@
 
-
-
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,wght@1,200&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@100;200;300;400;500;600&display=swap');
-
 
 
 body{
     background-color: #F7F5F3;
     font-family: 'Poppins', sans-serif;
-    margin: 0;
     font-weight: 300;
 }
 
 .shop-setup-header{
-padding-top: 10%;
-margin:4% 5% 2% 5%
+    padding-top: 10%;
+    margin:4% 5% 2% 5%
 }
 
 .centerBox{
     text-align: center;
 
 }
-
+/* .container{
+    text-align: center;
+} */
 
 .shopReady{
     font-weight: 400;
@@ -37,6 +35,7 @@ margin:4% 5% 2% 5%
     width: 355px;
     height:55px;
     margin-top: 40px;
+
 }
 
 .l-bn{
@@ -134,19 +133,22 @@ margin:4% 5% 2% 5%
     font-size:16px ;
 }
 
-
-.delivery_pickUp{
+/* .delivery_pickUp{
+    height: 10em;
     display: flex;
-    justify-content: center;
-  
-}
+    align-items: center;
+    justify-content: center 
+} */
+
+
 
 .delivery{
     border:solid black 1px;
     width:160px;
     height: 189px;
     background-color: white;
-    margin: 10px;
+margin:30px 1px 30px 45px;
+  float: left;
     
   
 }
@@ -156,6 +158,15 @@ margin:4% 5% 2% 5%
     width:160px;
     height: 189px;
     background-color: white;
+    margin:30px 45px 30px 1px;
+    float: right;
+}
+
+#deliveryDistance{
+    background-color: white;
+    border-radius: 5px;
+    width: 200px;
+    height: 40px;
     margin: 10px;
 
 }
