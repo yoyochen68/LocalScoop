@@ -8,6 +8,11 @@ body{
     font-weight: 300;
 }
 
+.fontFamily{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
 .shop-setup-header{
     padding-top: 10%;
     margin:4% 5% 2% 5%
@@ -101,10 +106,6 @@ body{
 
 }
 
-.clicked{
-    background-color: #D4E6B5;
-    /*color: #E3974F;*/
-}
 
 
 .form-control {
@@ -133,40 +134,43 @@ body{
     font-size:16px ;
 }
 
-/* .delivery_pickUp{
-    height: 10em;
+.delivery_pickUp{
+ 
+    /* height: 10em; */
     display: flex;
     align-items: center;
-    justify-content: center 
-} */
+    justify-content: center;
+    gap:10px;
+    /* background-color: white; */
+    margin-top: 40px;
+    margin-bottom: 40px;
+} 
 
 
-
-.delivery{
+ .deliveryBtn{
     border:solid black 1px;
     width:160px;
     height: 189px;
     background-color: white;
-margin:30px 1px 30px 45px;
-  float: left;
-    
+    font-size: 20px;
+    font-weight: 300;
   
-}
+} 
 
-.pickUp{
+/* .pickUp{
     border:solid black 1px;
     width:160px;
     height: 189px;
     background-color: white;
-    margin:30px 45px 30px 1px;
     float: right;
-}
+}  */
 
 #deliveryDistance{
     background-color: white;
     border-radius: 5px;
     width: 200px;
     height: 40px;
+
     margin: 10px;
 
 }
@@ -225,7 +229,9 @@ margin:30px 1px 30px 45px;
 
 }
 
+
 .nav-text{
     font-size: 30px;
     text-transform: uppercase;
 }
+

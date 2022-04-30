@@ -17,7 +17,7 @@
 
 <header class="shop-setup-header">
     <!--Back button-->
-    <a href="http://kmiweruypw48ytpuo">
+    <a href="/shop_setUp/shop_setUp_3">
         <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
             <rect width="37" height="37" fill="url(#pattern0)"/>
             <defs>
@@ -44,8 +44,10 @@
         <button class="btn-white"  value="art">Art</button>
         <button class="btn-white" value="handmaid_goods">Handmaid goods</button>
     </div>
-    <button type="button" class="yellow-bn nextBtn" >Next ></button>
 
+    <a href="/shop_setup/shop_setup_5">
+    <button type="submit" class="yellow-bn nextBtn" >Next ></button>
+</a>
 
 </div>
 
@@ -65,6 +67,7 @@
         let sellerProductTypes = document.querySelector(".options").children
 
         for (let typeBtn of sellerProductTypes) {
+
             typeBtn.addEventListener("click", () => {
 
                 //if the product type btn  was chosen before
