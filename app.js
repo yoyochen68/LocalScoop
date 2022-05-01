@@ -2,13 +2,14 @@
 const express = require("express");
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser");
+const cookieSession = require("cookie-session");
 
 //==image ===
 const multer = require('multer');
 const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
-//===image
+
 
 // fake-database
 const db = require("./fake-db")
@@ -28,6 +29,14 @@ app.use(express.static("public")); // allow front end to use the /public folder
 app.use(express.json());
 
 
+// cookie sessions
+app.use(cookieSession({
+  name:'kevin',
+  keys:['localscoop:8000'],
+  maxAge: 1000 * 60 * 60
+}))
+
+
 // router routes, set beginning of path
 app.use("/shop_setup", shopSetupRouter);
 
@@ -43,8 +52,6 @@ app.get("/", (req, res) => {
 
 
 //====image upload===
-
-
 const storage = multer.diskStorage({
   destination: './public/uploads/',
   filename: function (req, file, cb) {

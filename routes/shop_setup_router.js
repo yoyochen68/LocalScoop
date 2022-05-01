@@ -7,15 +7,12 @@ const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
 
+
 // const axios = require('axios');
 const { append } = require("express/lib/response");
 
 const app = express();
 app.use(express.json())
-
-
-
-// const path = require('path')  is for app.use(express.static())
 
 
 
@@ -39,10 +36,17 @@ router.get("/shop_setup_1", (req, res) => {
 
 // GET /shop_setUp/shop_setUp_2
 router.get("/shop_setup_2", (req, res) => {
-  db.addShop(req.body)
   res.render("shop_setup/shop_setup_2", {
 
   })
+})
+
+
+// POST /shop_setUp/shop_setUp_2
+router.post("/shop_setup_2", (req, res) => {
+  // put storeName in cookie session
+  req.session.storeName = req.body.storeName;  
+  res.redirect("/shop_setup/shop_setup_3")
 })
 
 
@@ -53,8 +57,17 @@ router.get("/shop_setup_3", (req, res) => {
   })
 })
 
+// POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", (req, res) => {
-  res.redirect("/shop_setup/shop_setup_4")
+  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
+  let userInputAddress = req.body.address;
+  
+  let editObject = { address: userInputAddress }
+
+  // add the address to the shopInfo {} in fake-db
+  db.editShop(shopIdOfSession, editObject)
+
+  res.redirect("/shop_setUp/shop_setUp_4")
 })
 
 
@@ -72,6 +85,7 @@ router.get("/shop_setup_5", (req, res) => {
   })
 })
 
+
 // GET /shop_setUp/shop_setUp_6
 router.get("/shop_setup_6", (req, res) => {
   res.render("shop_setup/shop_setup_6", {
@@ -79,11 +93,19 @@ router.get("/shop_setup_6", (req, res) => {
   })
 })
 
+
 // GET /shop_setUp/shop_setUp_7
 router.get("/shop_setup_7", (req, res) => {
   res.render("shop_setup/shop_setup_7", {
 
   })
+})
+
+
+// dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
+router.get("/dcs", (req, res) => {
+  req.session = null;
+  res.redirect("/");
 })
 
 router.post("#", (req, res) => {
