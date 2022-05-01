@@ -81,22 +81,20 @@ function checkFileType(file, cb) {
 
 
 
-app.get('/', (req, res) => res.render('index'));
-
-app.post('/upload', upload, (req, res) => {
-  if (req.file == undefined) {
-    res.render('/shop_setup/shop_setup_6', {
-      msg: 'Error: No File Selected!'
-    });
-    return 
-  } 
-  console.log(req.file)
-  // store some info in the database
-  res.render('shop_setup/shop_setup_6', {
-    msg: 'File Uploaded!',
-    file: `uploads/${req.file.filename}`
-  });
-});
+// app.post('/upload', upload, (req, res) => {
+//   if (req.file == undefined) {
+//     res.render('/shop_setup/shop_setup_6', {
+//       msg: 'Error: No File Selected!'
+//     });
+//     return 
+//   } 
+//   console.log(req.file)
+//   // store some info in the database
+//   res.render('shop_setup/shop_setup_6', {
+//     msg: 'File Uploaded!',
+//     file: `uploads/${req.file.filename}`
+//   });
+// });
 
 // le comment
 

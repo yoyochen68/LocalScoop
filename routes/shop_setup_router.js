@@ -131,20 +131,22 @@ function checkFileType(file, cb) {
 
 // User uploads photo on shop_setup/shop_setup_6
 router.post('/upload', upload, (req, res) => {
-  // console.log(req.file)
-  res.send("router.post('/upload', upload, (req, res) => {")
-
   if (req.file == undefined) {
     res.render('shop_setup/shop_setup_5', {
       msg: 'Error: No File Selected!'
     });
     return
   }
+
+  console.log(req.file)
+
+  let multeredFilename = req.file.filename
+  
   // store some info in the database
   res.render('shop_setup/shop_setup_6', {
     msg: 'Image Uploaded!',
     message: 'Your store looks amazing!',
-    file: `uploads/${req.file.filename}`
+    file: `uploads/${multeredFilename}`
   });
 });
 
@@ -152,16 +154,14 @@ router.post('/upload', upload, (req, res) => {
 
 //=============above: handling the store image uploading========
 
-
+// used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
-
     let sellerProductTypes = req.body.productTypeList
     //I will assign the "sellerProductTypes" value to the cookies.
 
     console.log("back End:", sellerProductTypes)
     res.status(200).send(sellerProductTypes)
-
 })
 
 module.exports = router;
