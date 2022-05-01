@@ -150,22 +150,18 @@ router.post('/upload', upload, (req, res) => {
   });
 });
 
+
+
 //=============above: handling the store image uploading========
 
 // used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
-  res.send("router.post('/product_type', (req, res) => {")
+    let sellerProductTypes = req.body.productTypeList
+    //I will assign the "sellerProductTypes" value to the cookies.
 
-  // let sellerProductTypes = req.body.productTypeList
-  // console.log(sellerProductTypes)
-  // console.log(req.body)
-  // console.log("!backend  !!")
-
-  // res.status(200).send(req.body.productTypeList)
-
-  // rn it sends array on first request,
-  // then object on second request
+    console.log("back End:", sellerProductTypes)
+    res.status(200).send(sellerProductTypes)
 })
 
 module.exports = router;
