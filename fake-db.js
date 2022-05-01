@@ -155,10 +155,27 @@ function getUser(userId) {
   return users[userId];
 }
 
+
+
 function getUserByUsername(username) {
   let relevant_user_object = Object.values(users).filter(user => user.username === username)[0];
   if (relevant_user_object) {
     return getUser(relevant_user_object.userId);
+  } else {
+    return undefined;
+  }
+}
+
+/**
+ * @param {string} storeName 
+ * @returns the storeName of the shop, if a shop with that name exists. if no shop with 
+ * that name exists, will return undefined.
+ */
+function getStoreIdFromStoreName(storeName){
+  let relevant_shop_object = Object.values(shopInfo).filter(shop => shop.storeName === storeName)[0];
+ 
+  if (relevant_shop_object) {
+    return relevant_shop_object.storeId;
   } else {
     return undefined;
   }
@@ -183,6 +200,7 @@ function addShop(shopObj){
   let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
+  return shopInfo
 }
 
 
@@ -235,6 +253,7 @@ function addProduct(storeId, productName, category, description,price, deliveryF
 
 function editProduct(productId, changes = {}) {
   let product = products[productId];
+  
   if (changes.productName) {
     product.productName = changes.productName;
   }
@@ -393,6 +412,7 @@ module.exports = {
   getShopProfilePhotoFilename,
   editShop,
   doesShopExist,
-  addShop
+  addShop,
+  getStoreIdFromStoreName
 };
 
