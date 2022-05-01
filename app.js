@@ -4,7 +4,7 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
 const mysql = require("mysql2");
-const dbConnection = require("database/databaseConnection.js")
+const dbConnection = require("./database/databaseConnection.js")
 const ejs = require('ejs');
 
 //==image ===
