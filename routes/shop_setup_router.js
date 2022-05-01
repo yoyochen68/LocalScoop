@@ -151,6 +151,7 @@ function checkFileType(file, cb) {
   }
 }
 
+
 // User uploads photo on shop_setup/shop_setup_6
 router.post('/upload', upload, (req, res) => {
   if (req.file == undefined) {
@@ -159,11 +160,13 @@ router.post('/upload', upload, (req, res) => {
     });
     return
   }
-  // console.log(req.file.filename)
+
   let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = req.file.filename
 
   db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
+  let a = db.returnShopInfo();
+  console.log(a)
   
   // store some info in the database
   res.render('shop_setup/shop_setup_6', {

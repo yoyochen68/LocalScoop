@@ -200,6 +200,10 @@ function addShop(shopObj){
   let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
+  // return shopInfo
+}
+
+function returnShopInfo(){
   return shopInfo
 }
 
@@ -413,6 +417,7 @@ module.exports = {
   editShop,
   doesShopExist,
   addShop,
-  getStoreIdFromStoreName
+  getStoreIdFromStoreName,
+  returnShopInfo
 };
 
