@@ -1,6 +1,11 @@
-const mysql = require('mysql2');
+/**
+ * adapted from the JSON API lab from OOP
+ */
 
+const mysql = require('mysql2');
 const is_heroku = process.env.IS_HEROKU || false;
+
+let database;
 
 const dbConfigHeroku = {
 	host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
@@ -22,10 +27,22 @@ const dbConfigLocal = {
 };
 
 if (is_heroku) {
-	var database = mysql.createPool(dbConfigHeroku);
+	database = mysql.createPool(dbConfigHeroku).promise();
 }
 else {
-	var database = mysql.createPool(dbConfigLocal);
+	database = mysql.createPool(dbConfigLocal).promise();
 }
 
-module.exports = database;
+/**
+ * @returns all the stores in the database
+ */
+function getStores(){
+	return database.query(`
+		SELECT * 
+		FROM store
+	`)
+}
+exports.getStores = getStores
+
+
+// module.exports = database;

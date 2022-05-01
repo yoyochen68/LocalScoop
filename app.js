@@ -16,6 +16,9 @@ const crypto = require('crypto')
 // fake-database
 const db = require("./fake-db")
 
+// other files çç
+const server = require("./server.js")
+
 // router files. require the router js files
 const shopSetupRouter = require("./routes/shop_setup_router")
 
@@ -38,7 +41,7 @@ app.use(cookieSession({
 }))
 
 
-// router routes, set beginning of path
+/**   router routes, set beginning of path   **/
 app.use("/shop_setup", shopSetupRouter);
 
 
@@ -49,7 +52,14 @@ app.get("/", (req, res) => {
   res.render("index")
 })
 
-
+app.get("/dbtest", (req, res) => {
+  dbConnection.getStores()
+    .then((stores) => {
+      // console.log(stores)
+      res.status(200).send(stores[0])
+    })
+  
+})
 
 
 //====image upload===
