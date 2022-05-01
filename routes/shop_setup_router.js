@@ -159,10 +159,11 @@ router.post('/upload', upload, (req, res) => {
     });
     return
   }
-
-  console.log(req.file)
-
+  // console.log(req.file.filename)
+  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = req.file.filename
+
+  db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
   
   // store some info in the database
   res.render('shop_setup/shop_setup_6', {
