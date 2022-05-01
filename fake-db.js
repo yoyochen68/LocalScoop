@@ -181,6 +181,10 @@ function getStoreIdFromStoreName(storeName){
   }
 }
 
+
+// console.log( getStoreIdFromStoreName('Hayes Studio') )
+
+
 function addUser(username, password) {
   let userId = Math.max(...Object.keys(users).map(Number)) + 1;
   let user = {
@@ -192,17 +196,55 @@ function addUser(username, password) {
   return user;
 }
 
+
+
+// let s = {
+//     storeId: 106,
+//     storeName: "sssssssssss",
+//     phoneNum: 235555555555555553,
+//     email: "777777777777777777777",
+//     password: "hahayes",
+//     address: "6666666666666666666666666666",
+//     product: "Handmade Goods",
+//     delivery: true,
+//     pickUp: true,
+//     kmRadius: 20,
+//     rating:4.94,
+//     shopProfilePhoto:"/uploads/1111111111111111111111111.jpeg"
+// }
+
+
+// console.log(shopInfo)
+
 /**
  * @param {object} shopObj: takes an object and adds key/value pairs into shopInfo {} 
  */
 function addShop(shopObj){
   // the next storeId
   let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
-  // return shopInfo
+ 
 }
 
+function returnNextShopId(){
+  return  Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+}
+
+
+// addShop(s)
+// addShop(s)
+// addShop(s)
+// addShop(s)
+
+// console.log(shopInfo)
+
+
+/**
+ * to check if the changes we made applied
+ * @returns shopInfo {}
+ */
 function returnShopInfo(){
   return shopInfo
 }
@@ -287,6 +329,7 @@ function editProduct(productId, changes = {}) {
  */
 function editShop(shopId, changes = {}){
   let product = shopInfo[shopId];
+  // console.log(typeof(shopId))
 
   if (changes.phoneNum) {
     product.phoneNum = changes.phoneNum;
@@ -418,6 +461,7 @@ module.exports = {
   doesShopExist,
   addShop,
   getStoreIdFromStoreName,
-  returnShopInfo
+  returnShopInfo,
+  returnNextShopId
 };
 
