@@ -46,6 +46,24 @@ router.get("/shop_setup_2", (req, res) => {
 router.post("/shop_setup_2", (req, res) => {
   // put storeName in cookie session
   req.session.storeName = req.body.storeName;  
+  
+  let nextShopId = db.returnNextShopId()
+
+  // create obj to pass into addShop(), need to add storeId and everything else in req.body
+  let addShopObj = {
+    storeName: req.body.storeName,
+    phoneNum: req.body.phoneNum,
+    email: req.body.email,
+    password: req.body.password,
+    storeId: nextShopId
+  }
+
+  // adds the use input information into the fake-db
+  db.addShop(addShopObj)
+
+  console.log(db.returnShopInfo())
+
+  // write store name into database
   res.redirect("/shop_setup/shop_setup_3")
 })
 
@@ -59,13 +77,16 @@ router.get("/shop_setup_3", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", (req, res) => {
-  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
-  let userInputAddress = req.body.address;
-  
-  let editObject = { address: userInputAddress }
+  // console.log(req.body.address)
+  console.log(req.session.storeName) // works
+  console.log(db.returnShopInfo())
 
-  // add the address to the shopInfo {} in fake-db
-  db.editShop(shopIdOfSession, editObject)
+  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
+  console.log(shopIdOfSession)
+
+  // console.log(db.returnShopInfo())
+  db.editShop(shopIdOfSession, req.body)
+
 
   res.redirect("/shop_setUp/shop_setUp_4")
 })
@@ -113,7 +134,7 @@ router.post("#", (req, res) => {
 })
 
 
-//=============handling the store image uploading========
+/************      handling the store image uploading          **********/
 
 
 // Set The Storage Engine
@@ -159,20 +180,19 @@ router.post('/upload', upload, (req, res) => {
       msg: 'Error: No File Selected!'
     });
     return
-  }
+  } 
 
   let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = '/uploads/' + req.file.filename
 
+
   db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
-  let a = db.returnShopInfo();
-  console.log(a)
-  
+
   // store some info in the database
   res.render('shop_setup/shop_setup_6', {
     msg: 'Image Uploaded!',
     message: 'Your store looks amazing!',
-    file: `uploads/${multeredFilename}`
+    file: `${multeredFilename}`
   });
 });
 
@@ -184,7 +204,7 @@ router.post('/upload', upload, (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
     let sellerProductTypes = req.body.productTypeList
-    //I will assign the "sellerProductTypes" value to the cookies.
+    // I will assign the "sellerProductTypes" value to the cookies.
 
     console.log("back End:", sellerProductTypes)
     res.status(200).send(sellerProductTypes)
