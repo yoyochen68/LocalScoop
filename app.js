@@ -14,7 +14,8 @@ const crypto = require('crypto')
 const db = require("./fake-db")
 
 // router files. require the router js files
-const shopSetupRouter = require("./routes/shop_setup_router")
+const shopSetupRouter = require("./routes/shop_setup_router");
+const { route } = require("./routes/shop_setup_router");
 
 
 
@@ -97,6 +98,8 @@ app.post('/upload', upload, (req, res) => {
     file: `uploads/${req.file.filename}`
   });
 });
+
+
 
 
 
