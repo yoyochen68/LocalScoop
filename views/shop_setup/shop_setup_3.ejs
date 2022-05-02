@@ -34,34 +34,26 @@
 </header>
 
 <body>
-
-
   <div class="address-box">
-
-    <h3>What’s your address?</h3>
+    <h3>What is your address?</h3>
     <p>This lets us know that your business is<br>
       authorized for the safety of your customers </p>
-
-
-  <form class="m-3"  action="/shop_setup/shop_setup_3" method="post">
-    <div>
-      <label for="seller-address"></label>
-      <input type="text" class="form-control" id="seller-address" placeHolder="Type in your address">
-    </div>
-
-  <button type="submit" class="yellow-bn" >Next --> </button>
-
+    <form class="m-3"  action="/shop_setup/shop_setup_3" method="POST">
+    
+      <div class=" m-4">
+          <label for="address"></label>
+          <input type="text" class="form-control" id="address" name="address" placeholder="Type in your address">
+      </div>
+      <button type="submit" class="yellow-bn" >Next</button>
     </form>
-
   </div>
 
 
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
-    crossorigin="anonymous"></script>
 
 
 </body>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+  crossorigin="anonymous"></script>
 </html>
