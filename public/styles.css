@@ -224,9 +224,9 @@ body{
     color: #009578;
 }
 
-.nav-icon{
+.nav-icon {
     font-size: 100px;
-
+}
 
 .homebox{
     display: flex;
@@ -239,8 +239,142 @@ body{
 
 
 .nav-text{
-    font-size: 30px;
+    font-size: 15px;
     text-transform: uppercase;
 }
+
+
+
+/*headers*/
+.seller-shop-header{
+    padding-top: 10%;
+    margin:2% 5% 2% 5%
+}
+
+
+
+
+/*---------------Seller Shop -------------------*/
+.shop_body{
+    padding-bottom: 100px;
+}
+
+* {box-sizing:border-box}
+
+/*Slideshow container*/
+.slideshow-container {
+    max-width: 1000px;
+    position: relative;
+    margin: auto;
+}
+
+/* Hide the images by default */
+.mySlides {
+    display: none;
+}
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 16px;
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Caption text */
+.text {
+    color: #f2f2f2;
+    font-size: 15px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 8px;
+    width: 100%;
+    text-align: center;
+}
+
+/* Number text (1/3 etc) */
+
+.numbertext {
+
+
+    /*color: red;*/
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: #D4E6B5;
+    border-radius: 50px;
+}
+
+
+/* Fading animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+
+
+
+/*GRID*/
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    grid-gap: 4px;
+}
+
+.item {
+    overflow: hidden;
+    position: relative;
+    background-color: red;
+    width: 100%;
+    height: 9rem; /* vary this to what you need */
+    border-radius: 15px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+
+.carousel_image{
+    width:100%;
+    height:250px
+}
+
+
+.store_info{
+    line-height: 1em;
+}
+
 
 
