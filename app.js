@@ -23,7 +23,7 @@ const server = require("./server.js")
 
 const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
-
+const sellerShopRouter = require("./routes/seller_shop_router")
 
 
 const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
@@ -48,6 +48,7 @@ app.use(cookieSession({
 /**   router routes, set beginning of path   **/
 app.use("/shop_setup", shopSetupRouter);
 app.use("/product_post", productPostRouter);
+app.use("/seller_shop", sellerShopRouter);
 
 // app.use("/product_post", productPostRouter);
 
