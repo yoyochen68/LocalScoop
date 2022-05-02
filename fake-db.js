@@ -35,9 +35,9 @@ const shopInfo = {
     password: "hahayes",
     address: "2310 Main street,Vancouver BC,Canada",
     product: "Handmade Goods",
-    delivery: true,
-    pickUp: true,
-    kmRadius: 20,
+    delivery: false,
+    pickup: false,
+    kmRadius: 10,
     rating:4.94,
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
@@ -203,6 +203,15 @@ function returnShopInfo(){
   return shopInfo
 }
 
+function getShop(storeId) {
+  return shopInfo[storeId];
+}
+
+function editStore(id,updatedObj){
+  let shop = shopInfo[id]
+  shop =  Object.assign(shop, updatedObj);
+  return shop
+}
 
 
 
@@ -376,13 +385,6 @@ function getOrder(){
   
 }
 
-function getStores(){
-
-}
-
-function getStore(){
-
-}
 
 function getWishList(){
   
@@ -407,7 +409,10 @@ module.exports = {
   addShop,
   getStoreIdFromStoreName,
   returnShopInfo,
-  returnNextShopId
+  returnNextShopId,
+  editStore,
+  getShop
+
 };
 
 

@@ -20,7 +20,11 @@ const db = require("./fake-db")
 const server = require("./server.js")
 
 // router files. require the router js files
+
 const shopSetupRouter = require("./routes/shop_setup_router")
+const productPostRouter = require("./routes/product_post_router")
+
+
 
 const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
 
@@ -43,6 +47,9 @@ app.use(cookieSession({
 
 /**   router routes, set beginning of path   **/
 app.use("/shop_setup", shopSetupRouter);
+app.use("/product_post", productPostRouter);
+
+// app.use("/product_post", productPostRouter);
 
 
 /* ROUTES */
@@ -115,6 +122,8 @@ function checkFileType(file, cb) {
 // });
 
 // le comment
+
+
 
 module.exports = app;
 
