@@ -14,6 +14,7 @@ const storage = multer.diskStorage({
   }
 });
 
+
 // Init Upload
 const upload = multer({
   storage: storage,
@@ -23,6 +24,7 @@ const upload = multer({
   }
 }).single('myImage');
 // can do .array() if you want to upload multiple images
+
 
 // Check File Type
 function checkFileType(file, cb) {
@@ -39,6 +41,7 @@ function checkFileType(file, cb) {
     cb('Error: Images Only!');
   }
 }
+
 
 // Init app
 const app = express();
