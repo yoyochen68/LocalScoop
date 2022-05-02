@@ -18,7 +18,7 @@ const db = require("./fake-db")
 
 const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
-
+const sellerShopRouter = require("./routes/seller_shop_router")
 
 
 
@@ -44,6 +44,7 @@ app.use(cookieSession({
 // router routes, set beginning of path
 app.use("/shop_setup", shopSetupRouter);
 app.use("/product_post", productPostRouter);
+app.use("/seller_shop", sellerShopRouter);
 
 // app.use("/product_post", productPostRouter);
 
