@@ -1,5 +1,4 @@
 
-
 const users = {
   1: {
     userId: 1,
@@ -125,23 +124,6 @@ const orders = {
 }
 
 
-// const comments = {
-//   9001: {
-//     id: 9001,
-//     post_id: 102,
-//     creator: 1,
-//     description: "Actually I learned a lot :pepega:",
-//     timestamp: 1642691742010,
-//   }
-// }
-
-// const votes = [
-//   { user_id: 2, post_id: 101, value: +1 },
-//   { user_id: 3, post_id: 101, value: +1 },
-//   { user_id: 4, post_id: 101, value: +1 },
-//   { user_id: 3, post_id: 102, value: -1 },
-// ]
-
 function debug() {
   console.log("==== DB DEBUGING ====")
   console.log("users", users)
@@ -182,8 +164,6 @@ function getStoreIdFromStoreName(storeName){
 }
 
 
-// console.log( getStoreIdFromStoreName('Hayes Studio') )
-
 
 function addUser(username, password) {
   let userId = Math.max(...Object.keys(users).map(Number)) + 1;
@@ -196,25 +176,6 @@ function addUser(username, password) {
   return user;
 }
 
-
-
-// let s = {
-//     storeId: 106,
-//     storeName: "sssssssssss",
-//     phoneNum: 235555555555555553,
-//     email: "777777777777777777777",
-//     password: "hahayes",
-//     address: "6666666666666666666666666666",
-//     product: "Handmade Goods",
-//     delivery: true,
-//     pickUp: true,
-//     kmRadius: 20,
-//     rating:4.94,
-//     shopProfilePhoto:"/uploads/1111111111111111111111111.jpeg"
-// }
-
-
-// console.log(shopInfo)
 
 /**
  * @param {object} shopObj: takes an object and adds key/value pairs into shopInfo {} 
@@ -232,13 +193,6 @@ function returnNextShopId(){
   return  Math.max(...Object.keys(shopInfo).map(Number)) + 1;
 }
 
-
-// addShop(s)
-// addShop(s)
-// addShop(s)
-// addShop(s)
-
-// console.log(shopInfo)
 
 
 /**
@@ -260,15 +214,6 @@ function editStore(id,updatedObj){
 }
 
 
-// function decoratePost(post) {
-//   post = {
-//     ...post,
-//     creator: users[post.creator],
-//     votes: getVotesForPost(post.id),
-//     comments: Object.values(comments).filter(comment => comment.post_id === post.id).map(comment => ({ ...comment, creator: users[comment.creator] })),
-//   }
-//   return post;
-// }
 
 /**
  * @param {number} n how many posts to get, defaults to 5
@@ -287,6 +232,7 @@ function getProducts(n = 5, category = undefined) {
 function getProduct(productId) {
   return products(productId);
 }
+
 
 function addProduct(storeId, productName, category, description,price, deliveryFee,tax) {
   let productId = Math.max(...Object.keys(products).map(Number)) + 1;
@@ -388,7 +334,6 @@ function deleteProduct(productId) {
 
 
 /**
- * 
  * @param {number} storeID 
  * @returns {string} profilePhotoFileName. undefined if no shop with given storeID exists
  */
@@ -408,6 +353,7 @@ function getShopProfilePhotoFilename(givenStoreID) {
   return shop.shopProfilePhoto;
 }
 
+
 /**
  * @param {string} inputShopName 
  * @returns {boolean} false if no shop with given name exists. Returns true if shop with given name exists
@@ -423,7 +369,6 @@ function doesShopExist(inputShopName){
 
   return false;
 }
-
 
 
 
@@ -470,3 +415,34 @@ module.exports = {
 
 };
 
+
+
+
+// function decoratePost(post) {
+//   post = {
+//     ...post,
+//     creator: users[post.creator],
+//     votes: getVotesForPost(post.id),
+//     comments: Object.values(comments).filter(comment => comment.post_id === post.id).map(comment => ({ ...comment, creator: users[comment.creator] })),
+//   }
+//   return post;
+// }
+
+
+
+// const comments = {
+//   9001: {
+//     id: 9001,
+//     post_id: 102,
+//     creator: 1,
+//     description: "Actually I learned a lot :pepega:",
+//     timestamp: 1642691742010,
+//   }
+// }
+
+// const votes = [
+//   { user_id: 2, post_id: 101, value: +1 },
+//   { user_id: 3, post_id: 101, value: +1 },
+//   { user_id: 4, post_id: 101, value: +1 },
+//   { user_id: 3, post_id: 102, value: -1 },
+// ]
