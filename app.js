@@ -16,6 +16,7 @@ const db = require("./fake-db")
 
 // router files. require the router js files
 const shopSetupRouter = require("./routes/shop_setup_router")
+const productPostRouter = require("./routes/product_post_router")
 
 
 
@@ -31,6 +32,9 @@ app.use(express.json());
 
 // router routes, set beginning of path
 app.use("/shop_setup", shopSetupRouter);
+app.use("/product_post", productPostRouter);
+
+// app.use("/product_post", productPostRouter);
 
 
 /* ROUTES */
