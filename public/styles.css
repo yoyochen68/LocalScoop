@@ -227,6 +227,14 @@ body{
 .nav-icon{
     font-size: 100px;
 
+
+.homebox{
+    display: flex;
+    flex-direction: column;
+    position:absolute;
+    align-items: center;
+    top:20%;
+
 }
 
 
