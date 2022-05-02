@@ -155,6 +155,8 @@ function getUser(userId) {
   return users[userId];
 }
 
+
+
 function getUserByUsername(username) {
   let relevant_user_object = Object.values(users).filter(user => user.username === username)[0];
   if (relevant_user_object) {
@@ -163,6 +165,25 @@ function getUserByUsername(username) {
     return undefined;
   }
 }
+
+/**
+ * @param {string} storeName 
+ * @returns the storeName of the shop, if a shop with that name exists. if no shop with 
+ * that name exists, will return undefined.
+ */
+function getStoreIdFromStoreName(storeName){
+  let relevant_shop_object = Object.values(shopInfo).filter(shop => shop.storeName === storeName)[0];
+ 
+  if (relevant_shop_object) {
+    return relevant_shop_object.storeId;
+  } else {
+    return undefined;
+  }
+}
+
+
+// console.log( getStoreIdFromStoreName('Hayes Studio') )
+
 
 function addUser(username, password) {
   let userId = Math.max(...Object.keys(users).map(Number)) + 1;
@@ -173,6 +194,59 @@ function addUser(username, password) {
   };
   users[userId] = user;
   return user;
+}
+
+
+
+// let s = {
+//     storeId: 106,
+//     storeName: "sssssssssss",
+//     phoneNum: 235555555555555553,
+//     email: "777777777777777777777",
+//     password: "hahayes",
+//     address: "6666666666666666666666666666",
+//     product: "Handmade Goods",
+//     delivery: true,
+//     pickUp: true,
+//     kmRadius: 20,
+//     rating:4.94,
+//     shopProfilePhoto:"/uploads/1111111111111111111111111.jpeg"
+// }
+
+
+// console.log(shopInfo)
+
+/**
+ * @param {object} shopObj: takes an object and adds key/value pairs into shopInfo {} 
+ */
+function addShop(shopObj){
+  // the next storeId
+  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+
+  // insert info from argument into shopInfo 
+  shopInfo[newStoreId] = shopObj;
+ 
+}
+
+function returnNextShopId(){
+  return  Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+}
+
+
+// addShop(s)
+// addShop(s)
+// addShop(s)
+// addShop(s)
+
+// console.log(shopInfo)
+
+
+/**
+ * to check if the changes we made applied
+ * @returns shopInfo {}
+ */
+function returnShopInfo(){
+  return shopInfo
 }
 
 
@@ -188,8 +262,8 @@ function addUser(username, password) {
 // }
 
 /**
- * @param {*} n how many posts to get, defaults to 5
- * @param {*} category which sub to fetch, defaults to all categories
+ * @param {number} n how many posts to get, defaults to 5
+ * @param {string} category which sub to fetch, defaults to all categories
  */
 function getProducts(n = 5, category = undefined) {
   let allProducts = Object.values(products);
@@ -225,6 +299,7 @@ function addProduct(storeId, productName, category, description,price, deliveryF
 
 function editProduct(productId, changes = {}) {
   let product = products[productId];
+  
   if (changes.productName) {
     product.productName = changes.productName;
   }
@@ -248,15 +323,14 @@ function editProduct(productId, changes = {}) {
 
 
 /**
- * 
  * @param {number} shopId, id of the shop you want to edit. ex. 102
  * @param {object} changes, object with changes you wish to make. parameter key name must match 
  * shopInfo {} in fake-db.js exactly. 
  */
 function editShop(shopId, changes = {}){
   let product = shopInfo[shopId];
+  // console.log(typeof(shopId))
 
-  
   if (changes.phoneNum) {
     product.phoneNum = changes.phoneNum;
   }
@@ -325,6 +399,24 @@ function getShopProfilePhotoFilename(givenStoreID) {
   return shop.shopProfilePhoto;
 }
 
+/**
+ * @param {string} inputShopName 
+ * @returns {boolean} false if no shop with given name exists. Returns true if shop with given name exists
+ */
+function doesShopExist(inputShopName){
+  for(shopIndex in shopInfo){
+    let storeNameDB =  shopInfo[shopIndex].storeName
+    
+    if (inputShopName == storeNameDB){
+      return true;
+    } 
+  }
+
+  return false;
+}
+
+
+
 
 function getCategory() {
   return Array.from(new Set(Object.values(products).map(product => product.category)))
@@ -365,6 +457,11 @@ module.exports = {
   deleteProduct,
   getCategory,
   getShopProfilePhotoFilename,
-  editShop
+  editShop,
+  doesShopExist,
+  addShop,
+  getStoreIdFromStoreName,
+  returnShopInfo,
+  returnNextShopId
 };
 
