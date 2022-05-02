@@ -227,10 +227,4 @@ router.post('/delivery_type', (req, res) => {
 
 
 
-
-
-
-
-
-
 module.exports = router;
