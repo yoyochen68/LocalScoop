@@ -22,7 +22,7 @@ const server = require("./server.js")
 // router files. require the router js files
 const shopSetupRouter = require("./routes/shop_setup_router")
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
 
 /*** express ***/
 const app = express();

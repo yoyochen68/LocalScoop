@@ -1,6 +1,3 @@
-/**
- * adapted from the JSON API lab from OOP
- */
 
 const mysql = require('mysql2');
 const is_heroku = process.env.IS_HEROKU || false;
