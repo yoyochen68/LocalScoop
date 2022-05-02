@@ -52,6 +52,7 @@ app.get("/", (req, res) => {
   res.render("index")
 })
 
+
 app.get("/dbtest", (req, res) => {
   dbConnection.getStores()
     .then((stores) => {
