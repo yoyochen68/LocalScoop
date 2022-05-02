@@ -15,8 +15,11 @@ const crypto = require('crypto')
 const db = require("./fake-db")
 
 // router files. require the router js files
+
 const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
+
+
 
 
 
@@ -108,6 +111,8 @@ function checkFileType(file, cb) {
 // });
 
 // le comment
+
+
 
 module.exports = app;
 

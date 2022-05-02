@@ -208,6 +208,37 @@ router.post('/product_type', (req, res) => {
 
     console.log("back End:", sellerProductTypes)
     res.status(200).send(sellerProductTypes)
+
 })
+
+
+
+router.post('/delivery_type', (req, res) => {
+  // let storeId = req.session.storeId ? req.session.storeId : null;
+  let storeId = 101
+  let deliveryMethodList = req.body.deliveryMethodList
+  let currentShopInfo
+  if(storeId){
+    db.editStore(storeId,deliveryMethodList)
+    currentShopInfo = db.getShop(storeId)
+  }
+  console.log("checking",deliveryMethodList)
+  console.log("!backend  !!")
+
+  // res.status(200).json(JSON.stringify(deliveryMethodList))
+  res.status(200).json(JSON.stringify(currentShopInfo))
+
+})
+
+
+
+
+
+
+
+
+
+
+
 
 module.exports = router;
