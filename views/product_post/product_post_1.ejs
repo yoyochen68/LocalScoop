@@ -1,48 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="stylesheet" href="../../public/styles.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <style>
+        img {
+            max-height: 20%;
+            max-width: 40%;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-bottom: 5%;
+        }
 
+
+    </style>
 </head>
+
 <body>
+    <img src="https://www.converse.com/on/demandware.static/-/Library-Sites-SharedLibrary/default/dw6b3d7071/firstspirit/media/09_global_elements/2022_spring_6/nav_3/03_30/03.03.22_Refresh_RSH_Core_NAV.jpg"
+        alt="">
 
-<div class="centerBox m-font">
+    <div>
+        Product Photos
+    </div>
 
-    <div class="container">
+    <div>
+        <label for="itemName">Item Name</label>
+        <input type="text" name="itemName" id="itemName">
 
-<!--        <%= //typeof msg != 'undefined' ? msg : '' %>-->
+    </div>
+    <hr>
+    <div>
+        <label for="description">Description</label>
+        <textarea name="description" id="description"></textarea>
+    </div>
 
-        <img src="<%= typeof file != 'undefined' ? file : '' %>" class="responsive-img">
-
-
-
-        <form action="/upload" method="POST" enctype="multipart/form-data">
-            <div class="file-field input-field">
-                <div class="">
-          <span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12 12H8M12 8V12V8ZM12 12V16V12ZM12 12H16H12Z" stroke="black" stroke-width="2" stroke-linecap="round"/>
-              <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="black" stroke-width="2"/>
-              </svg>
-          </span>
-                    <input name="myImage" type="file" accept="image/*">
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
-            </div>
-            <button type="submit" class="btn">Upload</button>
-        </form>
-
+    <div>
+        <label for="category">Category</label>
+        <select name="category" id="category">
+            <option value="shoes">Shoes</option>
+            <option value="top">Top</option>
+            <option value="pants">Pants</option>
+            <option value="accessories">Accessories</option>
+        </select>
+    </div>
+    <div>
+        <label for="deliveryFee">Delivery Fee</label>
+        <select name="deliveryFee" id="deliveryFee">
+            <option value="10">$10.00</option>
+            <option value="20">$15.00</option>
+            <option value="30">$20.00</option>
+        </select>
     </div>
 
 
+    <div>
+        <label for="itemPrice">Item Price : $</label>
+        <input type="number" name="itemPrice" id="itemPrice">
+    </div>
 
-    <button class="yellow-bn s-bn">Finish Up</button>
-
-</div>
-
+    <button>Post Product</button>
+<footer>
+    <%- include('../elements/footer') %>
+</footer>
 </body>
+
 </html>
