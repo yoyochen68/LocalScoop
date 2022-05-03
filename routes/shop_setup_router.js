@@ -190,7 +190,6 @@ router.post('/upload', upload, (req, res) => {
   // store some info in the database
   res.render('shop_setup/shop_setup_6', {
     msg: 'Image Uploaded!',
-    message: 'Your store looks amazing!',
     file: `${multeredFilename}`
   });
 });

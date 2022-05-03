@@ -296,3 +296,15 @@ display: flex;
     margin: 30px;
 }
 
+.greenBtn{
+    background-color: #26a69a;
+    color: white;
+    border-radius: 2px;
+height: 36px;
+display: inline-block;
+font-size: 0.8rem;
+margin-bottom: 10px;
+text-align: center;
+cursor: pointer;
+padding: 0 2rem;
+}

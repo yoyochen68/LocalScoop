@@ -376,9 +376,9 @@ function editShop(shopId, changes = {}){
     product.rating = changes.rating;
   }
 
-  if (changes.shopProfilePhoto) {
-    product.shopProfilePhoto = changes.shopProfilePhoto;
-  }
+  // if (changes.shopProfilePhoto) {
+  //   product.shopProfilePhoto = changes.shopProfilePhoto;
+  // }
 }
 
 
