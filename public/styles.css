@@ -30,7 +30,6 @@ body{
     font-weight: 400;
 }
 
-
 .yellow-bn{
     border:solid 2px;
     border-radius: 15px;
@@ -67,8 +66,32 @@ body{
 
 
 
-/*Yasmina*/
+.xl-font{
+    font-size:30px ;
+}
 
+.l-font{
+    font-size:24px ;
+}
+
+.m-font{
+    font-size:20px ;
+}
+
+.s-font{
+    font-size:18px ;
+}
+
+.xs-font{
+    font-size:16px ;
+}
+
+
+
+
+/*=====SHOP SETUP======*/
+
+/*shop_setup_4*/
 .btn-white{
     border:solid 2px;
     border-radius: 5px;
@@ -106,34 +129,21 @@ body{
 
 }
 
-
-
 .form-control {
     height: 48px;
     width: 335px;
     border-color: black;
 }
 
-.xl-font{
-    font-size:30px ;
+
+.clicked{
+    background-color: #C3D99D;
+    /*background-color: red;*/
 }
 
-.l-font{
-    font-size:24px ;
-}
 
-.m-font{
-    font-size:20px ;
-}
 
-.s-font{
-    font-size:18px ;
-}
-
-.xs-font{
-    font-size:16px ;
-}
-
+/*shop_setup_5*/
 .delivery_pickUp{
  
     /* height: 10em; */
@@ -178,9 +188,8 @@ body{
 
 
 
-/*=====Components======*/
 
-/*footer*/
+/*=====FOOTER/ HEADER======*/
 
 .nav{
     position: fixed;
@@ -243,9 +252,7 @@ body{
     text-transform: uppercase;
 }
 
-
-
-/*headers*/
+/*header*/
 .seller-shop-header{
     padding-top: 10%;
     margin:2% 5% 2% 5%
@@ -254,7 +261,8 @@ body{
 
 
 
-/*---------------Seller Shop -------------------*/
+/*===== SELLER SHOP======*/
+
 .shop_body{
     padding-bottom: 100px;
 }
@@ -311,7 +319,6 @@ body{
     text-align: center;
 }
 
-/* Number text (1/3 etc) */
 
 .numbertext {
 
@@ -338,22 +345,31 @@ body{
     to {opacity: 1}
 }
 
+/*Description*/
 
 
+.store_info{
+    line-height: 1em;
+    padding: 0 20px;
 
-/*GRID*/
+}
+
+
+/*Grid*/
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     grid-gap: 4px;
+    padding: 0 20px;
+
 }
 
 .item {
     overflow: hidden;
     position: relative;
-    background-color: red;
+    background-color: white;
     width: 100%;
-    height: 9rem; /* vary this to what you need */
+    height: 8rem; /* vary this to what you need */
     border-radius: 15px;
 }
 
@@ -368,13 +384,9 @@ img {
 
 .carousel_image{
     width:100%;
-    height:250px
+    height:250px;
 }
 
-
-.store_info{
-    line-height: 1em;
-}
 
 
 
