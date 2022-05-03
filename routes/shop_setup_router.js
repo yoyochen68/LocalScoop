@@ -41,9 +41,9 @@ router.get("/shop_setup_2", (req, res) => {
 // POST /shop_setUp/shop_setUp_2
 router.post("/shop_setup_2", (req, res) => {
   // put storeName in cookie session
-  req.session.storeName = req.body.storeName;  
-  
+
   let nextShopId = db.returnNextShopId()
+  req.session.storeName = req.body.storeName;
 
   // create obj to pass into addShop(), need to add storeId and everything else in req.body
   let addShopObj = {
@@ -196,11 +196,12 @@ router.post('/upload', upload, (req, res) => {
 // used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
-    let sellerProductTypes = req.body.productTypeList
-    // I will assign the "sellerProductTypes" value to the cookies.
+  let sellerProductTypes = req.body.productTypeList
+  let currentStoreId = db.getStoreIdFromStoreName(req.session.storeName)
+  db.editShop(currentStoreId, { product:sellerProductTypes} )
 
-    // console.log("back End:", sellerProductTypes)
-    res.status(200).send(sellerProductTypes)
+  // console.log("back End:", sellerProductTypes)
+  res.status(200).send(sellerProductTypes)
 
 })
 
