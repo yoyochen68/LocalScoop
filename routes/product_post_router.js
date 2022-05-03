@@ -32,6 +32,67 @@ router.get("/product_post_2", (req, res) => {
 
 
 
+/************      handling the store image uploading          **********/
+
+
+// Set The Storage Engine
+const storage = multer.diskStorage({
+    destination: './public/uploads/',
+    filename: function (req, file, cb) {
+      const bytes = crypto.randomBytes(16).toString('hex')
+      cb(null, bytes + path.extname(file.originalname));
+    }
+  });
+  
+  // Init Upload
+  const upload = multer({
+    storage: storage,
+    limits: { fileSize: 10000000 },
+    fileFilter: function (req, file, cb) {
+      checkFileType(file, cb);
+    }
+  }).single('myImage');
+  // can do .array() if you want to upload multiple images
+  
+  // Check File Type
+  function checkFileType(file, cb) {
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
+  
+    if (mimetype && extname) {
+      return cb(null, true);
+    } else {
+      cb('Error: Images Only!');
+    }
+  }
+  
+  
+  // User uploads photo on shop_setup/shop_setup_6
+  router.post('/upload', upload, (req, res) => {
+    if (req.file == undefined) {
+      res.render('product_post/product_post_1', {
+        msg: 'Error: No File Selected!'
+      });
+      return
+    } 
+  
+    // let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
+    let multeredFilename = '/uploads/' + req.file.filename
+  
+    // db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
+  
+    // store some info in the database
+    res.render('product_post/product_post_1', {
+      msg: 'Image Uploaded!',
+      file: `${multeredFilename}`
+    });
+  });
+
+  /************      handling the store image uploading          **********/
 
 
 

@@ -157,24 +157,15 @@ body{
   
 } 
 
-/* .pickUp{
-    border:solid black 1px;
-    width:160px;
-    height: 189px;
-    background-color: white;
-    float: right;
-}  */
 
 #deliveryDistance{
     background-color: white;
     border-radius: 5px;
     width: 200px;
     height: 40px;
-
     margin: 10px;
 
 }
-
 
 
 
@@ -224,8 +215,7 @@ body{
     color: #009578;
 }
 
-.nav-icon{
-    font-size: 100px;
+
 
 
 .homebox{
@@ -239,8 +229,70 @@ body{
 
 
 .nav-text{
-    font-size: 30px;
+    font-size: 15px;
     text-transform: uppercase;
 }
 
+
+
+/* for centering item ,should put it in the parent class list */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.productPostImg{
+    margin: 10% auto 5% auto;
+}
+
+.productPost{
+    display: flex;
+margin: 2% 5% 2% 5%;
+justify-content: space-between;
+}
+
+.btn{
+    text-decoration: none;
+    background-color: #26a69a;
+color: white;
+border:none;
+border-radius: 2px;
+height: 36px;
+display: inline-block;
+font-size: 0.8rem;
+margin-bottom: 10px;
+}
+
+.productSummary{
+    position: absolute;
+    top:80px
+}
+
+.productList{
+    position: absolute;
+    top:360px;
+    margin:10%;
+    font-size:20px
+}
+
+.imgAndProductInfo{
+    position: absolute;
+    top:430px;
+    margin:10%;
+}
+
+.imgAndProductInfo img{
+    max-width: 200px;
+    max-height: 200px;
+
+}
+
+.imgAndProductInfo {
+display: flex;
+}
+
+.productInfo{
+    margin: 30px;
+}
 

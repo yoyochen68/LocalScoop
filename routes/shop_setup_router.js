@@ -185,7 +185,6 @@ router.post('/upload', upload, (req, res) => {
   let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = '/uploads/' + req.file.filename
 
-
   db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
 
   // store some info in the database
