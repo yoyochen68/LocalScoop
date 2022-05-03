@@ -11,7 +11,7 @@ const router = express.Router();
 const app = express();
 app.use(express.json())
 
-
+// GET orders/orders_1
 router.get("/orders_1", (req, res) => {
     res.render("./orders/orders_1", {
 

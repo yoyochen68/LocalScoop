@@ -11,7 +11,6 @@ const router = express.Router();
 
 
 
-
 /* Global Variables */
 
 // GET /product_post/product_post_1
@@ -29,8 +28,6 @@ router.get("/product_post_2", (req, res) => {
 
     })
 })
-
-
 
 
 
