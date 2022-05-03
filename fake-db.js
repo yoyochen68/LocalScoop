@@ -33,7 +33,7 @@ const shopInfo = {
     phoneNum: 23602294563,
     email: "HayesStudio@gmail.com",
     password: "hahayes",
-    address: "2310 Main street,Vancouver BC,Canada",
+    address: "2310 Main street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickup: false,
@@ -48,7 +48,7 @@ const shopInfo = {
     phoneNum: 6042304194,
     email: "lesbasics@gmail.com",
     password: "lesbasics",
-    address: "4521 fraser street,Vancouver BC,Canada",
+    address: "4521 fraser street,Vancouver, BC,Canada",
     product: "fashion",
     delivery: true,
     pickUp: true,
@@ -63,7 +63,7 @@ const shopInfo = {
     phoneNum: 6047757246,
     email: "sagejewelss@gmail.com",
     password: "sagejewels",
-    address: "2410 pender street,Vancouver BC,Canada",
+    address: "2410 pender street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickUp: true,
@@ -182,8 +182,8 @@ function addUser(username, password) {
  */
 function addShop(shopObj){
   // the next storeId
-  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
-
+  // let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+let newStoreId = shopObj.storeId
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
  
@@ -207,7 +207,7 @@ function getShop(storeId) {
   return shopInfo[storeId];
 }
 
-function editStore(id,updatedObj){
+function editStore(id, updatedObj){
   let shop = shopInfo[id]
   shop =  Object.assign(shop, updatedObj);
   return shop
@@ -231,6 +231,7 @@ function getProducts(n = 5, category = undefined) {
 
 function getProduct(productId) {
   return products(productId);
+//  ??????
 }
 
 
@@ -346,7 +347,7 @@ function getShopProfilePhotoFilename(givenStoreID) {
   let shop = shopInfo[givenStoreID];
 
   // no shop exists with the given ID
-  if(shop == undefined){
+  if(shop === undefined){
     return;
   }
 
@@ -391,6 +392,14 @@ function getWishList(){
 }
 
 
+function getProductsByStoreId(storeId){
+  let productList = Object.values(products)
+  productList = productList.filter(product => product.storeId === storeId);
+
+  return productList
+
+}
+
 
 module.exports = {
   debug,
@@ -404,7 +413,9 @@ module.exports = {
   deleteProduct,
   getCategory,
   getShopProfilePhotoFilename,
+  getStoreIdFromStoreName,
   editShop,
+  getPostsByStoreId: getProductsByStoreId,
   doesShopExist,
   addShop,
   getStoreIdFromStoreName,
