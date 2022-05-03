@@ -62,23 +62,22 @@
 
   <!--  DESCRIPTION-->
   <div class="store_info">
-    <p>location</p>
-    <h2>Store name</h2>
+    <p><%= storeInfo.location %></p>
+    <h2><%= storeInfo.name %></h2>
     <h4>
       <span class="material-icons">star_outline</span>
-      Reviews
-    </h4>
+      <%= storeInfo.rating %>    </h4>
 
     <h3>About us</h3>
-    <p>Eat owner's food cats are cute purr as loud as possible, be the most annoying cat that you can</p>
+    <p> <%= storeInfo.description %></p>
     <h4>Number of followers</h4>
-    <h4>location</h4>
     <button class="s-bn" >Edit Shop </button>
     <button class="s-bn" >Share Shop </button>
 
+    <hr>
+
   </div>
 
-  <hr>
 
 
   <!--THE GRID PART -->
