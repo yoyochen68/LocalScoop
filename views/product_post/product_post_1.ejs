@@ -5,45 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <link rel="stylesheet" href="/styles.css">
+    <title>product posting 1</title>
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
-    <link rel="stylesheet" href="../../styles.css">
-    <style>
-        /* img {
-            max-height: 20%;
-            max-width: 20%;
-            margin-left: 10%;
-            margin-right: 10%;
-            margin-bottom: 5%;
-        } */
-
-
-        hr {
-            margin: auto 5% auto 5%;
-        }
-
-        .inputborder {
-            border: none;
-            background-color: #F7F5F3;
-            border-color: F7F5F3;
-            width: 200px;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .custom-file-upload {
-            display: inline-block;
-            cursor: pointer;
-        }
-        .file-path-wrapper{
-            display: none;
-        }
-
-
- 
-    </style>
+    <%- include('../elements/footerCss') %>
 </head>
 
 <body>
@@ -53,80 +18,66 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
 
-
     <div class="container centerBox m-font">
-        <div class="productImg">
-            <img src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>" class="responsive-img"
-                style="max-width: 60%; margin-top: 10px;">
-        </div>
+
+        <img src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>"
+            class="responsive-img" style="max-width: 60%; margin-top: 10px; border-radius: 10%;">
+
         <form action="/product_post/upload" method="POST" enctype="multipart/form-data" id="imgForm">
             <div class="file-field input-field">
-                <div>
-                    <label for="file-upload" class="custom-file-upload">
-    <div class="greenBtn">Upload Image</div>
-                    </label>
-                    <input id="file-upload" type="file" accept="image/*" name="myImage" onchange="uploadImg()"/>
-
-                </div>
-                <div class="file-path-wrapper">
-                    <input class="file-path validate" type="text">
-                </div>
+                <label for="file-upload" class="greenBtn">
+                    Upload Image
+                </label>
+                <input id="file-upload" type="file" accept="image/*" name="myImage" onchange="uploadImg()" />
             </div>
             <!-- <button type="submit" class="btn">UPLOAD</button> -->
         </form>
 
     </div>
+    <hr>
+    <form action="/product_post/product_post_2" method="POST">
+        <input name="imgUrl" class="displayNone" value="<%= typeof file != 'undefined' ? file : "" %>">
+        <div class="productPost">
+            <label for="productName">Item Name :</label>
+            <input type="text" name="itemName" id="productName" placeholder="Nike Sage Lows" class="inputborder" required>
 
+        </div>
+        <hr>
+        <div class="productPost">
+            <label for="description">Description :</label>
+            <textarea name="description" id="description" placeholder="Size 8 Womens US shoes"
+                class="inputborder"></textarea>
+        </div>
+        <hr>
+        <div class="productPost">
+            <label for="category">Category :</label>
+            <select name="category" id="category" class="inputborder" required>
+                <option value="shoes">Shoes</option>
+                <option value="top">Top</option>
+                <option value="pants">Pants</option>
+                <option value="accessories">Accessories</option>
+            </select>
+        </div>
+        <hr>
+        <div class="productPost">
+            <label for="deliveryFee">Delivery Fee :</label>
+            <select name="deliveryFee" id="deliveryFee" class="inputborder">
+                <option value="10">$10.00</option>
+                <option value="20">$15.00</option>
+                <option value="30">$20.00</option>
+            </select>
+        </div>
 
-    <!-- <div class="center productPostImg">
-        <img src="https://www.converse.com/on/demandware.static/-/Library-Sites-SharedLibrary/default/dw6b3d7071/firstspirit/media/09_global_elements/2022_spring_6/nav_3/03_30/03.03.22_Refresh_RSH_Core_NAV.jpg"
-            alt="">
-    </div> -->
-    <!-- <div class="productPost">
-        Product Photos
-    </div> -->
-
-    <hr>
-    <div class="productPost">
-        <label for="itemName">Item Name :</label>
-        <input type="text" name="itemName" id="itemName" placeholder="Nike Sage Lows" class="inputborder">
-
-    </div>
-    <hr>
-    <div class="productPost">
-        <label for="description">Description :</label>
-        <textarea name="description" id="description" placeholder="Size 8 Womens US shoes"
-            class="inputborder"></textarea>
-    </div>
-    <hr>
-    <div class="productPost">
-        <label for="category">Category :</label>
-        <select name="category" id="category" class="inputborder">
-            <option value="shoes">Shoes</option>
-            <option value="top">Top</option>
-            <option value="pants">Pants</option>
-            <option value="accessories">Accessories</option>
-        </select>
-    </div>
-    <hr>
-    <div class="productPost">
-        <label for="deliveryFee">Delivery Fee :</label>
-        <select name="deliveryFee" id="deliveryFee" class="inputborder">
-            <option value="10">$10.00</option>
-            <option value="20">$15.00</option>
-            <option value="30">$20.00</option>
-        </select>
-    </div>
-
-    <hr>
-    <div class="productPost">
-        <label for="itemPrice">Item Price : </label>
-        <input type="number" name="itemPrice" id="itemPrice" placeholder="$125" class="inputborder">
-    </div>
-    <hr>
-    <div class="center">
-        <button class="yellow-bn m-bn ">Post Product</button>
-    </div>
+        <hr>
+        <div class="productPost">
+            <label for="productPrice">Item Price : </label>
+            <input type="number" name="productPrice" id="productPrice" placeholder="$125" class="inputborder" required>
+        </div>
+        <hr>
+        <div class="center">
+            <button class="yellow-bn m-bn ">Post Product</button>
+        </div>
+    </form>
     <footer>
         <%- include('../elements/footer') %>
     </footer>
@@ -137,12 +88,12 @@
 
 <script>
 
-   function uploadImg(){
-       let fileUpload = document.getElementById("file-upload").value
-       if(fileUpload){
-        document.getElementById("imgForm").submit();
-       }
-   }
+    function uploadImg() {
+        let fileUpload = document.getElementById("file-upload").value
+        if (fileUpload) {
+            document.getElementById("imgForm").submit();
+        }
+    }
 </script>
 
 </html>
