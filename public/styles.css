@@ -246,7 +246,6 @@ body {
 .nav-icon {
     font-size: 30px;
     margin: 0 10px;
-    color: #383b3c;
 }
 
 .nav-icon.seller-shop{
@@ -255,6 +254,9 @@ body {
     color: #383b3c;
 }
 
+.back-icon{
+    font-size: 35px;
+}
 
 
 .homebox {
