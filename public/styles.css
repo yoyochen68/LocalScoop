@@ -1,74 +1,96 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Fraunces:ital,wght@1,200&family=Playfair+Display:ital,wght@1,500&family=Poppins:wght@100;200;300;400;500;600&display=swap');
 
 
-body{
-    background-color: #F7F5F3;
+body {
+    background-color: #F7F7F3;
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
 }
 
-.fontFamily{
+.fontFamily {
     font-family: 'Poppins', sans-serif;
     font-weight: 300;
 }
 
-.shop-setup-header{
-    padding-top: 10%;
-    margin:4% 5% 2% 5%
-}
 
-.centerBox{
+.centerBox {
     text-align: center;
-
+    
 }
+
+
+
 /* .container{
     text-align: center;
 } */
 
-.shopReady{
+/* for centering item ,should put it in the parent class list */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.shop-setup-header {
+    padding-top: 10%;
+    margin: 4% 5% 2% 5%
+}
+
+.shopReady {
     font-weight: 400;
 }
 
-.yellow-bn{
-    border:solid 2px;
+.greenBtn {
+    background-color: #26a69a;
+    color: white;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.yellow-bn {
+    border: solid 2px;
     border-radius: 15px;
-    background-color: #E3974F;  
-    color:white ;
+    background-color: #E3974F;
+    color: white;
     font-size: 18px;
     width: 355px;
-    height:55px;
+    height: 55px;
     margin-top: 40px;
-
 }
 
-.l-bn{
+.l-bn {
     width: 286px;
-    height:52px ;
+    height: 52px;
 }
 
-.m-bn{
+.m-bn {
 
     width: 250px;
-    height:48px ;
+    height: 48px;
 }
 
-.s-bn{
+.s-bn {
     width: 184px;
-    height:45px ;
+    height: 45px;
 
 }
-.xs-bn{
+
+.xs-bn {
     width: 150px;
-    height:38px ;
+    height: 38px;
     border-radius: 10px;
 }
-
-
 
 .xl-font{
     font-size:30px ;
 }
+
 
 .l-font{
     font-size:24px ;
@@ -99,31 +121,31 @@ body{
     /*color:white ;*/
     font-size: 18px;
     width: 355px;
-    height:55px;
+    height: 55px;
     margin-top: 15px;
 }
 
-.form-box{
+.form-box {
 
     margin: 15% 0%;
-    font-size:20px;
+    font-size: 20px;
     padding: 3% 5%;
 }
 
 
-.address-box{
+.address-box {
 
     margin: 40% 0%;
-    font-size:20px;
+    font-size: 20px;
     padding: 3% 5%;
     text-align: center;
 
 }
 
-.product-box{
+.product-box {
 
     margin: 30% 0;
-    font-size:20px;
+    font-size: 20px;
     padding: 3% 6%;
     text-align: center;
 
@@ -142,86 +164,69 @@ body{
 }
 
 
-
 /*shop_setup_5*/
 .delivery_pickUp{
- 
     /* height: 10em; */
     display: flex;
     align-items: center;
     justify-content: center;
-    gap:10px;
+    gap: 10px;
     /* background-color: white; */
     margin-top: 40px;
     margin-bottom: 40px;
-} 
+}
 
 
- .deliveryBtn{
-    border:solid black 1px;
-    width:160px;
+.deliveryBtn {
+    border: solid black 1px;
+    width: 160px;
     height: 189px;
     background-color: white;
     font-size: 20px;
     font-weight: 300;
-  
-} 
 
-/* .pickUp{
-    border:solid black 1px;
-    width:160px;
-    height: 189px;
-    background-color: white;
-    float: right;
-}  */
+}
 
-#deliveryDistance{
+
+#deliveryDistance {
     background-color: white;
     border-radius: 5px;
     width: 200px;
     height: 40px;
-
     margin: 10px;
-
 }
-
-
-
 
 
 /*=====FOOTER/ HEADER======*/
 
-.nav{
+.nav {
     position: fixed;
-    bottom:0;
-    width:100%;
+    bottom: 0;
+    width: 100%;
     /*height: 55px;*/
     height: 10%;
-
-    box-shadow:2px -10px 10px -4px rgba(0,0,0,0.30);
+    box-shadow: 2px -10px 10px -4px rgba(0, 0, 0, 0.30);
     background-color: #F7F7F3;
-    overflow-x:auto;
+    overflow-x: auto;
     display: flex;
-
 }
 
 
-.nav-link{
+.nav-link {
     display: flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     flex-grow: 1;
     min-width: 50px;
     overflow: hidden;
-    white-space:nowrap;
+    white-space: nowrap;
     font-size: 14px;
     color: #444;
     text-decoration: none;
-    -webkit-tap-highlight-color:transparent;
-    transition:background-color 0.1s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.1s ease-in-out;
     text-decoration: none;
-
 }
 
 
@@ -229,25 +234,27 @@ body{
     text-decoration: none;
 }
 
-.link-active, .nav-link:active, nav a:active{
+.link-active, .nav-link:active, nav a:active {
     color: #009578;
 }
+
 
 .nav-icon {
     font-size: 100px;
 }
 
-.homebox{
+
+.homebox {
     display: flex;
     flex-direction: column;
-    position:absolute;
+    position: absolute;
     align-items: center;
-    top:20%;
+    top: 20%;
 
 }
 
-
 .nav-text{
+
     font-size: 15px;
     text-transform: uppercase;
 }
@@ -321,8 +328,6 @@ body{
 
 
 .numbertext {
-
-
     /*color: red;*/
     font-size: 12px;
     padding: 8px 12px;
@@ -389,4 +394,76 @@ img {
 
 
 
+/* below css is for product posting */
+.productPostImg {
+    margin: 10% auto 5% auto;
+}
 
+.productPost {
+    display: flex;
+    margin: 3% 5% 3% 5%;
+    justify-content: space-between;
+}
+
+
+.imgAndProductInfo img {
+    max-width: 200px;
+    max-height: 200px;
+
+}
+
+.imgAndProductInfo {
+    display: flex;
+}
+
+
+#file-upload{
+    display: none;
+}
+
+hr {
+    margin: auto 5% auto 5%;
+    border-color: rgba(119, 117, 117, 0.803);
+}
+
+.inputborder {
+    border: none;
+    background-color: #F7F7F3;
+    border-color: #F7F7F3;
+    width: 180px;
+    text-align: right;
+    
+}
+
+#description{
+    height: 50px;
+}
+
+/* Product_posting page 2 */
+.productSummary {
+    position: absolute;
+    top: 80px
+}
+
+.productList {
+    position: absolute;
+    top: 330px;
+    margin: 10%;
+    font-size: 20px
+}
+
+.productInfo {
+    margin-left: 5%;
+    margin-top: 20px;
+}
+
+.imgAndProductInfo {
+    position: absolute;
+    top: 400px;
+    margin: 5%;
+}
+
+.displayNone{
+    display: none;
+}
+/* above css is for product posting */
