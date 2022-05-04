@@ -5,44 +5,28 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <title>Title</title>
+
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
   <title>Sellers shop</title>
 
-  <style>
-    .nav-wrapper{
-      display: grid;
-      grid-template-columns: 1fr 1fr ;
-    }
-
-    .nav-wrapper--left{
-      display: flex;
-      justify-content: flex-start;
-    }
-
-    .nav-wrapper--right{
-      display: flex;
-      justify-content: flex-end;
-    }
-
-  </style>
-
 </head>
 <body>
-<main class="shop_body">
+<main class="seller-shop-body">
 
   <!--  HEADER-->
   <header class="seller-shop-header">
     <!--Back button-->
-    <nav class="nav-wrapper">
-      <div class="nav-wrapper--left">
-        <a><span class="material-icons">star_outline</span></a>
+    <nav class="nav-wrapper seller-shop">
+      <div class="nav-wrapper--left seller-shop">
+        <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
       </div>
-      <div class="nav-wrapper--right">
-        <a><span class="material-icons">star_outline</span></a>
-        <a><span class="material-icons">star_outline</span></a>
-        <a><span class="material-icons">star_outline</span></a>
+      <div class="nav-wrapper--right seller-shop">
+
+        <a href="#"><span class="material-icons nav-icon seller-shop">mode_comment</span></a>
+        <a href="#"><span class="material-icons nav-icon seller-shop">share</span></a>
+        <a href="#"><span class="material-icons nav-icon seller-shop">settings</span></a>
       </div>
 
 
@@ -87,9 +71,10 @@
     <h3>About us</h3>
     <p> <%= storeInfo.description %></p>
     <h4><%= storeInfo.followers %> Followers</h4>
-    <button class="s-bn" >Edit Shop </button>
-    <button class="s-bn" >Share Shop </button>
-
+    <div class=" btn-container center">
+      <button class="yellow-bn xs-bn" >Edit Shop </button>
+      <button class="yellow-bn xs-bn" >Share Shop </button>
+    </div>
     <hr>
 
   </div>
@@ -115,7 +100,7 @@
   </div>
 
   <footer>
-    <%- include('../elements/footer.ejs') %>
+    <%- include('../elements/seller_footer.ejs') %>
   </footer>
 
 </main>

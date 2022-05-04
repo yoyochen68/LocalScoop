@@ -20,7 +20,7 @@ router.get("/seller_shop/:id", (req, res) => {
 
     //Address
     let shopAddressFields = shop.address.split(',')
-    let location = `${shopAddressFields[1]}, ${shopAddressFields[2]} /city+province`
+    let location = `${shopAddressFields[1]}, ${shopAddressFields[2]} `//city+province
 
     let followersNumber = !shop.followers?  0 : shop.followers
 
