@@ -15,7 +15,6 @@ body {
 
 .centerBox {
     text-align: center;
-    
 }
 
 
@@ -31,14 +30,6 @@ body {
     align-items: center;
 }
 
-.shop-setup-header {
-    padding-top: 10%;
-    margin: 4% 5% 2% 5%
-}
-
-.shopReady {
-    font-weight: 400;
-}
 
 .greenBtn {
     background-color: #26a69a;
@@ -113,6 +104,11 @@ body {
 
 /*=====SHOP SETUP======*/
 
+.shop-setup-header {
+    padding-top: 10%;
+    margin: 4% 5% 2% 5%
+}
+
 /*shop_setup_4*/
 .btn-white{
     border:solid 2px;
@@ -158,12 +154,6 @@ body {
 }
 
 
-.clicked{
-    background-color: #C3D99D;
-    /*background-color: red;*/
-}
-
-
 /*shop_setup_5*/
 .delivery_pickUp{
     /* height: 10em; */
@@ -194,6 +184,18 @@ body {
     width: 200px;
     height: 40px;
     margin: 10px;
+}
+
+
+/*shop_setup_7*/
+.shopReady {
+    font-weight: 400;
+}
+
+/* the background will be changed after click the button */
+.clicked{
+    background-color: #C3D99D;
+    /*background-color: red;*/
 }
 
 
@@ -356,7 +358,6 @@ body {
 .store_info{
     line-height: 1em;
     padding: 0 20px;
-
 }
 
 
@@ -378,13 +379,15 @@ body {
     border-radius: 15px;
 }
 
+
 .seller_grid_image {
+
     display: block;
     max-width: 100%;
     object-fit: cover;
     width: 100%;
     height: 100%;
-}
+} */
 
 
 .carousel_image{
@@ -394,7 +397,9 @@ body {
 
 
 
-/* below css is for product posting */
+/* =======below css is for product posting======= */
+
+/* Product_posting page 2 */
 .productPostImg {
     margin: 10% auto 5% auto;
 }
@@ -463,7 +468,11 @@ hr {
     margin: 5%;
 }
 
-.displayNone{
+.displayNone, #radius{
     display: none;
 }
-/* above css is for product posting */
+
+/* ====== above css is for product posting ========= */
+
+
+
