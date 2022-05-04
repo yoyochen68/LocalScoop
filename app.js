@@ -3,10 +3,12 @@ const express = require("express");
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser");
 const cookieSession = require("cookie-session");
+const mysql = require("mysql2");
+const dbConnection = require("./database/databaseConnection.js")
+const ejs = require('ejs');
 
 //==image ===
 const multer = require('multer');
-const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
 
@@ -14,23 +16,25 @@ const crypto = require('crypto')
 // fake-database
 const db = require("./fake-db")
 
-// router files. require the router js files
+// other files 
+const server = require("./server.js")
 
+// router files. require the router js files
 const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
+const ordersRouter = require("./routes/orders_router")
+const sellerShopRouter = require("./routes/seller_shop_router")
 
 
+const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
 
-
-
-// use express
+/*** express ***/
 const app = express();
 app.use(express.urlencoded({extended: false}))
-// app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.set('view engine', 'ejs'); // set templating engine to ejs
 app.use(express.static("public")); // allow front end to use the /public folder
-app.use(express.json());
+app.use(express.json()); 
+app.set('view engine', 'ejs'); // set templating engine to ejs
 
 
 // cookie sessions
@@ -41,9 +45,11 @@ app.use(cookieSession({
 }))
 
 
-// router routes, set beginning of path
+/**   router routes, set beginning of path   **/
 app.use("/shop_setup", shopSetupRouter);
 app.use("/product_post", productPostRouter);
+app.use("/orders", ordersRouter);
+app.use("/seller_shop", sellerShopRouter);
 
 // app.use("/product_post", productPostRouter);
 
@@ -56,6 +62,14 @@ app.get("/", (req, res) => {
 })
 
 
+app.get("/dbtest", (req, res) => {
+  dbConnection.getStores()
+    .then((stores) => {
+      // console.log(stores)
+      res.status(200).send(stores[0])
+    })
+  
+})
 
 
 //====image upload===

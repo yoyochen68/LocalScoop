@@ -1,5 +1,5 @@
-// require 
-const express = require('express');
+/* libraries */
+const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
 const path = require('path');
@@ -8,16 +8,13 @@ const db = require("../fake-db");
 const router = express.Router();
 
 
-// const axios = require('axios');
-const { append, redirect } = require("express/lib/response");
 
+const { append } = require("express/lib/response");
+
+
+/* express */
 const app = express();
 app.use(express.json())
-
-
-
-/* Global Variables */
-
 
 
 // GET /shop_setup/a
@@ -61,8 +58,6 @@ router.post("/shop_setup_2", (req, res) => {
   // adds the use input information into the fake-db
   db.addShop(addShopObj)
 
-  console.log(db.returnShopInfo())
-
   // write store name into database
   res.redirect("/shop_setup/shop_setup_3")
 })
@@ -78,11 +73,10 @@ router.get("/shop_setup_3", (req, res) => {
 // POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", (req, res) => {
   // console.log(req.body.address)
-  console.log(req.session.storeName) // works
-  console.log(db.returnShopInfo())
+  // console.log(req.session.storeName) // works
+  // console.log(db.returnShopInfo())
 
   let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
-  console.log(shopIdOfSession)
 
   // console.log(db.returnShopInfo())
   db.editShop(shopIdOfSession, req.body)
@@ -202,9 +196,12 @@ router.post('/upload', upload, (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', (req, res) => {
   let sellerProductTypes = req.body.productTypeList
-  // I will assign the "sellerProductTypes" value to the cookies.
 
-  console.log("back End:", sellerProductTypes)
+  let currentStoreId = db.getStoreIdFromStoreName(req.session.storeName)
+  db.editShop(currentStoreId, { product:sellerProductTypes} )
+
+  // console.log("back End:", sellerProductTypes)
+
   res.status(200).send(sellerProductTypes)
 
 })
@@ -227,12 +224,6 @@ router.post('/delivery_type', (req, res) => {
   res.status(200).json(JSON.stringify(currentShopInfo))
 
 })
-
-
-
-
-
-
 
 
 

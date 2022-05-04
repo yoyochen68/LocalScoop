@@ -1,5 +1,4 @@
 
-
 const users = {
   1: {
     userId: 1,
@@ -34,7 +33,7 @@ const shopInfo = {
     phoneNum: 23602294563,
     email: "HayesStudio@gmail.com",
     password: "hahayes",
-    address: "2310 Main street,Vancouver BC,Canada",
+    address: "2310 Main street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickup: false,
@@ -49,7 +48,7 @@ const shopInfo = {
     phoneNum: 6042304194,
     email: "lesbasics@gmail.com",
     password: "lesbasics",
-    address: "4521 fraser street,Vancouver BC,Canada",
+    address: "4521 fraser street,Vancouver, BC,Canada",
     product: "fashion",
     delivery: true,
     pickUp: true,
@@ -64,7 +63,7 @@ const shopInfo = {
     phoneNum: 6047757246,
     email: "sagejewelss@gmail.com",
     password: "sagejewels",
-    address: "2410 pender street,Vancouver BC,Canada",
+    address: "2410 pender street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickUp: true,
@@ -124,23 +123,6 @@ const orders = {
 }
 
 
-// const comments = {
-//   9001: {
-//     id: 9001,
-//     post_id: 102,
-//     creator: 1,
-//     description: "Actually I learned a lot :pepega:",
-//     timestamp: 1642691742010,
-//   }
-// }
-
-// const votes = [
-//   { user_id: 2, post_id: 101, value: +1 },
-//   { user_id: 3, post_id: 101, value: +1 },
-//   { user_id: 4, post_id: 101, value: +1 },
-//   { user_id: 3, post_id: 102, value: -1 },
-// ]
-
 function debug() {
   console.log("==== DB DEBUGING ====")
   console.log("users", users)
@@ -181,8 +163,6 @@ function getStoreIdFromStoreName(storeName){
 }
 
 
-// console.log( getStoreIdFromStoreName('Hayes Studio') )
-
 
 function addUser(username, password) {
   let userId = Math.max(...Object.keys(users).map(Number)) + 1;
@@ -196,32 +176,13 @@ function addUser(username, password) {
 }
 
 
-
-// let s = {
-//     storeId: 106,
-//     storeName: "sssssssssss",
-//     phoneNum: 235555555555555553,
-//     email: "777777777777777777777",
-//     password: "hahayes",
-//     address: "6666666666666666666666666666",
-//     product: "Handmade Goods",
-//     delivery: true,
-//     pickUp: true,
-//     kmRadius: 20,
-//     rating:4.94,
-//     shopProfilePhoto:"/uploads/1111111111111111111111111.jpeg"
-// }
-
-
-// console.log(shopInfo)
-
 /**
  * @param {object} shopObj: takes an object and adds key/value pairs into shopInfo {} 
  */
 function addShop(shopObj){
   // the next storeId
-  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
-
+  // let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+let newStoreId = shopObj.storeId
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
  
@@ -231,13 +192,6 @@ function returnNextShopId(){
   return  Math.max(...Object.keys(shopInfo).map(Number)) + 1;
 }
 
-
-// addShop(s)
-// addShop(s)
-// addShop(s)
-// addShop(s)
-
-// console.log(shopInfo)
 
 
 /**
@@ -252,22 +206,13 @@ function getShop(storeId) {
   return shopInfo[storeId];
 }
 
-function editStore(id,updatedObj){
+function editStore(id, updatedObj){
   let shop = shopInfo[id]
   shop =  Object.assign(shop, updatedObj);
   return shop
 }
 
 
-// function decoratePost(post) {
-//   post = {
-//     ...post,
-//     creator: users[post.creator],
-//     votes: getVotesForPost(post.id),
-//     comments: Object.values(comments).filter(comment => comment.post_id === post.id).map(comment => ({ ...comment, creator: users[comment.creator] })),
-//   }
-//   return post;
-// }
 
 /**
  * @param {number} n how many posts to get, defaults to 5
@@ -285,7 +230,9 @@ function getProducts(n = 5, category = undefined) {
 
 function getProduct(productId) {
   return products(productId);
+//  ??????
 }
+
 
 function addProduct(storeId, productName, category, description,productPrice, deliveryFee,imgUrl) {
   let productId = Math.max(...Object.keys(products).map(Number)) + 1;
@@ -387,7 +334,6 @@ function deleteProduct(productId) {
 
 
 /**
- * 
  * @param {number} storeID 
  * @returns {string} profilePhotoFileName. undefined if no shop with given storeID exists
  */
@@ -400,12 +346,13 @@ function getShopProfilePhotoFilename(givenStoreID) {
   let shop = shopInfo[givenStoreID];
 
   // no shop exists with the given ID
-  if(shop == undefined){
+  if(shop === undefined){
     return;
   }
 
   return shop.shopProfilePhoto;
 }
+
 
 /**
  * @param {string} inputShopName 
@@ -422,7 +369,6 @@ function doesShopExist(inputShopName){
 
   return false;
 }
-
 
 
 
@@ -445,6 +391,14 @@ function getWishList(){
 }
 
 
+function getProductsByStoreId(storeId){
+  let productList = Object.values(products)
+  productList = productList.filter(product => product.storeId === storeId);
+
+  return productList
+
+}
+
 
 module.exports = {
   debug,
@@ -458,7 +412,9 @@ module.exports = {
   deleteProduct,
   getCategory,
   getShopProfilePhotoFilename,
+  getStoreIdFromStoreName,
   editShop,
+  getPostsByStoreId: getProductsByStoreId,
   doesShopExist,
   addShop,
   getStoreIdFromStoreName,
@@ -469,3 +425,34 @@ module.exports = {
 
 };
 
+
+
+
+// function decoratePost(post) {
+//   post = {
+//     ...post,
+//     creator: users[post.creator],
+//     votes: getVotesForPost(post.id),
+//     comments: Object.values(comments).filter(comment => comment.post_id === post.id).map(comment => ({ ...comment, creator: users[comment.creator] })),
+//   }
+//   return post;
+// }
+
+
+
+// const comments = {
+//   9001: {
+//     id: 9001,
+//     post_id: 102,
+//     creator: 1,
+//     description: "Actually I learned a lot :pepega:",
+//     timestamp: 1642691742010,
+//   }
+// }
+
+// const votes = [
+//   { user_id: 2, post_id: 101, value: +1 },
+//   { user_id: 3, post_id: 101, value: +1 },
+//   { user_id: 4, post_id: 101, value: +1 },
+//   { user_id: 3, post_id: 102, value: -1 },
+// ]

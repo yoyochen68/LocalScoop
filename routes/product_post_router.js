@@ -11,7 +11,6 @@ const router = express.Router();
 
 
 
-
 /* Global Variables */
 
 // GET /product_post/product_post_1
@@ -109,8 +108,6 @@ console.log(multeredFilename)
 });
 
 /************      handling the store image uploading          **********/
-
-
 
 
 module.exports = router;
