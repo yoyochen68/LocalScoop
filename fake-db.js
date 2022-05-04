@@ -39,6 +39,7 @@ const shopInfo = {
     pickup: false,
     kmRadius: 10,
     rating:4.94,
+    followers:624,
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
@@ -54,6 +55,7 @@ const shopInfo = {
     pickUp: true,
     kmRadius: 20,
     rating:4.85,
+    followers:"",
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
@@ -69,6 +71,7 @@ const shopInfo = {
     pickUp: true,
     kmRadius: 30,
     rating:4.76,
+    followers:23,
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   }
 }
@@ -132,6 +135,7 @@ function debug() {
   console.log("==== DB DEBUGING ====")
 }
 
+
 function getUser(userId) {
   return users[userId];
 }
@@ -161,7 +165,6 @@ function getStoreIdFromStoreName(storeName){
     return undefined;
   }
 }
-
 
 
 function addUser(username, password) {

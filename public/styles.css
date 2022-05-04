@@ -263,7 +263,7 @@ body {
 
 /*header*/
 .seller-shop-header{
-    padding-top: 10%;
+    padding-top: 5%;
     margin:2% 5% 2% 5%
 }
 
@@ -362,7 +362,7 @@ body {
 
 
 /*Grid*/
-.grid {
+.seller_grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     grid-gap: 4px;
@@ -370,7 +370,7 @@ body {
 
 }
 
-.item {
+.seller_grid_item {
     overflow: hidden;
     position: relative;
     background-color: white;
@@ -379,7 +379,9 @@ body {
     border-radius: 15px;
 }
 
-/* img {
+
+.seller_grid_image {
+
     display: block;
     max-width: 100%;
     object-fit: cover;
