@@ -16,13 +16,13 @@ const crypto = require('crypto')
 // fake-database
 const db = require("./fake-db")
 
-// other files çç
+// other files 
 const server = require("./server.js")
 
 // router files. require the router js files
-
 const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
+const ordersRouter = require("./routes/orders_router")
 const sellerShopRouter = require("./routes/seller_shop_router")
 
 
@@ -48,6 +48,7 @@ app.use(cookieSession({
 /**   router routes, set beginning of path   **/
 app.use("/shop_setup", shopSetupRouter);
 app.use("/product_post", productPostRouter);
+app.use("/orders", ordersRouter);
 app.use("/seller_shop", sellerShopRouter);
 
 // app.use("/product_post", productPostRouter);
@@ -59,6 +60,7 @@ app.use("/seller_shop", sellerShopRouter);
 app.get("/", (req, res) => {
   res.render("index")
 })
+
 
 app.get("/dbtest", (req, res) => {
   dbConnection.getStores()

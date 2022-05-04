@@ -136,6 +136,7 @@ function debug() {
   console.log("==== DB DEBUGING ====")
 }
 
+
 function getUser(userId) {
   return users[userId];
 }
@@ -165,7 +166,6 @@ function getStoreIdFromStoreName(storeName){
     return undefined;
   }
 }
-
 
 
 function addUser(username, password) {
