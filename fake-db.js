@@ -84,9 +84,9 @@ const products = {
     productName:"Nike Sage Lows",
     category:"shoes",
     description:"Size 8 Womens US shoes, Great condition",
-    price:125,
+    productPrice:125,
     deliveryFee:10,
-    tax:0.12,
+    imgUrl:'/uploads/4f2105d1ecfb69b03909e7b5f348c7a1.png',
     timestamp:16426984492032
   },
   1002:{
@@ -95,12 +95,11 @@ const products = {
     productName:"Eco Tee",
     category:"clothing",
     description:"Size Large, men T-shirt",
-    price:35,
+    productPrice:35,
     deliveryFee:10,
-    tax:0.12,
+    imgUrl:'/uploads/f539e1c583c4a490254e8536bc09a9fa.png',
     timestamp:16426955392032
   },
-
 }
 
 const orders = {
@@ -238,7 +237,7 @@ function getProduct(productId) {
 }
 
 
-function addProduct(storeId, productName, category, description,price, deliveryFee,tax) {
+function addProduct(storeId, productName, category, description,productPrice, deliveryFee,imgUrl) {
   let productId = Math.max(...Object.keys(products).map(Number)) + 1;
   let product = {
     productId,
@@ -246,9 +245,9 @@ function addProduct(storeId, productName, category, description,price, deliveryF
     productName,
     category,
     description,
-    price,
+    productPrice,
     deliveryFee,
-    tax,
+    imgUrl,
     timestamp: Date.now(),
   }
   products[productId] = product;
@@ -268,8 +267,8 @@ function editProduct(productId, changes = {}) {
   if (changes.description) {
     product.description = changes.description;
   }
-  if (changes.price) {
-    product.price = changes.price;
+  if (changes.productPrice) {
+    product.productPrice = changes.productPrice;
   }
   if (changes.deliveryFee) {
     product.deliveryFee = changes.deliveryFee;
@@ -326,9 +325,9 @@ function editShop(shopId, changes = {}){
     product.rating = changes.rating;
   }
 
-  if (changes.shopProfilePhoto) {
-    product.shopProfilePhoto = changes.shopProfilePhoto;
-  }
+  // if (changes.shopProfilePhoto) {
+  //   product.shopProfilePhoto = changes.shopProfilePhoto;
+  // }
 }
 
 
