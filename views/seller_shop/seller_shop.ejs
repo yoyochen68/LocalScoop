@@ -10,6 +10,24 @@
 
   <title>Sellers shop</title>
 
+  <style>
+    .nav-wrapper{
+      display: grid;
+      grid-template-columns: 1fr 1fr ;
+    }
+
+    .nav-wrapper--left{
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .nav-wrapper--right{
+      display: flex;
+      justify-content: flex-end;
+    }
+
+  </style>
+
 </head>
 <body>
 <main class="shop_body">
@@ -17,20 +35,18 @@
   <!--  HEADER-->
   <header class="seller-shop-header">
     <!--Back button-->
-    <a href="#">
-      <svg width="37" height="37" viewBox="0 0 37 37" fill="none" xmlns="http://www.w3.org/2000/svg"
-           xmlns:xlink="http://www.w3.org/1999/xlink">
-        <rect width="37" height="37" fill="url(#pattern0)" />
-        <defs>
-          <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
-            <use xlink:href="#image0_146_7727" transform="scale(0.01)" />
-          </pattern>
-          <image id="image0_146_7727" width="100" height="100"
-                 xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAABmJLR0QA/wD/AP+gvaeTAAABY0lEQVR4nO3cPUpjURzG4dcBLWbikkTL6ccVuBJ34Ea0FSsLP9YzzVSjoEUSsAhRr9fcF+7zwCFNLvzJjwM3cDgJAAAAAAAAAACjWCS5WH0ysZ9JbpO8JHlMcjjtOPP2NsZ6iTKRTTFEmcgiyV02x1iv68mmm5ltO2O9/iU5nmrAORGjiBhFxCgiRhExiohRRIwiYhQRo4gYRcQoIkYRMYqIUUSMImIUEaOIGEXEGNHeF59fZHng4GjLd56TnGV5WmRu/q7WTvzK+6dD5r7OP/uj/vjsAysHSS6zfWcwwJAg+0mukvweeRYyfIfwTYYEeUryJ8nNyLOQ4Tvkf5LTJPcjzkK89n63nb72rn30j+HJrgebM1EKiVJIlEKiFBKlkCiFRCkkSiFRColSSJRCohQSpZAohUQpJEohUQqJUkiUQi4wK7RtpzzEFX+T2BRFjIm9jSJGCRcpAwAAAAAAAAC0eQUp0+wlmfscKgAAAABJRU5ErkJggg==" />
-        </defs>
-      </svg>
-    </a>
+    <nav class="nav-wrapper">
+      <div class="nav-wrapper--left">
+        <a><span class="material-icons">star_outline</span></a>
+      </div>
+      <div class="nav-wrapper--right">
+        <a><span class="material-icons">star_outline</span></a>
+        <a><span class="material-icons">star_outline</span></a>
+        <a><span class="material-icons">star_outline</span></a>
+      </div>
 
+
+    </nav>
   </header>
 
 
@@ -70,7 +86,7 @@
 
     <h3>About us</h3>
     <p> <%= storeInfo.description %></p>
-    <h4>Number of followers</h4>
+    <h4><%= storeInfo.followers %> Followers</h4>
     <button class="s-bn" >Edit Shop </button>
     <button class="s-bn" >Share Shop </button>
 
@@ -83,18 +99,18 @@
   <!--THE GRID PART -->
   <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
 
-  <div class="grid">
-    <div class="item">
-      <img src="https://picsum.photos/400/300">
+  <div class="seller_grid">
+    <div class="seller_grid_item">
+      <img  class="seller_grid_image" src="https://picsum.photos/400/300">
     </div>
-    <div class="item">
-      <img src="https://picsum.photos/300/300">
+    <div class="seller_grid_item">
+      <img class="seller_grid_image"  src="https://picsum.photos/300/300">
     </div>
-    <div class="item">
-      <img src="https://picsum.photos/500/250">
+    <div class="seller_grid_item">
+      <img class="seller_grid_image" src="https://picsum.photos/500/250">
     </div>
-    <div class="item">
-      <img src="https://picsum.photos/600/300">
+    <div class="seller_grid_item">
+      <img class="seller_grid_image" src="https://picsum.photos/600/300">
     </div>
   </div>
 
