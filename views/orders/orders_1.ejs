@@ -19,8 +19,8 @@
       left: 10%;
       top: 30%; */
       margin: auto;
-      width: 80%;
-      height: 200px;
+      /* width: 80%; */
+      /* height: 200px; */
       overflow: hidden;
     }
 
@@ -30,7 +30,8 @@
       left: 0; */
       height: 100%;
       width: 200%;
-      display: grid;
+      /* display: grid; */
+      display: flex;
       grid-template-columns: repeat(7, 1fr);
       gap: 5px;
       pointer-events: none;
@@ -40,9 +41,15 @@
     .slider-img {
       background-color: #e5e5e5;
       text-align: center;
-      padding: 2rem;
+      padding: 10px;
       border-radius: 20px;
-
+      box-sizing: border-box;
+      resize: horizontal;
+      border: 1px dashed;
+      overflow: auto;
+      /* max-width: 100%; */
+      width: 70%;
+      height: calc(100vh - 16px);
     }
 
     img {
@@ -50,154 +57,159 @@
     }
   </style>
 </head>
+
 <body>
-    <!--  HEADER -->
-    <header class="seller-shop-header">
-      <div class="page-header">
-        <h4>Product Posts</h4>
+  <!--  HEADER -->
+  <header class="seller-shop-header">
+    <div class="page-header">
+      <h4>Product Posts</h4>
+    </div>
+  </header>
+
+  <!-- the carousel slider of cards -->
+  <div class="slider">
+    <div class="slider-inner">
+
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
       </div>
-    </header>
 
-    <!-- the carousel slider of cards -->
-    <div class="slider">
-      <div class="slider-inner">
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
+      </div>
 
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
+      </div>
 
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
+      </div>
 
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
+      </div>
 
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
+      </div>
 
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="">
-        </div>
+      <div class="slider-img">
+        <img src="https://picsum.photos/100/100" alt="">
       </div>
     </div>
+  </div>
 
 
-    <!--  DESCRIPTION-->
-    <div class="store_info">
-      <a href="/">
-        <button type="submit" class="yellow-bn m-3">Create Account</button>
-      </a>
+  <!--  DESCRIPTION-->
+  <div class="store_info">
+    <a href="/">
+      <button type="submit" class="yellow-bn m-3">Create Account</button>
+    </a>
+  </div>
+  <hr>
+
+  <!--THE GRID PART -->
+  <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
+  <div class="grid">
+    <div class="item">
+      <img src="https://picsum.photos/400/300">
     </div>
-    <hr>
-
-    <!--THE GRID PART -->
-    <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
-    <div class="grid">
-      <div class="item">
-        <img src="https://picsum.photos/400/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/300/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/500/250">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/40/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/60/90">
-      </div>
-      <div class="item">
-        <img src="https://picsum.photos/600/300">
-      </div>
+    <div class="item">
+      <img src="https://picsum.photos/300/300">
     </div>
-    
-    <div>drafts</div> <div>></div>
-    
+    <div class="item">
+      <img src="https://picsum.photos/500/250">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/40/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/60/90">
+    </div>
+    <div class="item">
+      <img src="https://picsum.photos/600/300">
+    </div>
+  </div>
+  <a href="">
+    <div>drafts</div>
+    <div>></div>
+  </a>
 
-    <footer>
-      <%- include('../elements/footer.ejs') %>
-    </footer>
+
+
+  <footer>
+    <%- include('../elements/footer.ejs') %>
+  </footer>
 
 </body>
-  <script>
-    // from https://www.youtube.com/watch?v=KHGc7eZyxKY
+<script>
+  // from https://www.youtube.com/watch?v=KHGc7eZyxKY
 
-    let slider = document.querySelector(".slider");
-    let innerSlider = document.querySelector(".slider-inner");
+  let slider = document.querySelector(".slider");
+  let innerSlider = document.querySelector(".slider-inner");
 
-    let pressed = false;
-    let startx;
-    let x;
-
-
-    slider.addEventListener('mousedown', (e) => {
-      pressed = true;
-      startx = e.offsetX - innerSlider.offsetLeft; // how many pixels to the left or right of the parent element 
-      slider.style.cursor = 'grabbing'
-    });
-
-    slider.addEventListener("mouseenter", () => {
-      slider.style.cursor = 'grab'
-    });
-
-    slider.addEventListener('mouseup', () => {
-      slider.style.cursor = 'grab'
-    });
-
-    window.addEventListener('mouseup', () => {
-      pressed = false;
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-      if (!pressed) return;
-
-      e.preventDefault();
-      x = e.offsetX;
-      innerSlider.style.left = `${x - startx}px`;
-      checkBoundary()
-
-    })
+  let pressed = false;
+  let startx;
+  let x;
 
 
-    function checkBoundary() {
-      let outer = slider.getBoundingClientRect();
-      let inner = innerSlider.getBoundingClientRect();
+  slider.addEventListener('mousedown', (e) => {
+    pressed = true;
+    startx = e.offsetX - innerSlider.offsetLeft; // how many pixels to the left or right of the parent element 
+    slider.style.cursor = 'grabbing'
+  });
 
-      if (parseInt(innerSlider.style.left) > 0) {
-        innerSlider.style.left = '0px';
-      } else if (inner.right < outer.right) {
-        innerSlider.style.left = `-${inner.width - outer.width}px`
-      }
+  slider.addEventListener("mouseenter", () => {
+    slider.style.cursor = 'grab'
+  });
 
+  slider.addEventListener('mouseup', () => {
+    slider.style.cursor = 'grab'
+  });
+
+  window.addEventListener('mouseup', () => {
+    pressed = false;
+  });
+
+  slider.addEventListener('mousemove', (e) => {
+    if (!pressed) return;
+
+    e.preventDefault();
+    x = e.offsetX;
+    innerSlider.style.left = `${x - startx}px`;
+    checkBoundary()
+
+  })
+
+
+  function checkBoundary() {
+    let outer = slider.getBoundingClientRect();
+    let inner = innerSlider.getBoundingClientRect();
+
+    if (parseInt(innerSlider.style.left) > 0) {
+      innerSlider.style.left = '0px';
+    } else if (inner.right < outer.right) {
+      innerSlider.style.left = `-${inner.width - outer.width}px`
     }
-    checkBoundary();
-  </script>
+
+  }
+  checkBoundary();
+</script>
+
 </html>
