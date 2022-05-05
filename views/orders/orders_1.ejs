@@ -15,22 +15,11 @@
     }
 
     .slider {
-      margin:5%
-      /* position: relative;
-      left: 10%;
-      top: 30%; */
-      /* margin-left: 10px;
-      margin-right: 10px; */
-    
-      /* overflow: hidden; */
+      margin:5%;
+      overflow-x: scroll;
     }
 
     .slider-inner {
-      /* position: relative; */
-      /* top: 0;
-      left: 0; */
-      /* height: 100%;
-      width: 200%; */
       display: grid;
       grid-template-columns: repeat(7, 1fr);
       gap: 5px; 
@@ -63,12 +52,17 @@
 
     .grid{
       display: flex;
+      flex-direction: row;
+      max-width: 100%; 
+      height: auto;
+      margin: auto;
+
     }
 
     .draftImg{
       border-radius: 10px;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
     }
   </style>
 </head>
@@ -83,47 +77,21 @@
     <!-- the carousel slider of cards -->
     <div class="slider">
       <div class="slider-inner">
-
-        <div class="slider-img">
-          updatetime
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-          Product name <br>
-          Product Price
-        </div>
-
-        <div class="slider-img">
-          updatetime
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-          Product name <br>
-          Product Price
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-        </div>
-
-        <div class="slider-img">
-          <img src="https://picsum.photos/100/100" alt="" class="slideImg">
-        </div>
+        <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
+          <div class="slider-img">
+            <%= carouselSliderData[index].updateTime %> 
+            <img src="https://picsum.photos/<%= 300 + parseInt(index) %>" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[index].productName %> <br>
+            <%= carouselSliderData[index].productPrice %> <br>
+          </div>
+        <% } %>
       </div>
     </div>
 
 
-    <!--  DESCRIPTION-->
+    <!--  DESCRIPTION -->
     <div class="store_info">
-      <a href="/">
+      <a href="/orders/orders_2">
         <button type="submit" class="yellow-bn m-3">Sold Products</button>
       </a>
     </div>
@@ -136,83 +104,16 @@
     <!--THE GRID PART -->
     <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
     <div class="grid">
-      
-        <img src="https://picsum.photos/400/300" class="draftImg">
-     
-        <img src="https://picsum.photos/300/300" class="draftImg">
-  
-        <img src="https://picsum.photos/500/250" class="draftImg">
-   
-        <img src="https://picsum.photos/400/300" class="draftImg">
-    
-        <img src="https://picsum.photos/600/300" class="draftImg">
-    
-        <img src="https://picsum.photos/600/300" class="draftImg">
-   
-        <img src="https://picsum.photos/600/300" class="draftImg">
-   
-      
+        <a href="">
+          <img src="https://picsum.photos/201" class="draftImg">
+          <img src="https://picsum.photos/202" class="draftImg">
+          <img src="https://picsum.photos/203" class="draftImg"> 
+        </a>
     </div>
-    
-
     
 
     <footer>
       <%- include('../elements/seller_footer.ejs') %>
     </footer>
-
 </body>
-  <script>
-    // from https://www.youtube.com/watch?v=KHGc7eZyxKY
-
-    let slider = document.querySelector(".slider");
-    let innerSlider = document.querySelector(".slider-inner");
-
-    let pressed = false;
-    let startx;
-    let x;
-
-
-    slider.addEventListener('mousedown', (e) => {
-      pressed = true;
-      startx = e.offsetX - innerSlider.offsetLeft; // how many pixels to the left or right of the parent element 
-      slider.style.cursor = 'grabbing'
-    });
-
-    slider.addEventListener("mouseenter", () => {
-      slider.style.cursor = 'grab'
-    });
-
-    slider.addEventListener('mouseup', () => {
-      slider.style.cursor = 'grab'
-    });
-
-    window.addEventListener('mouseup', () => {
-      pressed = false;
-    });
-
-    slider.addEventListener('mousemove', (e) => {
-      if (!pressed) return;
-
-      e.preventDefault();
-      x = e.offsetX;
-      innerSlider.style.left = `${x - startx}px`;
-      checkBoundary()
-
-    })
-
-
-    function checkBoundary() {
-      let outer = slider.getBoundingClientRect();
-      let inner = innerSlider.getBoundingClientRect();
-
-      if (parseInt(innerSlider.style.left) > 0) {
-        innerSlider.style.left = '0px';
-      } else if (inner.right < outer.right) {
-        innerSlider.style.left = `-${inner.width - outer.width}px`
-      }
-
-    }
-    checkBoundary();
-  </script>
 </html>
