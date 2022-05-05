@@ -8,11 +8,11 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
-    * {
-      /* margin: 0; */
+    main * {
       padding: 1%;
       box-sizing: border-box;
     }
+
 
     .slider {
       margin:5%;
@@ -47,7 +47,7 @@
       display: flex;
       justify-content: space-between;
       margin: 5%;
-     
+
     }
 
     .grid{
@@ -75,6 +75,7 @@
     </header>
 
     <!-- the carousel slider of cards -->
+    <main>
     <div class="slider">
       <div class="slider-inner">
         <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
@@ -110,8 +111,8 @@
           <img src="https://picsum.photos/203" class="draftImg"> 
         </a>
     </div>
-    
 
+</main>
     <footer>
       <%- include('../elements/seller_footer.ejs') %>
     </footer>
