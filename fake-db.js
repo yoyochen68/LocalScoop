@@ -33,12 +33,13 @@ const shopInfo = {
     phoneNum: 23602294563,
     email: "HayesStudio@gmail.com",
     password: "hahayes",
-    address: "2310 Main street,Vancouver BC,Canada",
+    address: "2310 Main street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickup: false,
     kmRadius: 10,
     rating:4.94,
+    followers:624,
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
@@ -48,12 +49,13 @@ const shopInfo = {
     phoneNum: 6042304194,
     email: "lesbasics@gmail.com",
     password: "lesbasics",
-    address: "4521 fraser street,Vancouver BC,Canada",
+    address: "4521 fraser street,Vancouver, BC,Canada",
     product: "fashion",
     delivery: true,
     pickUp: true,
     kmRadius: 20,
     rating:4.85,
+    followers:"",
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   },
 
@@ -63,12 +65,13 @@ const shopInfo = {
     phoneNum: 6047757246,
     email: "sagejewelss@gmail.com",
     password: "sagejewels",
-    address: "2410 pender street,Vancouver BC,Canada",
+    address: "2410 pender street,Vancouver, BC,Canada",
     product: "Handmade Goods",
     delivery: false,
     pickUp: true,
     kmRadius: 30,
     rating:4.76,
+    followers:23,
     shopProfilePhoto:"/uploads/175f1e62ee34e7f0a81fb56d7ff3517c.jpeg"
   }
 }
@@ -81,9 +84,9 @@ const products = {
     productName:"Nike Sage Lows",
     category:"shoes",
     description:"Size 8 Womens US shoes, Great condition",
-    price:125,
+    productPrice:125,
     deliveryFee:10,
-    tax:0.12,
+    imgUrl:'/uploads/4f2105d1ecfb69b03909e7b5f348c7a1.png',
     timestamp:16426984492032
   },
   1002:{
@@ -92,12 +95,11 @@ const products = {
     productName:"Eco Tee",
     category:"clothing",
     description:"Size Large, men T-shirt",
-    price:35,
+    productPrice:35,
     deliveryFee:10,
-    tax:0.12,
+    imgUrl:'/uploads/f539e1c583c4a490254e8536bc09a9fa.png',
     timestamp:16426955392032
   },
-
 }
 
 const orders = {
@@ -133,6 +135,7 @@ function debug() {
   console.log("==== DB DEBUGING ====")
 }
 
+
 function getUser(userId) {
   return users[userId];
 }
@@ -164,7 +167,6 @@ function getStoreIdFromStoreName(storeName){
 }
 
 
-
 function addUser(username, password) {
   let userId = Math.max(...Object.keys(users).map(Number)) + 1;
   let user = {
@@ -182,8 +184,8 @@ function addUser(username, password) {
  */
 function addShop(shopObj){
   // the next storeId
-  let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
-
+  // let newStoreId = Math.max(...Object.keys(shopInfo).map(Number)) + 1;
+let newStoreId = shopObj.storeId
   // insert info from argument into shopInfo 
   shopInfo[newStoreId] = shopObj;
  
@@ -207,7 +209,7 @@ function getShop(storeId) {
   return shopInfo[storeId];
 }
 
-function editStore(id,updatedObj){
+function editStore(id, updatedObj){
   let shop = shopInfo[id]
   shop =  Object.assign(shop, updatedObj);
   return shop
@@ -231,10 +233,11 @@ function getProducts(n = 5, category = undefined) {
 
 function getProduct(productId) {
   return products(productId);
+//  ??????
 }
 
 
-function addProduct(storeId, productName, category, description,price, deliveryFee,tax) {
+function addProduct(storeId, productName, category, description,productPrice, deliveryFee,imgUrl) {
   let productId = Math.max(...Object.keys(products).map(Number)) + 1;
   let product = {
     productId,
@@ -242,9 +245,9 @@ function addProduct(storeId, productName, category, description,price, deliveryF
     productName,
     category,
     description,
-    price,
+    productPrice,
     deliveryFee,
-    tax,
+    imgUrl,
     timestamp: Date.now(),
   }
   products[productId] = product;
@@ -264,8 +267,8 @@ function editProduct(productId, changes = {}) {
   if (changes.description) {
     product.description = changes.description;
   }
-  if (changes.price) {
-    product.price = changes.price;
+  if (changes.productPrice) {
+    product.productPrice = changes.productPrice;
   }
   if (changes.deliveryFee) {
     product.deliveryFee = changes.deliveryFee;
@@ -322,9 +325,9 @@ function editShop(shopId, changes = {}){
     product.rating = changes.rating;
   }
 
-  if (changes.shopProfilePhoto) {
-    product.shopProfilePhoto = changes.shopProfilePhoto;
-  }
+  // if (changes.shopProfilePhoto) {
+  //   product.shopProfilePhoto = changes.shopProfilePhoto;
+  // }
 }
 
 
@@ -346,7 +349,7 @@ function getShopProfilePhotoFilename(givenStoreID) {
   let shop = shopInfo[givenStoreID];
 
   // no shop exists with the given ID
-  if(shop == undefined){
+  if(shop === undefined){
     return;
   }
 
@@ -391,6 +394,14 @@ function getWishList(){
 }
 
 
+function getProductsByStoreId(storeId){
+  let productList = Object.values(products)
+  productList = productList.filter(product => product.storeId === storeId);
+
+  return productList
+
+}
+
 
 module.exports = {
   debug,
@@ -404,7 +415,9 @@ module.exports = {
   deleteProduct,
   getCategory,
   getShopProfilePhotoFilename,
+  getStoreIdFromStoreName,
   editShop,
+  getPostsByStoreId: getProductsByStoreId,
   doesShopExist,
   addShop,
   getStoreIdFromStoreName,
