@@ -13,8 +13,11 @@ app.use(express.json())
 
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
+    let updateTime = 'Yesterday'
+    let productName = 'Nike Sage Lows'
+    let productPrice = '$125'
     res.render("./orders/orders_1", {
-
+        updateTime, productName, productPrice
     })
 })
 
@@ -26,3 +29,4 @@ router.get("/orders_2", (req, res) => {
 
 
 module.exports = router;
+
