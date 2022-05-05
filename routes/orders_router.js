@@ -5,7 +5,7 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
-
+const mysqlDB = require("../database/databaseConnection")
 
 /* express */
 const app = express();
@@ -13,6 +13,14 @@ app.use(express.json())
 
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
+    
+//    mysqlDB.getStores()
+//    .then((result) => {
+//         res.send(result[0])
+//    })
+//    .catch(error => {
+//        res.status(400).send('NEIN!')
+//    })
 
     let carouselSliderData = [
         { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125' },
