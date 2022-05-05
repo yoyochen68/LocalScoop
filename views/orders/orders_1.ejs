@@ -52,12 +52,17 @@
 
     .grid{
       display: flex;
+      flex-direction: row;
+      max-width: 100%; 
+      height: auto;
+      margin: auto;
+
     }
 
     .draftImg{
       border-radius: 10px;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
     }
   </style>
 </head>
@@ -72,46 +77,21 @@
     <!-- the carousel slider of cards -->
     <div class="slider">
       <div class="slider-inner">
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/300" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/301" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/302" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/299" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/298" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/297" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
+        <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
+          <div class="slider-img">
+            <%= carouselSliderData[index].updateTime %> 
+            <img src="https://picsum.photos/<%= 300 + parseInt(index) %>" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[index].productName %> <br>
+            <%= carouselSliderData[index].productPrice %> <br>
+          </div>
+        <% } %>
       </div>
     </div>
 
 
     <!--  DESCRIPTION -->
     <div class="store_info">
-      <a href="/">
+      <a href="/orders/orders_2">
         <button type="submit" class="yellow-bn m-3">Sold Products</button>
       </a>
     </div>
@@ -124,14 +104,12 @@
     <!--THE GRID PART -->
     <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
     <div class="grid">
-        <img src="https://picsum.photos/401" class="draftImg">
-     
-        <img src="https://picsum.photos/402" class="draftImg">
-  
-        <img src="https://picsum.photos/403" class="draftImg"> 
+        <a href="">
+          <img src="https://picsum.photos/201" class="draftImg">
+          <img src="https://picsum.photos/202" class="draftImg">
+          <img src="https://picsum.photos/203" class="draftImg"> 
+        </a>
     </div>
-    
-
     
 
     <footer>
