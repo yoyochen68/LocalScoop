@@ -52,12 +52,17 @@
 
     .grid{
       display: flex;
+      flex-direction: row;
+      max-width: 100%; 
+      height: auto;
+      margin: auto;
+
     }
 
     .draftImg{
       border-radius: 10px;
-      width: 150px;
-      height: 150px;
+      width: 120px;
+      height: 120px;
     }
   </style>
 </head>
@@ -99,14 +104,12 @@
     <!--THE GRID PART -->
     <!--https://stackoverflow.com/questions/65649642/square-css-grid-with-square-images-->
     <div class="grid">
-        <img src="https://picsum.photos/401" class="draftImg">
-     
-        <img src="https://picsum.photos/402" class="draftImg">
-  
-        <img src="https://picsum.photos/403" class="draftImg"> 
+        <a href="">
+          <img src="https://picsum.photos/201" class="draftImg">
+          <img src="https://picsum.photos/202" class="draftImg">
+          <img src="https://picsum.photos/203" class="draftImg"> 
+        </a>
     </div>
-    
-
     
 
     <footer>
