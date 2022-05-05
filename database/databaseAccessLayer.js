@@ -20,12 +20,21 @@ export async function getBuyer(buyer_id) {
 
 
 
-export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
-
+/**
+ * DO THIS ONE
+ * get all the products of the store by the store id in the product table
+ * @param {*} store_id 
+ */
+export async function getProductsByStoreId(store_id) { 
+    return 111
 }
 
-
-export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
+ 
+ /** DO THIS ONE
+  * get all the orders by the giving store id in the order table
+  * @param {*} store_id 
+  */
+export async function getOrdersByStoreId(store_id) {
 
 }
 
@@ -37,12 +46,14 @@ export async function getStoreInfoByStoreId(store_id) { //get the store info by 
 
 export async function getStoreInfoByStoreId(store_id) { 
 
+}
 
 
 
-export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
+//don't need to implement it because we don't have a edit shop page 
+export async function getAllProductPhotosByStoreId() {
 
-
+} 
 
 
 
