@@ -54,7 +54,6 @@ router.get("/orders_2", (req, res) => {
     ]
     
     
-    
     res.render("./orders/orders_2", {
         productListInfo
     })
