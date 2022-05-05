@@ -24,6 +24,9 @@ const shopSetupRouter = require("./routes/shop_setup_router")
 const productPostRouter = require("./routes/product_post_router")
 const ordersRouter = require("./routes/orders_router")
 const sellerShopRouter = require("./routes/seller_shop_router")
+const sellerLandingRouter = require("./routes/seller_landing_router")
+
+// const sellerHomeRouter = require("./routes/seller_home_router")
 
 
 const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
@@ -50,8 +53,7 @@ app.use("/shop_setup", shopSetupRouter);
 app.use("/product_post", productPostRouter);
 app.use("/orders", ordersRouter);
 app.use("/seller_shop", sellerShopRouter);
-
-// app.use("/product_post", productPostRouter);
+app.use("/seller_landing", sellerLandingRouter)
 
 
 /* ROUTES */
