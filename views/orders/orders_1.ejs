@@ -72,39 +72,14 @@
     <!-- the carousel slider of cards -->
     <div class="slider">
       <div class="slider-inner">
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/300" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/301" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
-        <div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/302" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/299" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/298" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div><div class="slider-img">
-          <%= updateTime %> 
-          <img src="https://picsum.photos/297" alt="" class="slideImg"><br>
-          <%= productName %> <br>
-          <%= productPrice %> <br>
-        </div>
+        <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
+          <div class="slider-img">
+            <%= carouselSliderData[index].updateTime %> 
+            <img src="https://picsum.photos/<%= 300 + parseInt(index) %>" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[index].productName %> <br>
+            <%= carouselSliderData[index].productPrice %> <br>
+          </div>
+        <% } %>
       </div>
     </div>
 
