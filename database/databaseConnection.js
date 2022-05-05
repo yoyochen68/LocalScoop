@@ -1,5 +1,4 @@
-
-const mysql = require('mysql2');
+import mysql from 'mysql2'
 const is_heroku = process.env.IS_HEROKU || false;
 
 let database;
