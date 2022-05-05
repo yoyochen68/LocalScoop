@@ -8,8 +8,10 @@
   <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <style>
-    main * {
-      padding: 1%;
+
+    * {
+      /* margin: 0; */
+      padding: 0;
       box-sizing: border-box;
     }
 
@@ -24,6 +26,7 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 5px; 
       pointer-events: none; 
+      padding: 5px;
     }
 
     /* the card */
@@ -53,9 +56,9 @@
     .grid{
       display: flex;
       flex-direction: row;
-      max-width: 100%; 
+      max-width: 80%; 
       height: auto;
-      margin: auto;
+      margin-left: 20px;
 
     }
 
@@ -63,6 +66,10 @@
       border-radius: 10px;
       width: 120px;
       height: 120px;
+    }
+
+    .spaceAtBottom {
+      height: 200px;
     }
   </style>
 </head>
@@ -81,7 +88,7 @@
         <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
           <div class="slider-img">
             <%= carouselSliderData[index].updateTime %> 
-            <img src="https://picsum.photos/<%= 300 + parseInt(index) %>" alt="" class="slideImg"> <br>
+            <img src="https://picsum.photos/300" alt="" class="slideImg"> <br>
             <%= carouselSliderData[index].productName %> <br>
             <%= carouselSliderData[index].productPrice %> <br>
           </div>
@@ -111,8 +118,8 @@
           <img src="https://picsum.photos/203" class="draftImg"> 
         </a>
     </div>
-
 </main>
+    <div class="spaceAtBottom"></div>
     <footer>
       <%- include('../elements/seller_footer.ejs') %>
     </footer>
