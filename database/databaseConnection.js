@@ -13,15 +13,28 @@ const dbConfigHeroku = {
 	namedPlaceholders: true
 };
 
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "root",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
+
+
+//YOYO local database
 const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
-	password: "root",
-	database: "localscoop",
+	password: "Password",
+	database: "localscoop_local",
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
 };
+
 
 if (is_heroku) {
 	database = mysql.createPool(dbConfigHeroku).promise();
@@ -30,16 +43,16 @@ else {
 	database = mysql.createPool(dbConfigLocal).promise();
 }
 
-/**
- * @returns all the stores in the database
- */
-function getStores(){
-	return database.query(`
-		SELECT * 
-		FROM store
-	`)
-}
-exports.getStores = getStores
+// /**
+//  * @returns all the stores in the database
+//  */
+// function getStores(){
+// 	return database.query(`
+// 		SELECT * 
+// 		FROM store
+// 	`)
+// }
+// exports.getStores = getStores
 
 
-// module.exports = database;
+module.exports = database;
