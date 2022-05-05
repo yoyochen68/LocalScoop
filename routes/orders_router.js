@@ -18,7 +18,12 @@ app.use(express.json())
 
 
 router.get("/a", async (req, res) => {
-    await mysqlDB.getProductsByStoreId()
+    try {  
+        const a = await mysqlDB.getProductsByStoreId(1)
+        console.log(a)
+    } catch (error){
+        res.send(error)
+    }  
     
 })
 

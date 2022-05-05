@@ -1,5 +1,5 @@
 
-const mysql = require('mysql2');
+import mysql from 'mysql2'
 const is_heroku = process.env.IS_HEROKU || false;
 
 let database;
@@ -42,27 +42,6 @@ if (is_heroku) {
 }
 else {
 	database = mysql.createPool(dbConfigLocal).promise();
-}
-
-
-
-/**
- * @returns all the stores in the database
- */
-function getStores(){
-	return database.query(`
-		SELECT * 
-		FROM store
-	`)
-}
-exports.getStores = getStores
-
-
-function getStore(storeID){
-	return database.query(`
-		SELECT * 
-		FROM store
-		WHERE store_name = ?`)
 }
 
 

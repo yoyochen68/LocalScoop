@@ -1,7 +1,10 @@
-const database = require('./databaseConnection');
+import * as database from './databaseConnection';
 
 //=====Sam suggest we use async await rather than call back=====
-
+/***
+ * 
+ * CHANGE EVERYTHING TO ESMODULE, and if have time, dependency injection
+ */
 
 
 export async function getAllBuyers() {
