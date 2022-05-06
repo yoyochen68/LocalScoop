@@ -19,14 +19,17 @@ body {
     
 }
 
+.displayBlock{
+    display: block;
+    justify-content: center;
+    align-items: center;
+}
+
 .indexpage{
     background-color:rgba(238, 193, 149, 0.19);
 
 }
 
-/* .container{
-    text-align: center;
-} */
 
 /* for centering item ,should put it in the parent class list */
 .center {
@@ -105,14 +108,30 @@ body {
     font-size:16px ;
 }
 
+.bold{
+    font-weight: 700;
+}
 
+
+.semiBold{
+    font-weight: 500;
+}
 
 
 /*=====SHOP SETUP======*/
 
 .shop-setup-header {
-    padding-top: 10%;
-    margin: 4% 5% 2% 5%
+    /* padding-top: 10%; */
+    /* margin: 4% 5% 2% 5% */
+    position: relative;
+    top:50px;
+    left:40px
+}
+
+.shopSet1{
+position: relative;
+top:200px;
+margin: 3%;
 }
 
 /*shop_setup_4*/
@@ -128,29 +147,28 @@ body {
 }
 
 .form-box {
-
-    margin: 15% 0%;
+    position: relative;
+    top:30px;
+    margin: 10% 0%;
     font-size: 20px;
     padding: 3% 5%;
+}
+
+@media only screen and (min-width:600px){
+    .form-box {
+top:10px;
+margin: 2% 0%;
+    }
 }
 
 
 .address-box {
-
-    margin: 40% 0%;
+position: relative;
+top:50px;
+    margin: 5% 0%;
     font-size: 20px;
     padding: 3% 5%;
     text-align: center;
-
-}
-
-.product-box {
-
-    margin: 30% 0;
-    font-size: 20px;
-    padding: 3% 6%;
-    text-align: center;
-
 }
 
 .form-control {
@@ -158,6 +176,17 @@ body {
     width: 335px;
     border-color: black;
 }
+
+.product-box {
+    position: relative;
+    top:40px;
+    margin: 10% 0;
+    font-size: 20px;
+    padding: 3% 6%;
+    text-align: center;
+
+}
+
 
 
 /*shop_setup_5*/
@@ -192,10 +221,32 @@ body {
     margin: 10px;
 }
 
+.deliveryBlock{
+    position: relative;
+    top:60px
+}
+
+.imgUpload{
+    position: relative;
+    top:60px;
+   
+}
+.imgUpload p{
+    margin-left: 10%;
+    margin-right: 10%;
+}
 
 /*shop_setup_7*/
 .shopReady {
     font-weight: 400;
+    
+}
+
+.textBox{
+    position: relative;
+    top:50px;
+    margin-left: 20%;
+    margin-right: 20%;
 }
 
 /* the background will be changed after click the button */
@@ -203,6 +254,9 @@ body {
     background-color: #C3D99D;
     /*background-color: red;*/
 }
+
+
+
 
 
 /*=====FOOTER/ HEADER======*/
@@ -213,7 +267,7 @@ body {
     width: 100%;
     /*height: 55px;*/
     height: 10%;
-    box-shadow: 2px -10px 10px -4px rgba(0, 0, 0, 0.30);
+    box-shadow: 2px -5px 10px -4px rgba(0, 0, 0, 0.30);
     background-color: #F7F7F3;
     overflow-x: auto;
     display: flex;
@@ -281,11 +335,37 @@ body {
 
 /*header*/
 
+.fixed_header{
+
+    position: fixed;
+    top: 0;
+    width: 100%;
+    /*height: 55px;*/
+    height: 9%;
+    box-shadow: -2px 5px 10px 4px rgba(0, 0, 0, 0.30);
+    background-color: #F7F7F3;
+    overflow-x: auto;
+    /*display: flex;*/
+
+    padding:1px;
+    z-index: 10;
+
+
+}
+
+
 /*Also the seller_landing*/
 .seller-shop-header{
     padding-top: 5%;
     margin:2% 5% 2% 5%
 }
+
+
+.seller-landing-header{
+    padding-top: 5%;
+    margin:4% 3% 2% 5%
+}
+
 
 .nav-wrapper.seller-shop{
     display: grid;
@@ -303,10 +383,13 @@ body {
 }
 
 
-/*===== SELLER SHOP======*/
+
+
+
+/* ============Seller Shop=========== */
 
 .seller-shop-body{
-    padding-bottom: 100px;
+    padding:0 0 110px 0;
 }
 
 .seller-shop-body * {box-sizing:border-box}
@@ -431,7 +514,9 @@ body {
 
 
 
-/* =======below css is for product posting======= */
+
+
+/* ============Product Posting=========== */
 
 /* Product_posting page 2 */
 .productPostImg {
@@ -506,9 +591,83 @@ font-size: 20px;
 .displayNone, #radius{
     display: none;
 }
+.extraspace{
+    height: 200px;
+}
 
 
-/* ====== above css is for product posting ========= */
+
+
+
+
+/* ============Seller landing=========== */
+
+
+.top_placeholder{
+    height:80px;
+}
+
+.seller-landing-body {
+    position: relative; /* usually the parent, in this case the body element, has position relative so that the absolute positioned child is positioned relative to it */
+    height: 100vh; /* 100% of the viewport height */
+    margin: 0; /* recommended */
+    /*box-sizing:border-box*/
+
+
+
+    /* you have to fixx thisssssssssssssssssssssssssssssssss*/
+    /*padding:80px 0 0 0  ;*/
+
+
+}
+
+.comingSoon{
+    position: absolute; /* taken out of the normal flow of the document */
+    top: 50%; /* moved down by 50% of the screen height */
+    transform: translateY(-50%); /* moved back up (Y axis) by half of its height to achieve the perfect center */
+    width: 100%; /* needs to be defined to keep the default block behavior */
+    text-align: center;
+    margin: 0; /* again, for perfect center */
+    opacity: 80%;
+}
+
+
+
+
+/* the card */
+.slider-img-landing{
+
+    box-sizing:border-box;
+    background-color: white;
+    text-align: center;
+
+    border-radius: 10px;
+    width:85%;
+    box-shadow: 2px 6px 6px 2px rgba(0, 0, 0, 0.40);
+    margin-top: 10%;
+    padding:10px
+}
+
+
+.slider-img-landing.card1{
+    height: 300px;
+
+}
+
+.slider-img-landing.card2{
+    height: 200px;
+}
+
+.sum_note{
+    padding: 5px;
+    margin: 20px;
+    background-color: #EEC195 ;
+    border-radius: 20px;
+    line-height: 1em;
+
+}
+
+/**/
 
 
 
