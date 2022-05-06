@@ -16,15 +16,16 @@ const app = express();
 app.use(express.json())
 
 
-
-router.get("/a", async (req, res) => {
+/**
+ * for testing 
+ */
+router.get("/a",  async (req, res) => {
     try {  
         const a = await mysqlDB.getProductsByStoreId(1)
-        console.log(a)
+       res.send(a[0])
     } catch (error){
         res.send(error)
     }  
-    
 })
 
 

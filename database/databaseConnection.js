@@ -1,7 +1,6 @@
 
-
-const mysql = require("mysql2")
-const is_heroku = process.env.IS_HEROKU || false;
+// const mysql = require("mysql2")
+// const is_heroku = process.env.IS_HEROKU || false;
 
 
 // let database;
@@ -15,41 +14,27 @@ const is_heroku = process.env.IS_HEROKU || false;
 // 	namedPlaceholders: true
 // };
 
-// // const dbConfigLocal = {
-// // 	host: "localhost",
-// // 	user: "root",
-// // 	password: "root",
-// // 	database: "localscoop",
-// // 	port: 3306,
-// // 	multipleStatements: false,
-// // 	namedPlaceholders: true
-// // };
-
-
-// //YOYO local database
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Password",
-// 	database: "localscoop_local",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
-
-
-
-// //YOYO local database
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
 // 	password: "root",
-// 	database: "localscoop-local",
-
+// 	database: "localscoop",
 // 	port: 3306,
 // 	multipleStatements: false,
 // 	namedPlaceholders: true
 // };
+
+
+// // //YOYO local database
+// // const dbConfigLocal = {
+// // 	host: "localhost",
+// // 	user: "root",
+// // 	password: "Password",
+// // 	database: "localscoop_local",
+// // 	port: 3306,
+// // 	multipleStatements: false,
+// // 	namedPlaceholders: true
+// // };
 
 
 // if (is_heroku) {
