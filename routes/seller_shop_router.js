@@ -30,6 +30,7 @@ router.get("/seller_shop/:id", (req, res) => {
 
     //Gathering all the required info for the page
     let storeInfo = {
+        id: storeId,
         image:"", //UNCOMPLETED
         location:location,
         name: shop.storeName,

@@ -70,6 +70,14 @@
             align-items: center;
             justify-content: center;
         }
+
+
+        .seller-orders2-body {
+            padding:100px 0 110px 0  ;
+        }
+
+
+
         .draftImg {
             max-width: 120px;
             max-height: 120px;
@@ -79,6 +87,7 @@
             max-width: 120px;
             max-height: 120px;
         }
+
     </style>
     <title>orders_2</title>
 </head>
@@ -89,13 +98,16 @@
 <!--        <h4>Sold Products</h4>-->
 <!--    </div>-->
 <!--</header>-->
-<header class="seller-shop-header">
-    <div class="page-header l-font">
+
+
+<body>
+<main class="seller-orders2-body">
+
+<header class="fixed_header">
+    <div class="page-header l-font seller-shop-header">
         Sold Products
     </div>
 </header>
-
-<body>
     <div class="cardDiv">
         <% for( let index = 0; index < productListInfo.length; index++ ) { %>
             <div class="productCard">
@@ -117,6 +129,7 @@
     <footer>
         <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
     </footer>
+</main>
 
 
 </body>
