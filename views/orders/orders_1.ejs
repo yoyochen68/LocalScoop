@@ -46,6 +46,7 @@
       border-radius: 10px;
       width: 200px;
       height: 200px;
+      object-fit: contain;
     }
 
     .draft{
@@ -87,14 +88,53 @@
     <main>
     <div class="slider">
       <div class="slider-inner">
-        <% for( let index = 0; index < carouselSliderData.length; index++ ) { %>
+
+        
+        
           <div class="slider-img">
-            <%= carouselSliderData[index].updateTime %> 
-            <img src="https://picsum.photos/300" alt="" class="slideImg"> <br>
-            <%= carouselSliderData[index].productName %> <br>
-            <%= carouselSliderData[index].productPrice %> <br>
+            <%= carouselSliderData[0].updateTime %> 
+            <img src="/uploads/fbda680e1700a34f4a988c8d95fb147f.png" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[0].productName %> <br>
+            <%= carouselSliderData[0].productPrice %> <br>
           </div>
-        <% } %>
+          <div class="slider-img">
+            <%= carouselSliderData[1].updateTime %> 
+            <img src="https://media.istockphoto.com/photos/portrait-of-a-young-pretty-female-student-in-a-white-hoodie-casual-picture-id1248498822?k=20&m=1248498822&s=612x612&w=0&h=EzpFyZF5d2sFKsQh-eV-jIi5JleYAZDJfSSnKlRy-iU=" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[1].productName %> <br>
+            <%= carouselSliderData[1].productPrice %> <br>
+          </div>
+          <div class="slider-img">
+            <%= carouselSliderData[2].updateTime %> 
+            <img src="https://sneakernews.com/wp-content/uploads/2021/08/Nike-Air-Force-1-Low-DC2911-400-4.jpg" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[2].productName %> <br>
+            <%= carouselSliderData[2].productPrice %> <br>
+          </div>
+          <div class="slider-img">
+            <%= carouselSliderData[3].updateTime %> 
+            <img src="https://www.cleveland.com/resizer/s-qN2ZoMrE_jRSJy7AE6dsqJiC0=/1280x0/smart/image.cleveland.com/home/cleve-media/width600/img/ent_impact_home/photo/lebron-15-ghostjpg-485c5c2f3d667d4a.jpg" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[3].productName %> <br>
+            <%= carouselSliderData[3].productPrice %> <br>
+          </div>
+          <div class="slider-img">
+            <%= carouselSliderData[4].updateTime %> 
+            <img src="https://herschel.ca/content/dam/herschel/products/10020/10020-02041-OS_01.jpg.sthumbnails.1000.1250.jpg" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[4].productName %> <br>
+            <%= carouselSliderData[4].productPrice %> <br>
+          </div>
+          <div class="slider-img">
+            <%= carouselSliderData[5].updateTime %> 
+            <img src="https://images.lululemon.com/is/image/lululemon/LM9A07S_047748_1?wid=1280&op_usm=0.5,2,10,0&fmt=webp&qlt=80,1&fit=constrain,0&op_sharpen=0&resMode=sharp2&iccEmbed=0&printRes=72" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[5].productName %> <br>
+            <%= carouselSliderData[5].productPrice %> <br>
+          </div>
+          <div class="slider-img">
+            <%= carouselSliderData[6].updateTime %> 
+            <img src="https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwd2120ba9/images/d_08/M9621_D_08X1.jpg?sw=406" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[6].productName %> <br>
+            <%= carouselSliderData[6].productPrice %> <br>
+          </div>
+        
+
       </div>
     </div>
 

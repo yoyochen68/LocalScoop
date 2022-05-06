@@ -1,5 +1,8 @@
-// // import mysql from 'mysql2'
-// const is_heroku = process.env.IS_HEROKU || false;
+
+
+const mysql = require("mysql2")
+const is_heroku = process.env.IS_HEROKU || false;
+
 
 // let database;
 
@@ -76,11 +79,6 @@
 // 		FROM store
 // 		WHERE store_name = ?`)
 // }
-
-
-
-
-
 
 
 
