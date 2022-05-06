@@ -56,6 +56,7 @@ export async function getAllBuyers() {
 // getAllBuyers().then(console.log)
 
 
+
 export async function getBuyer(buyer_id) {
     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
     const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
@@ -63,14 +64,40 @@ export async function getBuyer(buyer_id) {
     return buyer;
 }
 
+
+
+/**
+ * DO THIS ONE
+ * get all the products of the store by the store id in the product table
+ * @param {*} store_id 
+ */
+export async function getProductsByStoreId(store_id) { 
+    return 111
+}
+
+ 
+ /** DO THIS ONE
+  * get all the orders by the giving store id in the order table
+  * @param {*} store_id 
+  */
+
+
+export async function getOrdersByStoreId(store_id) {
+   //get all the orders by the giving store id in the order table
+            //Join the store and Order
+
+
+
 // getBuyer(1).then(console.log)
 
-// export async function addTask(title) {
-//     let query = `INSERT INTO tasks(title) VALUE (?)`
-//     const [data] = await pool.query(query, [title])
-//     const id = data.insertId
-//     return await getTask(id)
-//   }
+
+
+
+
+export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+            //join
+
+
 
 
 
@@ -88,6 +115,31 @@ export async function addNewProduct(store_id, product_name, product_category, pr
     const product_id = newproductInfo.insertId
     return await getProduct(product_id)
 }
+
+export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
+
+    //JOIN the
+
+// 1- Get the store id
+
+
+}
+
+
+
+export async function getStoreInfoByStoreId(store_id) { 
+
+}
+
+
+//don't need to implement it because we don't have a edit shop page
+
+
+//don't need to implement it because we don't have a edit shop page 
+export async function getAllProductPhotosByStoreId() {
+
+} 
+
 
 
 addNewProduct(4, rr, rr, rr, 50, 10,Date.now()).then(console.log)

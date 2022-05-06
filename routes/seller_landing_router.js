@@ -20,7 +20,7 @@ const router = express.Router();
 
 
 // GET /seller_landing/seller_landing
-router.get("/seller_landing", (req, res) => {
+router.get("/seller_landing/:id", (req, res) => {
     res.render("seller_landing/seller_landing")
 })
 
