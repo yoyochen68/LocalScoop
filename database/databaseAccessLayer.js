@@ -1,20 +1,16 @@
-// const database = inc('./databaseConnection');
-// import * as database from "./databaseConnection.js";
 
-//=====Sam suggest we use async await rather than call back=====
-
-import mysql from 'mysql2'
+// import mysql from 'mysql2'
 const is_heroku = process.env.IS_HEROKU || false;
 
 let database;
 
 const dbConfigHeroku = {
-	host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-	user: "hct0x5slkt8i1bgn",
-	password: "o9dc7b1zw1ho9812",
-	database: "ht3fknlbys0qeor5",
-	multipleStatements: false,
-	namedPlaceholders: true
+    host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "hct0x5slkt8i1bgn",
+    password: "o9dc7b1zw1ho9812",
+    database: "ht3fknlbys0qeor5",
+    multipleStatements: false,
+    namedPlaceholders: true
 };
 
 // const dbConfigLocal = {
@@ -30,25 +26,26 @@ const dbConfigHeroku = {
 
 //YOYO local database
 const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Password",
-	database: "localscoop_local",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
+    host: "localhost",
+    user: "root",
+    password: "Password",
+    database: "localscoop_local",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
 };
 
 
 if (is_heroku) {
-	database = mysql.createPool(dbConfigHeroku).promise();
+    database = mysql.createPool(dbConfigHeroku).promise();
 }
 else {
-	database = mysql.createPool(dbConfigLocal).promise();
+    database = mysql.createPool(dbConfigLocal).promise();
 }
 
 //=============above is mysql set up =========
 
+//=====Sam suggest we use async await rather than call back=====
 
 export async function getAllBuyers() {
     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
@@ -56,17 +53,17 @@ export async function getAllBuyers() {
     return AllBuyers;
 }
 
-getAllBuyers().then(console.log)
+// getAllBuyers().then(console.log)
 
 
 export async function getBuyer(buyer_id) {
     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
-    const [AllBuyers] = await database.query(sqlQuery,[buyer_id]);
+    const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
     const buyer = AllBuyers[0];
     return buyer;
 }
 
-
+// getBuyer(1).then(console.log)
 
 // export async function addTask(title) {
 //     let query = `INSERT INTO tasks(title) VALUE (?)`
@@ -77,15 +74,23 @@ export async function getBuyer(buyer_id) {
 
 
 
-export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) { 
-    let query = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
-    const [newproductInfo] = await pool.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
-    const id = newproductInfo.insertId
-    return await getProduct(id)
+export async function getProduct(product_id) {
+    let sqlQuery = `SELECT * FROM product WHERE product_id = ?`
+    const [products] = await database.query(sqlQuery, [product_id])
+    const product = products[0]
+    return product
+}
+// getProduct(1).then(console.log)
+
+export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
+    let sqlQuery = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
+    const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
+    const product_id = newproductInfo.insertId
+    return await getProduct(product_id)
 }
 
 
-
+addNewProduct(4, rr, rr, rr, 50, 10,Date.now()).then(console.log)
 
 
 //kevin:
@@ -107,13 +112,13 @@ export async function getStoreInfoByStoreId(store_id) { //get the store info by 
 
 //yasmina
 // export async function getStoreInfoByStoreId(store_id) { 
-    
+
 // }
 
 
 
 
-export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
+export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page 
 
 
 
