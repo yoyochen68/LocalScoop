@@ -5,13 +5,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Shop Orders</title>
-  <link rel="stylesheet" href="../../styles.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <style>
 
-    * {
-      /* margin: 0; */
-      padding: 0;
+    <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
+    <link rel="stylesheet" href="../../styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <style>
+    main * {
+      padding: 1%;
+
       box-sizing: border-box;
     }
 
@@ -121,7 +123,7 @@
 </main>
     <div class="spaceAtBottom"></div>
     <footer>
-      <%- include('../elements/seller_footer.ejs') %>
+      <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
     </footer>
 </body>
 </html>
