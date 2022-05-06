@@ -403,6 +403,22 @@ function getProductsByStoreId(storeId){
 }
 
 
+let photoObj = {
+  shoesCottonCandyColoured: "/uploads/nikeAirForceOneCottonCandy.png",
+  blackSweatshirt01: "/uploads/_blackSweatshirt.jpg",
+  bootsJacketJeansWomen: "/uploads/_bootsJacketJeansWomen.jpg",
+  burgundyDress: "/uploads/burgundyDress.jpg",
+  pantsShoesShirtWomen01: "/uploads/_pantsShoesShirt.jpg",
+  rackOfClothesWomen01: "/uploads/_rackOfSweatersWomens.jpg",
+  rackOfClothesWomen02: "/uploads/_rackOfWomensClothes01.jpg",
+  store01: "/uploads/_store01.jpg"
+}
+
+function returnPhotoObj(){
+  return photoObj;
+}
+
+
 module.exports = {
   debug,
   addUser,
@@ -424,7 +440,8 @@ module.exports = {
   returnShopInfo,
   returnNextShopId,
   editStore,
-  getShop
+  getShop,
+  returnPhotoObj
 
 };
 
