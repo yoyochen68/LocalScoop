@@ -1,5 +1,6 @@
-const app = require('./app.js');
-const express = require("express")
+const app = require("./app")
+const mysql = require("mysql2")
+
 const PORT = process.env.PORT || 8000; // let express set PORT, else make it 8000
 const dbConnection = require("./database/databaseConnection")
 
