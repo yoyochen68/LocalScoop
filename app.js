@@ -84,6 +84,9 @@ app.get("/dbtest", (req, res) => {
   
 })
 
+app.get('/shop_setup', (req, res) => {
+  res.render('/')
+})
 
 //====image upload===
 const storage = multer.diskStorage({
