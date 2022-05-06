@@ -36,46 +36,46 @@
 
 
 
-//YOYO local database
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "root",
-	database: "localscoop-local",
+// //YOYO local database
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "root",
+// 	database: "localscoop-local",
 
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
-
-
-if (is_heroku) {
-	database = mysql.createPool(dbConfigHeroku).promise();
-}
-else {
-	database = mysql.createPool(dbConfigLocal).promise();
-}
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
-
-/**
- * @returns all the stores in the database
- */
-function getStores(){
-	return database.query(`
-		SELECT * 
-		FROM store
-	`)
-}
-exports.getStores = getStores
+// if (is_heroku) {
+// 	database = mysql.createPool(dbConfigHeroku).promise();
+// }
+// else {
+// 	database = mysql.createPool(dbConfigLocal).promise();
+// }
 
 
-function getStore(storeID){
-	return database.query(`
-		SELECT * 
-		FROM store
-		WHERE store_name = ?`)
-}
+
+// /**
+//  * @returns all the stores in the database
+//  */
+// function getStores(){
+// 	return database.query(`
+// 		SELECT * 
+// 		FROM store
+// 	`)
+// }
+// exports.getStores = getStores
+
+
+// function getStore(storeID){
+// 	return database.query(`
+// 		SELECT * 
+// 		FROM store
+// 		WHERE store_name = ?`)
+// }
 
 
 
