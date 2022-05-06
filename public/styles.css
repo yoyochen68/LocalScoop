@@ -474,33 +474,35 @@ hr {
     height: 50px;
 }
 
+
 /* Product_posting page 2 */
 .productSummary {
     position: absolute;
-    top: 80px
+    top: 70px
 }
 
 .productList {
-    position: absolute;
-    top: 330px;
-    margin: 10%;
-    font-size: 20px
+position: absolute;
+top: 43%;
+margin-bottom: 10px;
+font-size: 20px; 
 }
 
 .productInfo {
     margin-left: 5%;
-    margin-top: 20px;
+
 }
 
 .imgAndProductInfo {
     position: absolute;
-    top: 400px;
+    top: 46%;
     margin: 5%;
 }
 
 .displayNone, #radius{
     display: none;
 }
+
 
 /* ====== above css is for product posting ========= */
 
