@@ -5,6 +5,9 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
+// const mysqlDB = require("../database/databaseConnection") 
+const mysqlDB = require('../database/databaseAccessLayer')
+
 
 
 
@@ -12,8 +15,26 @@ const router = express.Router();
 const app = express();
 app.use(express.json())
 
+
+
+router.get("/a", async (req, res) => {
+    await mysqlDB.getProductsByStoreId()
+    
+})
+
+
+
+
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
+    
+//    mysqlDB.getStores()
+//    .then((result) => {
+//         res.send(result[0])
+//    })
+//    .catch(error => {
+//        res.status(400).send('NEIN!')
+//    })
 
     let carouselSliderData = [
         { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125' },
@@ -45,7 +66,6 @@ router.get("/orders_2", (req, res) => {
         { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "2 Weeks Ago" },
         { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "2 Weeks Ago" }, 
     ]
-    
     
     
     res.render("./orders/orders_2", {
