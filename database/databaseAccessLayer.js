@@ -1,55 +1,39 @@
 
-// // import mysql from 'mysql2'
-// const is_heroku = process.env.IS_HEROKU || false;
-
-
-// let database;
-
+/** database setup */
 const mysql = require("mysql2")
 const is_heroku = process.env.IS_HEROKU || false;
+let database;
 
-// const dbConfigHeroku = {
-//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-//     user: "hct0x5slkt8i1bgn",
-//     password: "o9dc7b1zw1ho9812",
-//     database: "ht3fknlbys0qeor5",
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigHeroku = {
+    host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "hct0x5slkt8i1bgn",
+    password: "o9dc7b1zw1ho9812",
+    database: "ht3fknlbys0qeor5",
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
-// // const dbConfigLocal = {
-// // 	host: "localhost",
-// // 	user: "root",
-// // 	password: "root",
-// // 	database: "localscoop",
-// // 	port: 3306,
-// // 	multipleStatements: false,
-// // 	namedPlaceholders: true
-// // };
-
-
-// //YOYO local database
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "Password",
-//     database: "localscoop_local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+/* change this so it matches yours */
+const dbConfigLocal = {
+	host: "localhost",
+	user: "root",
+	password: "root",
+	database: "localscoop",
+	port: 3306,
+	multipleStatements: false,
+	namedPlaceholders: true
+};
 
 
-// if (is_heroku) {
-//     database = mysql.createPool(dbConfigHeroku).promise();
-// }
-// else {
-//     database = mysql.createPool(dbConfigLocal).promise();
-// }
+if (is_heroku) {
+    database = mysql.createPool(dbConfigHeroku).promise();
+}
+else {
+    database = mysql.createPool(dbConfigLocal).promise();
+}
 
-// //=============above is mysql set up =========
 
-// //=====Sam suggest we use async await rather than call back=====
+/** Functions */
 
 // export async function getAllBuyers() {
 //     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
@@ -84,42 +68,30 @@ const is_heroku = process.env.IS_HEROKU || false;
 
 
 
-// /**
-//  * DO THIS ONE
-//  * get all the products of the store by the store id in the product table
-//  * @param {*} store_id 
-//  */
-// export async function getProductsByStoreId(store_id) { 
-//     return 111
-// }
+/**
+ Kevin
+ * get all the products of the store by the store id in the product table
+ * @param {*} store_id 
+ */
+function getProductsByStoreId(store_id) { 
+   let query = `
+    SELECT product.*, store_name
+    FROM product
+    LEFT JOIN store
+    ON store.store_id = product.store_id
+    WHERE store.store_id = 2`
+
+    
+}
 
  
-//  /** DO THIS ONE
-//   * get all the orders by the giving store id in the order table
-//   * @param {*} store_id 
-//   */
+ /** Kevin
+  * get all the orders by the giving store id in the order table
+  * @param {*} store_id 
+  */
+function getOrdersByStoreId(store_id) {
 
-// export async function getOrdersByStoreId(store_id) {
-
-// export async function getOrdersByStoreId(store_id) {
-//    //get all the orders by the giving store id in the order table
-//             //Join the store and Order
-
-
-// export async function getOrdersByStoreId(store_id) {
-//    //get all the orders by the giving store id in the order table
-//             //Join the store and Order
-
-
-
-// // export async function addTask(title) {
-// //     let query = `INSERT INTO tasks(title) VALUE (?)`
-// //     const [data] = await pool.query(query, [title])
-// //     const id = data.insertId
-// //     return await getTask(id)
-// //   }
-
-// // getBuyer(1).then(console.log)
+}
 
 
 
@@ -187,8 +159,6 @@ const is_heroku = process.env.IS_HEROKU || false;
 
 
 // //don't need to implement it because we don't have a edit shop page
-
-
 // export async function getStoreInfoByStoreId(store_id) { 
 
 
@@ -223,13 +193,10 @@ const is_heroku = process.env.IS_HEROKU || false;
 // }
 
 // //kevin
-
 // export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
 
 // }
 
-
-// }
 
 
 // //kevin
