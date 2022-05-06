@@ -1,29 +1,32 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
 
-    <title>Footer</title>
+<!--    <title>Footer</title>-->
 
-    <!-- Material.io/ CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../styles.css">
-</head>
-<body>
+<!--    &lt;!&ndash; Material.io/ CSS &ndash;&gt;-->
+<!--&lt;!&ndash;<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">&ndash;&gt;-->
+<!--&lt;!&ndash;    <link rel="stylesheet" href="../../styles.css">&ndash;&gt;-->
+<!--</head>-->
+<!--<body>-->
+
 
 
 <nav class="nav">
-    <a href="/" class="nav-link link-active ">
+
+<!--    //seller_landing fix this later -->
+    <a href="/seller_landing/seller_landing/101" class="nav-link <%= page === "page_landing" ? "link-active" : "" %>">
         <i class=" material-icons nav-icon">home</i>
         <span class="nav-text"> Home</span>
     </a>
-    <a href="/orders/orders_1" class="nav-link">
+    <a href="/orders/orders_1" class="nav-link <%= page === "orders" ? "link-active" : "" %>">
         <i class=" material-icons nav-icon">shopping_bag</i>
         <span class="nav-text"> orders</span>
     </a>
-    <a href="/product_post/product_post_1" class="nav-link">
+    <a href="/product_post/product_post_1" class="nav-link <%= page === "product_post" ? "link-active" : "" %>">
         <i class=" material-icons nav-icon">add_circle</i>
         <span class="nav-text"> post</span>
     </a>
@@ -31,8 +34,9 @@
         <i class=" material-icons nav-icon">leaderboard</i>
         <span class="nav-text"> analytics</span>
     </a>
-    <a href="#" class="nav-link">
-        <i class=" material-icons nav-icon">manage_accounts</i>
+<!--    change this based on userrr whch is logged in -->
+    <a href="/seller_shop/seller_shop/101" class="nav-link <%= page === "seller_shop" ? "link-active" : "" %>">
+        <i class=" material-icons nav-icon ">manage_accounts</i>
         <span class="nav-text"> shop</span>
     </a>
 </nav>
@@ -50,5 +54,5 @@
         })
     }
 </script>
-</body>
-</html>
+<!--</body>-->
+<!--</html>-->

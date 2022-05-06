@@ -5,14 +5,18 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Your Shop Orders</title>
-  <link rel="stylesheet" href="../../styles.css">
+
+    <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
+    <link rel="stylesheet" href="../../styles.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <style>
-    * {
-      /* margin: 0; */
+
+    <style>
+    main * {
       padding: 1%;
+
       box-sizing: border-box;
     }
+
 
     .slider {
       margin:5%;
@@ -24,6 +28,7 @@
       grid-template-columns: repeat(7, 1fr);
       gap: 5px; 
       pointer-events: none; 
+      padding: 5px;
     }
 
     /* the card */
@@ -41,21 +46,22 @@
       border-radius: 10px;
       width: 200px;
       height: 200px;
+      object-fit: contain;
     }
 
     .draft{
       display: flex;
       justify-content: space-between;
       margin: 5%;
-     
+
     }
 
     .grid{
       display: flex;
       flex-direction: row;
-      max-width: 100%; 
+      max-width: 80%; 
       height: auto;
-      margin: auto;
+      margin-left: 20px;
 
     }
 
@@ -63,6 +69,10 @@
       border-radius: 10px;
       width: 120px;
       height: 120px;
+    }
+
+    .spaceAtBottom {
+      height: 200px;
     }
   </style>
 </head>
@@ -75,51 +85,56 @@
     </header>
 
     <!-- the carousel slider of cards -->
+    <main>
     <div class="slider">
       <div class="slider-inner">
+
+        
         
           <div class="slider-img">
             <%= carouselSliderData[0].updateTime %> 
-            <img src="/uploads/1d906045030fa0da94e21a3521f858cf.png" class="slideImg"> <br>
+            <img src="/uploads/fbda680e1700a34f4a988c8d95fb147f.png" alt="" class="slideImg"> <br>
             <%= carouselSliderData[0].productName %> <br>
             <%= carouselSliderData[0].productPrice %> <br>
           </div>
-
           <div class="slider-img">
             <%= carouselSliderData[1].updateTime %> 
-            <img src="https://img.hollisterco.com/is/image/anf/KIC_322-2656-1450-500_prod1?policy=product-large" alt="" class="slideImg"> <br>
+            <img src="https://media.istockphoto.com/photos/portrait-of-a-young-pretty-female-student-in-a-white-hoodie-casual-picture-id1248498822?k=20&m=1248498822&s=612x612&w=0&h=EzpFyZF5d2sFKsQh-eV-jIi5JleYAZDJfSSnKlRy-iU=" alt="" class="slideImg"> <br>
             <%= carouselSliderData[1].productName %> <br>
             <%= carouselSliderData[1].productPrice %> <br>
           </div>
-
           <div class="slider-img">
             <%= carouselSliderData[2].updateTime %> 
-            <img src="https://images.complex.com/complex/images/c_crop,h_2788,w_4956,x_26,y_209/c_fill,dpr_2.0,f_auto,q_auto,w_1400/fl_lossy,pg_1/c8ligvjip9xtfpnvicts/blue-louis-vuitton-nike-air-force-1-friends-and-family?fimg-ssr" alt="" class="slideImg"> <br>
+            <img src="https://sneakernews.com/wp-content/uploads/2021/08/Nike-Air-Force-1-Low-DC2911-400-4.jpg" alt="" class="slideImg"> <br>
             <%= carouselSliderData[2].productName %> <br>
             <%= carouselSliderData[2].productPrice %> <br>
           </div>
-
           <div class="slider-img">
             <%= carouselSliderData[3].updateTime %> 
-            <img src="https://picsum.photos/<%= 300 + 3 %>" alt="" class="slideImg"> <br>
+            <img src="https://www.cleveland.com/resizer/s-qN2ZoMrE_jRSJy7AE6dsqJiC0=/1280x0/smart/image.cleveland.com/home/cleve-media/width600/img/ent_impact_home/photo/lebron-15-ghostjpg-485c5c2f3d667d4a.jpg" alt="" class="slideImg"> <br>
             <%= carouselSliderData[3].productName %> <br>
             <%= carouselSliderData[3].productPrice %> <br>
           </div>
-
           <div class="slider-img">
             <%= carouselSliderData[4].updateTime %> 
-            <img src="https://picsum.photos/<%= 300 + 4 %>" alt="" class="slideImg"> <br>
+            <img src="https://herschel.ca/content/dam/herschel/products/10020/10020-02041-OS_01.jpg.sthumbnails.1000.1250.jpg" alt="" class="slideImg"> <br>
             <%= carouselSliderData[4].productName %> <br>
             <%= carouselSliderData[4].productPrice %> <br>
           </div>
-
           <div class="slider-img">
             <%= carouselSliderData[5].updateTime %> 
-            <img src="https://picsum.photos/<%= 300 + 5 %>" alt="" class="slideImg"> <br>
+            <img src="https://images.lululemon.com/is/image/lululemon/LM9A07S_047748_1?wid=1280&op_usm=0.5,2,10,0&fmt=webp&qlt=80,1&fit=constrain,0&op_sharpen=0&resMode=sharp2&iccEmbed=0&printRes=72" alt="" class="slideImg"> <br>
             <%= carouselSliderData[5].productName %> <br>
             <%= carouselSliderData[5].productPrice %> <br>
           </div>
+          <div class="slider-img">
+            <%= carouselSliderData[6].updateTime %> 
+            <img src="https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwd2120ba9/images/d_08/M9621_D_08X1.jpg?sw=406" alt="" class="slideImg"> <br>
+            <%= carouselSliderData[6].productName %> <br>
+            <%= carouselSliderData[6].productPrice %> <br>
+          </div>
         
+
       </div>
     </div>
 
@@ -145,10 +160,10 @@
           <img src="https://picsum.photos/203" class="draftImg"> 
         </a>
     </div>
-    
-
+</main>
+    <div class="spaceAtBottom"></div>
     <footer>
-      <%- include('../elements/seller_footer.ejs') %>
+      <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
     </footer>
 </body>
 </html>
