@@ -14,7 +14,7 @@ const ejs = require("ejs")
 // import mysql from "mysql2"
 // import * as dbConnection from "./database/databaseConnection.js"
 // import ejs from 'ejs'
-
+// useless commennt
 //==image ===
 const multer = require("multer")
 const path = require("path")
