@@ -1,5 +1,6 @@
 
 /** database setup */
+const res = require("express/lib/response");
 const mysql = require("mysql2")
 const is_heroku = process.env.IS_HEROKU || false;
 let database;
@@ -18,7 +19,7 @@ const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
 	password: "root",
-	database: "localscoop",
+	database: "localscoop-local",
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
@@ -33,7 +34,72 @@ else {
 }
 
 
-/** Functions */
+/*****      Functions     *****/
+
+
+
+/**
+ Kevin
+ * get all the products of the store by the store id in the product table
+ * @param {number} store_id, 
+ */
+function getProductsByStoreId(store_id) { 
+    let query = `
+    SELECT product.*, store_name
+    FROM product
+    LEFT JOIN store
+    ON store.store_id = product.store_id
+    WHERE store.store_id = ?`
+
+    return database.query(query, [store_id])
+        .then((products) => {
+            // console.log(products)
+            return products
+            // return products[0];
+        })
+}
+exports.getProductsByStoreId = getProductsByStoreId
+
+
+ /** Kevin
+  * get all the orders by the giving store id in the order table
+  * @param {*} store_id 
+  */
+function getOrdersByStoreId(store_id) {
+
+}
+
+/**
+ * 
+ * @returns 1. for testing purposes
+ */
+function return1(){
+    return 1;
+}
+exports.return1 = return1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+//             //join
+
+
+
+
+// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+//             //join
+
 
 // export async function getAllBuyers() {
 //     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
@@ -65,45 +131,6 @@ else {
 //     const buyer = AllBuyers[0];
 //     return buyer;
 // }
-
-
-
-/**
- Kevin
- * get all the products of the store by the store id in the product table
- * @param {*} store_id 
- */
-function getProductsByStoreId(store_id) { 
-   let query = `
-    SELECT product.*, store_name
-    FROM product
-    LEFT JOIN store
-    ON store.store_id = product.store_id
-    WHERE store.store_id = 2`
-
-    
-}
-
- 
- /** Kevin
-  * get all the orders by the giving store id in the order table
-  * @param {*} store_id 
-  */
-function getOrdersByStoreId(store_id) {
-
-}
-
-
-
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
-
-
-
-
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
-
 
 
 
