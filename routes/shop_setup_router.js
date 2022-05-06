@@ -23,6 +23,11 @@ router.get("/a", (req, res) => {
 })
 
 
+router.get("/login_signup", (req, res) => {
+  res.render("shop_setup/login_signup", {
+
+  })
+})
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setup_1", (req, res) => {
