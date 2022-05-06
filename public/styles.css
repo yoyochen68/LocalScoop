@@ -108,7 +108,14 @@ body {
     font-size:16px ;
 }
 
+.bold{
+    font-weight: 700;
+}
 
+
+.semiBold{
+    font-weight: 500;
+}
 
 
 /*=====SHOP SETUP======*/
@@ -249,6 +256,9 @@ top:50px;
 }
 
 
+
+
+
 /*=====FOOTER/ HEADER======*/
 
 .nav {
@@ -376,10 +386,10 @@ top:50px;
 
 
 
-/*===== SELLER SHOP======*/
+/* ============Seller Shop=========== */
 
 .seller-shop-body{
-    padding:80px 0 110px 0;
+    padding:0 0 110px 0;
 }
 
 .seller-shop-body * {box-sizing:border-box}
@@ -504,7 +514,9 @@ top:50px;
 
 
 
-/* =======below css is for product posting======= */
+
+
+/* ============Product Posting=========== */
 
 /* Product_posting page 2 */
 .productPostImg {
@@ -584,7 +596,78 @@ font-size: 20px;
 }
 
 
-/* ====== above css is for product posting ========= */
+
+
+
+
+/* ============Seller landing=========== */
+
+
+.top_placeholder{
+    height:80px;
+}
+
+.seller-landing-body {
+    position: relative; /* usually the parent, in this case the body element, has position relative so that the absolute positioned child is positioned relative to it */
+    height: 100vh; /* 100% of the viewport height */
+    margin: 0; /* recommended */
+    /*box-sizing:border-box*/
+
+
+
+    /* you have to fixx thisssssssssssssssssssssssssssssssss*/
+    /*padding:80px 0 0 0  ;*/
+
+
+}
+
+.comingSoon{
+    position: absolute; /* taken out of the normal flow of the document */
+    top: 50%; /* moved down by 50% of the screen height */
+    transform: translateY(-50%); /* moved back up (Y axis) by half of its height to achieve the perfect center */
+    width: 100%; /* needs to be defined to keep the default block behavior */
+    text-align: center;
+    margin: 0; /* again, for perfect center */
+    opacity: 80%;
+}
+
+
+
+
+/* the card */
+.slider-img-landing{
+
+    box-sizing:border-box;
+    background-color: white;
+    text-align: center;
+
+    border-radius: 10px;
+    width:85%;
+    box-shadow: 2px 6px 6px 2px rgba(0, 0, 0, 0.40);
+    margin-top: 10%;
+    padding:10px
+}
+
+
+.slider-img-landing.card1{
+    height: 300px;
+
+}
+
+.slider-img-landing.card2{
+    height: 200px;
+}
+
+.sum_note{
+    padding: 5px;
+    margin: 20px;
+    background-color: #EEC195 ;
+    border-radius: 20px;
+    line-height: 1em;
+
+}
+
+/**/
 
 
 
