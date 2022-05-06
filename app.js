@@ -1,20 +1,31 @@
 /* libraries */
-import express from "express"
-import bodyParser from 'body-parser'
-import cookieParser from "cookie-parser"
-import cookieSession from "cookie-session"
-import mysql from "mysql2"
-import * as dbConnection from "./database/databaseConnection.js"
-import ejs from 'ejs'
+const express = require("express")
+const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
+const cookieSession = require("cookie-session")
+const mysql = require("mysql2")
+const dbConnection = require("./database/databaseConnection.js")
+const ejs = require("ejs")
+
+
+
+
+// import cookieSession from "cookie-session"
+// import mysql from "mysql2"
+// import * as dbConnection from "./database/databaseConnection.js"
+// import ejs from 'ejs'
 
 //==image ===
-import multer from 'multer'
-import path from 'path'
-import crypto from 'crypto';
+const multer = require("multer")
+const path = require("path")
+const crypto = require("crypto")
+// import multer from 'multer'
+// import path from 'path'
+// import crypto from 'crypto';
 
 
 // fake-database
-import * as db from './fake-db';
+// import * as db from './fake-db';
 
 // other files 
 const server = require("./server.js")

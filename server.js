@@ -1,5 +1,5 @@
-import * as app from './app.js';
-import mysql from "mysql2"
+const app = require("./app")
+const mysql = require("mysql2")
 
 const PORT = process.env.PORT || 8000; // let express set PORT, else make it 8000
 const dbConnection = require("./database/databaseConnection")
