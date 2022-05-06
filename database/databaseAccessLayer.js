@@ -26,21 +26,40 @@ export async function getProductsByStoreId(store_id) { //get all the products of
 
 
 export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
+            //Join the store and Order
+
 
 }
 
 
 export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+            //join
+
+
+
 
 }
 
 
-export async function getStoreInfoByStoreId(store_id) { 
+export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
+
+    //JOIN the
+
+// 1- Get the store id
 
 
 
 
-export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
+
+
+
+}
+
+
+
+
+
+//don't need to implement it because we don't have a edit shop page
 
 
 
