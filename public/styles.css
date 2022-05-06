@@ -16,9 +16,13 @@ body {
 
 .centerBox {
     text-align: center;
+    
 }
 
+.indexpage{
+    background-color:rgba(238, 193, 149, 0.19);
 
+}
 
 /* .container{
     text-align: center;
