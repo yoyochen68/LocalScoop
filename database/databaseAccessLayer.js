@@ -2,7 +2,11 @@
 // // import mysql from 'mysql2'
 // const is_heroku = process.env.IS_HEROKU || false;
 
+
 // let database;
+
+const mysql = require("mysql2")
+const is_heroku = process.env.IS_HEROKU || false;
 
 // const dbConfigHeroku = {
 //     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
@@ -53,13 +57,27 @@
 //     return AllBuyers;
 // }
 
-// // getAllBuyers().then(console.log)
+
+// export async function getAllBuyers() {
+//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
+//     const [AllBuyers] = await database.query(sqlQuery);
+//     return AllBuyers;
+// }
+
+// getAllBuyers().then(console.log)
 
 
 
 // export async function getBuyer(buyer_id) {
 //     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
 //     const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
+//     const buyer = AllBuyers[0];
+//     return buyer;
+// }
+
+// export async function getBuyer(buyer_id) {
+//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
+//     const [AllBuyers] = await database.query(sqlQuery,[buyer_id]);
 //     const buyer = AllBuyers[0];
 //     return buyer;
 // }
@@ -81,6 +99,12 @@
 //   * @param {*} store_id 
 //   */
 
+// export async function getOrdersByStoreId(store_id) {
+
+// export async function getOrdersByStoreId(store_id) {
+//    //get all the orders by the giving store id in the order table
+//             //Join the store and Order
+
 
 // export async function getOrdersByStoreId(store_id) {
 //    //get all the orders by the giving store id in the order table
@@ -88,14 +112,26 @@
 
 
 
+// // export async function addTask(title) {
+// //     let query = `INSERT INTO tasks(title) VALUE (?)`
+// //     const [data] = await pool.query(query, [title])
+// //     const id = data.insertId
+// //     return await getTask(id)
+// //   }
+
 // // getBuyer(1).then(console.log)
 
+
+
+// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+//             //join
 
 
 
 
 // export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
 //             //join
+
 
 
 
@@ -109,12 +145,13 @@
 // }
 // // getProduct(1).then(console.log)
 
-// export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
-//     let sqlQuery = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
-//     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
-//     const product_id = newproductInfo.insertId
-//     return await getProduct(product_id)
+// export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) { 
+//     let query = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
+//     const [newproductInfo] = await pool.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
+//     const id = newproductInfo.insertId
+//     return await getProduct(id)
 // }
+
 
 // export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
 
@@ -123,13 +160,44 @@
 // // 1- Get the store id
 
 
+// export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
+//     let sqlQuery = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
+//     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
+//     const product_id = newproductInfo.insertId
+//     return await getProduct(product_id)
 // }
 
+
+// export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
+
+// }
+
+
+//     //JOIN the
+
+// // 1- Get the store id
 
 
 // export async function getStoreInfoByStoreId(store_id) { 
 
+
 // }
+
+
+
+
+// //don't need to implement it because we don't have a edit shop page
+
+
+// export async function getStoreInfoByStoreId(store_id) { 
+
+
+// }
+
+// //don't need to implement it because we don't have a edit shop page 
+// export async function getAllProductPhotosByStoreId() {
+
+// } 
 
 
 // //don't need to implement it because we don't have a edit shop page
@@ -142,13 +210,27 @@
 
 
 
+
 // addNewProduct(4, rr, rr, rr, 50, 10,Date.now()).then(console.log)
 
 
 // //kevin:
 // export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
 
+// //kevin:
+// export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
+
 // }
+
+// //kevin
+
+// export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
+
+// }
+
+
+// }
+
 
 // //kevin
 
@@ -163,6 +245,17 @@
 // }
 
 // //yasmina
+// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+
+// }
+
+// //yasmina
+// // export async function getStoreInfoByStoreId(store_id) { 
+    
+// // }
+
+
+// //yasmina
 // // export async function getStoreInfoByStoreId(store_id) { 
 
 // // }
@@ -170,7 +263,11 @@
 
 
 
+
 // export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page 
+
+// export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
+
 
 
 
