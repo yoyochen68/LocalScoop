@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "localscoop - marketplace app for the 1st IDSP project of full-stack web development",
   "main": "app.js",
-
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
