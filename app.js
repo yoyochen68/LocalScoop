@@ -81,7 +81,6 @@ app.get("/dbtest", (req, res) => {
       // console.log(stores)
       res.status(200).send(stores[0])
     })
-  
 })
 
 app.get('/shop_setup', (req, res) => {
