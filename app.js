@@ -4,28 +4,20 @@ const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
 const cookieSession = require("cookie-session")
 const mysql = require("mysql2")
-const dbConnection = require("./database/databaseConnection.js")
 const ejs = require("ejs")
-
-
-
 
 // import cookieSession from "cookie-session"
 // import mysql from "mysql2"
-// import * as dbConnection from "./database/databaseConnection.js"
 // import ejs from 'ejs'
 
 //==image ===
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
+
 // import multer from 'multer'
 // import path from 'path'
 // import crypto from 'crypto';
-
-
-// fake-database
-// import * as db from './fake-db';
 
 // other files 
 const server = require("./server.js")
@@ -78,13 +70,9 @@ app.get("/", (req, res) => {
 })
 
 
-app.get("/dbtest", (req, res) => {
-  dbConnection.getStores()
-    .then((stores) => {
-      // console.log(stores)
-      res.status(200).send(stores[0])
-    })
-  
+
+app.get("/sitemap", (req, res) => {
+  res.render("sitemap")
 })
 
 
@@ -124,23 +112,6 @@ function checkFileType(file, cb) {
 }
 
 
-
-// app.post('/upload', upload, (req, res) => {
-//   if (req.file == undefined) {
-//     res.render('/shop_setup/shop_setup_6', {
-//       msg: 'Error: No File Selected!'
-//     });
-//     return 
-//   } 
-//   console.log(req.file)
-//   // store some info in the database
-//   res.render('shop_setup/shop_setup_6', {
-//     msg: 'File Uploaded!',
-//     file: `uploads/${req.file.filename}`
-//   });
-// });
-
-// le comment
 
 
 

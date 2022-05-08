@@ -62,22 +62,14 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
  /** Kevin
-  * get all the orders by the giving store id in the order table
+  * get all the orders by the given store id in the order table
   * @param {*} store_id 
   */
 function getOrdersByStoreId(store_id) {
+    let query = ``
 
+    return database.query(query, )
 }
-
-/**
- * 
- * @returns 1. for testing purposes
- */
-function return1(){
-    return 1;
-}
-exports.return1 = return1
-
 
 
 
