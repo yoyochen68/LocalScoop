@@ -6,7 +6,7 @@ const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
-
+const mysqlDB = require('../database/databaseAccessLayer')
 
 
 const { append } = require("express/lib/response");
@@ -46,26 +46,30 @@ router.get("/shop_setup_2", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_2
 router.post("/shop_setup_2", (req, res) => {
+  
   // put storeName in cookie session
   req.session.storeName = req.body.storeName;
 
-  let storeId = db.returnNextShopId()
-  req.session.storeId = storeId
-  // create obj to pass into addShop(), need to add storeId and everything else in req.body
-  let addShopObj = {
-    storeName: req.body.storeName,
-    phoneNum: req.body.phoneNum,
-    email: req.body.email,
-    password: req.body.password,
-    storeId: storeId
+  // retrieve user input from req.body
+  let store_name = req.body.storeName;
+  let store_phone_number = req.body.phoneNum;
+  let store_email = req.body.email;
+  let store_password_hash = req.body.password;
+
+  if(store_name == null || store_phone_number == null || store_email == null || store_password_hash == null) {
+    // user did not give all of required info, redirect to the same page 
+    res.redirect("/shop_setup/shop_setup_3")
   }
 
-  // adds the use input information into the fake-db
-  db.addShop(addShopObj)
-
   // write store name into database
+  mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash)
+  
+  // redirect to next page
   res.redirect("/shop_setup/shop_setup_3")
 })
+
+
+
 
 
 // GET /shop_setUp/shop_setUp_3
@@ -81,13 +85,15 @@ router.post("/shop_setup_3", (req, res) => {
   // console.log(req.session.storeName) // works
   // console.log(db.returnShopInfo())
 
-  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
+  let shopInfo = mysqlDB.getStoreInfoFromStoreName('')
+  
+  res.send(shopInfo)
 
   // console.log(db.returnShopInfo())
-  db.editShop(shopIdOfSession, req.body)
+  // db.editShop(shopIdOfSession, req.body)
 
 
-  res.redirect("/shop_setUp/shop_setUp_4")
+  // res.redirect("/shop_setUp/shop_setUp_4")
 })
 
 

@@ -110,12 +110,39 @@ function addShop(store_name, store_phone_number, store_email, store_password_has
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
     VALUES ( ?, ?, ?, ?);`
 
+<<<<<<< Updated upstream
 /**
  *
  * @param store_id
  * @returns {Promise<void>}
  */
 function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+=======
+		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash])
+}
+exports.addShop = addShop
+
+
+/**
+ * @param {string} store_name 
+ * @returns storeInfo with given store name
+ */
+function getStoreInfoFromStoreName(store_name){
+
+	let query = 
+		`SELECT * 
+		 FROM store
+		 WHERE store_name = ?`
+
+	return database.query(query, [store_name])
+		.then((result) => {
+			return result
+		})
+}
+exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
+
+
+>>>>>>> Stashed changes
 
         let query = `
              SELECT store.*
