@@ -26,8 +26,9 @@ router.get("/a",  async (req, res) => {
 //        res.send(a)
 
         // await mysqlDB.addShop('the orange slut', 7782340000, 'boiiii@gmail.com', 'fsjdhf3u9h3')
-        let a = await mysqlDB.getOrdersByStoreId(1)
-        res.send(a)
+        let storeInfo = await mysqlDB.getStoreInfoFromStoreName('aaa')
+        let storeId = storeInfo[0]
+        res.send(storeInfo)
        
 
     } catch (error){
