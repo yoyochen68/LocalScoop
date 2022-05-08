@@ -19,7 +19,7 @@ const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
 	password: "root",
-	database: "localscoop-local",
+	database: "localscoop",
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
@@ -53,8 +53,7 @@ function getProductsByStoreId(store_id) {
 
     return database.query(query, [store_id])
         .then((products) => {
-            // console.log(products)
-            return products
+            return products[0]
             // return products[0];
         })
 }
@@ -63,21 +62,18 @@ exports.getProductsByStoreId = getProductsByStoreId
 
  /** Kevin
   * get all the orders by the giving store id in the order table
-  * @param {*} store_id 
+  * @param {number} store_id. 
   */
 function getOrdersByStoreId(store_id) {
+    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+    let query = "select * from `order` WHERE store_id = ?"; 
 
+    return database.query(query, [store_id])
+        .then((orders) => {
+            return orders[0]
+        })
 }
-
-/**
- * 
- * @returns 1. for testing purposes
- */
-function return1(){
-    return 1;
-}
-exports.return1 = return1
-
+exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 

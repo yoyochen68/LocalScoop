@@ -21,7 +21,7 @@ app.use(express.json())
  */
 router.get("/a",  async (req, res) => {
     try {  
-        const a = await mysqlDB.getProductsByStoreId(1)
+        const a = await mysqlDB.getOrdersByStoreId(1)
        res.send(a[0])
     } catch (error){
         res.send(error)
@@ -31,16 +31,9 @@ router.get("/a",  async (req, res) => {
 
 
 
+
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
-    
-//    mysqlDB.getStores()
-//    .then((result) => {
-//         res.send(result[0])
-//    })
-//    .catch(error => {
-//        res.status(400).send('NEIN!')
-//    })
 
     let carouselSliderData = [
         { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125', link: "/Users/kevincjhung/Documents/GitHub/idsp1-localScoop/public/uploads/fbda680e1700a34f4a988c8d95fb147f.png" },
