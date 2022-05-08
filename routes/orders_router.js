@@ -21,8 +21,10 @@ app.use(express.json())
  */
 router.get("/a",  async (req, res) => {
     try {  
-        const a = await mysqlDB.getOrdersByStoreId(1)
-       res.send(a[0])
+        // await mysqlDB.addShop('the orange slut', 7782340000, 'boiiii@gmail.com', 'fsjdhf3u9h3')
+        let a = await mysqlDB.getOrdersByStoreId(1)
+        res.send(a)
+       
     } catch (error){
         res.send(error)
     }  

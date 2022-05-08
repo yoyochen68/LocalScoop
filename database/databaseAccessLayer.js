@@ -39,7 +39,6 @@ else {
 
 
 /**
- Kevin
  * get all the products of the store by the store id in the product table
  * @param {number} store_id, 
  */
@@ -60,7 +59,7 @@ function getProductsByStoreId(store_id) {
 exports.getProductsByStoreId = getProductsByStoreId
 
 
- /** Kevin
+ /** 
   * get all the orders by the giving store id in the order table
   * @param {number} store_id. 
   */
@@ -76,8 +75,21 @@ function getOrdersByStoreId(store_id) {
 exports.getOrdersByStoreId = getOrdersByStoreId
 
 
+/**
+ * @param {string} store_name 
+ * @param {string, number} store_phone_number 
+ * @param {string} store_email 
+ * @param {string} store_password_hash 
+ * @returns 
+ */
+function addShop(store_name, store_phone_number, store_email, store_password_hash){
+  let query = `
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    VALUES ( ?, ?, ?, ?);`
 
-
+		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash])
+}
+exports.addShop = addShop
 
 
 
