@@ -22,7 +22,7 @@ app.use(express.json())
 router.get("/a",  async (req, res) => {
     try {  
         const a = await mysqlDB.getProductsByStoreId(1)
-       res.send(a[0])
+       res.send(a)
     } catch (error){
         res.send(error)
     }  

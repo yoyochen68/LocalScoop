@@ -18,12 +18,27 @@ const dbConfigHeroku = {
 const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
-	password: "root",
-	database: "localscoop-local",
+	password: "Fswd2021$",
+	database: "localscoop",
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
 };
+
+
+//KEVIN's localHost
+
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "root",
+//     database: "localscoop-local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
+
+
 
 
 if (is_heroku) {
@@ -43,16 +58,19 @@ else {
  * get all the products of the store by the store id in the product table
  * @param {number} store_id, 
  */
-function getProductsByStoreId(store_id) { 
+function getProductsByStoreId(store_id) {
     let query = `
-    SELECT product.*, store_name
+    SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
     LEFT JOIN store
     ON store.store_id = product.store_id
-    WHERE store.store_id = ?`
+    LEFT JOIN product_photo
+    ON product.product_id = product_photo.product_id
+    WHERE store.store_id = ?
+    `
 
     return database.query(query, [store_id])
-        .then((products) => {
+        .then(([products, fields]) => {
             // console.log(products)
             return products
             // return products[0];
@@ -82,18 +100,29 @@ exports.return1 = return1
 
 
 
+/**
+ *
+ * @param store_id
+ * @returns {Promise<void>}
+ */
+function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
 
+        let query = `
+             SELECT store.*
+        FROM store
+        WHERE store.store_id = ?
+                       
+    `
 
+        return database.query(query, [store_id])
+            .then(([store, fields]) => {
+                // console.log(products)
+                return store
+                // return products[0];
+            })
 
-
-
-
-
-
-
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
-
+}
+    exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
