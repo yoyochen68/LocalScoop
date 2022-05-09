@@ -112,41 +112,11 @@ function addShop(store_name, store_phone_number, store_email, store_password_has
 }
 
 
-
-
-<<<<<<< Updated upstream
 /**
- *
- * @param store_id
- * @returns {Promise<void>}
+ * @param {string} store_id
+ * @returns storeInfo with given store id
  */
-function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-=======
-		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash])
-}
-exports.addShop = addShop
-
-
-/**
- * @param {string} store_name 
- * @returns storeInfo with given store name
- */
-function getStoreInfoFromStoreName(store_name){
-
-	let query = 
-		`SELECT * 
-		 FROM store
-		 WHERE store_name = ?`
-
-	return database.query(query, [store_name])
-		.then((result) => {
-			return result
-		})
-}
-exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
-
-
->>>>>>> Stashed changes
+function getStoreInfoByStoreId(store_id){
 
     let query = `
              SELECT store.*, store_photo.photo_file_path
@@ -164,7 +134,7 @@ exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
             // return products[0];
         })
 }
-    exports.getStoreInfoByStoreId = getStoreInfoByStoreId
+exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
