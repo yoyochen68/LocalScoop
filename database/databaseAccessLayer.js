@@ -111,6 +111,9 @@ function addShop(store_name, store_phone_number, store_email, store_password_has
     VALUES ( ?, ?, ?, ?);`
 }
 
+exports.addShop = addShop
+
+
 
 /**
  * @param {string} store_id
