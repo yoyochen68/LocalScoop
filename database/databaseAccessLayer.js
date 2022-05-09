@@ -14,16 +14,34 @@ const dbConfigHeroku = {
     namedPlaceholders: true
 };
 
+
+//YASMINA's localHost
+
 /* change this so it matches yours */
 const dbConfigLocal = {
 	host: "localhost",
 	user: "root",
-	password: "root",
-	database: "localscoop-local",
+	password: "Fswd2021$",
+	database: "localscoop",
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
 };
+
+
+//KEVIN's localHost
+
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "root",
+//     database: "localscoop-local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
+
+
 
 
 if (is_heroku) {
@@ -39,61 +57,110 @@ else {
 
 
 /**
- Kevin
  * get all the products of the store by the store id in the product table
  * @param {number} store_id, 
  */
-function getProductsByStoreId(store_id) { 
+function getProductsByStoreId(store_id) {
     let query = `
-    SELECT product.*, store_name
+    SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
     LEFT JOIN store
     ON store.store_id = product.store_id
-    WHERE store.store_id = ?`
+    LEFT JOIN product_photo
+    ON product.product_id = product_photo.product_id
+    WHERE store.store_id = ?
+    `
 
     return database.query(query, [store_id])
-        .then((products) => {
+        .then(([products, fields]) => {
             // console.log(products)
             return products
+
             // return products[0];
         })
 }
 exports.getProductsByStoreId = getProductsByStoreId
 
 
- /** Kevin
+ /** 
   * get all the orders by the giving store id in the order table
-  * @param {*} store_id 
+  * @param {number} store_id. 
   */
 function getOrdersByStoreId(store_id) {
+    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+    let query = "select * from `order` WHERE store_id = ?"; 
 
+    return database.query(query, [store_id])
+        .then((orders) => {
+            return orders[0]
+        })
 }
+exports.getOrdersByStoreId = getOrdersByStoreId
+
 
 /**
- * 
- * @returns 1. for testing purposes
+ * @param {string} store_name 
+ * @param {string, number} store_phone_number 
+ * @param {string} store_email 
+ * @param {string} store_password_hash 
+ * @returns 
  */
-function return1(){
-    return 1;
+function addShop(store_name, store_phone_number, store_email, store_password_hash){
+  let query = `
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    VALUES ( ?, ?, ?, ?);`
+
+<<<<<<< Updated upstream
+/**
+ *
+ * @param store_id
+ * @returns {Promise<void>}
+ */
+function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
+=======
+		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash])
 }
-exports.return1 = return1
+exports.addShop = addShop
 
 
+/**
+ * @param {string} store_name 
+ * @returns storeInfo with given store name
+ */
+function getStoreInfoFromStoreName(store_name){
+
+	let query = 
+		`SELECT * 
+		 FROM store
+		 WHERE store_name = ?`
+
+	return database.query(query, [store_name])
+		.then((result) => {
+			return result
+		})
+}
+exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
 
 
+>>>>>>> Stashed changes
+
+        let query = `
+             SELECT store.*
+        FROM store
+        WHERE store.store_id = ?
+                       
+    `
+
+        return database.query(query, [store_id])
+            .then(([store, fields]) => {
+                // console.log(products)
+                return store
+                // return products[0];
+            })
 
 
-
-
-
-
-
-
-
-
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
-
+}
+    exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
