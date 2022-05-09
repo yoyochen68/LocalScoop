@@ -91,8 +91,8 @@ function getOrdersByStoreId(store_id) {
     let query = "select * from `order` WHERE store_id = ?"; 
 
     return database.query(query, [store_id])
-        .then((orders) => {
-            return orders[0]
+        .then(([orders, fields]) => {
+            return orders
         })
 }
 exports.getOrdersByStoreId = getOrdersByStoreId
@@ -105,10 +105,14 @@ exports.getOrdersByStoreId = getOrdersByStoreId
  * @param {string} store_password_hash 
  * @returns 
  */
-function addShop(store_name, store_phone_number, store_email, store_password_hash){
-  let query = `
+function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+    let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
     VALUES ( ?, ?, ?, ?);`
+}
+
+
+
 
 /**
  *
@@ -117,21 +121,21 @@ function addShop(store_name, store_phone_number, store_email, store_password_has
  */
 function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
 
-        let query = `
-             SELECT store.*
+    let query = `
+             SELECT store.*, store_photo.photo_file_path
         FROM store
+        LEFT JOIN store_photo
+        ON store.store_id = store_photo.store_id
         WHERE store.store_id = ?
-                       
+        
     `
 
-        return database.query(query, [store_id])
-            .then(([store, fields]) => {
-                // console.log(products)
-                return store
-                // return products[0];
-            })
-
-
+    return database.query(query, [store_id])
+        .then(([store, fields]) => {
+            // console.log(products)
+            return store
+            // return products[0];
+        })
 }
     exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
@@ -140,7 +144,7 @@ function getStoreInfoByStoreId(store_id) { //get the store info by the giving st
 // export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
 //             //join
 
-
+//
 // export async function getAllBuyers() {
 //     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
 //     const [AllBuyers] = await database.query(sqlQuery);

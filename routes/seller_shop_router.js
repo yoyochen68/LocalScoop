@@ -57,9 +57,9 @@ router.get("/seller_shop/:id",  async (req, res) => {
        // }
 
 // res.send(productInfo)
-//         res.send(storeInfo[0].photo_file_path)
+//         res.send(storeInfo.photo_file_path)
 //         res.send(storeInfo)
-        res.render("seller_shop/seller_shop", {storeInfo: storeInfo[0], productInfo:productInfo[0]})
+        res.render("seller_shop/seller_shop", {storeInfo: storeInfo, productInfo:productInfo})
 
     }catch (error){
         res.send(error)
