@@ -29,7 +29,7 @@ const dbConfigLocal = {
 };
 
 
-//KEVIN's localHost
+// KEVIN's localHost
 
 // const dbConfigLocal = {
 //     host: "localhost",
@@ -57,8 +57,9 @@ else {
 
 
 /**
- * get all the products of the store by the store id in the product table
- * @param {number} store_id, 
+ * 
+ * @param {number} store_id 
+ * @returns all products belonging to a store
  */
 function getProductsByStoreId(store_id) {
     let query = `
@@ -108,19 +109,21 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 function addShop(store_name, store_phone_number, store_email, store_password_hash){
   let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
-    VALUES ( ?, ?, ?, ?);`
+    VALUES ( ?, ?, ?, ?);`;
+		
+		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+}	
+exports.addShop = addShop
 
-<<<<<<< Updated upstream
+
 /**
  *
  * @param store_id
  * @returns {Promise<void>}
  */
 function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-=======
 		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash])
 }
-exports.addShop = addShop
 
 
 /**
@@ -142,30 +145,11 @@ function getStoreInfoFromStoreName(store_name){
 exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
 
 
->>>>>>> Stashed changes
-
-        let query = `
-             SELECT store.*
-        FROM store
-        WHERE store.store_id = ?
-                       
-    `
-
-        return database.query(query, [store_id])
-            .then(([store, fields]) => {
-                // console.log(products)
-                return store
-                // return products[0];
-            })
-
-
-}
-    exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
+
+
 
 
 // export async function getAllBuyers() {
@@ -198,10 +182,6 @@ exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
 //     const buyer = AllBuyers[0];
 //     return buyer;
 // }
-
-
-
-
 
 // export async function getProduct(product_id) {
 //     let sqlQuery = `SELECT * FROM product WHERE product_id = ?`
@@ -239,16 +219,6 @@ exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
 // }
 
 
-//     //JOIN the
-
-// // 1- Get the store id
-
-
-// export async function getStoreInfoByStoreId(store_id) { 
-
-
-// }
-
 
 
 
@@ -278,63 +248,11 @@ exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
 // addNewProduct(4, rr, rr, rr, 50, 10,Date.now()).then(console.log)
 
 
-// //kevin:
-// export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
-
-// //kevin:
-// export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
-
-// }
-
-// //kevin
-// export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
-
-// }
-
-
-
-// //kevin
-
-// export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
-
-// }
-
-
-// //yasmina
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-
-// }
-
-// //yasmina
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-
-// }
-
-// //yasmina
-// // export async function getStoreInfoByStoreId(store_id) { 
-    
-// // }
-
-
-// //yasmina
-// // export async function getStoreInfoByStoreId(store_id) { 
-
-// // }
-
-
-
 
 
 // export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page 
 
 // export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
-
-
-
-
-
-
-
 
 
 
