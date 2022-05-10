@@ -172,7 +172,6 @@ exports.addShop = addShop
 
 
 /**
- *
  * @param store_id
  * @param store_address
  * @returns {Promise<*>}
@@ -188,6 +187,7 @@ WHERE store.store_id  = ?;
     return getStoreInfoByStoreId(store_id)
 
 }
+
 
 exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 // updateShopAddressByStoreId(1,"123 Robson ST").then(console.log)
@@ -215,6 +215,11 @@ async function getCategoryIdByCategoryName(categoryNameList) {
 
     return categoryIdList
 
+function getStoreInfoFromStoreName(store_name){
+	let query = 
+		`SELECT * 
+		 FROM store
+		 WHERE store_name = ?`
 }
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 // getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
