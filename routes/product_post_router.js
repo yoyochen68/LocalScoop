@@ -8,7 +8,7 @@ const db = require("../fake-db");
 const router = express.Router();
 // const axios = require('axios')
 
-
+const mySqlDatabase = require("../database/databaseAccessLayer")
 
 
 /* Global Variables */
@@ -28,23 +28,45 @@ router.get("/product_post_2", (req, res) => {
 
   })
 })
-router.post("/product_post_2", (req, res) => {
+
+//fake database:
+// router.post("/product_post_2", (req, res) => {
+//   // let storeId = req.session.storeId ? req.session.storeId : null;
+//   let productInfo = req.body
+//   let storeId = 104
+//   let productName = productInfo.itemName
+//   let category = productInfo.category
+//   let description = productInfo.description
+//   let productPrice = +productInfo.productPrice
+//   let deliveryFee = +productInfo.deliveryFee
+//   let imgUrl = productInfo.imgUrl
+//   // if(storeId){}
+//   let produt = db.addProduct(storeId, productName, category, description, productPrice, deliveryFee,imgUrl)
+//   console.log(produt)
+//   res.render("product_post/product_post_2",{productInfo})
+// })
+
+
+// mysql:
+router.post("/product_post_2", async(req, res) => {
   // let storeId = req.session.storeId ? req.session.storeId : null;
   let productInfo = req.body
-
-  let storeId = 104
-  let productName = productInfo.itemName
-  let category = productInfo.category
-  let description = productInfo.description
-  let productPrice = +productInfo.productPrice
-  let deliveryFee = +productInfo.deliveryFee
-  let imgUrl = productInfo.imgUrl
-  // if(storeId){}
-  let produt = db.addProduct(storeId, productName, category, description, productPrice, deliveryFee,imgUrl)
-
-  console.log(produt)
+  let store_id = 1
+  let product_name = productInfo.productName
+  let product_category = productInfo.category
+  let product_description = productInfo.description
+  let product_price = +productInfo.productPrice
+  let product_delivery_fee = +productInfo.deliveryFee
+  let photo_file_path = productInfo.imgUrl
+  
+  let product_id = await mySqlDatabase.addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) 
+  // console.log(produt)
+  let photo = await mySqlDatabase.addNewProductPhoto(product_id, photo_file_path)
+  console.log("photo:",photo)
   res.render("product_post/product_post_2",{productInfo})
 })
+
+
 
 
 /************      handling the store image uploading          **********/
@@ -97,7 +119,7 @@ router.post('/upload', upload, (req, res) => {
 
   // let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = '/uploads/' + req.file.filename
-console.log(multeredFilename)
+// console.log(multeredFilename)
   // db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
 
   // store some info in the database

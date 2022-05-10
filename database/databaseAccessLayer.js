@@ -1,4 +1,5 @@
 
+
 /** database setup */
 const res = require("express/lib/response");
 const mysql = require("mysql2")
@@ -18,15 +19,15 @@ const dbConfigHeroku = {
 //YASMINA's localHost
 
 /* change this so it matches yours */
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
 // KEVIN's localHost
@@ -42,7 +43,17 @@ const dbConfigLocal = {
 // };
 
 
+//YOYO local database
 
+const dbConfigLocal = {
+	host: "localhost",
+	user: "root",
+	password: "Password",
+	database: "localscoop_local",
+	port: 3306,
+	multipleStatements: false,
+	namedPlaceholders: true
+};
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -57,46 +68,52 @@ else {
 
 
 /**
+
  * 
  * @param {number} store_id 
  * @returns all products belonging to a store
+
+
  */
-function getProductsByStoreId(store_id) {
-    let query = `
-    SELECT product.*, store.store_name, product_photo.photo_file_path
-    FROM product
-    LEFT JOIN store
-    ON store.store_id = product.store_id
-    LEFT JOIN product_photo
-    ON product.product_id = product_photo.product_id
-    WHERE store.store_id = ?
-    `
+// function getProductsByStoreId(store_id=1) {
+//     let query = `
+//     SELECT product.*, store.store_name, product_photo.photo_file_path
+//     FROM product
+//     LEFT JOIN store
+//     ON store.store_id = product.store_id
+//     LEFT JOIN product_photo
+//     ON product.product_id = product_photo.product_id
+//     WHERE store.store_id = ?
+//     `
 
-    return database.query(query, [store_id])
-        .then(([products, fields]) => {
-            // console.log(products)
-            return products
+//     return database.query(query, [store_id])
+//         .then(([products, fields]) => {
+//             // console.log(products)
+//             return products
 
-            // return products[0];
-        })
-}
-exports.getProductsByStoreId = getProductsByStoreId
+//             // return products[0];
+//         })
+// }
+// exports.getProductsByStoreId = getProductsByStoreId
 
 
  /** 
   * get all the orders by the giving store id in the order table
   * @param {number} store_id. 
   */
-function getOrdersByStoreId(store_id) {
-    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
-    let query = "select * from `order` WHERE store_id = ?"; 
 
-    return database.query(query, [store_id])
-        .then(([orders, fields]) => {
-            return orders
-        })
-}
-exports.getOrdersByStoreId = getOrdersByStoreId
+
+// function getOrdersByStoreId(store_id=1) {
+//     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+//     let query = "select * from `order` WHERE store_id = ?"; 
+
+//     return database.query(query, [store_id])
+//         .then((orders) => {
+//             return orders[0]
+//         })
+// }
+// exports.getOrdersByStoreId = getOrdersByStoreId
+
 
 
 
@@ -108,6 +125,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
  * @param store_password_hash
  * @returns {*}
  */
+
 function addShop(store_name, store_phone_number, store_email, store_password_hash) {
     let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
@@ -299,59 +317,71 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 
-//
-// export async function getAllBuyers() {
-//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
-//     const [AllBuyers] = await database.query(sqlQuery);
-//     return AllBuyers;
-// }
 
-
-// export async function getAllBuyers() {
-//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
-//     const [AllBuyers] = await database.query(sqlQuery);
-//     return AllBuyers;
-// }
+//works for local database
+ async function getAllBuyers() {
+    let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
+    const [AllBuyers] =  await database.query(sqlQuery);
+    return AllBuyers;
+}
+exports.getAllBuyers = getAllBuyers
 
 // getAllBuyers().then(console.log)
 
 
-
-// export async function getBuyer(buyer_id) {
-//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
-//     const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
-//     const buyer = AllBuyers[0];
-//     return buyer;
-// }
-
-// export async function getBuyer(buyer_id) {
-//     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
-//     const [AllBuyers] = await database.query(sqlQuery,[buyer_id]);
-//     const buyer = AllBuyers[0];
-//     return buyer;
-// }
-
-// export async function getProduct(product_id) {
-//     let sqlQuery = `SELECT * FROM product WHERE product_id = ?`
-//     const [products] = await database.query(sqlQuery, [product_id])
-//     const product = products[0]
-//     return product
-// }
-// // getProduct(1).then(console.log)
-
-// export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
-//     let query = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
-//     const [newproductInfo] = await pool.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
-//     const id = newproductInfo.insertId
-//     return await getProduct(id)
-// }
+//works for local database
+ async function getBuyer(buyer_id) {
+    let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
+    const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
+    const buyer = AllBuyers[0];
+    return buyer;
+}
+exports.getBuyer = getBuyer
+// getBuyer(2).then(console.log)
 
 
-// export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
+//works for local database
+ async function getProductsAndImages(product_id) {
+    let sqlQuery = `SELECT * FROM productsAndImages WHERE product_id = ?`
+    const [products] = await database.query(sqlQuery, [product_id])
+    const product = products[0]
+    return product
+}
+exports.getProductsAndImages = getProductsAndImages
+// getProductsAndImages(2).then(console.log)
 
-//     //JOIN the
+//works for local database
+ async function addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) { 
+    let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
+    const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee])
+    return +newproductInfo.insertId
+    // const  id = +newproductInfo.insertId
+    // console.log(id)
+    // return await getProductsAndImages(id)
+}
 
-// // 1- Get the store id
+
+exports.addNewProduct = addNewProduct
+//addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
+
+
+
+async function addNewProductPhoto(product_id, photo_file_path){
+    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
+    const newProductPhoto = await database.query(query, [product_id, photo_file_path])
+    return await getProductsAndImages(product_id)
+}
+
+exports.addNewProductPhoto = addNewProductPhoto
+// addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
+
+
+
+
+
+// addNewProductPhoto(4).then(console.log)
+
 
 
 // export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
@@ -393,7 +423,7 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 
-// addNewProduct(4, rr, rr, rr, 50, 10,Date.now()).then(console.log)
+
 
 
 
@@ -591,4 +621,4 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 // }
 
 
-// module.exports = { getAllRestaurants, addRestaurants, deleteRestaurants, getReview, getRestaurantName, addReview, deleteReview }
+// module.exports = { getAllRestaurants, addRestaurants, deleteRestaurants, getReview, getRestaurantName, addReview, deleteReview}
