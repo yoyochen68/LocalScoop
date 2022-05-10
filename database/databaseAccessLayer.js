@@ -19,15 +19,15 @@ const dbConfigHeroku = {
 //YASMINA's localHost
 
 /* change this so it matches yours */
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Fswd2021$",
-// 	database: "localscoop",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
+const dbConfigLocal = {
+	host: "localhost",
+	user: "root",
+	password: "Fswd2021$",
+	database: "localscoop",
+	port: 3306,
+	multipleStatements: false,
+	namedPlaceholders: true
+};
 
 
 // KEVIN's localHost
@@ -45,15 +45,15 @@ const dbConfigHeroku = {
 
 //YOYO local database
 
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Password",
-	database: "localscoop_local",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Password",
+// 	database: "localscoop_local",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -115,29 +115,6 @@ else {
 // exports.getOrdersByStoreId = getOrdersByStoreId
 
 
-
-
-/**
- *
- * @param store_name
- * @param store_phone_number
- * @param store_email
- * @param store_password_hash
- * @returns {*}
- */
-
-function addShop(store_name, store_phone_number, store_email, store_password_hash) {
-    let query = `
-    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
-    VALUES ( ?, ?, ?, ?);`;
-		
-		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
-}	
-exports.addShop = addShop
-
-
-
-
 /**
  *
  * @param store_id
@@ -145,11 +122,10 @@ exports.addShop = addShop
  */
 async function getStoreInfoByStoreId(store_id){
 
-    //------------------------------------------------------it does not work, ASK SAM
     let query = `
           SELECT store.*, 
-          GROUP_CONCAT(category.category_name SEPARATOR', ') AS "categories",
-          GROUP_CONCAT(store_photo.photo_file_path SEPARATOR', ') AS "photos"
+          GROUP_CONCAT(DISTINCT category.category_name ORDER BY category.category_id SEPARATOR', ') AS "categories",
+          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
 
         FROM store
         LEFT JOIN store_category 
@@ -174,7 +150,29 @@ getStoreInfoByStoreId(1).then(console.log)
 
 
 
-//==============updateShop===================
+//===================SHOP SETUP=========================
+
+
+/**
+ *
+ * @param store_name
+ * @param store_phone_number
+ * @param store_email
+ * @param store_password_hash
+ * @returns {*}
+ */
+
+function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+    let query = `
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    VALUES ( ?, ?, ?, ?);`;
+
+    return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+}
+exports.addShop = addShop
+
+
+
 
 
 /**
@@ -265,11 +263,11 @@ exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
 async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=null) {
 
     let query = `
-UPDATE store
-SET store.delivery = ?,
-store.pickup = ?,
-store.radius = ?
-WHERE store.store_id = ?;`
+    UPDATE store
+    SET store.delivery = ?,
+    store.pickup = ?,
+    store.radius = ?
+    WHERE store.store_id = ?;`
 
     await database.query(query,[delivery, pickup, radius, store_id])
     return getStoreInfoByStoreId(store_id)
@@ -287,28 +285,18 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 
-// function updateShopPhotoByStoreId(store_id, photo_path="") {
-// }
-// exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
+async function updateShopPhotoByStoreId(store_id, photo_path="") {
 
+    let query = `
+    INSERT INTO store_photo(store_id, photo_file_path ) 
+    VALUE(?, ?)`
 
+    await database.query(query, [store_id, photo_path])
+    // return getStoreInfoByStoreId(store_id)
+}
+exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//---------------------------------------------------------------------------
 
 
 
