@@ -75,26 +75,22 @@ else {
 
 
  */
-// function getProductsByStoreId(store_id=1) {
-//     let query = `
-//     SELECT product.*, store.store_name, product_photo.photo_file_path
-//     FROM product
-//     LEFT JOIN store
-//     ON store.store_id = product.store_id
-//     LEFT JOIN product_photo
-//     ON product.product_id = product_photo.product_id
-//     WHERE store.store_id = ?
-//     `
+async function getProductsByStoreId(store_id=1) {
+    let query = `
+    SELECT product.*, store.store_name, product_photo.photo_file_path
+    FROM product
+    LEFT JOIN store
+    ON store.store_id = product.store_id
+    LEFT JOIN product_photo
+    ON product.product_id = product_photo.product_id
+    WHERE store.store_id = ?
+    `
 
-//     return database.query(query, [store_id])
-//         .then(([products, fields]) => {
-//             // console.log(products)
-//             return products
+    let [products, fields] = await database.query(query,[store_id])
+    return products
 
-//             // return products[0];
-//         })
-// }
-// exports.getProductsByStoreId = getProductsByStoreId
+}
+exports.getProductsByStoreId = getProductsByStoreId
 
 
  /** 
@@ -143,7 +139,7 @@ async function getStoreInfoByStoreId(store_id){
     return store
 }
 exports.getStoreInfoByStoreId = getStoreInfoByStoreId
-getStoreInfoByStoreId(1).then(console.log)
+// getStoreInfoByStoreId(1).then(console.log)
 
 
 
@@ -298,13 +294,47 @@ async function updateShopPhotoByStoreId(store_id, photo_path="") {
 }
 exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
 
-//---------------------------------------------------------------------------
 
 
 
 
+//===================SELLER-SHOP =========================
 
 
+
+
+async function getShopPhotoByStoreId(store_id) {
+
+    let query = `
+          SELECT store.store_id, 
+          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+        FROM store
+        LEFT JOIN store_photo
+        ON store.store_id = store_photo.store_id
+        WHERE store.store_id = ?
+        group by store_id 
+         `
+
+    let [store, fields] = await database.query(query,[store_id])
+    let allPhotosString = store[0].photos
+    return allPhotosString.split(", ")
+
+}
+exports.getShopPhotoByStoreId = getShopPhotoByStoreId
+// getShopPhotoByStoreId(1).then(console.log)
+
+
+
+async function getProductsAndImagesByStoreID(store_id) {
+    let sqlQuery = `SELECT * FROM productsAndImages WHERE store_id = ?`
+    const [product, fields] = await database.query(sqlQuery, [store_id])
+    return product
+}
+exports.getProductsAndImagesByStoreID = getProductsAndImagesByStoreID
+
+
+
+//--------------------------------
 
 
 
@@ -333,8 +363,7 @@ exports.getBuyer = getBuyer
 //works for local database
  async function getProductsAndImages(product_id) {
     let sqlQuery = `SELECT * FROM productsAndImages WHERE product_id = ?`
-    const [products] = await database.query(sqlQuery, [product_id])
-    const product = products[0]
+    const [product, fields] = await database.query(sqlQuery, [product_id])
     return product
 }
 exports.getProductsAndImages = getProductsAndImages
