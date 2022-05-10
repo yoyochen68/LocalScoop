@@ -30,7 +30,7 @@ const dbConfigHeroku = {
 // };
 
 
-//KEVIN's localHost
+// KEVIN's localHost
 
 // const dbConfigLocal = {
 //     host: "localhost",
@@ -68,10 +68,12 @@ else {
 
 
 /**
- * get all the products of the store by the store id in the product table
- * @param {number} store_id, 
+
  * 
- * 
+ * @param {number} store_id 
+ * @returns all products belonging to a store
+
+
  */
 // function getProductsByStoreId(store_id=1) {
 //     let query = `
@@ -99,6 +101,8 @@ else {
   * get all the orders by the giving store id in the order table
   * @param {number} store_id. 
   */
+
+
 // function getOrdersByStoreId(store_id=1) {
 //     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
 //     let query = "select * from `order` WHERE store_id = ?"; 
@@ -111,6 +115,7 @@ else {
 // exports.getOrdersByStoreId = getOrdersByStoreId
 
 
+
 /**
  * @param {string} store_name 
  * @param {string, number} store_phone_number 
@@ -118,55 +123,45 @@ else {
  * @param {string} store_password_hash 
  * @returns 
  */
-// function addShop(store_name, store_phone_number, store_email, store_password_hash){
-//   let query = `
-//     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
-//     VALUES ( ?, ?, ?, ?);`
-// }
 
+function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+    let query = `
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    VALUES ( ?, ?, ?, ?);`;
+		
+		return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+}	
+exports.addShop = addShop
 
 
 
 /**
-//  * @param {string} store_name 
-//  * @returns storeInfo with given store name
-//  */
-// function getStoreInfoFromStoreName(store_name){
+ * @param {string} store_id
+ * @returns storeInfo with given store id
+ */
+function getStoreInfoByStoreId(store_id){
 
-// 	let query = 
-// 		`SELECT * 
-// 		 FROM store
-// 		 WHERE store_name = ?`
+    let query = `
+             SELECT store.*, store_photo.photo_file_path
+        FROM store
+        LEFT JOIN store_photo
+        ON store.store_id = store_photo.store_id
+        WHERE store.store_id = ?
+        
+    `
 
-// 	return database.query(query, [store_name])
-// 		.then((result) => {
-// 			return result
-// 		})
-// }
-// exports.getStoreInfoFromStoreName = getStoreInfoFromStoreName
-
-
-
-// function getStoreInfoByStoreId(store_id)
-//         let query = `
-//              SELECT store.*
-//         FROM store
-//         WHERE store.store_id = ?       
-//     `
-//         return database.query(query, [store_id])
-//             .then(([store, fields]) => {
-//                 // console.log(products)
-//                 return store
-//                 // return products[0];
-//             })
-
-// }
-    // exports.getStoreInfoByStoreId = getStoreInfoByStoreId
+    return database.query(query, [store_id])
+        .then(([store, fields]) => {
+            // console.log(products)
+            return store
+            // return products[0];
+        })
+}
+exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-//             //join
+
 
 //works for local database
  async function getAllBuyers() {
@@ -175,6 +170,7 @@ else {
     return AllBuyers;
 }
 exports.getAllBuyers = getAllBuyers
+
 // getAllBuyers().then(console.log)
 
 
@@ -209,6 +205,7 @@ exports.getProductsAndImages = getProductsAndImages
     // return await getProductsAndImages(id)
 }
 
+
 exports.addNewProduct = addNewProduct
 addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
 
@@ -221,6 +218,7 @@ async function addNewProductPhoto(product_id, photo_file_path){
 
 exports.addNewProductPhoto = addNewProductPhoto
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
 
 
 
@@ -243,16 +241,6 @@ exports.addNewProductPhoto = addNewProductPhoto
 // }
 
 
-//     //JOIN the
-
-// // 1- Get the store id
-
-
-// export async function getStoreInfoByStoreId(store_id) { 
-
-
-// }
-
 
 
 
@@ -279,51 +267,6 @@ exports.addNewProductPhoto = addNewProductPhoto
 
 
 
-
-
-
-// //kevin:
-// export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
-
-// //kevin:
-// export async function getProductsByStoreId(store_id) { //get all the products of the store by the store id in the product table
-
-// }
-
-// //kevin
-// export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
-
-// }
-
-
-
-// //kevin
-
-// export async function getOrdersByStoreId(store_id) { //get all the orders by the giving store id in the order table
-
-// }
-
-
-// //yasmina
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-
-// }
-
-// //yasmina
-// export async function getStoreInfoByStoreId(store_id) { //get the store info by the giving store id in the store table
-
-// }
-
-// //yasmina
-// // export async function getStoreInfoByStoreId(store_id) { 
-    
-// // }
-
-
-// //yasmina
-// // export async function getStoreInfoByStoreId(store_id) { 
-
-// // }
 
 
 
@@ -332,13 +275,6 @@ exports.addNewProductPhoto = addNewProductPhoto
 // export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page 
 
 // export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
-
-
-
-
-
-
-
 
 
 
