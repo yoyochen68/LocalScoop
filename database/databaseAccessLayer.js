@@ -19,28 +19,28 @@ const dbConfigHeroku = {
 //YASMINA's localHost
 
 /* change this so it matches yours */
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
 // KEVIN's localHost
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop-local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "localscoop",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 
 //YOYO local database
@@ -218,6 +218,7 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     }
 
     return categoryIdList
+}
 
 function getStoreInfoFromStoreName(store_name){
 	let query = 
@@ -248,7 +249,6 @@ async function updateShopCategoryByStoreId(store_id, categoryNameList) {
     }
 
     return getStoreInfoByStoreId(store_id)
-
 }
 
 exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
@@ -277,7 +277,6 @@ async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radiu
     await database.query(query,[delivery, pickup, radius, store_id])
     return getStoreInfoByStoreId(store_id)
 }
-
 exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 // updateShopDeliveryByStoreId(1,0,1,0).then(console.log)
 
@@ -343,6 +342,7 @@ exports.getBuyer = getBuyer
 exports.getProductsAndImages = getProductsAndImages
 // getProductsAndImages(2).then(console.log)
 
+
 //works for local database
  async function addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) { 
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
@@ -352,7 +352,6 @@ exports.getProductsAndImages = getProductsAndImages
     // console.log(id)
     // return await getProductsAndImages(id)
 }
-
 
 exports.addNewProduct = addNewProduct
 //addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
@@ -612,6 +611,3 @@ exports.addNewProductPhoto = addNewProductPhoto
 //         }
 //     });
 // }
-
-
-// module.exports = { getAllRestaurants, addRestaurants, deleteRestaurants, getReview, getRestaurantName, addReview, deleteReview}

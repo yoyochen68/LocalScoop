@@ -12,12 +12,15 @@ const router = express.Router();
 
 /* Global Variables */
 
-// GET /follow_business/follow_business
+// GET /follow_business/follow_business_1
 router.get("/follow_business_1", (req, res) => {
-    res.render("follow_business/follow_business_1")
+    res.send("aksdjfl")
+    // res.render("/follow_business/follow_business_1")
 })
 
-
+router.get("a", (req, res) => {
+    res.send("a")
+})
 
 
 
