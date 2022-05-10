@@ -116,12 +116,14 @@ else {
 
 
 
+
 /**
- * @param {string} store_name 
- * @param {string, number} store_phone_number 
- * @param {string} store_email 
- * @param {string} store_password_hash 
- * @returns 
+ *
+ * @param store_name
+ * @param store_phone_number
+ * @param store_email
+ * @param store_password_hash
+ * @returns {*}
  */
 
 function addShop(store_name, store_phone_number, store_email, store_password_hash) {
@@ -135,29 +137,182 @@ exports.addShop = addShop
 
 
 
-/**
- * @param {string} store_id
- * @returns storeInfo with given store id
- */
-function getStoreInfoByStoreId(store_id){
 
+/**
+ *
+ * @param store_id
+ * @returns {Promise<*>}
+ */
+async function getStoreInfoByStoreId(store_id){
+
+    //------------------------------------------------------it does not work, ASK SAM
     let query = `
-             SELECT store.*, store_photo.photo_file_path
+          SELECT store.*, 
+          GROUP_CONCAT(category.category_name SEPARATOR', ') AS "categories",
+          GROUP_CONCAT(store_photo.photo_file_path SEPARATOR', ') AS "photos"
+
         FROM store
+        LEFT JOIN store_category 
+        ON store.store_id = store_category.store_id
+        LEFT JOIN category
+        ON store_category.category_id = category.category_id
         LEFT JOIN store_photo
         ON store.store_id = store_photo.store_id
         WHERE store.store_id = ?
+        group by store_id 
         
-    `
-
-    return database.query(query, [store_id])
-        .then(([store, fields]) => {
-            // console.log(products)
-            return store
-            // return products[0];
-        })
+         `
+        
+    let [store, fields] = await database.query(query,[store_id])
+    return store
 }
 exports.getStoreInfoByStoreId = getStoreInfoByStoreId
+getStoreInfoByStoreId(1).then(console.log)
+
+
+
+
+
+
+//==============updateShop===================
+
+
+/**
+ *
+ * @param store_id
+ * @param store_address
+ * @returns {Promise<*>}
+ */
+async function updateShopAddressByStoreId(store_id, store_address="") {
+
+    let query = `
+UPDATE store
+SET store_address = ?
+WHERE store.store_id  = ?;
+`
+    await database.query(query,[store_address,store_id])
+    return getStoreInfoByStoreId(store_id)
+
+}
+
+exports.updateShopAddressByStoreId = updateShopAddressByStoreId
+// updateShopAddressByStoreId(1,"123 Robson ST").then(console.log)
+
+
+/**
+ *
+ * @param categoryNameList
+ * @returns {Promise<*[]>}
+ */
+async function getCategoryIdByCategoryName(categoryNameList) {
+    let categoryIdList =[]
+
+    let query = `
+    SELECT category.category_id
+    FROM category
+    WHERE category.category_name=?;
+    `
+
+    for (let categoryName of categoryNameList){
+        let [idObjectOfName, fields] =  await database.query(query,[categoryName])
+        let idOfName =  JSON.parse(idObjectOfName[0]['category_id'])
+        categoryIdList.push(idOfName)
+    }
+
+    return categoryIdList
+
+}
+exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
+// getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
+
+
+/**
+ *
+ * @param store_id
+ * @param categoryNameList
+ * @returns {Promise<*>}
+ */
+async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+    let categoryIdList = await getCategoryIdByCategoryName(categoryNameList)
+
+        let query = `
+         INSERT INTO store_category (store_id, category_id)
+         VALUES (?, ?);
+    `
+
+    for (let categoryId of categoryIdList){
+        await database.query(query,[store_id,categoryId])
+    }
+
+    return getStoreInfoByStoreId(store_id)
+
+}
+
+exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
+// updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
+// updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)
+
+
+
+/**
+ *
+ * @param store_id
+ * @param delivery
+ * @param pickup
+ * @param radius
+ * @returns {Promise<*>}
+ */
+async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=null) {
+
+    let query = `
+UPDATE store
+SET store.delivery = ?,
+store.pickup = ?,
+store.radius = ?
+WHERE store.store_id = ?;`
+
+    await database.query(query,[delivery, pickup, radius, store_id])
+    return getStoreInfoByStoreId(store_id)
+}
+
+exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
+// updateShopDeliveryByStoreId(1,0,1,0).then(console.log)
+
+
+
+
+/**
+ *
+ * @param store_id
+ * @param photo_path
+ */
+
+// function updateShopPhotoByStoreId(store_id, photo_path="") {
+// }
+// exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -207,7 +362,8 @@ exports.getProductsAndImages = getProductsAndImages
 
 
 exports.addNewProduct = addNewProduct
-addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
+//addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
+
 
 
 async function addNewProductPhoto(product_id, photo_file_path){
@@ -245,24 +401,24 @@ exports.addNewProductPhoto = addNewProductPhoto
 
 
 // //don't need to implement it because we don't have a edit shop page
-// export async function getStoreInfoByStoreId(store_id) { 
+// export async function getStoreInfoByStoreId(store_id) {
 
 
 // }
 
-// //don't need to implement it because we don't have a edit shop page 
+// //don't need to implement it because we don't have a edit shop page
 // export async function getAllProductPhotosByStoreId() {
 
-// } 
+// }
 
 
 // //don't need to implement it because we don't have a edit shop page
 
 
-// //don't need to implement it because we don't have a edit shop page 
+// //don't need to implement it because we don't have a edit shop page
 // export async function getAllProductPhotosByStoreId() {
 
-// } 
+// }
 
 
 
@@ -272,9 +428,9 @@ exports.addNewProductPhoto = addNewProductPhoto
 
 
 
-// export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page 
+// export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page
 
-// export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page 
+// export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page
 
 
 
