@@ -23,11 +23,30 @@ router.get("/a", (req, res) => {
 })
 
 
+//////LOGIN/SIGNUP
 router.get("/login_signup", (req, res) => {
   res.render("shop_setup/login_signup", {
 
   })
 })
+
+
+
+
+router.get("/login", (req, res) => {
+  res.render("shop_setup/login", {
+
+  })
+})
+
+router.post("/login", (req, res) => {
+  let userEmail= req.body.email
+  let userPassword = req.body.password
+
+})
+
+
+
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setup_1", (req, res) => {
@@ -81,20 +100,19 @@ router.get("/shop_setup_3", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", (req, res) => {
-  // console.log(req.body.address)
-  // console.log(req.session.storeName) // works
-  // console.log(db.returnShopInfo())
+  let ShopAddress =  req.body.address;
+  if(ShopAddress == null) {
+    res.redirect("/shop_setup/shop_setup_3")
+  }
 
-  let shopInfo = mysqlDB.getStoreInfoFromStoreName('')
-  
-  res.send(shopInfo)
-
-  // console.log(db.returnShopInfo())
-  // db.editShop(shopIdOfSession, req.body)
-
-
-  // res.redirect("/shop_setUp/shop_setUp_4")
+  //----------------------------------------------I need the id
+  mysqlDB.updateShopAddressByStoreId(store_id)
+  res.redirect("/shop_setUp/shop_setUp_4")
 })
+
+
+
+
 
 
 // GET /shop_setUp/shop_setUp_4

@@ -236,17 +236,14 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-    let categoryIdList = await getCategoryIdByCategoryName(categoryNameList)
+    let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
         let query = `
          INSERT INTO store_category (store_id, category_id)
          VALUES (?, ?);
     `
 
-    for (let categoryId of categoryIdList){
-        await database.query(query,[store_id,categoryId])
-    }
-
+    for (let catId of catIdList) await database.query(query,[store_id,catId])
     return getStoreInfoByStoreId(store_id)
 
 }
