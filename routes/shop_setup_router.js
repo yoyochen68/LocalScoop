@@ -1,21 +1,12 @@
 /* libraries */
 const express = require("express");
 const multer = require('multer');
-const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
-
-
-const { append } = require("express/lib/response");
-
-
-/* express */
-const app = express();
-app.use(express.json())
-
+const s3 = require("../s3");  
 
 // GET /shop_setup/a
 router.get("/a", (req, res) => {
@@ -112,11 +103,18 @@ router.get("/shop_setup_5", (req, res) => {
 })
 
 
+
 // GET /shop_setUp/shop_setUp_6
 router.get("/shop_setup_6", (req, res) => {
   res.render("shop_setup/shop_setup_6", {
-
+    
   })
+})
+
+
+// POST /shop_setup/uploadS3
+router.post('/uploadS3', (req, res) => {
+  console.log(req.body )
 })
 
 

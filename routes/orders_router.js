@@ -9,13 +9,6 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
-
-
-/* express */
-const app = express();
-app.use(express.json())
-
-
 /**
  * for testing 
  */

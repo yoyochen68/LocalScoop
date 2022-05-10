@@ -143,7 +143,7 @@ async function getStoreInfoByStoreId(store_id){
     return store
 }
 exports.getStoreInfoByStoreId = getStoreInfoByStoreId
-getStoreInfoByStoreId(1).then(console.log)
+// getStoreInfoByStoreId(1).then(console.log)
 
 
 
@@ -183,10 +183,10 @@ exports.addShop = addShop
 async function updateShopAddressByStoreId(store_id, store_address="") {
 
     let query = `
-UPDATE store
-SET store_address = ?
-WHERE store.store_id  = ?;
-`
+        UPDATE store
+        SET store_address = ?
+        WHERE store.store_id  = ?;
+        `
     await database.query(query,[store_address,store_id])
     return getStoreInfoByStoreId(store_id)
 
@@ -250,7 +250,6 @@ async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
     return getStoreInfoByStoreId(store_id)
 }
-
 exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
 // updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
 // updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)

@@ -6,7 +6,7 @@ const cookieSession = require("cookie-session")
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
 const ejs = require("ejs")
-
+const s3 = require("./s3")
 
 // import cookieSession from "cookie-session"
 // import mysql from "mysql2"
@@ -17,6 +17,7 @@ const ejs = require("ejs")
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
+const cors = require("cors")
 // import multer from 'multer'
 // import path from 'path'
 // import crypto from 'crypto';
@@ -44,7 +45,11 @@ const PORT = process.env.PORT || 8000; // let express set port, else make it 800
 
 /*** express ***/
 const app = express();
-app.use(express.urlencoded({extended: false}))
+app.use(cors({
+  origin: "http://localhost:8000",
+  optionsSuccessStatus: 200
+}))
+//app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
 app.use(express.json()); 
@@ -66,13 +71,18 @@ app.use("/orders", ordersRouter);
 app.use("/seller_shop", sellerShopRouter);
 app.use("/seller_landing", sellerLandingRouter)
 app.use("/add_cart", addCartRouter)
-app.use("/follow_business_router", followBusinessRouter)
+app.use("/follow_business", followBusinessRouter)
 
 
 
 /* ROUTES */
 
-// route for testing, 
+app.get("/a", (req, res) => {
+
+})
+
+
+ 
 app.get("/", (req, res) => {
   res.render("index")
 })
@@ -86,6 +96,16 @@ app.get("/dbtest", (req, res) => {
     })
   
 })
+
+
+// for s3 photo upload. Is an ajax route
+app.get('/s3Url', async (req, res) => {
+  const url = await s3.generateUploadURL()
+  res.send({ url })
+})
+
+
+
 
 
 //====image upload===
