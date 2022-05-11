@@ -35,3 +35,7 @@ file names also use underscores
 * open mySQL workbench, create new connection using jawsDB connection string
 * create the tables and input the data you need
 * localhost to access it locally, heroku to access it online
+
+## S3 Photo Upload
+https://www.youtube.com/watch?v=yGYeYJpRWPM&t=1s
+
