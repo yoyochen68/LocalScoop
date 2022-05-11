@@ -11,9 +11,9 @@ const router = express.Router();
 // GET /add_cart/add_cart
 router.get("/add_cart", (req, res) => {
   res.render("add_cart/add_cart", {
-
   })
 })
+
 
 
 

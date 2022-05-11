@@ -5,33 +5,36 @@ const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
-const router = express.Router();
+const mysqlDB = require('../database/databaseAccessLayer')
 
-const realDb = require(`../database/databaseAccessLayer.js`)
-const mysqlDB = require("../database/databaseAccessLayer");
-const {getStoreInfoByStoreId} = require("../database/databaseAccessLayer");
+const router = express.Router();
 // const axios = require('axios')
 
+const { append } = require("express/lib/response");
+
+
+/* express */
+const app = express();
+app.use(express.json())
+
+
+
+/* Global Variables */
 
 // GET /seller_shop/seller_shop
-router.get("/seller_shop/:id",  async (req, res) => {
-    try {
-        let storeId = req.params.id// req.params.anything will always be a string
-        //////////////////////////////////////////
+ router.get("/seller_shop", async (req, res) => {
 
-        let productInfo = await realDb.getProductsByStoreId(storeId)
-        let storeInfo = await realDb.getStoreInfoByStoreId(storeId)
+  //WORK ON LOCALHOST
+  //   let storeId = req.params.id
+    let storeId = req.session.storeId
+  // let storeId = 1
 
-        res.render("seller_shop/seller_shop", {storeInfo: storeInfo, productInfo:productInfo})
+     let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
+     let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
+     let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
 
-    }catch (error){
-        res.send(error)
-    }
+     res.render("seller_shop/seller_shop", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 })
-
-
-console.log()
-
 
 
 
