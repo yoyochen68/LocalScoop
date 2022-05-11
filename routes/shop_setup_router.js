@@ -61,19 +61,16 @@ router.post("/shop_login", async (req, res) => {
 // GET /shop_setUp/shop_setUp_1
 
 router.get("/shop_setup_1", async (req, res) => {
-  res.render("shop_setup/shop_setup_1", {
-
-  res.render("shop_setup/shop_setup_1", {
-  
+  res.render("shop_setup/shop_setup_1")
   })
-})
+
+
+
 
 // GET /shop_setUp/shop_setUp_2
-router.get("/shop_setup_2", async (req, res) => {
-  res.render("shop_setup/shop_setup_2", {
-
+  router.get("/shop_setup_2", async (req, res) => {
+    res.render("shop_setup/shop_setup_2")
   })
-})
 
 
 // POST /shop_setUp/shop_setUp_2

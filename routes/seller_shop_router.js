@@ -26,16 +26,14 @@ app.use(express.json())
 
   //WORK ON LOCALHOST
     // let storeId = req.params.id
-    // let storeId = 1
+    let storeId = 1
 
-     // let storeInfo =  await mysqlDB.getStoreInfoByStoreId(storeId)
+     let storeInfo =  await mysqlDB.getStoreInfoByStoreId(storeId)
      // let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
      // let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
 
 
-  // res.send(storeInfo)
-
-
+  res.send(storeInfo)
 
   // console.log("storeInfo", mysqlDB)
   //    console.log("productInfo", mysqlDB)
