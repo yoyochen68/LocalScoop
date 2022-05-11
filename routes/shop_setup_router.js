@@ -9,7 +9,8 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
-const { append } = require("express/lib/response");
+const { append, render } = require("express/lib/response");
+const res = require("express/lib/response");
 
 
 /* express */
@@ -31,27 +32,37 @@ router.get("/login_signup", (req, res) => {
 })
 
 
-
-
-router.get("/login", (req, res) => {
-  res.render("shop_setup/login", {
-
+router.get("/shop_login", (req, res) => {
+  res.render("shop_setup/shop_login", {
   })
 })
 
-router.post("/login", (req, res) => {
-  let userEmail= req.body.email
-  let userPassword = req.body.password
-
+router.post("/shop_login", async (req, res) => {
+  let email = req.body.store_email;
+  let password = req.body.store_password;
+  let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
+  console.log(shopOwner)
+  if (shopOwner.length === 0) {
+    res.redirect("/shop_setup/shop_login")
+    return
+  }
+  const id = shopOwner[0].store_id
+  console.log("hello", req.session)
+  req.session.email = email;
+  console.log("hi", req.session)
+  // let store_email = req.session.store_email ? req.session.store_email : null;
+  res.redirect("/seller_landing/seller_landing/" + id)
 })
+
 
 
 
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setup_1", (req, res) => {
-  res.render("shop_setup/shop_setup_1", {
 
+  res.render("shop_setup/shop_setup_1", {
+  
   })
 })
 
@@ -65,7 +76,7 @@ router.get("/shop_setup_2", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_2
 router.post("/shop_setup_2", (req, res) => {
-  
+
   // put storeName in cookie session
   req.session.storeName = req.body.storeName;
 
@@ -75,14 +86,14 @@ router.post("/shop_setup_2", (req, res) => {
   let store_email = req.body.email;
   let store_password_hash = req.body.password;
 
-  if(store_name == null || store_phone_number == null || store_email == null || store_password_hash == null) {
+  if (store_name == null || store_phone_number == null || store_email == null || store_password_hash == null) {
     // user did not give all of required info, redirect to the same page 
     res.redirect("/shop_setup/shop_setup_3")
   }
 
   // write store name into database
   mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash)
-  
+
   // redirect to next page
   res.redirect("/shop_setup/shop_setup_3")
 })
@@ -100,8 +111,8 @@ router.get("/shop_setup_3", (req, res) => {
 
 // POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", (req, res) => {
-  let ShopAddress =  req.body.address;
-  if(ShopAddress == null) {
+  let ShopAddress = req.body.address;
+  if (ShopAddress == null) {
     res.redirect("/shop_setup/shop_setup_3")
   }
 
@@ -227,7 +238,7 @@ router.post('/product_type', (req, res) => {
   let sellerProductTypes = req.body.productTypeList
 
   let currentStoreId = db.getStoreIdFromStoreName(req.session.storeName)
-  db.editShop(currentStoreId, { product:sellerProductTypes} )
+  db.editShop(currentStoreId, { product: sellerProductTypes })
 
   // console.log("back End:", sellerProductTypes)
 

@@ -25,16 +25,8 @@
 // };
 
 
-// // //YOYO local database
-// // const dbConfigLocal = {
-// // 	host: "localhost",
-// // 	user: "root",
-// // 	password: "Password",
-// // 	database: "localscoop_local",
-// // 	port: 3306,
-// // 	multipleStatements: false,
-// // 	namedPlaceholders: true
-// // };
+
+
 
 
 // if (is_heroku) {
