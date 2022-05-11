@@ -9,6 +9,7 @@ const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 
+
 // import cookieSession from "cookie-session"
 // import mysql from "mysql2"
 // import * as dbConnection from "./database/databaseConnection.js"

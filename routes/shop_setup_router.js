@@ -6,6 +6,7 @@ const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
+const s3 = require("../s3");  
 
 
 const { append, render } = require("express/lib/response");
@@ -17,16 +18,13 @@ const app = express();
 app.use(express.json())
 
 
-const s3 = require("../s3");  
-
-
 // GET /shop_setup/a
 router.get("/a", (req, res) => {
 
 })
 
 
-//////LOGIN/SIGNUP
+// GET /shop_setUp/login_signup
 router.get("/login_signup", (req, res) => {
   res.render("shop_setup/login_signup", {
 
@@ -34,11 +32,14 @@ router.get("/login_signup", (req, res) => {
 })
 
 
+// GET /shop_setUp/shop_login
 router.get("/shop_login", (req, res) => {
   res.render("shop_setup/shop_login", {
   })
 })
 
+
+// POST /shop_setUp/shop_login
 router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
@@ -61,7 +62,6 @@ router.post("/shop_login", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_1
-
 router.get("/shop_setup_1", async (req, res) => {
   res.render("shop_setup/shop_setup_1")
   })
@@ -91,13 +91,10 @@ router.post("/shop_setup_2", async (req, res) => {
   }
 
   // write store name into database
-
   let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash);
-
 
   // put store_id in cookie session
   req.session.storeId =  newStore[0].store_id
-
 
   // redirect to next page
   res.redirect(`/shop_setup/shop_setup_3`)
@@ -150,7 +147,7 @@ router.get("/shop_setup_5", async(req, res) => {
 // GET /shop_setUp/shop_setUp_6
 router.get("/shop_setup_6", async(req, res) => {
   let newStoreId = req.session.storeId
-
+  
   res.render("shop_setup/shop_setup_6", {newStoreId})
 })
 
@@ -158,11 +155,10 @@ router.get("/shop_setup_6", async(req, res) => {
 
 // POST /shop_setup/uploadS3
 router.post('/uploadS3', (req, res) => {
-
   // At some point check the session exists for the logged in user
   // console.log(req.session)
   let imageUrl =  req.body.imageUrl;
-  
+  mysqlDB.updateShopPhotoByStoreId(1, imageUrl)
 })
 
 
@@ -183,14 +179,11 @@ router.get("/dcs", (req, res) => {
   res.redirect("/");
 })
 
-router.post("#", (req, res) => {
-
-})
 
 
 
 
-//============= Handling the Store Image Uploading========
+/*   Multer code that we are no longer using */
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -228,11 +221,6 @@ async function checkFileType(file, cb) {
 }
 
 
-
-
-
-
-//=============Routes Connected To Axios========
 
 
 // User uploads photo on shop_setup/shop_setup_6
@@ -283,6 +271,8 @@ router.post('/delivery_type', async (req, res) => {
 
 
 })
+
+
 
 
 
