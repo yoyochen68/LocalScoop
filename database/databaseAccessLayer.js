@@ -19,28 +19,28 @@ const dbConfigHeroku = {
 //YASMINA's localHost
 
 /* change this so it matches yours */
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
 // KEVIN's localHost
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop-local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "localscoop",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 
 //YOYO local database
@@ -65,17 +65,12 @@ else {
 
 /*****      Functions     *****/
 
-
-
 /**
-
- * 
  * @param {number} store_id 
  * @returns all products belonging to a store
-
-
  */
 async function getProductsByStoreId(store_id=1) {
+
     let query = `
     SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
@@ -89,26 +84,25 @@ async function getProductsByStoreId(store_id=1) {
     let [products, fields] = await database.query(query,[store_id])
     return products
 
-}
+
 exports.getProductsByStoreId = getProductsByStoreId
 
 
-/** 
- * get all the orders by the giving store id in the order table
- * @param {number} store_id. 
- */
+ /** 
+  * get all the orders by the giving store id in the order table
+  * @param {number} store_id. 
+  */
+function getOrdersByStoreId(store_id=1) {
+    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+    let query = "select * from `order` WHERE store_id = ?"; 
 
+  database.query(query, [store_id])
+        .then((orders) => {
+            return orders[0]
+        })
+}
+exports.getOrdersByStoreId = getOrdersByStoreId
 
-// function getOrdersByStoreId(store_id=1) {
-//     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
-//     let query = "select * from `order` WHERE store_id = ?"; 
-
-//     return database.query(query, [store_id])
-//         .then((orders) => {
-//             return orders[0]
-//         })
-// }
-// exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 async function authenticateShopOwner(store_email, store_password) {
@@ -195,11 +189,13 @@ exports.addShop = addShop
 async function updateShopAddressByStoreId(store_id, store_address = "") {
 
     let query = `
+
 UPDATE store
 SET store_address = ?
 WHERE store.store_id  = ?;
 `
     await database.query(query, [store_address, store_id])
+
     return getStoreInfoByStoreId(store_id)
 
 }
@@ -230,6 +226,14 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     }
 
     return categoryIdList
+
+}
+
+function getStoreInfoFromStoreName(store_name){
+	let query = 
+		`SELECT * 
+		 FROM store
+		 WHERE store_name = ?`
 }
 
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
@@ -253,10 +257,11 @@ async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
     for (let catId of catIdList) await database.query(query, [store_id, catId])
     return getStoreInfoByStoreId(store_id)
-
 }
 
+
 exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
+
 // updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
 // updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)
 
@@ -283,7 +288,6 @@ async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radiu
     await database.query(query, [delivery, pickup, radius, store_id])
     return getStoreInfoByStoreId(store_id)
 }
-
 exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 // updateShopDeliveryByStoreId(1,0,1,0).then(console.log)
 
@@ -382,6 +386,7 @@ async function getProductsAndImages(product_id) {
 exports.getProductsAndImages = getProductsAndImages
 // getProductsAndImages(76).then(console.log)
 
+
 //works for local database
 async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
 
@@ -392,6 +397,7 @@ async function addNewProduct(store_id, product_name, product_category, product_d
     // console.log(id)
     // return await getProductsAndImages(id)
 }
+
 exports.addNewProduct = addNewProduct
 // addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
 
@@ -650,6 +656,3 @@ exports.addNewProductPhoto = addNewProductPhoto
 //         }
 //     });
 // }
-
-
-// module.exports = { getAllRestaurants, addRestaurants, deleteRestaurants, getReview, getRestaurantName, addReview, deleteReview}

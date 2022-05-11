@@ -9,28 +9,15 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
-
-
-/* express */
-const app = express();
-app.use(express.json())
-
-
 /**
  * for testing 
  */
 router.get("/a",  async (req, res) => {
     try {  
+        let productsByStore = await mysqlDB.getProductsByStoreId(1)
+        let a = productsByStore[0]
 
-//         const a = await mysqlDB.getProductsByStoreId(1)
-//        res.send(a)
-
-        // await mysqlDB.addShop('the orange slut', 7782340000, 'boiiii@gmail.com', 'fsjdhf3u9h3')
-        let storeInfo = await mysqlDB.getStoreInfoFromStoreName('aaa')
-        let storeId = storeInfo[0]
-        res.send(storeInfo)
-       
-
+        res.send(a)
     } catch (error){
         res.send(error)
     }  
