@@ -19,44 +19,28 @@ app.use(express.json())
 
 
 
-
-
 /* Global Variables */
 
 // GET /seller_shop/seller_shop
- router.get("/seller_shop/:id", async (req, res) => {
+ router.get("/seller_shop", async (req, res) => {
 
-    // let id = req.params.id
+  //WORK ON LOCALHOST
+    // let storeId = req.params.id
     let storeId = 1
 
      let storeInfo =  await mysqlDB.getStoreInfoByStoreId(storeId)
-     let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
-     let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
+     // let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
+     // let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
 
 
-// console.log(productInfo)
+  res.send(storeInfo)
 
-    //
-    // //Gathering all the required info for the page
-    // let storeInfo = {
-    //     id: storeId,
-    //     image:"", //UNCOMPLETED
-    //     location:location,
-    //     name: shop.storeName,
-    //     rating:shop.rating,
-    //     description:pageDescription,
-    //     followers:followersNumber,
-    //     productsImages:"" //UNCOMPLETED
-    // }
+  // console.log("storeInfo", mysqlDB)
+  //    console.log("productInfo", mysqlDB)
+     // console.log("storeImages",storeImages)
 
-    // res.send(storeInfo)
-    // res.send(productInfo)
-    res.render("seller_shop/seller_shop", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
+     // res.render("seller_shop/seller_shop", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 })
-
-
-
-
 
 
 

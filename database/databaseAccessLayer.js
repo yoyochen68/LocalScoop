@@ -170,14 +170,18 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @returns {*}
  */
 
-function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+async function addShop(store_name, store_phone_number, store_email, store_password_hash) {
     let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
     VALUES ( ?, ?, ?, ?);`;
 
-    return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreId = newStoreInfo[0].insertId
+    return getStoreInfoByStoreId(newStoreId)
+
 }
 exports.addShop = addShop
+// addShop("store_name", "store_phone_number", "store_email", "store_password_hash").then(console.log)
 
 
 
@@ -232,6 +236,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 // getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
 
 
+
 /**
  *
  * @param store_id
@@ -265,7 +270,8 @@ exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
  * @param radius
  * @returns {Promise<*>}
  */
-async function updateShopDeliveryByStoreId(store_id, delivery = 0, pickup = 0, radius = null) {
+
+async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=0) {
 
     let query = `
     UPDATE store
@@ -378,6 +384,7 @@ exports.getProductsAndImages = getProductsAndImages
 
 //works for local database
 async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
+
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee])
     return +newproductInfo.insertId

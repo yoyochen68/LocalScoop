@@ -361,19 +361,18 @@ top:50px;
     box-shadow: -2px 2px 10px 2px rgba(0, 0, 0, 0.30);
     background-color: #F7F7F3;
     overflow-x: auto;
-    /*display: flex;*/
-
-    /*padding-top:20px;*/
-
-    /*whyy this is not workingggggggg*/
-    padding:20px 50px 0px 10px;
+    padding-top:20px;
     z-index: 10;
     font-size: 22px;
     font-weight:400;
 
-
 }
 
+
+
+.nav-wrapper{
+    margin:0 15px
+}
 
 
 .nav-wrapper.seller-shop{
@@ -383,7 +382,7 @@ top:50px;
 
 .nav-wrapper.buyer{
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr ;
+    grid-template-columns: 1fr 2fr 1fr ;
 }
 
 
@@ -676,8 +675,8 @@ font-size: 20px;
 
 .dot {
     position: absolute;
-    top:5px;
-    right:15px;
+    top:6px;
+    right:25px;
 
     height: 20px;
     width: 20px;
@@ -692,12 +691,13 @@ font-size: 20px;
 
 .bag {
     align-items: center;
-    font-size: 30px;
+
+    /*WHYYYYYYYYYYYYYYYYYYYYYYYYYYY*/
+    font-size: 40px;
     display:flex;
     flex-direction: column;
-
-
 }
+
 
 
 .addToCartBtn{
@@ -708,3 +708,15 @@ font-size: 20px;
 }
 
 
+/*==================================Add To Cart===================*/
+
+
+
+.seller-landing-body {
+    position: relative; /* usually the parent, in this case the body element, has position relative so that the absolute positioned child is positioned relative to it */
+    height: 100vh; /* 100% of the viewport height */
+    margin: 0; /* recommended */
+    /*box-sizing:border-box*/
+
+
+}

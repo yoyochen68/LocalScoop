@@ -59,26 +59,23 @@ router.post("/shop_login", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_1
-router.get("/shop_setup_1", (req, res) => {
 
-  res.render("shop_setup/shop_setup_1", {
-  
+router.get("/shop_setup_1", async (req, res) => {
+  res.render("shop_setup/shop_setup_1")
   })
-})
+
+
+
 
 // GET /shop_setUp/shop_setUp_2
-router.get("/shop_setup_2", (req, res) => {
-  res.render("shop_setup/shop_setup_2", {
-
+  router.get("/shop_setup_2", async (req, res) => {
+    res.render("shop_setup/shop_setup_2")
   })
-})
 
 
 // POST /shop_setUp/shop_setUp_2
-router.post("/shop_setup_2", (req, res) => {
 
-  // put storeName in cookie session
-  req.session.storeName = req.body.storeName;
+router.post("/shop_setup_2", async (req, res) => {
 
   // retrieve user input from req.body
   let store_name = req.body.storeName;
@@ -92,69 +89,79 @@ router.post("/shop_setup_2", (req, res) => {
   }
 
   // write store name into database
-  mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash)
+
+  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash);
+
+
+  // put store_id in cookie session
+  req.session.storeId =  newStore[0].store_id
+
 
   // redirect to next page
-  res.redirect("/shop_setup/shop_setup_3")
+  res.redirect(`/shop_setup/shop_setup_3`)
 })
-
-
 
 
 
 // GET /shop_setUp/shop_setUp_3
-router.get("/shop_setup_3", (req, res) => {
-  res.render("shop_setup/shop_setup_3", {
+router.get("/shop_setup_3", async(req, res) => {
 
-  })
+  let newStoreId = req.session.storeId
+  console.log(newStoreId)
+
+  res.render("shop_setup/shop_setup_3", { newStoreId})
 })
+
 
 // POST /shop_setUp/shop_setUp_3
-router.post("/shop_setup_3", (req, res) => {
-  let ShopAddress = req.body.address;
-  if (ShopAddress == null) {
-    res.redirect("/shop_setup/shop_setup_3")
-  }
+router.post("/shop_setup_3", async (req, res) => {
+  let storeAddress =  req.body.address;
+  let newStoreId = req.session.storeId
 
-  //----------------------------------------------I need the id
-  mysqlDB.updateShopAddressByStoreId(store_id)
-  res.redirect("/shop_setUp/shop_setUp_4")
+  if(storeAddress == null) return
+
+  await mysqlDB.updateShopAddressByStoreId(newStoreId, storeAddress)
+  res.redirect(`/shop_setUp/shop_setUp_4`)
 })
-
-
 
 
 
 
 // GET /shop_setUp/shop_setUp_4
-router.get("/shop_setup_4", (req, res) => {
-  res.render("shop_setup/shop_setup_4", {
+router.get("/shop_setup_4", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+  res.render("shop_setup/shop_setup_4", {newStoreId})
 })
+
+
 
 // GET /shop_setUp/shop_setUp_5
-router.get("/shop_setup_5", (req, res) => {
-  res.render("shop_setup/shop_setup_5", {
+router.get("/shop_setup_5", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+  res.render("shop_setup/shop_setup_5", {newStoreId})
 })
+
 
 
 // GET /shop_setUp/shop_setUp_6
-router.get("/shop_setup_6", (req, res) => {
-  res.render("shop_setup/shop_setup_6", {
+router.get("/shop_setup_6", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+  res.render("shop_setup/shop_setup_6", {newStoreId})
 })
+
 
 
 // GET /shop_setUp/shop_setUp_7
-router.get("/shop_setup_7", (req, res) => {
-  res.render("shop_setup/shop_setup_7", {
+router.get("/shop_setup_7", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+
+  res.render("shop_setup/shop_setup_7", {newStoreId})
 })
+
 
 
 // dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
@@ -168,8 +175,9 @@ router.post("#", (req, res) => {
 })
 
 
-/************      handling the store image uploading          **********/
 
+
+//============= Handling the Store Image Uploading========
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -191,7 +199,7 @@ const upload = multer({
 // can do .array() if you want to upload multiple images
 
 // Check File Type
-function checkFileType(file, cb) {
+async function checkFileType(file, cb) {
   // Allowed ext
   const filetypes = /jpeg|jpg|png|gif/;
   // Check ext
@@ -207,66 +215,61 @@ function checkFileType(file, cb) {
 }
 
 
+
+
+
+
+//=============Routes Connected To Axios========
+
+
 // User uploads photo on shop_setup/shop_setup_6
-router.post('/upload', upload, (req, res) => {
-  if (req.file == undefined) {
+router.post('/upload', upload, async (req, res) => {
+  if (req.file === undefined) {
     res.render('shop_setup/shop_setup_5', {
       msg: 'Error: No File Selected!'
     });
     return
   }
 
-  let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
+  let newStoreId = req.session.storeId
   let multeredFilename = '/uploads/' + req.file.filename
 
-  db.editShop(shopIdOfSession, { shopProfilePhoto: multeredFilename })
+  // await mysqlDB.updateShopCategoryByStoreId(newStoreId, multeredFilename )
+
 
   // store some info in the database
-  res.render('shop_setup/shop_setup_6', {
+  res.render(`shop_setup/shop_setup_6`, {
     msg: 'Image Uploaded!',
-    file: `${multeredFilename}`
+    file: `${multeredFilename}`,
+    newStoreId: newStoreId
+    // newStoreId: newStoreId
   });
 });
 
-
-
-//=============above: handling the store image uploading========
-
 // used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
-router.post('/product_type', (req, res) => {
+router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
+  let newStoreId = req.session.storeId
 
-  let currentStoreId = db.getStoreIdFromStoreName(req.session.storeName)
-  db.editShop(currentStoreId, { product: sellerProductTypes })
 
-  // console.log("back End:", sellerProductTypes)
-
-  res.status(200).send(sellerProductTypes)
+  let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes )
+  res.status(200).send(updatedStore[0].categories)
 
 })
 
 
 
-router.post('/delivery_type', (req, res) => {
+router.post('/delivery_type', async (req, res) => {
   // let storeId = req.session.storeId ? req.session.storeId : null;
-  let storeId = 101
+  let newStoreId = req.session.storeId
   let deliveryMethodList = req.body.deliveryMethodList
-  let currentShopInfo
-  if (storeId) {
-    db.editStore(storeId, deliveryMethodList)
-    currentShopInfo = db.getShop(storeId)
-  }
-  console.log("checking", deliveryMethodList)
-  console.log("!backend  !!")
 
-  // res.status(200).json(JSON.stringify(deliveryMethodList))
-  res.status(200).json(JSON.stringify(currentShopInfo))
+  let updatedStore = await mysqlDB.updateShopDeliveryByStoreId(newStoreId, deliveryMethodList.delivery, deliveryMethodList.pickup, deliveryMethodList.kmRadius )
+  res.status(200).send(updatedStore)
+
 
 })
-
-
-
 
 
 
