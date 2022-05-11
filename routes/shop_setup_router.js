@@ -1,7 +1,6 @@
 /* libraries */
 const express = require("express");
 const multer = require('multer');
-const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
 // const db = require("../fake-db");
@@ -16,6 +15,9 @@ const res = require("express/lib/response");
 /* express */
 const app = express();
 app.use(express.json())
+
+
+const s3 = require("../s3");  
 
 
 // GET /shop_setup/a
@@ -150,6 +152,17 @@ router.get("/shop_setup_6", async(req, res) => {
   let newStoreId = req.session.storeId
 
   res.render("shop_setup/shop_setup_6", {newStoreId})
+})
+
+
+
+// POST /shop_setup/uploadS3
+router.post('/uploadS3', (req, res) => {
+
+  // At some point check the session exists for the logged in user
+  // console.log(req.session)
+  let imageUrl =  req.body.imageUrl;
+  
 })
 
 

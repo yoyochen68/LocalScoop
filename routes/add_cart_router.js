@@ -9,15 +9,6 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
-
-const { append } = require("express/lib/response");
-
-
-/* express */
-const app = express();
-app.use(express.json())
-
-
 // GET /add_cart/add_cart
 router.get("/add_cart", async(req, res) => {
 
