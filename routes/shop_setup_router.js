@@ -158,7 +158,11 @@ router.get("/shop_setup_6", async(req, res) => {
 
 // POST /shop_setup/uploadS3
 router.post('/uploadS3', (req, res) => {
-  console.log(req.body )
+
+  // At some point check the session exists for the logged in user
+  // console.log(req.session)
+  let imageUrl =  req.body.imageUrl;
+  
 })
 
 

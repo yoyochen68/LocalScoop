@@ -70,7 +70,6 @@ else {
  * @returns all products belonging to a store
  */
 async function getProductsByStoreId(store_id=1) {
-
     let query = `
     SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
@@ -83,20 +82,19 @@ async function getProductsByStoreId(store_id=1) {
 
     let [products, fields] = await database.query(query,[store_id])
     return products
-
-
+}
 exports.getProductsByStoreId = getProductsByStoreId
 
 
- /** 
-  * get all the orders by the giving store id in the order table
-  * @param {number} store_id. 
-  */
-function getOrdersByStoreId(store_id=1) {
+/** 
+ * get all the orders by the giving store id in the order table
+ * @param {number} store_id. 
+ */
+function getOrdersByStoreId(store_id = 1) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
-    let query = "select * from `order` WHERE store_id = ?"; 
+    let query = "select * from `order` WHERE store_id = ?";
 
-  database.query(query, [store_id])
+    database.query(query, [store_id])
         .then((orders) => {
             return orders[0]
         })
@@ -125,9 +123,9 @@ exports.authenticateShopOwner = authenticateShopOwner
 async function getStoreInfoByStoreId(store_id) {
 
     let query = `
-          SELECT store.*, 
-          GROUP_CONCAT(DISTINCT category.category_name ORDER BY category.category_id SEPARATOR', ') AS "categories",
-          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+        SELECT store.*, 
+        GROUP_CONCAT(DISTINCT category.category_name ORDER BY category.category_id SEPARATOR', ') AS "categories",
+        GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
 
         FROM store
         LEFT JOIN store_category 
@@ -137,9 +135,7 @@ async function getStoreInfoByStoreId(store_id) {
         LEFT JOIN store_photo
         ON store.store_id = store_photo.store_id
         WHERE store.store_id = ?
-        group by store_id 
-        
-         `
+        group by store_id `
 
     let [store, fields] = await database.query(query, [store_id])
     return store
@@ -189,18 +185,13 @@ exports.addShop = addShop
 async function updateShopAddressByStoreId(store_id, store_address = "") {
 
     let query = `
-
-UPDATE store
-SET store_address = ?
-WHERE store.store_id  = ?;
-`
+        UPDATE store
+        SET store_address = ?
+        WHERE store.store_id  = ?;
+        `
     await database.query(query, [store_address, store_id])
-
     return getStoreInfoByStoreId(store_id)
-
 }
-
-
 exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 // updateShopAddressByStoreId(1,"123 Robson ST").then(console.log)
 
@@ -226,12 +217,12 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     }
 
     return categoryIdList
-
 }
 
-function getStoreInfoFromStoreName(store_name){
-	let query = 
-		`SELECT * 
+
+function getStoreInfoFromStoreName(store_name) {
+    let query =
+        `SELECT * 
 		 FROM store
 		 WHERE store_name = ?`
 }
@@ -389,7 +380,6 @@ exports.getProductsAndImages = getProductsAndImages
 
 //works for local database
 async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
-
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee])
     return +newproductInfo.insertId

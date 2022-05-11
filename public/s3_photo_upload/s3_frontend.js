@@ -17,7 +17,7 @@ imageForm.addEventListener("submit", async event => {
 	try {
 		// get secure url from our server
 		const { url } = await fetch("/s3Url").then(res => res.json())
-		console.log(url)
+		// console.log(url)
 		// post the image direclty to the s3 bucket
 		await fetch(url, {
 			method: "PUT",
@@ -34,17 +34,23 @@ imageForm.addEventListener("submit", async event => {
 		const postParam = {
 			imageUrl
 		}
+
 		console.log(postParam)
+
+		// ajax request to routes
 		await fetch("/shop_setup/uploadS3", {
 			method: "POST",
-			body: postParam
+			body: JSON.stringify(postParam),
+			headers: {
+				"Content-Type": "application/json"
+			},
 		})
 	} catch (error) {
-	console.log("ERROR", error)
-}
+		console.log("ERROR", error)
+	}
 
-// append image on document
-const img = document.createElement("img")
-img.src = imageUrl
-document.body.appendChild(img)
+	// append image on document
+	const img = document.createElement("img")
+	img.src = imageUrl
+	document.body.appendChild(img)
 })
