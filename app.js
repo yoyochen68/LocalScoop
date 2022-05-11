@@ -59,9 +59,9 @@ app.set('view engine', 'ejs'); // set templating engine to ejs
 
 // cookie sessions
 app.use(cookieSession({
-  name:'kevin',
+  name:'session',
   keys:['localscoop:8000'],
-  maxAge: 1000 * 60 * 60
+  maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
 }))
 
 
@@ -99,12 +99,12 @@ app.get("/dbtest", (req, res) => {
 })
 
 
+
 // for s3 photo upload. Is an ajax route
 app.get('/s3Url', async (req, res) => {
   const url = await s3.generateUploadURL()
   res.send({ url })
 })
-
 
 
 

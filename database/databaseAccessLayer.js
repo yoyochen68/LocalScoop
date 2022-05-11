@@ -46,13 +46,13 @@ const dbConfigLocal = {
 //YOYO local database
 
 // const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Password",
-// 	database: "localscoop_local",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
+//     host: "localhost",
+//     user: "root",
+//     password: "Password",
+//     database: "localscoop_local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
 // };
 
 if (is_heroku) {
@@ -69,7 +69,8 @@ else {
  * @param {number} store_id 
  * @returns all products belonging to a store
  */
-function getProductsByStoreId(store_id) {
+async function getProductsByStoreId(store_id=1) {
+
     let query = `
     SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
@@ -80,17 +81,10 @@ function getProductsByStoreId(store_id) {
     WHERE store.store_id = ?
     `
 
-    let b = database.query(query, [store_id])
-    return b
-    // database.query(query, [store_id])
-    // .then((result) => {
-    //     return result
-    // })
-       
-        // .then(([products, fields]) => {
-        //     return products
-        // })
-}
+    let [products, fields] = await database.query(query,[store_id])
+    return products
+
+
 exports.getProductsByStoreId = getProductsByStoreId
 
 
@@ -110,12 +104,25 @@ function getOrdersByStoreId(store_id=1) {
 exports.getOrdersByStoreId = getOrdersByStoreId
 
 
+
+async function authenticateShopOwner(store_email, store_password) {
+    let query = `SELECT * FROM store WHERE store_email = ? and store_password = ?;`
+    let [validatedShopOwner,filed] = await database.query(query, [store_email, store_password])
+    return validatedShopOwner
+}
+exports.authenticateShopOwner = authenticateShopOwner
+// authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
+// authenticateShopOwner("local", "localsc").then(console.log)
+
+
+
+
 /**
  *
  * @param store_id
  * @returns {Promise<*>}
  */
-async function getStoreInfoByStoreId(store_id){
+async function getStoreInfoByStoreId(store_id) {
 
     let query = `
           SELECT store.*, 
@@ -133,8 +140,8 @@ async function getStoreInfoByStoreId(store_id){
         group by store_id 
         
          `
-        
-    let [store, fields] = await database.query(query,[store_id])
+
+    let [store, fields] = await database.query(query, [store_id])
     return store
 }
 exports.getStoreInfoByStoreId = getStoreInfoByStoreId
@@ -157,14 +164,18 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @returns {*}
  */
 
-function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+async function addShop(store_name, store_phone_number, store_email, store_password_hash) {
     let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
     VALUES ( ?, ?, ?, ?);`;
 
-    return database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreId = newStoreInfo[0].insertId
+    return getStoreInfoByStoreId(newStoreId)
+
 }
 exports.addShop = addShop
+// addShop("store_name", "store_phone_number", "store_email", "store_password_hash").then(console.log)
 
 
 
@@ -175,14 +186,16 @@ exports.addShop = addShop
  * @param store_address
  * @returns {Promise<*>}
  */
-async function updateShopAddressByStoreId(store_id, store_address="") {
+async function updateShopAddressByStoreId(store_id, store_address = "") {
 
     let query = `
-        UPDATE store
-        SET store_address = ?
-        WHERE store.store_id  = ?;
-        `
-    await database.query(query,[store_address,store_id])
+
+UPDATE store
+SET store_address = ?
+WHERE store.store_id  = ?;
+`
+    await database.query(query, [store_address, store_id])
+
     return getStoreInfoByStoreId(store_id)
 
 }
@@ -198,7 +211,7 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
  * @returns {Promise<*[]>}
  */
 async function getCategoryIdByCategoryName(categoryNameList) {
-    let categoryIdList =[]
+    let categoryIdList = []
 
     let query = `
     SELECT category.category_id
@@ -206,13 +219,14 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     WHERE category.category_name=?;
     `
 
-    for (let categoryName of categoryNameList){
-        let [idObjectOfName, fields] =  await database.query(query,[categoryName])
-        let idOfName =  JSON.parse(idObjectOfName[0]['category_id'])
+    for (let categoryName of categoryNameList) {
+        let [idObjectOfName, fields] = await database.query(query, [categoryName])
+        let idOfName = JSON.parse(idObjectOfName[0]['category_id'])
         categoryIdList.push(idOfName)
     }
 
     return categoryIdList
+
 }
 
 function getStoreInfoFromStoreName(store_name){
@@ -221,8 +235,10 @@ function getStoreInfoFromStoreName(store_name){
 		 FROM store
 		 WHERE store_name = ?`
 }
+
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 // getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
+
 
 
 /**
@@ -232,20 +248,20 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-    let categoryIdList = await getCategoryIdByCategoryName(categoryNameList)
+    let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
-        let query = `
+    let query = `
          INSERT INTO store_category (store_id, category_id)
          VALUES (?, ?);
     `
 
-    for (let categoryId of categoryIdList){
-        await database.query(query,[store_id,categoryId])
-    }
-
+    for (let catId of catIdList) await database.query(query, [store_id, catId])
     return getStoreInfoByStoreId(store_id)
 }
-exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
+
+
+exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
+
 // updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
 // updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)
 
@@ -259,7 +275,8 @@ exports.updateShopCategoryByStoreId= updateShopCategoryByStoreId
  * @param radius
  * @returns {Promise<*>}
  */
-async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=null) {
+
+async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=0) {
 
     let query = `
     UPDATE store
@@ -268,7 +285,7 @@ async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radiu
     store.radius = ?
     WHERE store.store_id = ?;`
 
-    await database.query(query,[delivery, pickup, radius, store_id])
+    await database.query(query, [delivery, pickup, radius, store_id])
     return getStoreInfoByStoreId(store_id)
 }
 exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
@@ -283,7 +300,7 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 
-async function updateShopPhotoByStoreId(store_id, photo_path="") {
+async function updateShopPhotoByStoreId(store_id, photo_path = "") {
 
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path ) 
@@ -294,20 +311,54 @@ async function updateShopPhotoByStoreId(store_id, photo_path="") {
 }
 exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
 
-//---------------------------------------------------------------------------
 
 
 
 
+//===================SELLER-SHOP =========================
 
 
 
 
+async function getShopPhotoByStoreId(store_id) {
+
+    let query = `
+          SELECT store.store_id, 
+          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+        FROM store
+        LEFT JOIN store_photo
+        ON store.store_id = store_photo.store_id
+        WHERE store.store_id = ?
+        group by store_id 
+         `
+
+    let [store, fields] = await database.query(query,[store_id])
+    let allPhotosString = store[0].photos
+    return allPhotosString.split(", ")
+
+}
+exports.getShopPhotoByStoreId = getShopPhotoByStoreId
+// getShopPhotoByStoreId(1).then(console.log)
+
+
+
+async function getProductsAndImagesByStoreID(store_id) {
+    let sqlQuery = `SELECT * FROM productsAndImages WHERE store_id = ?`
+    const [product, fields] = await database.query(sqlQuery, [store_id])
+    return product
+}
+exports.getProductsAndImagesByStoreID = getProductsAndImagesByStoreID
+
+
+
+//--------------------------------
+
+//=====================
 
 //works for local database
- async function getAllBuyers() {
+async function getAllBuyers() {
     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer";
-    const [AllBuyers] =  await database.query(sqlQuery);
+    const [AllBuyers] = await database.query(sqlQuery);
     return AllBuyers;
 }
 exports.getAllBuyers = getAllBuyers
@@ -316,7 +367,7 @@ exports.getAllBuyers = getAllBuyers
 
 
 //works for local database
- async function getBuyer(buyer_id) {
+async function getBuyer(buyer_id) {
     let sqlQuery = "SELECT buyer_id, buyer_firstname, buyer_lastname, buyer_email, buyer_phone_number, buyer_gender, buyer_date_of_birth, buyer_profile_photo, buyer_address FROM buyer WHERE buyer_id = ? ";
     const [AllBuyers] = await database.query(sqlQuery, [buyer_id]);
     const buyer = AllBuyers[0];
@@ -327,18 +378,18 @@ exports.getBuyer = getBuyer
 
 
 //works for local database
- async function getProductsAndImages(product_id) {
+async function getProductsAndImages(product_id) {
     let sqlQuery = `SELECT * FROM productsAndImages WHERE product_id = ?`
-    const [products] = await database.query(sqlQuery, [product_id])
-    const product = products[0]
+    const [product, fields] = await database.query(sqlQuery, [product_id])
     return product
 }
 exports.getProductsAndImages = getProductsAndImages
-// getProductsAndImages(2).then(console.log)
+// getProductsAndImages(76).then(console.log)
 
 
 //works for local database
- async function addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) { 
+async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
+
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee])
     return +newproductInfo.insertId
@@ -348,11 +399,11 @@ exports.getProductsAndImages = getProductsAndImages
 }
 
 exports.addNewProduct = addNewProduct
-//addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
+// addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
 
 
 
-async function addNewProductPhoto(product_id, photo_file_path){
+async function addNewProductPhoto(product_id, photo_file_path) {
     let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)

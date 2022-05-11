@@ -8,7 +8,7 @@ const db = require("../fake-db");
 const router = express.Router();
 // const axios = require('axios')
 
-const mySqlDatabase = require("../database/databaseAccessLayer")
+const mysqlDB = require("../database/databaseAccessLayer")
 
 
 /* Global Variables */
@@ -59,11 +59,12 @@ router.post("/product_post_2", async(req, res) => {
   let product_delivery_fee = +productInfo.deliveryFee
   let photo_file_path = productInfo.imgUrl
   
-  let product_id = await mySqlDatabase.addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) 
-  // console.log(produt)
-  let photo = await mySqlDatabase.addNewProductPhoto(product_id, photo_file_path)
+  let product_id = await mysqlDB.addNewProduct(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) 
+
+  req.session.product_id = product_id
+  let photo = await mysqlDB.addNewProductPhoto(product_id, photo_file_path)
   console.log("photo:",photo)
-  res.render("product_post/product_post_2",{productInfo})
+  res.render("product_post/product_post_2",{productInfo,product_id})
 })
 
 
