@@ -22,8 +22,8 @@ const mysqlDB = require('../database/databaseAccessLayer')
 // GET /seller_landing/seller_landing
 router.get("/seller_landing/:id", (req, res) => {
    let id = req.params.id
-   req.session.email
-//    let email = req.session.email ? req.session.email: null;
+  // let email =  req.session.email
+   let email = req.session.email ? req.session.email: null;
     res.render("seller_landing/seller_landing",{id,email})
 })
 
