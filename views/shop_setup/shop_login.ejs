@@ -28,19 +28,20 @@
 
 
 <div class="form-box center">
-    <form class="p-3"  action="/shop_setup/login" method="POST">
+    <form class="p-3"  action="/shop_setup/shop_login" method="POST">
+    <!-- <form class="p-3"  action="/seller_landing/seller_landing/:id" method="POST"> -->
         <h5>Enter contact Info</h5>
 
         <div class=" m-3">
-            <label for="email">Email Address</label>
-            <input type="email" class="form-control" id="inputEmail" name="email">
+            <label for="store_email">Email Address</label>
+            <input type="store_email" class="form-control" id="inputEmail" name="store_email">
         </div>
         <br>
         <div class=" m-3">
             <h5>Create Password</h5>
 
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="inputPassword" name="password">
+            <label for="store_password">Password</label>
+            <input type="store_password" class="form-control" id="inputPassword" name="store_password">
         <small><a href=""> Forgot password?</a></small>
         </div>
         <button type="submit" class="yellow-bn m-3" >Login </button>
