@@ -65,54 +65,49 @@ else {
 
 /*****      Functions     *****/
 
-
-
 /**
-
- * 
  * @param {number} store_id 
  * @returns all products belonging to a store
-
-
  */
-// function getProductsByStoreId(store_id=1) {
-//     let query = `
-//     SELECT product.*, store.store_name, product_photo.photo_file_path
-//     FROM product
-//     LEFT JOIN store
-//     ON store.store_id = product.store_id
-//     LEFT JOIN product_photo
-//     ON product.product_id = product_photo.product_id
-//     WHERE store.store_id = ?
-//     `
+function getProductsByStoreId(store_id) {
+    let query = `
+    SELECT product.*, store.store_name, product_photo.photo_file_path
+    FROM product
+    LEFT JOIN store
+    ON store.store_id = product.store_id
+    LEFT JOIN product_photo
+    ON product.product_id = product_photo.product_id
+    WHERE store.store_id = ?
+    `
 
-//     return database.query(query, [store_id])
-//         .then(([products, fields]) => {
-//             // console.log(products)
-//             return products
-
-//             // return products[0];
-//         })
-// }
-// exports.getProductsByStoreId = getProductsByStoreId
+    let b = database.query(query, [store_id])
+    return b
+    // database.query(query, [store_id])
+    // .then((result) => {
+    //     return result
+    // })
+       
+        // .then(([products, fields]) => {
+        //     return products
+        // })
+}
+exports.getProductsByStoreId = getProductsByStoreId
 
 
  /** 
   * get all the orders by the giving store id in the order table
   * @param {number} store_id. 
   */
+function getOrdersByStoreId(store_id=1) {
+    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+    let query = "select * from `order` WHERE store_id = ?"; 
 
-
-// function getOrdersByStoreId(store_id=1) {
-//     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
-//     let query = "select * from `order` WHERE store_id = ?"; 
-
-//     return database.query(query, [store_id])
-//         .then((orders) => {
-//             return orders[0]
-//         })
-// }
-// exports.getOrdersByStoreId = getOrdersByStoreId
+  database.query(query, [store_id])
+        .then((orders) => {
+            return orders[0]
+        })
+}
+exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
