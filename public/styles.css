@@ -30,6 +30,13 @@ body {
 
 }
 
+.logoImage{
+    max-width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+}
+
 
 /* for centering item ,should put it in the parent class list */
 .center {
@@ -700,23 +707,68 @@ font-size: 20px;
 
 
 
-.addToCartBtn{
-    height: 60px;
-    width: 200px;
-    color: white;
-    background-color: darkslategrey;
-}
 
 
-/*==================================Add To Cart===================*/
+/*==============================Add To Cart===================*/
 
 
 
-.seller-landing-body {
+.add-cart-body  {
     position: relative; /* usually the parent, in this case the body element, has position relative so that the absolute positioned child is positioned relative to it */
-    height: 100vh; /* 100% of the viewport height */
+    /*height: 100vh; !* 100% of the viewport height *!*/
     margin: 0; /* recommended */
     /*box-sizing:border-box*/
 
+}
 
+.product_react_btn_set{
+    text-align: center;
+}
+
+.product_react_btn_set > * {
+    height:50px;
+    width:50px;
+    border-radius: 50px;
+    color: white;
+    background-color: black;
+    margin:0 20px;
+
+}
+
+
+.product_info > *{
+    text-align: center;
+
+}
+
+.product_info>h2{
+    text-transform: capitalize;
+
+}
+
+
+.addToCartBtn{
+    height: 60px;
+    text-align: center;
+    /*width: 100%;*/
+
+    background-color: #E3974F;
+    border-radius: 10px;
+    margin:20px;
+    color:white
+
+}
+
+
+.add_card_btn{
+    text-align: center;
+}
+
+
+.product-l-image{
+    width: 80%;
+    max-width: 350px;
+    /*max-width: 80%;*/
+    margin-top: 10px;
+    border-radius: 5%
 }

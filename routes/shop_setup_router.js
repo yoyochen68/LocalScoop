@@ -3,7 +3,7 @@ const express = require("express");
 const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto')
-const db = require("../fake-db");
+// const db = require("../fake-db");
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 const s3 = require("../s3");  
@@ -50,9 +50,8 @@ router.post("/shop_login", async (req, res) => {
     return
   }
   const id = shopOwner[0].store_id
-  console.log("hello", req.session)
+  req.session.id = id;
   req.session.email = email;
-  console.log("hi", req.session)
   // let store_email = req.session.store_email ? req.session.store_email : null;
   res.redirect("/seller_landing/seller_landing/" + id)
 })
