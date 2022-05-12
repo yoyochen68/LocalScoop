@@ -18,7 +18,8 @@ const s3 = require("./s3")
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
-const cors = require("cors")
+// const cors = require("cors")
+
 // import multer from 'multer'
 // import path from 'path'
 // import crypto from 'crypto';
@@ -46,10 +47,10 @@ const PORT = process.env.PORT || 8000; // let express set port, else make it 800
 
 /*** express ***/
 const app = express();
-app.use(cors({
-  origin: "http://localhost:8000",
-  optionsSuccessStatus: 200
-}))
+// app.use(cors({
+//   origin: "http://localhost:8000",
+//   optionsSuccessStatus: 200
+// }))
 //app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
