@@ -30,6 +30,13 @@ body {
 
 }
 
+.logoImage{
+    max-width: 80%;
+    height: 80%;
+    position: absolute;
+    top: 10%;
+}
+
 
 /* for centering item ,should put it in the parent class list */
 .center {
