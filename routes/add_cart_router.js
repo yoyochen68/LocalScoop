@@ -19,8 +19,12 @@ router.get("/add_cart", async(req, res) => {
 
 
   let cardItemsTotal = await mysqlDB.getCartItemsLength(buyer_id)
+  let productInfo = await mysqlDB.getProductsAndImages(product_id)
+  let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
 
-  res.render("add_cart/add_cart", {product_id,cardItemsTotal})
+  console.log(productInfo)
+
+  res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cardItemsTotal})
 })
 
 
@@ -36,7 +40,7 @@ router.post("/add_cart",  async (req, res) => {
   await mysqlDB.addToCart(buyer_id, product_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsLength(buyer_id)
 
-  res.json({ id: cartItemsTotal })
+  res.json( {quantity: cartItemsTotal })
   // return  await mysqlDB.getCartItemsLength(buyer_id)
 
 })
