@@ -54,7 +54,7 @@ const app = express();
 //   origin: "http://localhost:8000",
 //   optionsSuccessStatus: 200
 // }))
-//app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
 app.use(express.json()); 

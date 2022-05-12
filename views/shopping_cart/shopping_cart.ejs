@@ -9,13 +9,7 @@
 <link rel="stylesheet" href="../../styles.css">
 <style>
  
-    .shopping_cart_i{
-       max-width: auto;
-      height: 100px;
-        border: 1px solid gray;
-        border-radius: 50%;
-        
-    }
+
 
     /* @media only screen and (min-width:400px){
         .shopping_cart_i{
@@ -30,7 +24,16 @@
         /* display: flex;
         justify-content: space-around; */
         display: grid;
-        grid-template-columns: 3fr 2fr 1fr;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 20px;
+    }
+
+    .shopping_cart_i{
+        max-width: auto;
+        height: 120px;
+        border: 1px solid gray;
+        border-radius: 50%;
+        place-self: center;
     }
 
     .productName{
@@ -78,7 +81,8 @@ button:hover {
 
 .price{
     display: block;
-    justify-items: end;
+    margin-left: 5px;
+justify-items: end;
 }
 
 
@@ -120,7 +124,7 @@ let numberOfProducts = fakeListFromDb.length
 
 
 
-<section>
+<section >
 <img src="https://cdn.shopify.com/s/files/1/0107/9820/2938/products/CLOVECORE4954copy_4d257312-9baf-40f1-aad2-b10d8af11227.jpg?v=1646350921" alt="Avatar" class="shopping_cart_i">
 
 <div>
@@ -128,11 +132,11 @@ let numberOfProducts = fakeListFromDb.length
     <p class="remove">Remove</p>
     <p class="saveForLater">Save for later</p>
 </div>
-<div class="price">
-   <p >$100</p> 
+<div class="priceAndQuantity">
+   <p class="price">$100</p> 
    <div  class="quantityBtn">
    <button>&#43;</button>
-   <span>quantity</span>
+   <span>2</span>
    <button>&#8211;</button>
 </div>
 
