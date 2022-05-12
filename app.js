@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser")
 const cookieSession = require("cookie-session")
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
-const mysqlDB = require("./database/databaseAccessLayer.js")
+// const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 
