@@ -32,15 +32,15 @@ let database;
 // KEVIN's localHost
 
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "localscoop",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 
 
@@ -459,7 +459,9 @@ exports.addToCart = addToCart
 
 
 // exports.addNewProductPhoto = addNewProductPhoto
+
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
 
 
 
