@@ -155,11 +155,16 @@ router.get("/shop_setup_6", async(req, res) => {
 
 // POST /shop_setup/uploadS3
 router.post('/uploadS3', (req, res) => {
+  
   // At some point check the session exists for the logged in user
   // console.log(req.session)
-  let imageUrl =  req.body.imageUrl;
-  mysqlDB.updateShopPhotoByStoreId(1, imageUrl)
+  let store_id = req.session.store_id
+  let imageUrl =  +req.body.imageUrl;
+
+  mysqlDB.updateShopPhotoByStoreId(store_id, req.body.imageUrl)
 })
+
+
 
 
 
