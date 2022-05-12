@@ -18,29 +18,29 @@ let database;
 // YASMINA's localHost
 
 /* change this so it matches yours */
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
 // KEVIN's localHost
 
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "root",
+    database: "localscoop",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 
 
@@ -458,8 +458,8 @@ exports.addToCart = addToCart
 
 
 
-exports.addNewProductPhoto = addNewProductPhoto
-// addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+// exports.addNewProductPhoto = addNewProductPhoto
+// // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
 
 
 

@@ -14,7 +14,7 @@ const { append } = require("express/lib/response");
 // GET /follow_business/follow_business_1
 router.get("/follow_business_1", (req, res) => {
 
-    res.render("/follow_business/follow_business_1")
+    res.render("follow_business/follow_business_1")
 })
 
 

@@ -12,7 +12,7 @@ const mysqlDB = require('../database/databaseAccessLayer')
 // GET /add_cart/add_cart
 router.get("/add_cart", async(req, res) => {
 
-  /////I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
+  // I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
   // let product_id = ""
   let product_id = 2
   let buyer_id = 2
