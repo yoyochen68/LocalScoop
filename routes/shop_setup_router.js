@@ -43,6 +43,10 @@ router.get("/shop_login", (req, res) => {
 router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
+  console.log(req.body)
+  console.log(email)
+  console.log(password)
+
   let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
   console.log(shopOwner)
   if (shopOwner.length === 0) {

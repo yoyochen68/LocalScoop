@@ -45,15 +45,15 @@ const dbConfigLocal = {
 
 
 // YOYO local database
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "Password",
-//     database: "localscoop_local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "Password",
+    database: "localscoop_local",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -110,7 +110,7 @@ async function authenticateShopOwner(store_email, store_password) {
     return validatedShopOwner
 }
 exports.authenticateShopOwner = authenticateShopOwner
-// authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
+authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
 
 
@@ -459,7 +459,9 @@ exports.addToCart = addToCart
 
 
 // exports.addNewProductPhoto = addNewProductPhoto
-// // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
+// addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
 
 
 
