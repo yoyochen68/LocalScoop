@@ -23,35 +23,26 @@
     <a onclick="history.back()"><span class="material-icons back-icon">arrow_back</span></a>
   </div>
 
-  <div class="centerBox m-font">
+  <div class="centerBox m-font imgUpload">
     <P>
       Add pictures of your store!<br>
-      This gives customers an idea of <br>
-      what your store has to offer.
+      This gives customers an idea of what your store has to offer.
     </P>
 
 
 
     <div class="container centerBox m-font">
-      <img
-        src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>"
-        class="responsive-img" style="max-width: 70%; margin-top: 10px; border-radius: 10%;">
-
-      <form action="/shop_setup/upload" method="POST" enctype="multipart/form-data" id="photoForm">
+      <!-- <form action="/shop_setup/uploadS3" method="POST" enctype="multipart/form-data" id="imageForm"> -->
+      <form id="imageForm">
         <div class="file-field input-field">
-          <label for="file-upload" class="greenBtn">
-            Upload Image
-          </label>
-          <input id="file-upload" type="file" accept="image/*" name="myImage" onchange="uploadphoto()" />
+          <input id="imageInput" class="greenBtn" type="file" accept="image/*" name="myImage" />
+          <button type="submit" class="greenBtn">Upload</button>
         </div>
-
-        <!-- <button type="submit" class="btn">Upload</button> -->
       </form>
-
     </div>
 
     <a href="/shop_setup/shop_setup_7">
-      <button class="yellow-bn s-bn">Finish Up</button>
+      <button type="submit" class="yellow-bn s-bn">Finish Up</button>
     </a>
 
   </div>
@@ -60,14 +51,15 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
-<script>
+<script src="/s3_photo_upload/s3_frontend.js"></script>
 
+<!-- <script>
   function uploadphoto() {
     let fileUpload = document.getElementById("file-upload").value
     if (fileUpload) {
       document.getElementById("photoForm").submit();
     }
   }
-</script>
+</script> -->
 
 </html>

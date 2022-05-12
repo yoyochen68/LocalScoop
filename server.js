@@ -1,9 +1,8 @@
-const app = require('./app.js');
-const express = require("express")
-const PORT = process.env.PORT || 8000; // let express set PORT, else make it 8000
-const dbConnection = require("./database/databaseConnection")
+const app = require("./app")
+const mysql = require("mysql2")
 
-// app.set("view engine", "ejs")
+
+const PORT = process.env.PORT || 8000; // let express set PORT, else make it 8000
 
 app.listen(PORT, () => console.log(`server should be running at http://localhost:${PORT}/`))
 

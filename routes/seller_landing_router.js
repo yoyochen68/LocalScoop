@@ -7,7 +7,7 @@ const crypto = require('crypto')
 const db = require("../fake-db");
 const router = express.Router();
 // const axios = require('axios')
-
+const mysqlDB = require('../database/databaseAccessLayer')
 
 
 /* Global Variables */
@@ -19,11 +19,14 @@ const router = express.Router();
 
 
 
+
 // GET /seller_landing/seller_landing
 router.get("/seller_landing/:id", (req, res) => {
-    res.render("seller_landing/seller_landing")
-})
+   let id = req.params.id
+   let email = req.session.email 
+    res.render("seller_landing/seller_landing",{id,email})
 
+})
 
 
 

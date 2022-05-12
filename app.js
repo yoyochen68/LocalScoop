@@ -1,20 +1,33 @@
 /* libraries */
-const express = require("express");
+const express = require("express")
 const bodyParser = require("body-parser")
-const cookieParser = require("cookie-parser");
-const cookieSession = require("cookie-session");
-const mysql = require("mysql2");
+const cookieParser = require("cookie-parser")
+const cookieSession = require("cookie-session")
+const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
-const ejs = require('ejs');
+const mysqlDB = require("./database/databaseAccessLayer.js")
+const ejs = require("ejs")
+const s3 = require("./s3")
+
+
+// import cookieSession from "cookie-session"
+// import mysql from "mysql2"
+// import * as dbConnection from "./database/databaseConnection.js"
+// import ejs from 'ejs'
 
 //==image ===
-const multer = require('multer');
-const path = require('path');
-const crypto = require('crypto')
+const multer = require("multer")
+const path = require("path")
+const crypto = require("crypto")
+// const cors = require("cors")
+
+// import multer from 'multer'
+// import path from 'path'
+// import crypto from 'crypto';
 
 
 // fake-database
-const db = require("./fake-db")
+// import * as db from './fake-db';
 
 // other files 
 const server = require("./server.js")
@@ -25,6 +38,10 @@ const productPostRouter = require("./routes/product_post_router")
 const ordersRouter = require("./routes/orders_router")
 const sellerShopRouter = require("./routes/seller_shop_router")
 const sellerLandingRouter = require("./routes/seller_landing_router")
+const addCartRouter = require("./routes/add_cart_router")
+const shoppingCartRouter = require("./routes/shopping_cart_router")
+const followBusinessRouter = require("./routes/follow_business_router")
+
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
@@ -33,6 +50,10 @@ const PORT = process.env.PORT || 8000; // let express set port, else make it 800
 
 /*** express ***/
 const app = express();
+// app.use(cors({
+//   origin: "http://localhost:8000",
+//   optionsSuccessStatus: 200
+// }))
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
@@ -42,9 +63,9 @@ app.set('view engine', 'ejs'); // set templating engine to ejs
 
 // cookie sessions
 app.use(cookieSession({
-  name:'kevin',
+  name:'session',
   keys:['localscoop:8000'],
-  maxAge: 1000 * 60 * 60
+  maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
 }))
 
 
@@ -54,13 +75,35 @@ app.use("/product_post", productPostRouter);
 app.use("/orders", ordersRouter);
 app.use("/seller_shop", sellerShopRouter);
 app.use("/seller_landing", sellerLandingRouter)
+app.use("/add_cart", addCartRouter)
+app.use("/shopping_cart", shoppingCartRouter)
+app.use("/follow_business", followBusinessRouter)
 
+function authorized(req, res, next) {
+  if (!req.session.email) {
+      res.redirect("/login")
+      return
+  }
+  next()
+}
 
 /* ROUTES */
 
-// route for testing, 
+app.get("/a", (req, res) => {
+  mysqlDB.getProductsByStoreId()
+})
+
+
+ 
 app.get("/", (req, res) => {
-  res.render("index")
+  let email = req.session.email
+  let id = req.session.id
+
+  res.render("index",{email,id})
+})
+
+app.get("/index2", (req, res) => {
+  res.render("index2")
 })
 
 
@@ -72,6 +115,16 @@ app.get("/dbtest", (req, res) => {
     })
   
 })
+
+
+
+// for s3 photo upload. Is an ajax route
+app.get('/s3Url', async (req, res) => {
+  const url = await s3.generateUploadURL()
+  res.send({ url })
+})
+
+
 
 
 //====image upload===

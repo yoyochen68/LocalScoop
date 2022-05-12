@@ -9,41 +9,33 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
+/**
+ * for testing 
+ */
+router.get("/a",  async (req, res) => {
+    try {  
+        let productsByStore = await mysqlDB.getProductsByStoreId(1)
+        let a = productsByStore[0]
 
-
-/* express */
-const app = express();
-app.use(express.json())
-
-
-
-router.get("/a", async (req, res) => {
-    await mysqlDB.getProductsByStoreId()
-    
+        res.send(a)
+    } catch (error){
+        res.send(error)
+    }  
 })
-
 
 
 
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
-    
-//    mysqlDB.getStores()
-//    .then((result) => {
-//         res.send(result[0])
-//    })
-//    .catch(error => {
-//        res.status(400).send('NEIN!')
-//    })
 
     let carouselSliderData = [
-        { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125' },
+        { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125', link: "/Users/kevincjhung/Documents/GitHub/idsp1-localScoop/public/uploads/fbda680e1700a34f4a988c8d95fb147f.png" },
         { updateTime : '2 Days Ago', productName : 'White Luxury Hoodie', productPrice : '$105' },
         { updateTime : '3 Days Ago', productName : 'Nike Air Force One-Blue', productPrice : '$175' },
         { updateTime : '3 Days Ago', productName : 'Nike Lebron Air 1', productPrice : '$130' },
         { updateTime : '5 Days Ago', productName : 'Herschel White Backpack', productPrice : '$125' },
         { updateTime : 'Last Week', productName : 'Baseball Cap', productPrice : '$105' },
-        { updateTime : 'Yesterday', productName : 'Premium Foot Pics', productPrice : '$125' },
+        { updateTime : 'Yesterday', productName : 'Women`s converse Shoes', productPrice : '$125' },
     ]
 
     let numberOfCards = carouselSliderData.length

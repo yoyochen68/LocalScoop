@@ -8,13 +8,15 @@ const db = require("../fake-db");
 const router = express.Router();
 // const axios = require('axios')
 
-
+const mysqlDB = require("../database/databaseAccessLayer")
 
 
 /* Global Variables */
 
 // GET /product_post/product_post_1
 router.get("/product_post_1", (req, res) => {
+  
+  
   res.render("product_post/product_post_1", {
 
   })
@@ -24,27 +26,68 @@ router.get("/product_post_1", (req, res) => {
 // -- NOT MADE YET ---
 // GET /product_post/product_post_2
 router.get("/product_post_2", (req, res) => {
-  res.render("product_post/product_post_2", {
 
+  // will need to replace this with actual request from db
+  let productInfo = [
+    {
+      "Product Name": "name1",
+      "Description": 'productInfo.description',
+      "Category": 'productInfo.category',
+      "Delivery Fee": 'productInfo.deliveryFee',
+      "Product Price": 'productInfo.productPrice'
+    },
+    {
+      "Product Name": 'productInfo.productName',
+      "Description": 'productInfo.description',
+      "Category": 'productInfo.category',
+      "Delivery Fee": 'productInfo.deliveryFee',
+      "Product Price": 'productInfo.productPrice'
+    }]
+
+  res.render("product_post/product_post_2", {
+    productInfo
   })
 })
-router.post("/product_post_2", (req, res) => {
+
+// fake database:
+// router.post("/product_post_2", (req, res) => {
+//   // let storeId = req.session.storeId ? req.session.storeId : null;
+//   let productInfo = req.body
+//   let storeId = 104
+//   let productName = productInfo.itemName
+//   let category = productInfo.category
+//   let description = productInfo.description
+//   let productPrice = +productInfo.productPrice
+//   let deliveryFee = +productInfo.deliveryFee
+//   let imgUrl = productInfo.imgUrl
+//   // if(storeId){}
+//   let produt = db.addProduct(storeId, productName, category, description, productPrice, deliveryFee,imgUrl)
+//   console.log(produt)
+//   res.render("product_post/product_post_2",{productInfo})
+// })
+
+
+// mysql:
+router.post("/product_post_2", async (req, res) => {
   // let storeId = req.session.storeId ? req.session.storeId : null;
   let productInfo = req.body
+  let store_id = 1
+  let product_name = productInfo.productName
+  let product_category = productInfo.category
+  let product_description = productInfo.description
+  let product_price = +productInfo.productPrice
+  let product_delivery_fee = +productInfo.deliveryFee
+  let photo_file_path = productInfo.imgUrl
 
-  let storeId = 104
-  let productName = productInfo.itemName
-  let category = productInfo.category
-  let description = productInfo.description
-  let productPrice = +productInfo.productPrice
-  let deliveryFee = +productInfo.deliveryFee
-  let imgUrl = productInfo.imgUrl
-  // if(storeId){}
-  let produt = db.addProduct(storeId, productName, category, description, productPrice, deliveryFee,imgUrl)
+  let product_id = await mysqlDB.addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee)
 
-  console.log(produt)
-  res.render("product_post/product_post_2",{productInfo})
+  req.session.product_id = product_id
+  let photo = await mysqlDB.addNewProductPhoto(product_id, photo_file_path)
+  console.log("photo:", photo)
+  res.render("product_post/product_post_2", { productInfo, product_id })
 })
+
+
 
 
 /************      handling the store image uploading          **********/
@@ -97,7 +140,7 @@ router.post('/upload', upload, (req, res) => {
 
   // let shopIdOfSession = db.getStoreIdFromStoreName(req.session.storeName)
   let multeredFilename = '/uploads/' + req.file.filename
-console.log(multeredFilename)
+  // console.log(multeredFilename)
   // db.editShop(shopIdOfSession, { shopProfilePhoto : multeredFilename })
 
   // store some info in the database

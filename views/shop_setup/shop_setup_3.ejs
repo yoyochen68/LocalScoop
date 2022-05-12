@@ -15,20 +15,19 @@
   <title>Shop Setup</title>
 </head>
 
-
+<body>
 <header class="shop-setup-header">
   <!--Back button-->
   <a onclick="history.back()"><span class="material-icons back-icon">arrow_back</span></a>
 </header>
 
-<body>
-  <div class="address-box">
-    <h3>What is your address?</h3>
+
+  <div class="address-box displayBlock">
+    <h3>What is your address?`</h3>
     <p>This lets us know that your business is<br>
       authorized for the safety of your customers </p>
     <form class="m-3"  action="/shop_setup/shop_setup_3" method="POST">
-    
-      <div class=" m-4">
+      <div class="m-4">
           <label for="address"></label>
           <input type="text" class="form-control" id="address" name="address" placeholder="Type in your address">
      <small> Example: street, City, Province</small>

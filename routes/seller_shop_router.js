@@ -5,47 +5,38 @@ const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
 const db = require("../fake-db");
+const mysqlDB = require('../database/databaseAccessLayer')
+
 const router = express.Router();
 // const axios = require('axios')
+
+const { append } = require("express/lib/response");
+
+
+/* express */
+const app = express();
+app.use(express.json())
 
 
 
 /* Global Variables */
 
 // GET /seller_shop/seller_shop
-router.get("/seller_shop/:id", (req, res) => {
-    let storeId = req.params.id// req.params.anything will always be a string
-    let shop = db.getShop(+storeId)
-    let shopPostsList = db.getPostsByStoreId(+storeId)
+ router.get("/seller_shop", async (req, res) => {
 
-    //Address
-    let shopAddressFields = shop.address.split(',')
-    let location = `${shopAddressFields[1]}, ${shopAddressFields[2]} `//city+province
+  //WORK ON LOCALHOST
+  //    let storeId = 1
 
-    let followersNumber = !shop.followers?  0 : shop.followers
+     let storeId = req.session.storeId
+     // console.log({storeId})
 
-    let placeholderDesc = "We are small local store that aim to bring you the best of quality and make you happy. "
-    let pageDescription = !shop.description?  placeholderDesc : shop.description
+     let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
+     let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
+     let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
 
+     res.render("seller_shop/seller_shop", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 
-    //Gathering all the required info for the page
-    let storeInfo = {
-        image:"", //UNCOMPLETED
-        location:location,
-        name: shop.storeName,
-        rating:shop.rating,
-        description:pageDescription,
-        followers:followersNumber,
-        productsImages:"" //UNCOMPLETED
-    }
-
-
-    res.render("seller_shop/seller_shop", { storeInfo:storeInfo})
-})
-
-
-
-
+ })
 
 
 
