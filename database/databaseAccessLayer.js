@@ -1,5 +1,4 @@
 
-
 /** database setup */
 const res = require("express/lib/response");
 const mysql = require("mysql2")
@@ -16,7 +15,7 @@ let database;
 // };
 
 
-//YASMINA's localHost
+// YASMINA's localHost
 
 /* change this so it matches yours */
 const dbConfigLocal = {
@@ -32,6 +31,7 @@ const dbConfigLocal = {
 
 // KEVIN's localHost
 
+
 // const dbConfigLocal = {
 //     host: "localhost",
 //     user: "root",
@@ -43,8 +43,8 @@ const dbConfigLocal = {
 // };
 
 
-//YOYO local database
 
+// YOYO local database
 // const dbConfigLocal = {
 //     host: "localhost",
 //     user: "root",
@@ -86,6 +86,7 @@ async function getProductsByStoreId(store_id=1) {
 exports.getProductsByStoreId = getProductsByStoreId
 
 
+
 /** 
  * get all the orders by the giving store id in the order table
  * @param {number} store_id. 
@@ -111,7 +112,6 @@ async function authenticateShopOwner(store_email, store_password) {
 exports.authenticateShopOwner = authenticateShopOwner
 // authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
-
 
 
 
@@ -146,10 +146,7 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
 
 
 
-
-
 //===================SHOP SETUP=========================
-
 
 /**
  *
@@ -168,12 +165,9 @@ async function addShop(store_name, store_phone_number, store_email, store_passwo
     let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
     let newStoreId = newStoreInfo[0].insertId
     return getStoreInfoByStoreId(newStoreId)
-
 }
 exports.addShop = addShop
 // addShop("store_name", "store_phone_number", "store_email", "store_password_hash").then(console.log)
-
-
 
 
 
@@ -196,6 +190,7 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 // updateShopAddressByStoreId(1,"123 Robson ST").then(console.log)
 
 
+
 /**
  *
  * @param categoryNameList
@@ -207,17 +202,16 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     let query = `
     SELECT category.category_id
     FROM category
-    WHERE category.category_name=?;
-    `
+    WHERE category.category_name=?;`
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
         let idOfName = JSON.parse(idObjectOfName[0]['category_id'])
         categoryIdList.push(idOfName)
     }
-
     return categoryIdList
 }
+exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 function getStoreInfoFromStoreName(store_name) {
@@ -225,9 +219,9 @@ function getStoreInfoFromStoreName(store_name) {
         `SELECT * 
 		 FROM store
 		 WHERE store_name = ?`
+    return database.query(query, [store_name])
 }
-
-exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
+exports.getStoreInfoByStoreName = getStoreInfoFromStoreName
 // getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
 
 
@@ -243,16 +237,12 @@ async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
     let query = `
          INSERT INTO store_category (store_id, category_id)
-         VALUES (?, ?);
-    `
+         VALUES (?, ?);`
 
     for (let catId of catIdList) await database.query(query, [store_id, catId])
     return getStoreInfoByStoreId(store_id)
 }
-
-
 exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
-
 // updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
 // updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)
 
@@ -266,7 +256,6 @@ exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
  * @param radius
  * @returns {Promise<*>}
  */
-
 async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radius=0) {
 
     let query = `
@@ -286,13 +275,10 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 /**
- *
  * @param store_id
  * @param photo_path
  */
-
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path ) 
     VALUE(?, ?)`
@@ -309,23 +295,33 @@ exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
 //===================SELLER-SHOP =========================
 
 
-
-
 async function getShopPhotoByStoreId(store_id) {
 
     let query = `
           SELECT store.store_id, 
           JSON_ARRAYAGG(store_photo.photo_file_path) AS "photos"
-        FROM store
-        LEFT JOIN store_photo
-        ON store.store_id = store_photo.store_id
-        WHERE store.store_id = ?
-        group by store.store_id 
+          FROM store
+          LEFT JOIN store_photo
+          ON store.store_id = store_photo.store_id
+          WHERE store.store_id = ?
+          group by store.store_id 
          `
 
     let [store, fields] = await database.query(query,[store_id])
     const photos = store[0].photos.filter(a => a)
     return photos
+
+//           GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+//             FROM store
+//             LEFT JOIN store_photo
+//             ON store.store_id = store_photo.store_id
+//             WHERE store.store_id = ?
+//             group by store_id `
+
+//     let [store, fields] = await database.query(query,[store_id])
+//     let allPhotosString = store[0].photos
+//     return allPhotosString.split(", ")
+
 }
 exports.getShopPhotoByStoreId = getShopPhotoByStoreId
 // getShopPhotoByStoreId(1).then(console.log)
@@ -341,15 +337,6 @@ exports.getProductsAndImagesByStoreID = getProductsAndImagesByStoreID
 
 
 
-//===================ADD-CART =========================
-
-
-
-
-
-
-
-//=====================
 
 //works for local database
 async function getAllBuyers() {
@@ -358,8 +345,8 @@ async function getAllBuyers() {
     return AllBuyers;
 }
 exports.getAllBuyers = getAllBuyers
-
 // getAllBuyers().then(console.log)
+
 
 
 //works for local database
@@ -373,6 +360,7 @@ exports.getBuyer = getBuyer
 // getBuyer(2).then(console.log)
 
 
+
 //works for local database
 async function getProductsAndImages(product_id) {
     let sqlQuery = `SELECT * FROM productsAndImages WHERE product_id = ?`
@@ -383,6 +371,7 @@ exports.getProductsAndImages = getProductsAndImages
 // getProductsAndImages(76).then(console.log)
 
 
+
 //works for local database
 async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
@@ -390,7 +379,6 @@ async function addNewProduct(store_id, product_name, product_category, product_d
     return +newproductInfo.insertId
 
 }
-
 exports.addNewProduct = addNewProduct
 // addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
 
@@ -438,6 +426,7 @@ async function getCartItemsLength(buyerId){
     return itemsArray.length
 }
 
+
 exports.getCartItemsLength = getCartItemsLength
 // getCartItemsLength(1).then(console.log)
 
@@ -470,247 +459,8 @@ exports.addToCart = addToCart
 
 
 
+exports.addNewProductPhoto = addNewProductPhoto
+// addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
 
 
 
-
-
-// addNewProductPhoto(4).then(console.log)
-
-
-
-// export async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) {
-//     let sqlQuery = `INSERT INTO product(store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp) VALUE (?, ?, ?, ?, ?, ?, ?)`
-//     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee, product_timestamp])
-//     const product_id = newproductInfo.insertId
-//     return await getProduct(product_id)
-// }
-
-
-// export async function getAllProductPhotosByStoreId(store_id, product_id, photosNumber=1) {
-
-// }
-
-
-
-
-
-// //don't need to implement it because we don't have a edit shop page
-// export async function getStoreInfoByStoreId(store_id) {
-
-
-// }
-
-// //don't need to implement it because we don't have a edit shop page
-// export async function getAllProductPhotosByStoreId() {
-
-// }
-
-
-// //don't need to implement it because we don't have a edit shop page
-
-
-// //don't need to implement it because we don't have a edit shop page
-// export async function getAllProductPhotosByStoreId() {
-
-// }
-
-
-
-
-
-
-
-
-
-// export async function getAllProductPhotosByStoreId() { } //don't need to implement it because we don't have a edit shop page
-
-// export async function getAllProductPhotosByStoreId() {} //don't need to implement it because we don't have a edit shop page
-
-
-
-//==========copy from Patrick's lab"========
-
-
-// function getAllUsers(callback) {
-//     let sqlQuery = "SELECT web_user_id, first_name, last_name, email FROM web_user";
-//     database.query(sqlQuery, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         }
-//         else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-// const passwordPepper = "SeCretPeppa4MySal+";
-
-// function addUser(postData, callback) {
-//     let sqlInsertSalt = "INSERT INTO web_user (first_name, last_name, email, password_salt) VALUES(:first_name, :last_name, :email, sha2(UUID(), 512)); ";
-//     let params = {
-//         first_name: postData.first_name, last_name: postData.last_name,
-//         email: postData.email
-//     };
-//     console.log(sqlInsertSalt);
-
-//     database.query(sqlInsertSalt, params, (err, results, fields) => {
-//         if (err) {
-//             console.log(err);
-//             callback(err, null);
-//         } else {
-//             let insertedID = results.insertId;
-//             let updatePasswordHash = "UPDATE web_user SET password_hash = sha2(concat(:password,:pepper,password_salt),512) WHERE web_user_id = :userId;"
-//             let params2 = {
-//                 password: postData.password,
-//                 pepper: passwordPepper,
-//                 userId: insertedID
-//             }
-//             console.log(updatePasswordHash);
-//             database.query(updatePasswordHash, params2, (err, results, fields) => {
-//                 if (err) {
-//                     console.log(err);
-//                     callback(err, null);
-//                 } else {
-//                     console.log(results);
-//                     callback(null, results);
-//                 }
-//             });
-//         }
-//     });
-// }
-
-// function deleteUser(webUserId, callback) {
-//     let sqlDeleteUser = "DELETE FROM web_user WHERE web_user_id = :userID";
-//     let params = {
-//         userID: webUserId
-//     };
-//     console.log(sqlDeleteUser);
-//     database.query(sqlDeleteUser, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-
-
-// function getAllRestaurants(callback) {
-//     let sqlQuery = "SELECT restaurant_id, name, description FROM restaurant";
-//     database.query(sqlQuery, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-
-// function addRestaurants(postData, callback) {
-//     let sqlInsertRestaurant = "INSERT INTO restaurant (name, description) VALUES(:name, :description); ";
-//     let params = {
-//         name: postData.name,
-//         description: postData.description
-//     };
-//     database.query(sqlInsertRestaurant, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-//     console.log(sqlInsertRestaurant);
-// }
-
-// function deleteRestaurants(restaurant_id, callback) {
-//     let sqlDeleteRestaurant = "DELETE FROM restaurant WHERE restaurant_id = :restaurant_id";
-//     let params = {
-//         restaurant_id: restaurant_id
-//     };
-//     console.log(sqlDeleteRestaurant);
-//     database.query(sqlDeleteRestaurant, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-
-// function getReview(restaurant_id, callback) {
-//     let reviewQuery = "SELECT review_id, restaurant_id, reviewer_name, details, rating FROM review";
-//     let params = {
-//         restaurant_id: restaurant_id
-//     };
-//     database.query(reviewQuery, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-
-// function getRestaurantName(restaurant_id, callback) {
-//     let reviewQuery = "SELECT * FROM restaurant WHERE restaurant_id = :restaurant_id";
-//     let params = {
-//         restaurant_id: restaurant_id
-//     };
-//     database.query(reviewQuery, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
-
-// function addReview(postData, callback) {
-//     let sqlInsertReview = "INSERT INTO review (restaurant_id, reviewer_name, details, rating) VALUES(:restaurant_id, :reviewer_name, :details, :rating); ";
-//     let params = {
-//         restaurant_id: postData.restaurant_id,
-//         reviewer_name: postData.reviewer_name,
-//         details: postData.details,
-//         rating: postData.rating
-
-//     };
-//     database.query(sqlInsertReview, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-//     console.log(sqlInsertReview);
-// }
-
-
-
-// function deleteReview(review_id, callback) {
-//     let sqlDeleteReview = "DELETE FROM review WHERE review_id = :review_id";
-//     let params = {
-//         review_id: review_id
-//     };
-//     console.log(sqlDeleteReview);
-//     database.query(sqlDeleteReview, params, (err, results, fields) => {
-//         if (err) {
-//             callback(err, null);
-//         } else {
-//             console.log(results);
-//             callback(null, results);
-//         }
-//     });
-// }
