@@ -273,21 +273,20 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 
-
+// ***********  command works, but f() doesn't
 /**
  * @param store_id
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
+   
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path ) 
     VALUE(?, ?)`
 
     await database.query(query, [store_id, photo_path])
-    // return getStoreInfoByStoreId(store_id)
 }
 exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
-
 
 
 
