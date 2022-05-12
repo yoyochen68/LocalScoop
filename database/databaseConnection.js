@@ -27,6 +27,18 @@
 
 
 
+// //YOYO local database
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "root",
+// 	database: "localscoop-local",
+
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
+
 
 
 // if (is_heroku) {
@@ -35,6 +47,29 @@
 // else {
 // 	database = mysql.createPool(dbConfigLocal).promise();
 // }
+
+
+
+
+// /**
+//  * @returns all the stores in the database
+//  */
+// function getStores(){
+// 	return database.query(`
+// 		SELECT * 
+// 		FROM store
+// 	`)
+// }
+// exports.getStores = getStores
+
+
+// function getStore(storeID){
+// 	return database.query(`
+// 		SELECT * 
+// 		FROM store
+// 		WHERE store_name = ?`)
+// }
+
 
 
 
