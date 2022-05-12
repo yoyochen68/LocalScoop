@@ -4,34 +4,32 @@ const res = require("express/lib/response");
 const mysql = require("mysql2")
 const is_heroku = process.env.IS_HEROKU || false;
 let database;
-//
-// const dbConfigHeroku = {
-//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-//     user: "hct0x5slkt8i1bgn",
-//     password: "o9dc7b1zw1ho9812",
-//     database: "ht3fknlbys0qeor5",
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
 
-
-// YASMINA's localHost
-
-/* change this so it matches yours */
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
+const dbConfigHeroku = {
+    host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "hct0x5slkt8i1bgn",
+    password: "o9dc7b1zw1ho9812",
+    database: "ht3fknlbys0qeor5",
+    multipleStatements: false,
+    namedPlaceholders: true
 };
 
 
+
+// YASMINA's localHost
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
+
+
+
 // KEVIN's localHost
-
-
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
@@ -41,7 +39,6 @@ const dbConfigLocal = {
     multipleStatements: false,
     namedPlaceholders: true
 };
-
 
 
 // YOYO local database
