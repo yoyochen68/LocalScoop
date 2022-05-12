@@ -37,6 +37,8 @@ const ordersRouter = require("./routes/orders_router")
 const sellerShopRouter = require("./routes/seller_shop_router")
 const sellerLandingRouter = require("./routes/seller_landing_router")
 const addCartRouter = require("./routes/add_cart_router")
+const shoppingCartRouter = require("./routes/shopping_cart_router")
+
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
@@ -67,14 +69,28 @@ app.use("/orders", ordersRouter);
 app.use("/seller_shop", sellerShopRouter);
 app.use("/seller_landing", sellerLandingRouter)
 app.use("/add_cart", addCartRouter)
+app.use("/shopping_cart", shoppingCartRouter)
 
-
+function authorized(req, res, next) {
+  if (!req.session.email) {
+      res.redirect("/login")
+      return
+  }
+  next()
+}
 
 /* ROUTES */
 
 // route for testing, 
 app.get("/", (req, res) => {
-  res.render("index")
+  let email = req.session.email
+  let id = req.session.id
+
+  res.render("index",{email,id})
+})
+
+app.get("/index2", (req, res) => {
+  res.render("index2")
 })
 
 
