@@ -28,7 +28,7 @@ imageForm.addEventListener("submit", async event => {
 		})
 
 		imageUrl = url.split('?')[0]
-		console.log("imageUrl: ", imageUrl)
+		console.log(imageUrl)
 
 		// post requst to my server to store any extra data
 		const postParam = {
