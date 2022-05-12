@@ -15,6 +15,7 @@ const dbConfigHeroku = {
 };
 
 
+
 // YASMINA's localHost
 // const dbConfigLocal = {
 // 	host: "localhost",
@@ -25,6 +26,7 @@ const dbConfigHeroku = {
 // 	multipleStatements: false,
 // 	namedPlaceholders: true
 // };
+
 
 
 // KEVIN's localHost
