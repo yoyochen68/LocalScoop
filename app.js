@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser")
 const cookieSession = require("cookie-session")
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
-const mysqlDB = require("./database/databaseAccessLayer.js")
+// const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 
@@ -54,7 +54,7 @@ const app = express();
 //   origin: "http://localhost:8000",
 //   optionsSuccessStatus: 200
 // }))
-//app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
 app.use(express.json()); 
@@ -181,7 +181,7 @@ function checkFileType(file, cb) {
 
 // le comment
 
-
+// pointless comment to change the network graoph
 
 module.exports = app;
 

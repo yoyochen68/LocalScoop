@@ -9,19 +9,31 @@
 <link rel="stylesheet" href="../../styles.css">
 <style>
  
-    .shopping_cart_i{
-       max-width: 30%;
-       max-height: 30%;
-        border: 1px solid gray;
-        border-radius: 50%;
-    }
+
+
+    /* @media only screen and (min-width:400px){
+        .shopping_cart_i{
+       max-width: 20%;
+       max-height: 20%;
+    } */
 
     section{
         border-bottom: 1px solid #B4B4B4;
         box-shadow:  2px 2px 2px rgba(0, 0, 0, 0.20);
         padding: 2%;
-        display: flex;
-        justify-content: space-around;
+        /* display: flex;
+        justify-content: space-around; */
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        gap: 20px;
+    }
+
+    .shopping_cart_i{
+        max-width: auto;
+        height: 120px;
+        border: 1px solid gray;
+        border-radius: 50%;
+        place-self: center;
     }
 
     .productName{
@@ -38,15 +50,42 @@
         color: #E3974F;
     }
 
-    button{
-        font-size: 20px;
-        max-width: 50px;
-        max-height: 50px;
-        color: white;
-        border-radius: 50%;
-        background-color: #E3974F;
-        border: white;
-    }
+
+    button {
+  display:block;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  border: 1px solid #E3974F;
+  background-color: #E3974F;
+  color: white;
+  font-size: 20px;
+  margin: 5px;
+}
+
+
+
+
+button:hover {
+  background: #3F69A0 ;
+  cursor: pointer;
+  border: #3F69A0;
+}
+.quantityBtn {
+    display: flex;
+    margin: 5px;
+}
+.quantityBtn span {
+    margin: 5px;
+}
+
+.price{
+    display: block;
+    margin-left: 5px;
+
+}
+
+
 </style>
 
 </head>
@@ -85,23 +124,29 @@ let numberOfProducts = fakeListFromDb.length
 
 
 
-<section>
- 
-        <img src="https://cdn.shopify.com/s/files/1/0107/9820/2938/products/CLOVECORE4954copy_4d257312-9baf-40f1-aad2-b10d8af11227.jpg?v=1646350921" alt="Avatar" class="shopping_cart_i">
+<section >
+<img src="https://cdn.shopify.com/s/files/1/0107/9820/2938/products/CLOVECORE4954copy_4d257312-9baf-40f1-aad2-b10d8af11227.jpg?v=1646350921" alt="Avatar" class="shopping_cart_i">
 
 <div>
-    <p class="productName">Bag</p>
+    <p class="productName">Shoes</p>
     <p class="remove">Remove</p>
     <p class="saveForLater">Save for later</p>
 </div>
-<div>
-   <p>$100</p> 
-   <button>+</button>
-   quantity
-   <button>-</button>
-
+<div class="priceAndQuantity">
+   <p class="price center">$100</p> 
+   <div  class="quantityBtn">
+   <button>&#43;</button>
+   <span>2</span>
+   <button>&#8211;</button>
 </div>
 
+<!-- <button class="cssCircle minusSign">
+    &#8211;
+</button>
+number
+  <button class="cssCircle plusSign">
+    &#43;
+  </button> -->
 
 </section> 
 
