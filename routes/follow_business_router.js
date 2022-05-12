@@ -1,26 +1,28 @@
-// require
-const express = require('express');
+/* libraries */
+const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
-const db = require("../fake-db");
 const router = express.Router();
-// const axios = require('axios')
+const mysqlDB = require('../database/databaseAccessLayer')
+
+const { append } = require("express/lib/response");
 
 
 
-/* Global Variables */
-
-// GET /follow_business/follow_business
+// GET /follow_business/follow_business_1
 router.get("/follow_business_1", (req, res) => {
-    res.render("follow_business/follow_business_1")
+
+    res.render("/follow_business/follow_business_1")
 })
 
 
+// GET /follow_business/follow_business_2
+router.get("/follow_business_2", (req, res) => {
 
-
-
+    res.render("/follow_business/follow_business_2")
+})
 
 
 

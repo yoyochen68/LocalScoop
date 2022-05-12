@@ -32,28 +32,28 @@ const dbConfigHeroku = {
 
 // KEVIN's localHost
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop-local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
-
-
-//YOYO local database
-
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
-    password: "Password",
-    database: "localscoop_local",
+    password: "root",
+    database: "localscoop",
     port: 3306,
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+//YOYO local database
+
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "Password",
+//     database: "localscoop_local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -65,15 +65,9 @@ else {
 
 /*****      Functions     *****/
 
-
-
 /**
-
- * 
  * @param {number} store_id 
  * @returns all products belonging to a store
-
-
  */
 async function getProductsByStoreId(store_id=1) {
     let query = `
@@ -88,7 +82,6 @@ async function getProductsByStoreId(store_id=1) {
 
     let [products, fields] = await database.query(query,[store_id])
     return products
-
 }
 exports.getProductsByStoreId = getProductsByStoreId
 
@@ -97,18 +90,17 @@ exports.getProductsByStoreId = getProductsByStoreId
  * get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
+function getOrdersByStoreId(store_id = 1) {
+    // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
+    let query = "select * from `order` WHERE store_id = ?";
 
+    database.query(query, [store_id])
+        .then((orders) => {
+            return orders[0]
+        })
+}
+exports.getOrdersByStoreId = getOrdersByStoreId
 
-// function getOrdersByStoreId(store_id=1) {
-//     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
-//     let query = "select * from `order` WHERE store_id = ?"; 
-
-//     return database.query(query, [store_id])
-//         .then((orders) => {
-//             return orders[0]
-//         })
-// }
-// exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 async function authenticateShopOwner(store_email, store_password) {
@@ -131,9 +123,9 @@ exports.authenticateShopOwner = authenticateShopOwner
 async function getStoreInfoByStoreId(store_id) {
 
     let query = `
-          SELECT store.*, 
-          GROUP_CONCAT(DISTINCT category.category_name ORDER BY category.category_id SEPARATOR', ') AS "categories",
-          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+        SELECT store.*, 
+        GROUP_CONCAT(DISTINCT category.category_name ORDER BY category.category_id SEPARATOR', ') AS "categories",
+        GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
 
         FROM store
         LEFT JOIN store_category 
@@ -143,9 +135,7 @@ async function getStoreInfoByStoreId(store_id) {
         LEFT JOIN store_photo
         ON store.store_id = store_photo.store_id
         WHERE store.store_id = ?
-        group by store_id 
-        
-         `
+        group by store_id `
 
     let [store, fields] = await database.query(query, [store_id])
     return store
@@ -195,16 +185,13 @@ exports.addShop = addShop
 async function updateShopAddressByStoreId(store_id, store_address = "") {
 
     let query = `
-UPDATE store
-SET store_address = ?
-WHERE store.store_id  = ?;
-`
+        UPDATE store
+        SET store_address = ?
+        WHERE store.store_id  = ?;
+        `
     await database.query(query, [store_address, store_id])
     return getStoreInfoByStoreId(store_id)
-
 }
-
-
 exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 // updateShopAddressByStoreId(1,"123 Robson ST").then(console.log)
 
@@ -232,6 +219,14 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     return categoryIdList
 }
 
+
+function getStoreInfoFromStoreName(store_name) {
+    let query =
+        `SELECT * 
+		 FROM store
+		 WHERE store_name = ?`
+}
+
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 // getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
 
@@ -253,10 +248,11 @@ async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
     for (let catId of catIdList) await database.query(query, [store_id, catId])
     return getStoreInfoByStoreId(store_id)
-
 }
 
+
 exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
+
 // updateShopCategoryByStoreId(1,[2, 3, 4]).then(console.log)
 // updateShopCategoryByStoreId(1,["beauty", "stationary", "art"]).then(console.log)
 
@@ -283,7 +279,6 @@ async function updateShopDeliveryByStoreId(store_id, delivery=0, pickup=0, radiu
     await database.query(query, [delivery, pickup, radius, store_id])
     return getStoreInfoByStoreId(store_id)
 }
-
 exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 // updateShopDeliveryByStoreId(1,0,1,0).then(console.log)
 
@@ -320,18 +315,17 @@ async function getShopPhotoByStoreId(store_id) {
 
     let query = `
           SELECT store.store_id, 
-          GROUP_CONCAT(DISTINCT store_photo.photo_file_path SEPARATOR', ') AS "photos"
+          JSON_ARRAYAGG(store_photo.photo_file_path) AS "photos"
         FROM store
         LEFT JOIN store_photo
         ON store.store_id = store_photo.store_id
         WHERE store.store_id = ?
-        group by store_id 
+        group by store.store_id 
          `
 
     let [store, fields] = await database.query(query,[store_id])
-    let allPhotosString = store[0].photos
-    return allPhotosString.split(", ")
-
+    const photos = store[0].photos.filter(a => a)
+    return photos
 }
 exports.getShopPhotoByStoreId = getShopPhotoByStoreId
 // getShopPhotoByStoreId(1).then(console.log)
@@ -347,7 +341,13 @@ exports.getProductsAndImagesByStoreID = getProductsAndImagesByStoreID
 
 
 
-//--------------------------------
+//===================ADD-CART =========================
+
+
+
+
+
+
 
 //=====================
 
@@ -382,29 +382,93 @@ async function getProductsAndImages(product_id) {
 exports.getProductsAndImages = getProductsAndImages
 // getProductsAndImages(76).then(console.log)
 
+
 //works for local database
 async function addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee) {
-
     let query = `INSERT INTO product(store_id,product_name, product_category, product_description, product_price, product_delivery_fee) VALUE (?, ?, ?, ?, ?, ?)`
     const [newproductInfo] = await database.query(query, [store_id, product_name, product_category, product_description, product_price, product_delivery_fee])
     return +newproductInfo.insertId
-    // const  id = +newproductInfo.insertId
-    // console.log(id)
-    // return await getProductsAndImages(id)
+
 }
+
 exports.addNewProduct = addNewProduct
 // addNewProduct(2,"pp", "food", "olive", 20, 10).then(console.log)
 
 
 
-async function addNewProductPhoto(product_id, photo_file_path) {
-    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
-    const newProductPhoto = await database.query(query, [product_id, photo_file_path])
-    return await getProductsAndImages(product_id)
+
+
+
+
+
+
+
+
+
+
+
+
+async function getCartItemsByBuyer(buyerId){
+
+    let query = `SELECT cart.cart_id, cart.buyer_id, 
+
+          JSON_ARRAYAGG(cart.product_id) AS "items"
+
+            FROM cart 
+            LEFT JOIN product
+            ON product.product_id = cart.product_id
+            WHERE buyer_id = ?
+            group by cart.buyer_id
+             `;
+
+    const [buyerOrders, fields] = await database.query(query, [buyerId]);
+    return buyerOrders[0].items.filter(a => a)
+
+
+}
+exports.getCartItemsByBuyer = getCartItemsByBuyer
+// getCartItemsByBuyer(1).then(console.log)
+
+
+
+
+
+async function getCartItemsLength(buyerId){
+    let itemsArray =  await getCartItemsByBuyer(buyerId)
+    return itemsArray.length
 }
 
-exports.addNewProductPhoto = addNewProductPhoto
-// addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(1).then(console.log)
+
+
+
+
+async function getCartItems(){
+
+    let query = `SELECT * FROM cart`
+     let [cartItems,fields] = await database.query(query)
+    return cartItems
+}
+exports.getCartItems = getCartItems
+
+
+
+
+async function addToCart(buyerId, productId) {
+
+    let query = `INSERT INTO cart(buyer_id, product_id) VALUE (?, ?)`
+
+    await database.query(query, [buyerId, productId])
+    // return getCartItemsByBuyer(buyerId)
+    return getCartItems()
+
+}
+
+exports.addToCart = addToCart
+// addToCart(1, 2).then(console.log)
+
+
 
 
 
@@ -650,6 +714,3 @@ exports.addNewProductPhoto = addNewProductPhoto
 //         }
 //     });
 // }
-
-
-// module.exports = { getAllRestaurants, addRestaurants, deleteRestaurants, getReview, getRestaurantName, addReview, deleteReview}

@@ -707,23 +707,52 @@ font-size: 20px;
 
 
 
-.addToCartBtn{
-    height: 60px;
-    width: 200px;
-    color: white;
-    background-color: darkslategrey;
-}
 
 
-/*==================================Add To Cart===================*/
+/*==============================Add To Cart===================*/
 
 
 
-.seller-landing-body {
+.add-cart-body  {
     position: relative; /* usually the parent, in this case the body element, has position relative so that the absolute positioned child is positioned relative to it */
     height: 100vh; /* 100% of the viewport height */
     margin: 0; /* recommended */
     /*box-sizing:border-box*/
 
+}
 
+.product_react_btn_set{
+    text-align: center;
+}
+
+.product_react_btn_set > * {
+    height:40px;
+    width:40px;
+    border-radius: 50px;
+    color: white;
+    background-color: #383b3c;
+
+}
+
+
+.product_info > *{
+    text-align: center;
+
+}
+
+
+.addToCartBtn{
+    height: 60px;
+    text-align: center;
+    /*width: 100%;*/
+
+    background-color: #E3974F;
+    border-radius: 10px;
+    margin:20px
+
+}
+
+
+.add_card_btn{
+    text-align: center;
 }
