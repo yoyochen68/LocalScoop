@@ -35,21 +35,21 @@ router.get("/add_cart/:id", async(req, res) => {
 
 
 
-router.post("/add_cart/:id",  async (req, res) => {
+// router.post("/add_cart/:id",  async (req, res) => {
 
-  /////I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
+//   /////I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
 
-  // let product_id = 2
-  let product_id = req.params.id
-  let buyer_id = 1
+//   // let product_id = 2
+//   let product_id = req.params.id
+//   let buyer_id = 1
 
-  await mysqlDB.addToCart(buyer_id, product_id)
-  let cartItemsTotal =  await mysqlDB.getCartItemsLength(buyer_id)
-console.log("checking",cartItemsTotal)
-  res.json( {quantity: cartItemsTotal })
-  // return  await mysqlDB.getCartItemsLength(buyer_id)
+//   await mysqlDB.addToCart(buyer_id, product_id)
+//   let cartItemsTotal =  await mysqlDB.getCartItemsLength(buyer_id)
+// console.log("checking",cartItemsTotal)
+//   res.json( {quantity: cartItemsTotal })
+//   // return  await mysqlDB.getCartItemsLength(buyer_id)
 
-})
+// })
 
 
 module.exports = router;
