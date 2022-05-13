@@ -87,17 +87,14 @@
 		}
 
 
-
-
 		.container * {
 			background-color: white;
-
 		}
 
 
-
-
-
+ a {
+	 text-decoration: none;
+ }
 
 
 	</style>
@@ -136,35 +133,38 @@
 	<div class="grid">
 
 		<% productInfo.forEach(product => { %>
+
+		<a href="/add_cart/add_cart/<%= product.product_id%>">
 		<div class="product-col card">
 			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
 			<h4><%=product.product_name%></h4>
 			<p><%=product.product_price%></p>
 
-			<div class="productId" style="display:none;">
-			  <%=product.product_id%>
-			</div>
 		</div>
+
+		</a>
 		<%})%>
 
 	</div>
 
-<!--	<div><h2>Trending Shops</h2></div>-->
+	<div><h2>Trending Shops</h2></div>
+	<div class="grid">
 
-<!--	<h1> css grid</h1>-->
+		<% storeInfo.forEach(store => { %>
 
-<!--	<div class="grid">-->
+		<a href="/follow_business/follow_business_2/<%= store.store_id%>">
+		<div class="store-col card">
+			<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
+<!--			//<h4>storeCategory</h4>-->
 
-<!--		-->
-<!--		-->
-<!--		<div class="store-col card">-->
-<!--			<img src="https://picsum.photos/200/300?random=1" alt="Avatar" style="width:100%">-->
-<!--			<h4>storeCategory</h4>-->
-<!--			<h4>storeName</h4>-->
-<!--			<p>Vancouver, BC</p>-->
-<!--		</div>-->
+			<h4><%=store.store_name%></h4>
+<!--				make it dynamic later -->
+			<p>Vancouver, BC</p>
+		</div>
+		</a>
 
-<!--	</div>-->
+		<%})%>
+	</div>
 </main>
 
 <div class="bottom_space"></div>
@@ -173,20 +173,20 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-	let productCards= document.querySelectorAll(".product-col")
-	for(let productCard of productCards ){
-	productCard.addEventListener("click", () => {
-
-		// WE HAVE TO ADD THE PRODUCT ID
-		// let productId = document.querySelector(".productId").innerHTML
-		let productId = 2
-
-		console.log("the product id is", productId)
-		window.location.href = `/add_cart/add_cart/${productId}`;
-
-
-	})
-	}
+	// let productCards= document.querySelectorAll(".product-col")
+	// for(let productCard of productCards ){
+	// productCard.addEventListener("click", () => {
+	//
+	// 	// WE HAVE TO ADD THE PRODUCT ID
+	// 	let productId = document.querySelector(".productId").innerHTML
+	// 	// let productId = 2
+	//
+	// 	console.log("the product id is", productId)
+	// 	window.location.href = `/add_cart/add_cart/${productId}`;
+	//
+	//
+	// })
+	// }
 
 
 
