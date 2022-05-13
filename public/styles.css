@@ -682,9 +682,8 @@ font-size: 20px;
 
 .dot {
     position: absolute;
-    top:6px;
+    top:8px;
     right:25px;
-
     height: 20px;
     width: 20px;
     border-radius: 50%;
@@ -771,4 +770,9 @@ font-size: 20px;
     /*max-width: 80%;*/
     margin-top: 10px;
     border-radius: 5%
+}
+
+
+.extraspace{
+    height: 300px;
 }

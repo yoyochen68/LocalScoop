@@ -1,4 +1,4 @@
-## Git Fork workflow ##
+## Git Fork workflow 
 
 step1: push your(Yasmina) code to your GitHub **Yasmina** branch
 
@@ -10,7 +10,7 @@ step4:merge the **IDSP develop** to the **IDSP main** weekly.
 
 
 
-## Naming Conventions ##
+## Naming Conventions 
 
 variables use camelCase. This includes variables that are related to paths. 
     ex. let theChair = "asdf"
@@ -41,3 +41,14 @@ file names also use underscores
 ## S3 Photo Upload
 https://www.youtube.com/watch?v=yGYeYJpRWPM&t=1s
 
+
+## Heroku
+
+// tell heroku to make your current branch the master branch. 
+Git push heroku yourCurrentBranchName:master
+
+// push and deploy to main 
+git push heroku main:master
+
+
+  

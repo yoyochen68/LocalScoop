@@ -43,12 +43,8 @@ router.get("/shop_login", (req, res) => {
 router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
-  console.log(req.body)
-  console.log(email)
-  console.log(password)
-
   let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
-  console.log(shopOwner)
+  // console.log(shopOwner)
   if (shopOwner.length === 0) {
     res.redirect("/shop_setup/shop_login")
     return
@@ -57,7 +53,7 @@ router.post("/shop_login", async (req, res) => {
   req.session.id = id;
   req.session.email = email;
   // let store_email = req.session.store_email ? req.session.store_email : null;
-  res.redirect("/seller_landing/seller_landing/" + id)
+  res.redirect("/seller_landing/seller_landing")
 })
 
 
@@ -86,15 +82,15 @@ router.post("/shop_setup_2", async (req, res) => {
   let store_name = req.body.storeName;
   let store_phone_number = req.body.phoneNum;
   let store_email = req.body.email;
-  let store_password_hash = req.body.password;
+  let store_password = req.body.password;
 
-  if (store_name == null || store_phone_number == null || store_email == null || store_password_hash == null) {
+  if (store_name == null || store_phone_number == null || store_email == null || store_password == null) {
     // user did not give all of required info, redirect to the same page 
     res.redirect("/shop_setup/shop_setup_3")
   }
 
   // write store name into database
-  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash);
+  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password);
 
   // put store_id in cookie session
   req.session.storeId =  newStore[0].store_id
@@ -109,7 +105,7 @@ router.post("/shop_setup_2", async (req, res) => {
 router.get("/shop_setup_3", async(req, res) => {
 
   let newStoreId = req.session.storeId
-  console.log(newStoreId)
+  // console.log(newStoreId)
 
   res.render("shop_setup/shop_setup_3", { newStoreId})
 })
@@ -259,9 +255,11 @@ router.post('/upload', upload, async (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
+  // let sellerProductTypes = ["stationary", "handmaid_good"]
+
+  // console.log(req.body.productTypeList)
   let newStoreId = req.session.storeId
-
-
+  //
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes )
   res.status(200).send(updatedStore[0].categories)
 

@@ -12,13 +12,6 @@
 </head>
 <body>
 
-<%
-
-//Here this woud be disapear since we get the numberOfProducts from router based on DB
-let fakeListFromDb = ["product1", "product2", "product3"]
-let numberOfProducts = fakeListFromDb.length
-%>
-
 
 <header class="fixed_header">
 
@@ -52,8 +45,7 @@ let numberOfProducts = fakeListFromDb.length
 <div class="add-cart-body ">
 
     <div class="container centerBox m-font">
-        <img src="https://images.unsplash.com/photo-1515923019249-6b544314450f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=580&q=80"
-             class="responsive-img product-l-image" >
+        <img  class="responsive-img product-l-image" src=<%=  productInfo.image_file_paths[0]%>>
     </div>
 
 
@@ -95,7 +87,7 @@ let numberOfProducts = fakeListFromDb.length
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 
-        axios.post('/add_cart/add_cart')
+        axios.post('/add_cart/add_cart/<%=productInfo.product_id%>')
             .then(response => {
                 document.querySelector(".dot").innerHTML = response.data.quantity
                 // console.log(cartItemsTotal, "the item has been added to the bag ")
@@ -105,7 +97,6 @@ let numberOfProducts = fakeListFromDb.length
                 console.log(error);
             })
     })
-
 
 </script>
 </html>

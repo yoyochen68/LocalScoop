@@ -5,7 +5,7 @@ const cookieParser = require("cookie-parser")
 const cookieSession = require("cookie-session")
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
-const mysqlDB = require("./database/databaseAccessLayer.js")
+// const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 
@@ -19,7 +19,6 @@ const s3 = require("./s3")
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
-// const cors = require("cors")
 
 // import multer from 'multer'
 // import path from 'path'
@@ -41,7 +40,7 @@ const sellerLandingRouter = require("./routes/seller_landing_router")
 const addCartRouter = require("./routes/add_cart_router")
 const shoppingCartRouter = require("./routes/shopping_cart_router")
 const followBusinessRouter = require("./routes/follow_business_router")
-
+const buyerSetupRouter = require("./routes/buyer_setup_router")
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
@@ -50,10 +49,7 @@ const PORT = process.env.PORT || 8000; // let express set port, else make it 800
 
 /*** express ***/
 const app = express();
-// app.use(cors({
-//   origin: "http://localhost:8000",
-//   optionsSuccessStatus: 200
-// }))
+
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
@@ -78,6 +74,9 @@ app.use("/seller_landing", sellerLandingRouter)
 app.use("/add_cart", addCartRouter)
 app.use("/shopping_cart", shoppingCartRouter)
 app.use("/follow_business", followBusinessRouter)
+app.use("/buyer_setup", buyerSetupRouter)
+
+
 
 function authorized(req, res, next) {
   if (!req.session.email) {
@@ -88,9 +87,8 @@ function authorized(req, res, next) {
 }
 
 /* ROUTES */
-
 app.get("/a", (req, res) => {
-  mysqlDB.getProductsByStoreId()
+
 })
 
 
@@ -178,10 +176,6 @@ function checkFileType(file, cb) {
 //     file: `uploads/${req.file.filename}`
 //   });
 // });
-
-// le comment
-
-// pointless comment to change the network graoph
 
 module.exports = app;
 
