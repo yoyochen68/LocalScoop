@@ -16,9 +16,8 @@ const dbConfigHeroku = {
 };
 
 
-// YASMINA's localHost
 
-/* change this so it matches yours */
+// YASMINA's localHost
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
@@ -30,31 +29,30 @@ const dbConfigHeroku = {
 // };
 
 
+
 // KEVIN's localHost
-
-
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
-
-
-
-// YOYO local database
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
-    password: "Password",
-    database: "localscoop_local",
+    password: "root",
+    database: "localscoop",
     port: 3306,
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+
+// YOYO local database
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "Password",
+//     database: "localscoop_local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -207,6 +205,7 @@ async function getCategoryIdByCategoryName(categoryNameList) {
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
+        // console.log( "idObjectOfName: ",idObjectOfName)
         let idOfName = JSON.parse(idObjectOfName[0]['category_id'])
         categoryIdList.push(idOfName)
     }
@@ -215,15 +214,6 @@ async function getCategoryIdByCategoryName(categoryNameList) {
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
-function getStoreInfoFromStoreName(store_name) {
-    let query =
-        `SELECT * 
-		 FROM store
-		 WHERE store_name = ?`
-    return database.query(query, [store_name])
-}
-exports.getStoreInfoByStoreName = getStoreInfoFromStoreName
-// getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
 
 
 
@@ -234,6 +224,7 @@ exports.getStoreInfoByStoreName = getStoreInfoFromStoreName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+    console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
     let query = `
@@ -415,7 +406,7 @@ async function getCartItemsByBuyer(buyerId){
 
 }
 exports.getCartItemsByBuyer = getCartItemsByBuyer
-// getCartItemsByBuyer(1).then(console.log)
+getCartItemsByBuyer(1).then(console.log)
 
 
 
@@ -460,6 +451,7 @@ exports.addToCart = addToCart
 
 
 // exports.addNewProductPhoto = addNewProductPhoto
+
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
 
 

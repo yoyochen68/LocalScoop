@@ -43,6 +43,7 @@ router.get("/shop_login", (req, res) => {
 router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
+
   console.log(req.body)
   console.log(email)
   console.log(password)
@@ -57,7 +58,7 @@ router.post("/shop_login", async (req, res) => {
   req.session.id = id;
   req.session.email = email;
   // let store_email = req.session.store_email ? req.session.store_email : null;
-  res.redirect("/seller_landing/seller_landing/" + id)
+  res.redirect("/seller_landing/seller_landing")
 })
 
 
@@ -259,9 +260,11 @@ router.post('/upload', upload, async (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
+  // let sellerProductTypes = ["stationary", "handmaid_good"]
+
+  // console.log(req.body.productTypeList)
   let newStoreId = req.session.storeId
-
-
+  //
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes )
   res.status(200).send(updatedStore[0].categories)
 

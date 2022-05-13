@@ -1,20 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+	<style>
+		.card {
+			background-color: peru;
+			border-radius: 15px;
+			width: 167px;
+			height: 203px;
+		}
+
+	</style>
+	<title>Document</title>
 </head>
+
 <body>
+		<header class="fixed_header">
+			<div class="nav-wrapper buyer buyer-shop-header">
+				<div class="nav-wrapper--left buyer">
+					<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+				</div>
+				<div class="nav-wrapper--middle buyer">
+					Home
+				</div>
+
+				<div class="nav-wrapper--right buyer">
+					<div class="bag">
+						<a href="/shopping_cart/shopping_cart">
+							<%if(cardItemsTotal !==0 ){%>
+								<div class="dot">
+									<%=cardItemsTotal%>
+								</div>
+								<%}%>
+									<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</header>
+		<div>Trending Shops</div>
+		<!-- number represents store_id -->
+		<a href="/follow_business/3" id="hayes_studio">
+			<div class="card">
+	
+			</div>
+		</a>
+
+		<a href="/follow_business/5" id="les_basics">
+			<div class="card">
+	
+			</div>
+		</a>
+
+		<a href="/follow_business/6" id="r&r">
+			<div class="card">
+	
+			</div>
+		</a>
+
+		<a href="/follow_business/4" id="sage_jewels">
+			<div class="card">
+	
+			</div>
+		</a>
 
 
+		<div>Trending Items</div>
 
+		 <!-- number represents product_id -->
+		<a href="/add_cart/14" id="pink_mochi_donut">
+			<div class="card">
+	
+			</div>
+		</a>
+		<a href="/add_cart/15" id="minimalist_tote">
+			<div class="card">
+				
+			</div>
+		</a>
+		
+		<a href="/add_cart/16" id="personal_training">
+			<div class="card">
+				
+			</div>
+		</a>
 
+		<a href="/add_cart/17" id="cedar_table">
+			<div class="card">
+				
+			</div>
+		</a>
 
+		<a href="/add_cart/18" id="eco_tee">
+			<div class="card">
+				
+			</div>
+		</a>
 
+		<a href="/add_cart/19" id="peach_sour">
+			<div class="card">
+				
+			</div>
+		</a>
+		
 
+		
 
-<%- include('../elements/buyer_footer.ejs') %>
-
-
+			<div class="bottom_space"></div>
+		<footer><%- include('../elements/seller_footer', {page:"product_post"}) %></footer>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </html>
