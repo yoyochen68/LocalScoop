@@ -18,19 +18,20 @@ const dbConfigHeroku = {
 
 
 // YASMINA's localHost
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Fswd2021$",
-// 	database: "localscoop",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
+const dbConfigLocal = {
+	host: "localhost",
+	user: "root",
+	password: "Fswd2021$",
+	database: "localscoop",
+	port: 3306,
+	multipleStatements: false,
+	namedPlaceholders: true
+};
 
 
 
 // KEVIN's localHost
+
 // const dbConfigLocal = {
 //     host: "localhost",
 //     user: "root",
@@ -40,6 +41,10 @@ const dbConfigHeroku = {
 //     multipleStatements: false,
 //     namedPlaceholders: true
 // };
+//
+
+
+
 
 
 
@@ -111,6 +116,24 @@ async function authenticateShopOwner(store_email, store_password) {
 exports.authenticateShopOwner = authenticateShopOwner
 // authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
+
+
+
+
+
+async function authenticateBuyer(buyer_email, buyer_password) {
+    let query = `SELECT * FROM buyer WHERE buyer_email = ? and buyer_password = ?;`
+    let [validatedBuyer,filed] = await database.query(query, [buyer_email, buyer_password])
+    return validatedBuyer
+}
+exports.authenticateBuyer = authenticateBuyer
+// authenticateBuyer("localscoop@gmail.com", "localscoop").then(console.log)
+// authenticateBuyer("local", "localsc").then(console.log)
+
+
+
+
+
 
 
 
