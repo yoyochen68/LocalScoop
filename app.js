@@ -50,17 +50,17 @@ const PORT = process.env.PORT || 8000; // let express set port, else make it 800
 /*** express ***/
 const app = express();
 
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
-app.use(express.json()); 
+app.use(express.json());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 
 
 // cookie sessions
 app.use(cookieSession({
-  name:'session',
-  keys:['localscoop:8000'],
+  name: 'session',
+  keys: ['localscoop:8000'],
   maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
 }))
 
@@ -80,11 +80,15 @@ app.use("/buyer_setup", buyerSetupRouter)
 
 function authorized(req, res, next) {
   if (!req.session.email) {
-      res.redirect("/login")
-      return
+    res.redirect("/login")
+    return
   }
   next()
 }
+
+app.get("/route", authorized, (req, res) => {
+
+})
 
 /* ROUTES */
 app.get("/a", (req, res) => {
@@ -92,12 +96,12 @@ app.get("/a", (req, res) => {
 })
 
 
- 
+
 app.get("/", (req, res) => {
   let email = req.session.email
   let id = req.session.id
 
-  res.render("index",{email,id})
+  res.render("index", { email, id })
 })
 
 app.get("/index2", (req, res) => {
