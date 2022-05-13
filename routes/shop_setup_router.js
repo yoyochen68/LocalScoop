@@ -1,26 +1,21 @@
-// require 
+/* libraries */
 const express = require("express");
 const multer = require('multer');
-const ejs = require('ejs');
 const path = require('path');
 const crypto = require('crypto')
-const db = require("../fake-db");
+// const db = require("../fake-db");
 const router = express.Router();
+const mysqlDB = require('../database/databaseAccessLayer')
+const s3 = require("../s3");  
 
-// const axios = require('axios');
-const { append } = require("express/lib/response");
 
+const { append, render } = require("express/lib/response");
+const res = require("express/lib/response");
+
+
+/* express */
 const app = express();
 app.use(express.json())
-
-
-
-// const path = require('path')  is for app.use(express.static())
-
-
-
-/* Global Variables */
-
 
 
 // GET /shop_setup/a
@@ -29,70 +24,164 @@ router.get("/a", (req, res) => {
 })
 
 
+// GET /shop_setUp/login_signup
+router.get("/login_signup", (req, res) => {
+  res.render("shop_setup/login_signup", {
+
+  })
+})
+
+
+// GET /shop_setUp/shop_login
+router.get("/shop_login", (req, res) => {
+  res.render("shop_setup/shop_login", {
+  })
+})
+
+
+// POST /shop_setUp/shop_login
+router.post("/shop_login", async (req, res) => {
+  let email = req.body.store_email;
+  let password = req.body.store_password;
+  let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
+  // console.log(shopOwner)
+  if (shopOwner.length === 0) {
+    res.redirect("/shop_setup/shop_login")
+    return
+  }
+  const id = shopOwner[0].store_id
+  req.session.id = id;
+  req.session.email = email;
+  // let store_email = req.session.store_email ? req.session.store_email : null;
+  res.redirect("/seller_landing/seller_landing")
+})
+
+
+
+
 
 // GET /shop_setUp/shop_setUp_1
-router.get("/shop_setup_1", (req, res) => {
-  res.render("shop_setup/shop_setup_1", {
-
+router.get("/shop_setup_1", async (req, res) => {
+  res.render("shop_setup/shop_setup_1")
   })
-})
+
+
+
 
 // GET /shop_setUp/shop_setUp_2
-router.get("/shop_setup_2", (req, res) => {
-  db.addShop(req.body)
-  res.render("shop_setup/shop_setup_2", {
-
+  router.get("/shop_setup_2", async (req, res) => {
+    res.render("shop_setup/shop_setup_2")
   })
+
+
+// POST /shop_setUp/shop_setUp_2
+
+router.post("/shop_setup_2", async (req, res) => {
+
+  // retrieve user input from req.body
+  let store_name = req.body.storeName;
+  let store_phone_number = req.body.phoneNum;
+  let store_email = req.body.email;
+  let store_password = req.body.password;
+
+  if (store_name == null || store_phone_number == null || store_email == null || store_password == null) {
+    // user did not give all of required info, redirect to the same page 
+    res.redirect("/shop_setup/shop_setup_3")
+  }
+
+  // write store name into database
+  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password);
+
+  // put store_id in cookie session
+  req.session.storeId =  newStore[0].store_id
+
+  // redirect to next page
+  res.redirect(`/shop_setup/shop_setup_3`)
 })
+
 
 
 // GET /shop_setUp/shop_setUp_3
-router.get("/shop_setup_3", (req, res) => {
-  res.render("shop_setup/shop_setup_3", {
+router.get("/shop_setup_3", async(req, res) => {
 
-  })
+  let newStoreId = req.session.storeId
+  // console.log(newStoreId)
+
+  res.render("shop_setup/shop_setup_3", { newStoreId})
 })
 
-router.post("/shop_setup_3", (req, res) => {
-  res.redirect("/shop_setup/shop_setup_4")
+
+// POST /shop_setUp/shop_setUp_3
+router.post("/shop_setup_3", async (req, res) => {
+  let storeAddress =  req.body.address;
+  let newStoreId = req.session.storeId
+
+  if(storeAddress == null) return
+
+  await mysqlDB.updateShopAddressByStoreId(newStoreId, storeAddress)
+  res.redirect(`/shop_setUp/shop_setUp_4`)
 })
+
+
 
 
 // GET /shop_setUp/shop_setUp_4
-router.get("/shop_setup_4", (req, res) => {
-  res.render("shop_setup/shop_setup_4", {
+router.get("/shop_setup_4", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+  res.render("shop_setup/shop_setup_4", {newStoreId})
 })
+
+
 
 // GET /shop_setUp/shop_setUp_5
-router.get("/shop_setup_5", (req, res) => {
-  res.render("shop_setup/shop_setup_5", {
+router.get("/shop_setup_5", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
+  res.render("shop_setup/shop_setup_5", {newStoreId})
 })
+
+
 
 // GET /shop_setUp/shop_setUp_6
-router.get("/shop_setup_6", (req, res) => {
-  res.render("shop_setup/shop_setup_6", {
-
-  })
+router.get("/shop_setup_6", async(req, res) => {
+  let newStoreId = req.session.storeId
+  
+  res.render("shop_setup/shop_setup_6", {newStoreId})
 })
+
+
+
+// POST /shop_setup/uploadS3
+router.post('/uploadS3', (req, res) => {
+  
+  // At some point check the session exists for the logged in user
+  // console.log(req.session)
+  let store_id = req.session.store_id
+  let imageUrl =  +req.body.imageUrl;
+
+  mysqlDB.updateShopPhotoByStoreId(store_id, req.body.imageUrl)
+})
+
+
 
 // GET /shop_setUp/shop_setUp_7
-router.get("/shop_setup_7", (req, res) => {
-  res.render("shop_setup/shop_setup_7", {
+router.get("/shop_setup_7", async(req, res) => {
+  let newStoreId = req.session.storeId
 
-  })
-})
 
-router.post("#", (req, res) => {
-
+  res.render("shop_setup/shop_setup_7", {newStoreId})
 })
 
 
-//=============handling the store image uploading========
 
+
+
+
+
+
+
+/*   Multer code that we are no longer using */
 
 // Set The Storage Engine
 const storage = multer.diskStorage({
@@ -114,7 +203,7 @@ const upload = multer({
 // can do .array() if you want to upload multiple images
 
 // Check File Type
-function checkFileType(file, cb) {
+async function checkFileType(file, cb) {
   // Allowed ext
   const filetypes = /jpeg|jpg|png|gif/;
   // Check ext
@@ -129,41 +218,62 @@ function checkFileType(file, cb) {
   }
 }
 
-// User uploads photo on shop_setup/shop_setup_6
-router.post('/upload', upload, (req, res) => {
-  // console.log(req.file)
-  res.send("router.post('/upload', upload, (req, res) => {")
 
-  if (req.file == undefined) {
+
+
+// User uploads photo on shop_setup/shop_setup_6
+router.post('/upload', upload, async (req, res) => {
+  if (req.file === undefined) {
     res.render('shop_setup/shop_setup_5', {
       msg: 'Error: No File Selected!'
     });
     return
   }
+
+  let newStoreId = req.session.storeId
+  let multeredFilename = '/uploads/' + req.file.filename
+
+  // await mysqlDB.updateShopCategoryByStoreId(newStoreId, multeredFilename )
+
+
   // store some info in the database
-  res.render('shop_setup/shop_setup_6', {
+  res.render(`shop_setup/shop_setup_6`, {
     msg: 'Image Uploaded!',
-    message: 'Your store looks amazing!',
-    file: `uploads/${req.file.filename}`
+    file: `${multeredFilename}`,
+    newStoreId: newStoreId
+    // newStoreId: newStoreId
   });
 });
 
-//=============above: handling the store image uploading========
-
-
+// used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
-router.post('/product_type', (req, res) => {
-  res.send("router.post('/product_type', (req, res) => {")
-
+router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
-  console.log(sellerProductTypes)
-  console.log(req.body)
-  console.log("!backend  !!")
+  // let sellerProductTypes = ["stationary", "handmaid_good"]
 
-  res.status(200).send(req.body.productTypeList)
+  // console.log(req.body.productTypeList)
+  let newStoreId = req.session.storeId
+  //
+  let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes )
+  res.status(200).send(updatedStore[0].categories)
 
-  // rn it sends array on first request,
-  // then object on second request
 })
+
+
+
+router.post('/delivery_type', async (req, res) => {
+  // let storeId = req.session.storeId ? req.session.storeId : null;
+  let newStoreId = req.session.storeId
+  let deliveryMethodList = req.body.deliveryMethodList
+
+  let updatedStore = await mysqlDB.updateShopDeliveryByStoreId(newStoreId, deliveryMethodList.delivery, deliveryMethodList.pickup, deliveryMethodList.kmRadius )
+  res.status(200).send(updatedStore)
+
+
+})
+
+
+
+
 
 module.exports = router;
