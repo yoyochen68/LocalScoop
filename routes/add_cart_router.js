@@ -15,21 +15,18 @@ router.get("/a", (req, res) => {
 })
 
 // GET /add_cart/add_cart
-router.get("/add_cart", async(req, res) => {
+router.get("/add_cart/:id", async(req, res) => {
 
-  // I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
-  // let product_id = ""
-  let product_id = 2
-  let buyer_id = 2
+  let product_id = req.params.id
+  let buyer_id = req.session.id
 
 
   let cardItemsTotal = await mysqlDB.getCartItemsLength(buyer_id)
   let productInfo = await mysqlDB.getProductsAndImages(product_id)
   let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
 
-  console.log(productInfo)
-
-  res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cardItemsTotal})
+res.send(product_id)
+  // res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cardItemsTotal})
 })
 
 
