@@ -87,6 +87,7 @@
 		}
 
 
+
 		.container * {
 			background-color: white;
 		}
@@ -95,6 +96,7 @@
  a {
 	 text-decoration: none;
  }
+
 
 
 	</style>
@@ -133,8 +135,8 @@
 	<div class="grid">
 
 		<% productInfo.forEach(product => { %>
-
 		<a href="/add_cart/add_cart/<%= product.product_id%>">
+
 		<div class="product-col card">
 			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
 			<h4><%=product.product_name%></h4>
@@ -143,6 +145,7 @@
 		</div>
 
 		</a>
+
 		<%})%>
 
 	</div>
@@ -165,7 +168,7 @@
 
 		<%})%>
 	</div>
-</main>
+
 
 <div class="bottom_space"></div>
 <footer><%- include('../elements/seller_footer', {page:"product_post"}) %></footer>
@@ -187,8 +190,5 @@
 	//
 	// })
 	// }
-
-
-
 </script>
 </html>

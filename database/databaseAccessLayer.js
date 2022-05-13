@@ -33,6 +33,7 @@ const dbConfigHeroku = {
 
 // KEVIN's localHost
 
+
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
@@ -147,6 +148,7 @@ exports.authenticateBuyer = authenticateBuyer
 
 
 
+
  async function getAllStores(){
 
      let sqlQuery = `SELECT * FROM storesAndImages ORDER BY store_id ASC `
@@ -169,7 +171,6 @@ async function getAllProducts() {
 
 exports.getAllProducts= getAllProducts
 // getAllProducts().then(console.log)
-
 
 
 /**
@@ -521,7 +522,9 @@ exports.addNewProductPhoto = addNewProductPhoto
 //====YOYO CODE FOR ADD TO CART======
 
 
+
 async function getCartItemsByBuyer(buyer_id) {
+
     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
 from buyer as b
 left join cart as c
@@ -532,12 +535,14 @@ left join productsandimages as p
 on cp.product_id = p.product_id
 where b.buyer_id = ? and c.purchased = "no";`
 
-    let [cartItems] = await database.query(query, [buyer_id])
+    let [cartItems] = await database.query(query, [buyer_Id])
+
     return cartItems
 }
 
 exports.getCartItemsByBuyer = getCartItemsByBuyer
 // getCartItemsByBuyer(1).then(console.log)
+
 
 
 async function getCartItemsLength(buyer_id) {
@@ -592,4 +597,52 @@ async function deCartItem(cart_product_id, buyer_id) {
 }
 exports.deCartItem=deCartItem
 
+
+=======
+
+// async function getCartItemByProduct(buyer_Id,product_id) {
+//     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
+// from buyer as b
+// left join cart as c
+// on b.buyer_id = c.buyer_id
+// left join cart_product as cp
+// on c.cart_id = cp.cart_id
+// left join productsandimages as p
+// on cp.product_id = p.product_id
+// where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
+
+//     let [cartItem] = await database.query(query, [buyer_Id,product_id])
+//     return cartItem[0]
+// }
+// exports.getCartItemByProduct = getCartItemByProduct
+// getCartItemByProduct(1,1).then(console.log)
+
+
+
+
+async function inCartItem(cart_product_id) {
+    // let cartItem = getCartItemByProduct(buyer_Id,product_id)
+
+    let query = `UPDATE cart_product SET cart_product.product_quantity = cart_product.product_quantity + 1 WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+}
+
+async function deCartItem(buyer_Id, product_id) {
+
+
+}
+
+async function getCartItemsLength(buyer_Id) {
+    let cartItems = await getCartItemsByBuyer(buyer_Id)
+    // console.log("bew",cartItems)
+    let cartQuantity = 0
+    cartItems.forEach(item => {
+        cartQuantity = cartQuantity + item.product_quantity
+
+    })
+    return cartQuantity
+}
+
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(1).then(console.log)
 
