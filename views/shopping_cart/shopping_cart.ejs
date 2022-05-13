@@ -7,6 +7,7 @@
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../../styles.css">
+<script src="help.js"></script>
 <style>
  
 
@@ -36,7 +37,7 @@
         place-self: center;
     }
 
-    .productName{
+    .productName, .totalAmount{
         font-size: 20px;
         font-weight: 600;
     }
@@ -51,7 +52,7 @@
     }
 
 
-    button {
+    .quantityBtn button {
   display:block;
   height: 30px;
   width: 30px;
@@ -66,7 +67,7 @@
 
 
 
-button:hover {
+.quantityBtn button:hover {
   background: #3F69A0 ;
   cursor: pointer;
   border: #3F69A0;
@@ -81,22 +82,25 @@ button:hover {
 
 .price{
     display: block;
-    margin-left: 5px;
+    margin-left: 10px;
+    font-size: 20px;
+
 
 }
 
-
+.subtotal{
+    /* display: block; */
+    margin: 5%;
+    /* align-content: flex-end; */
+    flex-direction: column;
+    float: right;
+    text-align: right;
+}
 </style>
 
 </head>
 <body>
 
-<%
-
-//Here this woud be disapear since we get the numberOfProducts from router based on DB
-let fakeListFromDb = ["product1", "product2", "product3"]
-let numberOfProducts = fakeListFromDb.length
-%>
 
 
 <header class="fixed_header">
@@ -112,7 +116,7 @@ let numberOfProducts = fakeListFromDb.length
 
         <div class="nav-wrapper--right buyer">
             <div class="bag">
-                <div class="dot"> <%=numberOfProducts%></div>
+                <div class="dot"> <%= cartQuantity %></div>
                 <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
             </div>
         </div>
@@ -122,31 +126,43 @@ let numberOfProducts = fakeListFromDb.length
 
     <div class="top_space"></div>
 
-
-
-<section >
-<img src="https://cdn.shopify.com/s/files/1/0107/9820/2938/products/CLOVECORE4954copy_4d257312-9baf-40f1-aad2-b10d8af11227.jpg?v=1646350921" alt="Avatar" class="shopping_cart_i">
-
+    <% let subtotal = 0 %>
+   <% for(let cartItem of cartIterms){   %>
+    <section>
+<img src="<%= cartItem.image_file_paths[0] %>" class="shopping_cart_i">
 <div>
-    <p class="productName">Shoes</p>
+    <p class="productName"><%= cartItem.product_name %></p>
     <p class="remove">Remove</p>
     <p class="saveForLater">Save for later</p>
 </div>
 <div class="priceAndQuantity">
-   <p class="price center">$100</p> 
-   <div  class="quantityBtn">
-   <button>&#43;</button>
-   <span>2</span>
-   <button>&#8211;</button>
-</div>
+    <p class="price">$<%= cartItem.product_price %></p> 
+    <div  class="quantityBtn">
+    
+    <button type="button" onclick="incrementQuantity('<%= cartItem.cart_product_id %>')">&#43;</button>
+    <span><%= cartItem.product_quantity %></span>
+    <button type="button" onclick="decrementQuantity('<%= cartItem.cart_product_id %>')">&#8211;</button>
+ </div>
+ <% subtotal = subtotal+(+cartItem.product_quantity*(+cartItem.product_price)) %>
+    </section>
+    <% } %>
 
-<!-- <button class="cssCircle minusSign">
-    &#8211;
-</button>
-number
-  <button class="cssCircle plusSign">
-    &#43;
-  </button> -->
+   <div class="subtotal">
+       <div>Subtotal:</div>
+       <div class="totalAmount">CAD$<%= subtotal %>.00</div>
+      <button type="submit" class="yellow-bn xs-bn">checkout</button>
+   </div>
+
+
+
+
+
+
+
+
+
+<div class="extraspace"></div>
+
 
 </section> 
 
@@ -154,13 +170,13 @@ number
 
 
 <footer>
-    <%- include('../elements/buyer_footer',{page:"product_post"}) %>
+    <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
 </footer>
 </body>
 
 <script>
-    document.querySelector(".addToCartBtn").addEventListener("click", () => {
-        //HERE send product to the back end to , cart DB
-    })
+// function incrementQuantity(id){
+//     console.log(id)
+// }
 </script>
 </html>
