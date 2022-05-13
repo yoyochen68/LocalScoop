@@ -31,28 +31,28 @@ const dbConfigHeroku = {
 
 
 // KEVIN's localHost
-const dbConfigLocal = {
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "localscoop",
-    port: 3306,
-    multipleStatements: false,
-    namedPlaceholders: true
-};
-
-
-
-// YOYO local database
 // const dbConfigLocal = {
 //     host: "localhost",
 //     user: "root",
-//     password: "Password",
-//     database: "localscoop_local",
+//     password: "root",
+//     database: "localscoop",
 //     port: 3306,
 //     multipleStatements: false,
 //     namedPlaceholders: true
 // };
+
+
+
+// YOYO local database
+const dbConfigLocal = {
+    host: "localhost",
+    user: "root",
+    password: "Password",
+    database: "localscoop_local",
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -387,26 +387,26 @@ exports.addNewProduct = addNewProduct
 
 
 
-async function getCartItemsByBuyer(buyerId){
+// async function getCartItemsByBuyer(buyerId){
 
-    let query = `SELECT cart.cart_id, cart.buyer_id, 
+//     let query = `SELECT cart.cart_id, cart.buyer_id, 
 
-          JSON_ARRAYAGG(cart.product_id) AS "items"
+//           JSON_ARRAYAGG(cart.product_id) AS "items"
 
-            FROM cart 
-            LEFT JOIN product
-            ON product.product_id = cart.product_id
-            WHERE buyer_id = ?
-            group by cart.buyer_id
-             `;
+//             FROM cart 
+//             LEFT JOIN product
+//             ON product.product_id = cart.product_id
+//             WHERE buyer_id = ?
+//             group by cart.buyer_id
+//              `;
 
-    const [buyerOrders, field] = await database.query(query, [buyerId]);
-    return buyerOrders[0].items.filter(a => a)
+//     const [buyerOrders, field] = await database.query(query, [buyerId]);
+//     return buyerOrders[0].items.filter(a => a)
 
 
-}
-exports.getCartItemsByBuyer = getCartItemsByBuyer
-getCartItemsByBuyer(1).then(console.log)
+// }
+// exports.getCartItemsByBuyer = getCartItemsByBuyer
+// getCartItemsByBuyer(1).then(console.log)
 
 
 
