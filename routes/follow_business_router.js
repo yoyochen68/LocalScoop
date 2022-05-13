@@ -14,28 +14,20 @@ const { append } = require("express/lib/response");
 // GET /follow_business/follow_business_1
 router.get("/follow_business_1", async(req, res) => {
     let cardItemsTotal = 0
-    let storeId = 1
 
-    //we need  function to give a list of all products and their images
-    //we need  function to give a list of all stores and their images
-
-
-    let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
-    let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
-    let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
-
-    console.log(productInfo)
+    let productInfo = await mysqlDB.getAllProducts()
+    let storeInfo = await mysqlDB.getAllStores()
 
 
-    res.render("follow_business/follow_business_1", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages, cardItemsTotal:cardItemsTotal })
+    res.render("follow_business/follow_business_1", { storeInfo:storeInfo, productInfo:productInfo, cardItemsTotal:cardItemsTotal })
 })
 
 
 // GET /follow_business/follow_business_2
-router.get("/follow_business_2", async (req, res) => {
+router.get("/follow_business_2/:id", async (req, res) => {
     // res.send("jgqfjkeqg")
     // let storeId = req.session.storeId
-    let storeId = 1
+    let storeId = req.params.id
 
     let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
     let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
