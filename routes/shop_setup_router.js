@@ -43,13 +43,8 @@ router.get("/shop_login", (req, res) => {
 router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
-
-  console.log(req.body)
-  console.log(email)
-  console.log(password)
-
   let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
-  console.log(shopOwner)
+  // console.log(shopOwner)
   if (shopOwner.length === 0) {
     res.redirect("/shop_setup/shop_login")
     return
@@ -110,7 +105,7 @@ router.post("/shop_setup_2", async (req, res) => {
 router.get("/shop_setup_3", async(req, res) => {
 
   let newStoreId = req.session.storeId
-  console.log(newStoreId)
+  // console.log(newStoreId)
 
   res.render("shop_setup/shop_setup_3", { newStoreId})
 })
