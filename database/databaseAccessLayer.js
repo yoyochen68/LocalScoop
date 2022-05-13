@@ -237,12 +237,12 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 /**
- *
  * @param store_id
  * @param categoryNameList
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+    console.log('updateshopcategorybystoreid')
     console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
