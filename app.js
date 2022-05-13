@@ -102,16 +102,6 @@ app.get("/index2", (req, res) => {
 })
 
 
-app.get("/dbtest", (req, res) => {
-  dbConnection.getStores()
-    .then((stores) => {
-      // console.log(stores)
-      res.status(200).send(stores[0])
-    })
-  
-})
-
-
 
 // for s3 photo upload. Is an ajax route
 app.get('/s3Url', async (req, res) => {
