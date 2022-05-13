@@ -10,8 +10,13 @@
     <link rel="stylesheet" href="../../styles.css">
 
 </head>
+<style>
+    .fade {
+        opacity: 0;
+    }
+</style>
 
-<body class="indexpage center">
+<body class="indexpage center fadeOut">
 
 
     <!-- <img src="logo/localscooplogo2.png" class="logoImage"> -->
@@ -69,13 +74,20 @@
     <script>
         let id = "<%= id %>";
             setTimeout(function () {
-                if (id.length < 1) {
+                document.body.classList.add('fade');
+
                     window.location.href = '/index2';
-                }else {
-                    window.location.href = `/seller_landing/seller_landing/${id}`
-                }
+
+                // if (id.length < 1) {
+                //     window.location.href = '/index2';
+                // }else {
+                //
+                //     window.location.href = `/seller_landing/seller_landing`
+                // }
             }, 2000);
-        
+
+
+
     </script>
 
 </body>

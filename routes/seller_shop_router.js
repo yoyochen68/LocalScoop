@@ -27,8 +27,9 @@ app.use(express.json())
   //WORK ON LOCALHOST
   //    let storeId = 1
 
-     let storeId = req.session.storeId
+     let storeId = req.session.id
      // console.log({storeId})
+     // let storeId = 1
 
      let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
      let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
