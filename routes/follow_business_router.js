@@ -12,11 +12,22 @@ const { append } = require("express/lib/response");
 
 
 // GET /follow_business/follow_business_1
-router.get("/follow_business_1", (req, res) => {
+router.get("/follow_business_1", async(req, res) => {
     let cardItemsTotal = 0
-    res.render("follow_business/follow_business_1", {
-        cardItemsTotal
-    })
+    let storeId = 1
+
+    //we need  function to give a list of all products and their images
+    //we need  function to give a list of all stores and their images
+
+
+    let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
+    let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
+    let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
+
+    console.log(productInfo)
+
+
+    res.render("follow_business/follow_business_1", { storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages, cardItemsTotal:cardItemsTotal })
 })
 
 

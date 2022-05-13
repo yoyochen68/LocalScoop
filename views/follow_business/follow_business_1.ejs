@@ -6,111 +6,189 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
 	<style>
-		.card {
-			background-color: peru;
-			border-radius: 15px;
-			width: 167px;
-			height: 203px;
+
+
+
+
+		main * {
+
+			margin:10px;
+			padding:0;
+			box-sizing:content-box;
+			background-color: #F7F7F3;
+
+
 		}
+
+
+		.grid{
+			display:block;
+			padding:16px;
+			grid-gap:16px;
+
+		}
+
+
+		@media screen and (max-width:768px) {
+			.grid {
+				display:grid;
+				grid-template-columns: 1fr 1fr;
+			}
+
+		}
+
+
+
+		@media screen and (min-width:768px) {
+			.grid {
+				display:grid;
+				grid-template-columns:1fr 1fr 1fr 1fr ;
+			}
+		}
+
+
+
+
+		.card{
+			margin-bottom: 16px;
+			padding:16px 30px 16px 16px ;
+			min-width: 20vh;
+			min-height: 20vh;
+
+			border-radius: 15px;
+			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+			transition: 0.3s;
+			background-color: white;
+
+		}
+
+
+
+		.card * {
+			background-color: white;
+
+		}
+
+		/* On mouse-over, add a deeper shadow */
+		.card:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+		}
+
+
+
+		/*}*/
+
+		img {
+			float: left;
+			max-width:100%;
+			height:150px;
+			object-fit: cover;
+			border-radius: 15px;
+		}
+
+
+
+
+		.container * {
+			background-color: white;
+
+		}
+
+
+
+
+
+
 
 	</style>
 	<title>Document</title>
 </head>
 
 <body>
-		<header class="fixed_header">
-			<div class="nav-wrapper buyer buyer-shop-header">
-				<div class="nav-wrapper--left buyer">
-					<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
-				</div>
-				<div class="nav-wrapper--middle buyer">
-					Home
-				</div>
+<header class="fixed_header">
+	<div class="nav-wrapper buyer buyer-shop-header">
+		<div class="nav-wrapper--left buyer">
+			<a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+		</div>
+		<div class="nav-wrapper--middle buyer">
+			Home
+		</div>
+		</div>
 
-				<div class="nav-wrapper--right buyer">
-					<div class="bag">
-						<a href="/shopping_cart/shopping_cart">
-							<%if(cardItemsTotal !==0 ){%>
-								<div class="dot">
-									<%=cardItemsTotal%>
-								</div>
-								<%}%>
-									<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
-						</a>
+		<div class="nav-wrapper--right buyer">
+			<div class="bag">
+				<a href="/shopping_cart/shopping_cart">
+					<%if(cardItemsTotal !==0 ){%>
+					<div class="dot">
+						<%=cardItemsTotal%>
 					</div>
-				</div>
+					<%}%>
+					<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+				</a>
 			</div>
-		</header>
-		<div>Trending Shops</div>
-		<!-- number represents store_id -->
-		<a href="/follow_business/3" id="hayes_studio">
-			<div class="card">
-	
+		</div>
+	</div>
+</header>
+<main>
+	<div class="top_space"></div>
+	<div><h2>Trending Items</h2></div>
+
+	<div class="grid">
+
+		<% productInfo.forEach(product => { %>
+		<div class="product-col card">
+			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
+			<h4><%=product.product_name%></h4>
+			<p><%=product.product_price%></p>
+
+			<div class="productId" style="display:none;">
+			  <%=product.product_id%>
 			</div>
-		</a>
+		</div>
+		<%})%>
 
-		<a href="/follow_business/5" id="les_basics">
-			<div class="card">
-	
-			</div>
-		</a>
+	</div>
 
-		<a href="/follow_business/6" id="r&r">
-			<div class="card">
-	
-			</div>
-		</a>
+<!--	<div><h2>Trending Shops</h2></div>-->
 
-		<a href="/follow_business/4" id="sage_jewels">
-			<div class="card">
-	
-			</div>
-		</a>
+<!--	<h1> css grid</h1>-->
 
+<!--	<div class="grid">-->
 
-		<div>Trending Items</div>
+<!--		-->
+<!--		-->
+<!--		<div class="store-col card">-->
+<!--			<img src="https://picsum.photos/200/300?random=1" alt="Avatar" style="width:100%">-->
+<!--			<h4>storeCategory</h4>-->
+<!--			<h4>storeName</h4>-->
+<!--			<p>Vancouver, BC</p>-->
+<!--		</div>-->
 
-		 <!-- number represents product_id -->
-		<a href="/add_cart/14" id="pink_mochi_donut">
-			<div class="card">
-	
-			</div>
-		</a>
-		<a href="/add_cart/15" id="minimalist_tote">
-			<div class="card">
-				
-			</div>
-		</a>
-		
-		<a href="/add_cart/16" id="personal_training">
-			<div class="card">
-				
-			</div>
-		</a>
+<!--	</div>-->
+</main>
 
-		<a href="/add_cart/17" id="cedar_table">
-			<div class="card">
-				
-			</div>
-		</a>
-
-		<a href="/add_cart/18" id="eco_tee">
-			<div class="card">
-				
-			</div>
-		</a>
-
-		<a href="/add_cart/19" id="peach_sour">
-			<div class="card">
-				
-			</div>
-		</a>
-		
-
-		
-
-			<div class="bottom_space"></div>
-		<footer><%- include('../elements/seller_footer', {page:"product_post"}) %></footer>
+<div class="bottom_space"></div>
+<footer><%- include('../elements/seller_footer', {page:"product_post"}) %></footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+	let productCards= document.querySelectorAll(".product-col")
+	for(let productCard of productCards ){
+	productCard.addEventListener("click", () => {
+
+		// WE HAVE TO ADD THE PRODUCT ID
+		// let productId = document.querySelector(".productId").innerHTML
+		let productId = 2
+
+		console.log("the product id is", productId)
+		window.location.href = `/add_cart/add_cart/${productId}`;
+
+
+	})
+	}
+
+
+
+</script>
 </html>
