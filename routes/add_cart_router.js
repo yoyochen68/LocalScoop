@@ -9,6 +9,11 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 
 
+
+router.get("/a", (req, res) => {
+  res.redirect("/add_cart/add_cart")
+})
+
 // GET /add_cart/add_cart
 router.get("/add_cart", async(req, res) => {
 
