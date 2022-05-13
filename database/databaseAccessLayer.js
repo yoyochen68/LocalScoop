@@ -143,7 +143,7 @@ exports.authenticateBuyer = authenticateBuyer
      return stores
  }
 exports.getAllStores = getAllStores
-getAllStores().then(console.log)
+// getAllStores().then(console.log)
 
 
 
