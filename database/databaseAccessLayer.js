@@ -18,6 +18,7 @@ const dbConfigHeroku = {
 
 
 // YASMINA's localHost
+
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
@@ -33,31 +34,41 @@ const dbConfigHeroku = {
 // KEVIN's localHost
 
 // const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
 // };
-//
 
 
 
+// KEVIN's localHost
 
-
-
-// YOYO local database
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
-    password: "Password",
-    database: "localscoop_local",
+    password: "root",
+    database: "localscoop",
     port: 3306,
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+
+// YOYO local database
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "Password",
+//     database: "localscoop_local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -265,12 +276,12 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 /**
- *
  * @param store_id
  * @param categoryNameList
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+    console.log('updateshopcategorybystoreid')
     console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 

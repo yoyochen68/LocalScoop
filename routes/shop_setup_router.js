@@ -165,8 +165,6 @@ router.post('/uploadS3', (req, res) => {
 
 
 
-
-
 // GET /shop_setUp/shop_setUp_7
 router.get("/shop_setup_7", async(req, res) => {
   let newStoreId = req.session.storeId
@@ -177,11 +175,7 @@ router.get("/shop_setup_7", async(req, res) => {
 
 
 
-// dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
-router.get("/dcs", (req, res) => {
-  req.session = null;
-  res.redirect("/");
-})
+
 
 
 
@@ -251,6 +245,7 @@ router.post('/upload', upload, async (req, res) => {
   });
 });
 
+
 // used by axios request from shop_setup_4.ejs
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
@@ -260,9 +255,9 @@ router.post('/product_type', async (req, res) => {
   // console.log(req.body.productTypeList)
   let newStoreId = req.session.storeId
   //
-  let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes )
+  let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes)
+  
   res.status(200).send(updatedStore[0].categories)
-
 })
 
 
