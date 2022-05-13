@@ -12,13 +12,6 @@
 </head>
 <body>
 
-<%
-
-//Here this woud be disapear since we get the numberOfProducts from router based on DB
-let fakeListFromDb = ["product1", "product2", "product3"]
-let numberOfProducts = fakeListFromDb.length
-%>
-
 
 <header class="fixed_header">
 
@@ -94,7 +87,7 @@ let numberOfProducts = fakeListFromDb.length
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 
-        axios.post('/add_cart/add_cart')
+        axios.post('/add_cart/add_cart/<%=productInfo.product_id%>')
             .then(response => {
                 document.querySelector(".dot").innerHTML = response.data.quantity
                 // console.log(cartItemsTotal, "the item has been added to the bag ")

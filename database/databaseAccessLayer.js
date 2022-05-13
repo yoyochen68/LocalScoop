@@ -130,6 +130,30 @@ exports.authenticateBuyer = authenticateBuyer
 
 
 
+ async function getAllStores(){
+
+     let sqlQuery = `SELECT * FROM storesAndImages ORDER BY store_id ASC `
+     const [stores, fields] = await database.query(sqlQuery)
+     return stores
+ }
+exports.getAllStores = getAllStores
+getAllStores().then(console.log)
+
+
+
+
+
+async function getAllProducts() {
+        let sqlQuery = `SELECT * FROM productsAndImages ORDER BY product_id ASC `
+        const [products, fields] = await database.query(sqlQuery)
+        return products
+
+}
+
+exports.getAllProducts= getAllProducts
+// getAllProducts().then(console.log)
+
+
 
 /**
  *
