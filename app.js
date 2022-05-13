@@ -104,6 +104,11 @@ app.get("/index2", (req, res) => {
   res.render("index2")
 })
 
+// dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
+app.get("/dcs", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+})
 
 
 // for s3 photo upload. Is an ajax route

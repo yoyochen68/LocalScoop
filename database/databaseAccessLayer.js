@@ -18,46 +18,42 @@ const dbConfigHeroku = {
 
 
 // YASMINA's localHost
-const dbConfigLocal = {
-	host: "localhost",
-	user: "root",
-	password: "Fswd2021$",
-	database: "localscoop",
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
 
 
 
 // KEVIN's localHost
 
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "root",
-//     database: "localscoop",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
-//
-
-
-
-
-
-
-// YOYO local database
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
-    password: "Password",
-    database: "localscoop_local",
+    password: "root",
+    database: "localscoop",
     port: 3306,
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+
+// YOYO local database
+// const dbConfigLocal = {
+//     host: "localhost",
+//     user: "root",
+//     password: "Password",
+//     database: "localscoop_local",
+//     port: 3306,
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();

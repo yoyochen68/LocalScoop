@@ -165,8 +165,6 @@ router.post('/uploadS3', (req, res) => {
 
 
 
-
-
 // GET /shop_setUp/shop_setUp_7
 router.get("/shop_setup_7", async(req, res) => {
   let newStoreId = req.session.storeId
@@ -177,11 +175,7 @@ router.get("/shop_setup_7", async(req, res) => {
 
 
 
-// dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
-router.get("/dcs", (req, res) => {
-  req.session = null;
-  res.redirect("/");
-})
+
 
 
 
