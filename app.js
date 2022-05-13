@@ -124,7 +124,6 @@ app.get('/s3Url', async (req, res) => {
 
 
 
-
 //====image upload===
 const storage = multer.diskStorage({
   destination: './public/uploads/',
