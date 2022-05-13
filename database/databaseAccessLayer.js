@@ -41,6 +41,7 @@ const dbConfigLocal = {
 };
 
 
+
 // YOYO local database
 // const dbConfigLocal = {
 //     host: "localhost",
@@ -154,12 +155,12 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @returns {*}
  */
 
-async function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+async function addShop(store_name, store_phone_number, store_email, store_password) {
     let query = `
-    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password) 
     VALUES ( ?, ?, ?, ?);`;
 
-    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
     return getStoreInfoByStoreId(newStoreId)
 }
@@ -203,6 +204,7 @@ async function getCategoryIdByCategoryName(categoryNameList) {
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
+        // console.log( "idObjectOfName: ",idObjectOfName)
         let idOfName = JSON.parse(idObjectOfName[0]['category_id'])
         categoryIdList.push(idOfName)
     }
@@ -211,15 +213,6 @@ async function getCategoryIdByCategoryName(categoryNameList) {
 exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
-function getStoreInfoFromStoreName(store_name) {
-    let query =
-        `SELECT * 
-		 FROM store
-		 WHERE store_name = ?`
-    return database.query(query, [store_name])
-}
-exports.getStoreInfoByStoreName = getStoreInfoFromStoreName
-// getCategoryIdByCategoryName(["beauty", "stationary", "art"]).then(console.log)
 
 
 
@@ -230,6 +223,7 @@ exports.getStoreInfoByStoreName = getStoreInfoFromStoreName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+    console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
     let query = `
@@ -411,7 +405,7 @@ async function getCartItemsByBuyer(buyerId){
 
 }
 exports.getCartItemsByBuyer = getCartItemsByBuyer
-// getCartItemsByBuyer(1).then(console.log)
+getCartItemsByBuyer(1).then(console.log)
 
 
 
