@@ -30,17 +30,7 @@ const dbConfigHeroku = {
 
 
 
-// KEVIN's localHost
 
-const dbConfigLocal = {
-    host: "localhost",
-    user: "root",
-    password: "root",
-    database: "localscoop",
-    port: 3306,
-    multipleStatements: false,
-    namedPlaceholders: true
-};
 
 
 
