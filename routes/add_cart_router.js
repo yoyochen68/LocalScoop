@@ -25,8 +25,14 @@ router.get("/add_cart/:id", async(req, res) => {
   let productInfo = await mysqlDB.getProductsAndImages(product_id)
   let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
 
+
 res.send(product_id)
   // res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cardItemsTotal})
+
+  // console.log(productInfo)
+
+  res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cardItemsTotal})
+
 })
 
 
@@ -37,11 +43,11 @@ router.post("/add_cart",  async (req, res) => {
   /////I NEED HE PRODUCT ID SOMEHOW FROM LAST PAGE
   // let product_id = ""
   let product_id = 2
-  let buyer_id = 2
+  let buyer_id = 1
 
   await mysqlDB.addToCart(buyer_id, product_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsLength(buyer_id)
-
+console.log("checking",cartItemsTotal)
   res.json( {quantity: cartItemsTotal })
   // return  await mysqlDB.getCartItemsLength(buyer_id)
 
