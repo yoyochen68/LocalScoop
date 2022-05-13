@@ -163,9 +163,6 @@ router.post('/uploadS3', (req, res) => {
   mysqlDB.updateShopPhotoByStoreId(store_id, req.body.imageUrl)
 })
 
-router.get("/db", (req, res) => {
-  
-})
 
 
 // GET /shop_setUp/shop_setUp_7

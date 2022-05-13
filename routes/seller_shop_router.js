@@ -24,7 +24,7 @@ app.use(express.json())
 // GET /seller_shop/seller_shop
  router.get("/seller_shop", async (req, res) => {
 
-  // WORK ON LOCALHOST
+  //WORK ON LOCALHOST
   //    let storeId = 1
 
      let storeId = req.session.id
