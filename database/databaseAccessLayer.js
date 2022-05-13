@@ -150,13 +150,12 @@ exports.authenticateBuyer = authenticateBuyer
 
 
  async function getAllStores(){
-
      let sqlQuery = `SELECT * FROM storesAndImages ORDER BY store_id ASC `
      const [stores, fields] = await database.query(sqlQuery)
      return stores
  }
 exports.getAllStores = getAllStores
-getAllStores().then(console.log)
+// getAllStores().then(console.log)
 
 
 
@@ -166,9 +165,7 @@ async function getAllProducts() {
         let sqlQuery = `SELECT * FROM productsAndImages ORDER BY product_id ASC `
         const [products, fields] = await database.query(sqlQuery)
         return products
-
 }
-
 exports.getAllProducts= getAllProducts
 // getAllProducts().then(console.log)
 
@@ -596,9 +593,6 @@ async function deCartItem(cart_product_id, buyer_id) {
     return await getCartItemByProduct(buyer_id,cart_product_id)
 }
 exports.deCartItem=deCartItem
-
-
-=======
 
 // async function getCartItemByProduct(buyer_Id,product_id) {
 //     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
