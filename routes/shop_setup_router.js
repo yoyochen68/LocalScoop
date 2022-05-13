@@ -86,15 +86,15 @@ router.post("/shop_setup_2", async (req, res) => {
   let store_name = req.body.storeName;
   let store_phone_number = req.body.phoneNum;
   let store_email = req.body.email;
-  let store_password_hash = req.body.password;
+  let store_password = req.body.password;
 
-  if (store_name == null || store_phone_number == null || store_email == null || store_password_hash == null) {
+  if (store_name == null || store_phone_number == null || store_email == null || store_password == null) {
     // user did not give all of required info, redirect to the same page 
     res.redirect("/shop_setup/shop_setup_3")
   }
 
   // write store name into database
-  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password_hash);
+  let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password);
 
   // put store_id in cookie session
   req.session.storeId =  newStore[0].store_id

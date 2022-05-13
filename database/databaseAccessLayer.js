@@ -1,18 +1,19 @@
 
 /** database setup */
 const res = require("express/lib/response");
-const mysql = require("mysql2")
+const mysql = require("mysql2");
+const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
 let database;
-//
-// const dbConfigHeroku = {
-//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-//     user: "hct0x5slkt8i1bgn",
-//     password: "o9dc7b1zw1ho9812",
-//     database: "ht3fknlbys0qeor5",
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+
+const dbConfigHeroku = {
+    host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+    user: "hct0x5slkt8i1bgn",
+    password: "o9dc7b1zw1ho9812",
+    database: "ht3fknlbys0qeor5",
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 
 // YASMINA's localHost
@@ -153,16 +154,16 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @param store_name
  * @param store_phone_number
  * @param store_email
- * @param store_password_hash
+ * @param store_password
  * @returns {*}
  */
 
-async function addShop(store_name, store_phone_number, store_email, store_password_hash) {
+async function addShop(store_name, store_phone_number, store_email, store_password) {
     let query = `
-    INSERT INTO store (store_name, store_phone_number, store_email, store_password_hash) 
+    INSERT INTO store (store_name, store_phone_number, store_email, store_password) 
     VALUES ( ?, ?, ?, ?);`;
 
-    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password_hash]);
+    let newStoreInfo= await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
     return getStoreInfoByStoreId(newStoreId)
 }
@@ -408,7 +409,7 @@ async function getCartItemsByBuyer(buyerId){
             group by cart.buyer_id
              `;
 
-    const [buyerOrders, fields] = await database.query(query, [buyerId]);
+    const [buyerOrders, field] = await database.query(query, [buyerId]);
     return buyerOrders[0].items.filter(a => a)
 
 
@@ -460,6 +461,7 @@ exports.addToCart = addToCart
 
 // exports.addNewProductPhoto = addNewProductPhoto
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
+
 
 
 
