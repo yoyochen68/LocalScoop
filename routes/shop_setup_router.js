@@ -18,12 +18,6 @@ const app = express();
 app.use(express.json())
 
 
-// GET /shop_setup/a
-router.get("/a", (req, res) => {
-
-})
-
-
 // GET /shop_setUp/login_signup
 router.get("/login_signup", (req, res) => {
   res.render("shop_setup/login_signup", {
@@ -86,12 +80,12 @@ router.post("/shop_setup_2", async (req, res) => {
 
   if (store_name == null || store_phone_number == null || store_email == null || store_password == null) {
     // user did not give all of required info, redirect to the same page 
-    res.redirect("/shop_setup/shop_setup_3")
+    res.redirect("/shop_setup/shop_setup_2")
   }
 
   // write store name into database
   let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password);
-
+ 
   // put store_id in cookie session
   req.session.storeId =  newStore[0].store_id
 
@@ -105,7 +99,6 @@ router.post("/shop_setup_2", async (req, res) => {
 router.get("/shop_setup_3", async(req, res) => {
 
   let newStoreId = req.session.storeId
-  // console.log(newStoreId)
 
   res.render("shop_setup/shop_setup_3", { newStoreId})
 })
@@ -128,7 +121,7 @@ router.post("/shop_setup_3", async (req, res) => {
 // GET /shop_setUp/shop_setUp_4
 router.get("/shop_setup_4", async(req, res) => {
   let newStoreId = req.session.storeId
-
+  
   res.render("shop_setup/shop_setup_4", {newStoreId})
 })
 
@@ -137,7 +130,7 @@ router.get("/shop_setup_4", async(req, res) => {
 // GET /shop_setUp/shop_setUp_5
 router.get("/shop_setup_5", async(req, res) => {
   let newStoreId = req.session.storeId
-
+  
   res.render("shop_setup/shop_setup_5", {newStoreId})
 })
 
@@ -153,15 +146,20 @@ router.get("/shop_setup_6", async(req, res) => {
 
 
 // POST /shop_setup/uploadS3
-router.post('/uploadS3', (req, res) => {
+router.post('/uploadS3', async (req, res) => {
   
   // At some point check the session exists for the logged in user
   // console.log(req.session)
-  let store_id = req.session.store_id
-  let imageUrl =  +req.body.imageUrl;
-
-  mysqlDB.updateShopPhotoByStoreId(store_id, req.body.imageUrl)
+  let newStoreId = req.session.storeId
+  
+  
+  let imageUrl = req.body.imageUrl;
+  // console.log(newStoreId)
+  // console.log(typeof(imageUrl))
+  
+  await mysqlDB.updateShopPhotoByStoreId(newStoreId, imageUrl)
 })
+
 
 
 

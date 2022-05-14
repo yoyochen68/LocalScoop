@@ -20,6 +20,7 @@ let numberOfProducts = fakeListFromDb.length
 %>
 
 
+
 <header class="fixed_header">
 
     <div class="nav-wrapper buyer buyer-shop-header">
@@ -94,7 +95,9 @@ let numberOfProducts = fakeListFromDb.length
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 
-        axios.post('/add_cart/add_cart')
+
+        axios.post('/add_cart/add_cart/<%=productInfo.product_id%>')
+
             .then(response => {
                 document.querySelector(".dot").innerHTML = response.data.quantity
                 // console.log(cartItemsTotal, "the item has been added to the bag ")
