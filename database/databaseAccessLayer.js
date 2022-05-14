@@ -32,22 +32,6 @@ const dbConfigHeroku = {
 
 
 // KEVIN's localHost
-
-
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Fswd2021$",
-// 	database: "localscoop",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
-
-
-
-// KEVIN's localHost
-
 const dbConfigLocal = {
     host: "localhost",
     user: "root",
@@ -80,7 +64,6 @@ else {
 
 
 /*****      Functions     *****/
-
 /**
  * @param {number} store_id 
  * @returns all products belonging to a store
@@ -211,7 +194,6 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @param store_password
  * @returns {*}
  */
-
 async function addShop(store_name, store_phone_number, store_email, store_password) {
     let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password) 
@@ -219,6 +201,8 @@ async function addShop(store_name, store_phone_number, store_email, store_passwo
 
     let newStoreInfo = await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
+
+    console.log(newStoreId)
     return getStoreInfoByStoreId(newStoreId)
 }
 exports.addShop = addShop
@@ -232,7 +216,6 @@ exports.addShop = addShop
  * @returns {Promise<*>}
  */
 async function updateShopAddressByStoreId(store_id, store_address = "") {
-
     let query = `
         UPDATE store
         SET store_address = ?
@@ -279,7 +262,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-    console.log('updateshopcategorybystoreid')
+
     console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
@@ -321,20 +304,30 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 
-// ***********  command works, but f() doesn't
 /**
  * @param store_id
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-
+    console.log('update shop photo with the id')
+    
     let query = `
-    INSERT INTO store_photo(store_id, photo_file_path ) 
+    INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
 
     await database.query(query, [store_id, photo_path])
 }
 exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
+
+
+// function update_shop_photo_by_store_id(){
+//     let query = `
+//     INSERT INTO store_photo(store_id, photo_file_path) 
+//     VALUE(?, ?)`
+
+// }
+// exports.update_shop_photo_by_store_id = update_shop_photo_by_store_id
+
 
 
 
