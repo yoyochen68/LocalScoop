@@ -18,6 +18,7 @@ let database;
 //     namedPlaceholders: true
 // };
 
+
 // .env 
 const dbConfigHeroku = {
     host: process.env.DBCONFIG_HEROKU_HOST,
@@ -28,7 +29,7 @@ const dbConfigHeroku = {
     namedPlaceholders: true
 };
 
-console.log(dbConfigHeroku)
+
 
 // YASMINA's localHost
 
