@@ -4,7 +4,10 @@ const res = require("express/lib/response");
 const mysql = require("mysql2");
 const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
+const dotenv = require("dotenv")
+dotenv.config()
 let database;
+
 
 // const dbConfigHeroku = {
 //     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
@@ -15,6 +18,7 @@ let database;
 //     namedPlaceholders: true
 // };
 
+// .env 
 const dbConfigHeroku = {
     host: process.env.DBCONFIG_HEROKU_HOST,
     user: process.env.DBCONFIG_HEROKU_USER,
@@ -24,7 +28,7 @@ const dbConfigHeroku = {
     namedPlaceholders: true
 };
 
-
+console.log(dbConfigHeroku)
 
 // YASMINA's localHost
 
@@ -50,8 +54,6 @@ const dbConfigLocal = {
 };
 
 
-
-
 // YOYO local database
 // const dbConfigLocal = {
 //     host: "localhost",
@@ -62,6 +64,7 @@ const dbConfigLocal = {
 //     multipleStatements: false,
 //     namedPlaceholders: true
 // };
+
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -279,7 +282,6 @@ exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
 
 
 /**
- *
  * @param store_id
  * @param delivery
  * @param pickup
