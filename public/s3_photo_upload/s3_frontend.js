@@ -12,6 +12,7 @@ imageForm.addEventListener("submit", async event => {
 	 * 	2nd to send it to the backend
 	 */
 	let imageUrl;
+	
 	try {
 		// get secure url from our server
 		const { url } = await fetch("/s3Url").then(res => res.json())
@@ -50,5 +51,6 @@ imageForm.addEventListener("submit", async event => {
 	// append image on document
 	const img = document.createElement("img")
 	img.src = imageUrl
+	console.log(imageUrl)
 	document.body.appendChild(img)
 })
