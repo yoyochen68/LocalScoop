@@ -6,11 +6,20 @@ const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
 let database;
 
+// const dbConfigHeroku = {
+//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
+//     user: "hct0x5slkt8i1bgn",
+//     password: "o9dc7b1zw1ho9812",
+//     database: "ht3fknlbys0qeor5",
+//     multipleStatements: false,
+//     namedPlaceholders: true
+// };
+
 const dbConfigHeroku = {
-    host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-    user: "hct0x5slkt8i1bgn",
-    password: "o9dc7b1zw1ho9812",
-    database: "ht3fknlbys0qeor5",
+    host: process.env.DBCONFIG_HEROKU_HOST,
+    user: process.env.DBCONFIG_HEROKU_USER,
+    password: process.env.DBCONFIG_HEROKU_PASSWORD,
+    database: process.env.DBCONFIG_HEROKU_DATABASE,
     multipleStatements: false,
     namedPlaceholders: true
 };
@@ -29,12 +38,12 @@ const dbConfigHeroku = {
 // 	namedPlaceholders: true
 // };
 
-
+// Kevin's localhost
 const dbConfigLocal = {
 	host: "localhost",
-	user: "root",
-	password: "root",
-	database: "localscoop",
+	user: process.env.DBCONFIG_LOCAL_USERNAME,
+	password: process.env.DBCONFIG_LOCAL_PASSWORD,
+	database: process.env.DBCONFIG_LOCAL_DATABASE,
 	port: 3306,
 	multipleStatements: false,
 	namedPlaceholders: true
@@ -126,26 +135,18 @@ exports.authenticateBuyer = authenticateBuyer
 
 
 
-
-
-
-
-
  async function getAllStores(){
-     let sqlQuery = `SELECT * FROM storesAndImages ORDER BY store_id ASC `
-     const [stores, fields] = await database.query(sqlQuery)
-     return stores
+    let sqlQuery = `SELECT * FROM store_photo ORDER BY store_id ASC `
+    const [stores, fields] = await database.query(sqlQuery)
+    return stores
  }
 exports.getAllStores = getAllStores
 // getAllStores().then(console.log)
 
 
-
-
-
 async function getAllProducts() {
-        let sqlQuery = `SELECT * FROM productsAndImages ORDER BY product_id ASC `
-        const [products, fields] = await database.query(sqlQuery)
+    let sqlQuery = `SELECT * FROM product_photo ORDER BY product_id ASC `
+    const [products, fields] = await database.query(sqlQuery)
         return products
 }
 exports.getAllProducts= getAllProducts
@@ -153,7 +154,6 @@ exports.getAllProducts= getAllProducts
 
 
 /**
- *
  * @param store_id
  * @returns {Promise<*>}
  */
@@ -429,13 +429,22 @@ async function addNewProductPhoto(product_id, photo_file_path) {
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
-
 exports.addNewProductPhoto = addNewProductPhoto
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
 
 
+async function productsAndImagesViews(){
+    let query = `SELECT *  FROM  productsandimages`
+    return await database.query(query)
+}
+exports.productsAndImagesViews = productsAndImagesViews
 
 
+async function storesAndImagesViews(){
+    let query = `SELECT *  FROM  storesandimages`
+    return await database.query(query)
+}
+exports.storesAndImagesViews = storesAndImagesViews
 
 
 
@@ -514,15 +523,16 @@ exports.addNewProductPhoto = addNewProductPhoto
 
 async function getCartItemsByBuyer(buyer_id) {
 
-    let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
-from buyer as b
-left join cart as c
-on b.buyer_id = c.buyer_id
-left join cart_product as cp
-on c.cart_id = cp.cart_id
-left join productsandimages as p
-on cp.product_id = p.product_id
-where b.buyer_id = ? and c.purchased = "no";`
+    let query = `
+        select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
+        from buyer as b
+        left join cart as c
+        on b.buyer_id = c.buyer_id
+        left join cart_product as cp
+        on c.cart_id = cp.cart_id
+        left join productsandimages as p
+        on cp.product_id = p.product_id
+        where b.buyer_id = ? and c.purchased = "no";`
 
     let [cartItems] = await database.query(query, [buyer_Id])
 
@@ -552,14 +562,14 @@ exports.getCartItemsLength = getCartItemsLength
 
 async function getCartItemByProduct(buyer_id,product_id) {
     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
-from buyer as b
-left join cart as c
-on b.buyer_id = c.buyer_id
-left join cart_product as cp
-on c.cart_id = cp.cart_id
-left join productsandimages as p
-on cp.product_id = p.product_id
-where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
+        from buyer as b
+        left join cart as c
+        on b.buyer_id = c.buyer_id
+        left join cart_product as cp
+        on c.cart_id = cp.cart_id
+        left join productsandimages as p
+        on cp.product_id = p.product_id
+        where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
 
     let [cartItem] = await database.query(query, [buyer_id,product_id])
     return cartItem[0]
@@ -576,8 +586,8 @@ async function inCartItem(cart_product_id, buyer_id) {
     await database.query(query, [cart_product_id])
     return await getCartItemByProduct(buyer_id,cart_product_id)
 }
-
 exports.inCartItem=inCartItem
+
 
 async function deCartItem(cart_product_id, buyer_id) {
     let query = `UPDATE cart_product SET product_quantity = product_quantity - 1 WHERE cart_product_id = ?`
