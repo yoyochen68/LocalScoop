@@ -15,29 +15,45 @@
 
     .afterOrder {
         color: white;
+        font-size: 35px;
 
     }
 
-    .confirmationImg{
-        border-radius: 50%;
-        max-width: 50%;
+    .confirmationImg {
+        clip-path: circle();
+        /* border-radius: 50%; */
+        max-width: 80%;
+        margin: 5%;
     }
 
-    .confirmatiomText{
-        box-sizing: border-box;
-        border-radius: 10%;
-        height: 200px;
-        width: 300px;
+    .confirmatiomText {
         background-color: white;
+        border-radius: 15px;
         display: grid;
+        margin-top: 5%;
+        margin-left: 15%;
+        margin-right: 15%;
+        height: 180px;
+        text-align: left;
+
     }
 
-    .continueShopBtn{
+    .continueShopBtn {
         color: white;
         background-color: black;
         border-radius: 20px;
-        width: 200px;
-        height: 30px;
+        width: 170px;
+        height: 35px;
+        margin-left: 40%;
+        /* margin-right: 20%; */
+        font-size: 16px;
+    }
+
+    .boxtext {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+
     }
 </style>
 
@@ -67,24 +83,26 @@
         </div>
     </header>
 
+    <div class="top_space"></div>
+
     <section class="confirmation displayBlock">
-        <div class="top_space"></div>
 
-        <h2 class="afterOrder centerBox">
+        <h1 class="afterOrder">
             Thank you for Supporting Our Business!
-        </h2>
+        </h1>
 
-        <img src="https://brokeandchic.com/wp-content/uploads/2020/12/10-Discount-Clothing-Sites-Youll-Love.jpg" alt="" class="confirmationImg">
-       
-       <div class="confirmatiomText center">
-       <p>An order confirmation will be sent to your email address that you provided!</p> 
-       <button type="button" class="continueShopBtn">Continue shopping</button>
-       </div>
+        <img src="https://brokeandchic.com/wp-content/uploads/2020/12/10-Discount-Clothing-Sites-Youll-Love.jpg" alt=""
+            class="confirmationImg">
+
+        <div class="confirmatiomText displayBlock">
+            <div class="boxtext">An order confirmation will be sent to your email address that you provided!</div>
+            <button type="button" class="continueShopBtn">Continue shopping</button>
+        </div>
 
 
-        <div class="extraspace"></div>
 
     </section>
+    <div class="extraspace"></div>
     <footer>
         <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
     </footer>

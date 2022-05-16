@@ -23,9 +23,6 @@ router.get("/shopping_cart", async(req, res) => {
 let buyer_Id = 1
 let cartIterms = await mysqlDB.getCartItemsByBuyer(buyer_Id)
 let cartQuantity = await mysqlDB.getCartItemsLength(buyer_Id)
-
-// console.log(cartIterms)
-// console.log(cartQuantity)
   res.render("shopping_cart/shopping_cart", {buyer_Id,cartIterms,cartQuantity})
 })
 
@@ -58,6 +55,10 @@ router.post('/shopping_cart_removeItem', async(req, res) => {
   res.json({message:"Have remove the item in cart"})
 })
 
+
+// router.post('/checkout',async(req,res)=>{
+//   res.redirect('/checkout/checkout')
+// })
 
 
 module.exports = router;

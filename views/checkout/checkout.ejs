@@ -14,15 +14,14 @@
         margin: 7%;
     }
 
-    .submitOder input,
+    .submitOder input[type='text'],
     select {
         border-radius: 10px;
         height: 40px;
-        border: 1px, solid, gainsboro;
+        border: 1px solid rgb(153, 148, 148);
         width: 80%;
-
-
     }
+
 
     .checkoutIpt {
         display: grid;
@@ -34,18 +33,36 @@
         width: 40%;
     }
 
-    /* #province,
+    #province,
     #city {
-        width: 80%;
-    } */
+        width: 70%;
+    }
 
     .provinceCity {
         display: flex;
 
     }
 
-    .deliveryOption {
+
+
+    .submitOder input[type='radio'] {
+        width: 20px;
+        height: 20px;
+
+    }
+
+    #deliveryOption {
         display: flex;
+        justify-content: space-around;
+        margin: 2%;
+
+    }
+
+    #submitBtn {
+
+        text-align: center;
+        justify-content: center;
+
     }
 </style>
 
@@ -66,7 +83,7 @@
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
                     <div class="dot">
-
+                        <%= cartQuantity %>
                     </div>
                     <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                 </div>
@@ -77,14 +94,14 @@
 
     <div class="top_space"></div>
 
-    <form action="" class="submitOder">
+    <form action="/checkout/checkout_confirmation" class="submitOder" method="POST">
         <div class="checkoutIpt">
             <label for="deliveryAddress">Delivery Address:</label>
             <input type="text" name="deliveryAddress" id="deliveryAddress">
         </div>
         <div class="checkoutIpt">
-            <label for="PostalCode">Postal Code:</label>
-            <input type="text" name="PostalCode" id="PostalCode">
+            <label for="postalCode">Postal Code:</label>
+            <input type="text" name="postalCode" id="postalCode">
         </div>
 
         <div class="provinceCity">
@@ -111,26 +128,28 @@
 
         <div class="checkoutIpt">
             <label for="cartNumber">Card Number:</label>
-            <input type="number" name="cartNumber" id="cartNumber">
+            <input type="text" name="cartNumber" id="cartNumber">
         </div>
 
         <h4>Choose a Shipping Method:</h4>
-        
-        <div calss="deliveryOption">
-                <label for="standardDelivery">Standard Delivery: CAD $10.00</label>
-                <input type="radio" name="standardDelivery" id="standardDelivery">
+
+        <div id="deliveryOption">
+            <label for="standardDelivery">Standard Delivery:</label>
+            <div>CAD $10.00</div>
+            <input type="radio" name="delivery" id="standardDelivery" value="10">
         </div>
 
-        <div calss="deliveryOption">
-                <label for="expressDelivery">Express Delivery: CAD $20.00</label>
-                <input type="radio" name="expressDelivery" id="expressDelivery">
+        <div id="deliveryOption">
+            <label for="expressDelivery">Express Delivery: </label>
+            <div>CAD $20.00</div>
+            <input type="radio" name="delivery" id="expressDelivery" value="20">
         </div>
-      
-        
+
+
         <h4>Order Total (3 items) CA $90.00</h4>
-
-        <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
-
+        <div class="center">
+            <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
+        </div>
     </form>
 
     <div class="extraspace"></div>
