@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>shopping cart</title>
+<!-- Material.io/ CSS -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="../../styles.css">
+
+<style>
+    .submitOder {
+        display: grid;
+        margin: 7%;
+    }
+
+    .submitOder input,
+    select {
+        border-radius: 10px;
+        height: 40px;
+        border: 1px, solid, gainsboro;
+        width: 80%;
+
+
+    }
+
+    .checkoutIpt {
+        display: grid;
+        margin: 2%;
+    }
+
+
+    #PostalCode {
+        width: 40%;
+    }
+
+    /* #province,
+    #city {
+        width: 80%;
+    } */
+
+    .provinceCity {
+        display: flex;
+
+    }
+
+    .deliveryOption {
+        display: flex;
+    }
+</style>
+
+</head>
+
+<body>
+    <header class="fixed_header">
+
+        <div class="nav-wrapper buyer buyer-shop-header">
+            <div class="nav-wrapper--left buyer">
+                <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+            </div>
+
+            <div class="nav-wrapper--middle buyer">
+                Checkout
+            </div>
+
+            <div class="nav-wrapper--right buyer">
+                <div class="bag">
+                    <div class="dot">
+
+                    </div>
+                    <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+    <div class="top_space"></div>
+
+    <form action="" class="submitOder">
+        <div class="checkoutIpt">
+            <label for="deliveryAddress">Delivery Address:</label>
+            <input type="text" name="deliveryAddress" id="deliveryAddress">
+        </div>
+        <div class="checkoutIpt">
+            <label for="PostalCode">Postal Code:</label>
+            <input type="text" name="PostalCode" id="PostalCode">
+        </div>
+
+        <div class="provinceCity">
+            <div class="checkoutIpt">
+                <label for="province">Province:</label>
+                <input type="text" name="province" id="province">
+            </div>
+            <div class="checkoutIpt">
+                <label for="city">City:</label>
+                <input type="text" name="city" id="city">
+            </div>
+        </div>
+
+
+        <div class="checkoutIpt">
+            <label for="paymentMethod">Payment Method:</label>
+            <select name="paymentMethod" id="paymentMethod">
+                <option value="debit">Debit Card</option>
+                <option value="master">Master Card</option>
+                <option value="visa">Visa Card</option>
+                <option value="amx">American Express</option>
+            </select>
+        </div>
+
+        <div class="checkoutIpt">
+            <label for="cartNumber">Card Number:</label>
+            <input type="number" name="cartNumber" id="cartNumber">
+        </div>
+
+        <h4>Choose a Shipping Method:</h4>
+        
+        <div calss="deliveryOption">
+                <label for="standardDelivery">Standard Delivery: CAD $10.00</label>
+                <input type="radio" name="standardDelivery" id="standardDelivery">
+        </div>
+
+        <div calss="deliveryOption">
+                <label for="expressDelivery">Express Delivery: CAD $20.00</label>
+                <input type="radio" name="expressDelivery" id="expressDelivery">
+        </div>
+      
+        
+        <h4>Order Total (3 items) CA $90.00</h4>
+
+        <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
+
+    </form>
+
+    <div class="extraspace"></div>
+
+
+    <footer>
+        <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
+    </footer>
+</body>
+<!-- <script src="../../help.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+
+
+
+</html>

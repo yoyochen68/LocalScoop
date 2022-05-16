@@ -6,6 +6,10 @@ const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
 let database;
 
+// environment variables: for hiding api keys and mysql login
+const dotenv = require("dotenv")
+dotenv.config()
+
 const dbConfigHeroku = {
     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
     user: "hct0x5slkt8i1bgn",
@@ -582,3 +586,9 @@ async function deCartItem(cart_product_id, buyer_id) {
 exports.deCartItem=deCartItem
 
 
+async function deleteCartItem(cart_product_id, buyer_id) {
+    let query = `DELETE FROM cart_product WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+    return 
+}
+exports.deleteCartItem=deleteCartItem

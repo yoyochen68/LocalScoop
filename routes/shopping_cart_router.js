@@ -36,7 +36,7 @@ router.post("/shopping_cart_add",async (req, res)=>{
   let cartIterm = await mysqlDB.inCartItem(cart_product_id,buyer_id)
   let itermQuantity = cartIterm.product_quantity
   let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
-  console.log("add",itermQuantity)
+  // console.log("add",itermQuantity)
   res.json({itermQuantity,cartQuantity})
 })
 
@@ -47,11 +47,16 @@ router.post("/shopping_cart_minus",async (req, res)=>{
   let cartIterm = await mysqlDB.deCartItem(cart_product_id,buyer_id)
   let itermQuantity = cartIterm.product_quantity
   let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
-  console.log("minus",itermQuantity)
+  // console.log("minus",itermQuantity)
   res.json({itermQuantity,cartQuantity})
 })
 
-
+router.post('/shopping_cart_removeItem', async(req, res) => {
+  let cart_product_id = +req.body.cart_product_id
+  let buyer_id = +req.body.buyer_id
+  await mysqlDB.deleteCartItem(cart_product_id)
+  res.json({message:"Have remove the item in cart"})
+})
 
 
 
