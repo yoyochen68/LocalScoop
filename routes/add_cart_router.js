@@ -50,6 +50,7 @@ router.get("/add_cart/:id", async(req, res) => {
 
 
 
+
 // ajax request destination
 router.post("/add_cart/:id",  async (req, res) => {
 
@@ -60,10 +61,7 @@ router.post("/add_cart/:id",  async (req, res) => {
   await mysqlDB.addToCart(buyer_id, product_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
    res.json( {quantity: cartItemsTotal })
-
-})
-
-
+ })
 
 
 

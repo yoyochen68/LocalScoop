@@ -41,6 +41,7 @@ const addCartRouter = require("./routes/add_cart_router")
 const shoppingCartRouter = require("./routes/shopping_cart_router")
 const followBusinessRouter = require("./routes/follow_business_router")
 const buyerSetupRouter = require("./routes/buyer_setup_router")
+const checkoutRouter = require("./routes/checkout_router")
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
@@ -75,6 +76,7 @@ app.use("/add_cart", addCartRouter)
 app.use("/shopping_cart", shoppingCartRouter)
 app.use("/follow_business", followBusinessRouter)
 app.use("/buyer_setup", buyerSetupRouter)
+app.use("/checkout", checkoutRouter)
 
 
 
@@ -87,9 +89,6 @@ function authorized(req, res, next) {
 }
 
 /* ROUTES */
-app.get("/a", (req, res) => {
-res.send('aaaaaaaaaaaaaaaaaa')
-})
 
 
  

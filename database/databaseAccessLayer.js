@@ -8,6 +8,9 @@ const dotenv = require("dotenv")
 dotenv.config()
 let database;
 
+// environment variables: for hiding api keys and mysql login
+const dotenv = require("dotenv")
+dotenv.config()
 
 
 const dbConfigHeroku = {
@@ -122,6 +125,7 @@ async function getAllProducts() {
 }
 exports.getAllProducts= getAllProducts
 // getAllProducts().then(console.log)
+
 
 
 
@@ -643,3 +647,9 @@ async function getCartItemsLength(buyer_Id) {
 exports.getCartItemsLength = getCartItemsLength
 // getCartItemsLength(1).then(console.log)
 
+async function deleteCartItem(cart_product_id, buyer_id) {
+    let query = `DELETE FROM cart_product WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+    return 
+}
+exports.deleteCartItem=deleteCartItem
