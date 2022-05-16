@@ -82,8 +82,11 @@ router.post("/product_post_2", async (req, res) => {
   let product_id = await mysqlDB.addNewProduct(store_id, product_name, product_category, product_description, product_price, product_delivery_fee)
 
   req.session.product_id = product_id
+
+  // rn , this adds local file path, need it to add link 
   let photo = await mysqlDB.addNewProductPhoto(product_id, photo_file_path)
-  console.log("photo:", photo)
+  console.log("photo:", photo[0])
+
   res.render("product_post/product_post_2", { productInfo, product_id })
 })
 

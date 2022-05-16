@@ -4,19 +4,12 @@ const res = require("express/lib/response");
 const mysql = require("mysql2");
 const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
+
+// environment variables: for hiding api keys and mysql login
 const dotenv = require("dotenv")
 dotenv.config()
+
 let database;
-
-
-// const dbConfigHeroku = {
-//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-//     user: "hct0x5slkt8i1bgn",
-//     password: "o9dc7b1zw1ho9812",
-//     database: "ht3fknlbys0qeor5",
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
 
 
 // .env 
@@ -30,6 +23,16 @@ const dbConfigHeroku = {
 };
 
 
+// Kevin's localhost
+const dbConfigLocal = {
+    host: "localhost",
+    user: process.env.DBCONFIG_LOCAL_USERNAME,
+    password: process.env.DBCONFIG_LOCAL_PASSWORD,
+    database: process.env.DBCONFIG_LOCAL_DATABASE,
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
 
 // YASMINA's localHost
 
@@ -43,16 +46,6 @@ const dbConfigHeroku = {
 // 	namedPlaceholders: true
 // };
 
-// Kevin's localhost
-const dbConfigLocal = {
-	host: "localhost",
-	user: process.env.DBCONFIG_LOCAL_USERNAME,
-	password: process.env.DBCONFIG_LOCAL_PASSWORD,
-	database: process.env.DBCONFIG_LOCAL_DATABASE,
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
 
 
 // YOYO local database
@@ -240,10 +233,11 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 async function getCategoryIdByCategoryName(categoryNameList) {
     let categoryIdList = []
 
+    // likely problem with query
     let query = `
-    SELECT category.category_id
-    FROM category
-    WHERE category.category_name=?;`
+        SELECT category.category_id
+        FROM category
+        WHERE category.category_name=?;`
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
@@ -311,7 +305,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
