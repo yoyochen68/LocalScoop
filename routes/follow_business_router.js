@@ -13,20 +13,20 @@ const { append } = require("express/lib/response");
 
 // GET /follow_business/follow_business_1
 router.get("/follow_business_1", async(req, res) => {
-    let cardItemsTotal = 0
+    let cartItemsTotal = 0
+    let productInfo = await mysqlDB.getRandomProducts(6)
+    let storeInfo = await mysqlDB.getRandomStores(6)
 
-    let productInfo = await mysqlDB.getAllProducts()
-    let storeInfo = await mysqlDB.getAllStores()
 
-
-    res.render("follow_business/follow_business_1", { storeInfo:storeInfo, productInfo:productInfo, cardItemsTotal:cardItemsTotal })
+    res.render("follow_business/follow_business_1", { storeInfo:storeInfo, productInfo:productInfo, cartItemsTotal:cartItemsTotal })
 })
+
+
 
 
 // GET /follow_business/follow_business_2
 router.get("/follow_business_2/:id", async (req, res) => {
-    // res.send("jgqfjkeqg")
-    // let storeId = req.session.storeId
+
     let storeId = req.params.id
 
     let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
@@ -40,8 +40,10 @@ router.get("/follow_business_2/:id", async (req, res) => {
 
 
 
-router.post("/follow_business_2", async (req, res) => {
 
+
+
+router.post("/follow_business_2", async (req, res) => {
 
     //the function that adds to the th follower to number of followers
     //the function that get the new followers quantity

@@ -12,7 +12,7 @@
 
 		main * {
 
-			margin:10px;
+			margin:5px;
 			padding:0;
 			box-sizing:content-box;
 			background-color: #F7F7F3;
@@ -24,7 +24,7 @@
 		.grid{
 			display:block;
 			padding:16px;
-			grid-gap:16px;
+			grid-gap:10px;
 
 		}
 
@@ -52,8 +52,8 @@
 		.cart{
 			margin-bottom: 16px;
 			padding:16px 30px 16px 16px ;
-			min-width: 20vh;
-			min-height: 20vh;
+			min-width: 15vh;
+			min-height: 15vh;
 
 			border-radius: 15px;
 			box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -96,6 +96,43 @@
 	 text-decoration: none;
  }
 
+ .search-div{
+	 width:100%;
+	 display: flex;
+	 align-items:center;
+	 justify-content: center;
+ }
+
+
+ .search-bar{
+	 width:250px;
+	 background-color:white;
+	 display: flex;
+	 align-items:center;
+	 border-radius:20px;
+	 padding:5px 10px;
+ }
+
+ .search-bar input {
+	 background:transparent;
+	 flex:1;
+	 border:0;
+	 outline:none;
+	 padding:10px 10px;
+	 font-size:12px
+
+ }
+
+
+.products-body{
+	text-align: center;
+}
+
+.search-btn{
+	border:0;
+	background-color: white;
+}
+
 
 	</style>
 	<title>Document</title>
@@ -126,9 +163,19 @@
 		</div>
 	</div>
 </header>
-<main>
+<main class="products-body">
 	<div class="top_space"></div>
-	<div><h2>Trending Items</h2></div>
+
+<div class="search-div">
+	<form action="#" class="search-bar">
+		<button type="submit" class="search-btn"><span class="material-icons">
+				search
+</span></button>
+		<input type="text" name="search" placeholder="Serach the product">
+
+
+	</form>
+</div>
 
 	<div class="grid">
 
@@ -145,25 +192,6 @@
 		</a>
 		<%})%>
 
-	</div>
-
-	<div><h2>Trending Shops</h2></div>
-	<div class="grid">
-
-		<% storeInfo.forEach(store => { %>
-
-		<a href="/follow_business/follow_business_2/<%= store.store_id%>">
-		<div class="store-col cart">
-			<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
-<!--			//<h4>storeCategory</h4>-->
-
-			<h4><%=store.store_name%></h4>
-<!--				make it dynamic later -->
-			<p>Vancouver, BC</p>
-		</div>
-		</a>
-
-		<%})%>
 	</div>
 </main>
 
