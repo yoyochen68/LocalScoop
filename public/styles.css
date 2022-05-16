@@ -682,9 +682,8 @@ font-size: 20px;
 
 .dot {
     position: absolute;
-    top:22px;
+    top:8px;
     right:25px;
-
     height: 20px;
     width: 20px;
     border-radius: 50%;

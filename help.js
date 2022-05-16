@@ -21,7 +21,6 @@ async function incrementQuantity(cart_product_id){
 exports.incrementQuantity = incrementQuantity
 
 
-
 function decrementQuantity(){
 
 }

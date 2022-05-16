@@ -6,8 +6,8 @@ const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
 const dotenv = require("dotenv")
 dotenv.config()
-
 let database;
+
 
 
 const dbConfigHeroku = {
@@ -18,6 +18,7 @@ const dbConfigHeroku = {
     multipleStatements: false,
     namedPlaceholders: true
 };
+
 
 
 const dbConfigLocal = {
@@ -42,7 +43,6 @@ else {
 
 
 /*****      Functions     *****/
-
 /**
  * @param {number} store_id 
  * @returns all products belonging to a store
@@ -106,26 +106,19 @@ exports.authenticateBuyer = authenticateBuyer
 
 
 
-
-
-
-
  async function getAllStores(){
-
-     let sqlQuery = `SELECT * FROM storesAndImages ORDER BY store_id ASC `
-     const [stores, fields] = await database.query(sqlQuery)
-     return stores
+    let sqlQuery = `SELECT * FROM store_photo ORDER BY store_id ASC `
+    const [stores, fields] = await database.query(sqlQuery)
+    return stores
  }
 exports.getAllStores = getAllStores
 // getAllStores().then(console.log)
 
 
-
 async function getAllProducts() {
-        let sqlQuery = `SELECT * FROM productsAndImages ORDER BY product_id ASC `
-        const [products, fields] = await database.query(sqlQuery)
+    let sqlQuery = `SELECT * FROM product_photo ORDER BY product_id ASC `
+    const [products, fields] = await database.query(sqlQuery)
         return products
-
 }
 exports.getAllProducts= getAllProducts
 // getAllProducts().then(console.log)
@@ -158,13 +151,7 @@ exports.getRandomProducts= getRandomProducts
 
 
 
-
-
-
-
-
 /**
- *
  * @param store_id
  * @returns {Promise<*>}
  */
@@ -204,7 +191,6 @@ exports.getStoreInfoByStoreId = getStoreInfoByStoreId
  * @param store_password
  * @returns {*}
  */
-
 async function addShop(store_name, store_phone_number, store_email, store_password) {
     let query = `
     INSERT INTO store (store_name, store_phone_number, store_email, store_password) 
@@ -212,6 +198,8 @@ async function addShop(store_name, store_phone_number, store_email, store_passwo
 
     let newStoreInfo = await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
+
+    console.log(newStoreId)
     return getStoreInfoByStoreId(newStoreId)
 }
 exports.addShop = addShop
@@ -225,7 +213,6 @@ exports.addShop = addShop
  * @returns {Promise<*>}
  */
 async function updateShopAddressByStoreId(store_id, store_address = "") {
-
     let query = `
         UPDATE store
         SET store_address = ?
@@ -267,12 +254,12 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 /**
- *
  * @param store_id
  * @param categoryNameList
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
+
     console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
@@ -290,7 +277,6 @@ exports.updateShopCategoryByStoreId = updateShopCategoryByStoreId
 
 
 /**
- *
  * @param store_id
  * @param delivery
  * @param pickup
@@ -314,20 +300,30 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
 
 
 
-// ***********  command works, but f() doesn't
 /**
  * @param store_id
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-
+    console.log('update shop photo with the id')
+    
     let query = `
-    INSERT INTO store_photo(store_id, photo_file_path ) 
+    INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
 
     await database.query(query, [store_id, photo_path])
 }
 exports.updateShopPhotoByStoreId = updateShopPhotoByStoreId
+
+
+// function update_shop_photo_by_store_id(){
+//     let query = `
+//     INSERT INTO store_photo(store_id, photo_file_path) 
+//     VALUE(?, ?)`
+
+// }
+// exports.update_shop_photo_by_store_id = update_shop_photo_by_store_id
+
 
 
 
@@ -430,11 +426,22 @@ async function addNewProductPhoto(product_id, photo_file_path) {
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
-
 exports.addNewProductPhoto = addNewProductPhoto
 // addNewProductPhoto(2,"dfgvdfvd444").then(console.log)
 
 
+async function productsAndImagesViews(){
+    let query = `SELECT *  FROM  productsandimages`
+    return await database.query(query)
+}
+exports.productsAndImagesViews = productsAndImagesViews
+
+
+async function storesAndImagesViews(){
+    let query = `SELECT *  FROM  storesandimages`
+    return await database.query(query)
+}
+exports.storesAndImagesViews = storesAndImagesViews
 
 
 //======yasmina code for add to cart===
@@ -514,18 +521,22 @@ exports.getCartItemsCount = getCartItemsCount
 //====YOYO CODE FOR ADD TO CART======
 
 
-async function getCartItemsByBuyer(buyer_Id) {
-    let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
-from buyer as b
-left join cart as c
-on b.buyer_id = c.buyer_id
-left join cart_product as cp
-on c.cart_id = cp.cart_id
-left join productsandimages as p
-on cp.product_id = p.product_id
-where b.buyer_id = ? and c.purchased = "no";`
+
+async function getCartItemsByBuyer(buyer_id) {
+
+    let query = `
+        select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
+        from buyer as b
+        left join cart as c
+        on b.buyer_id = c.buyer_id
+        left join cart_product as cp
+        on c.cart_id = cp.cart_id
+        left join productsandimages as p
+        on cp.product_id = p.product_id
+        where b.buyer_id = ? and c.purchased = "no";`
 
     let [cartItems] = await database.query(query, [buyer_Id])
+
     return cartItems
 }
 
@@ -533,6 +544,58 @@ exports.getCartItemsByBuyer = getCartItemsByBuyer
 // getCartItemsByBuyer(1).then(console.log)
 
 
+
+async function getCartItemsLength(buyer_id) {
+    let cartItems = await getCartItemsByBuyer(buyer_id)
+    // console.log("bew",cartItems)
+    let cartQuantity = 0
+    cartItems.forEach(item => {
+        cartQuantity = cartQuantity + item.product_quantity
+
+    })
+    return cartQuantity
+}
+
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(1).then(console.log)
+
+
+
+async function getCartItemByProduct(buyer_id,product_id) {
+    let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
+        from buyer as b
+        left join cart as c
+        on b.buyer_id = c.buyer_id
+        left join cart_product as cp
+        on c.cart_id = cp.cart_id
+        left join productsandimages as p
+        on cp.product_id = p.product_id
+        where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
+
+    let [cartItem] = await database.query(query, [buyer_id,product_id])
+    return cartItem[0]
+}
+exports.getCartItemByProduct = getCartItemByProduct
+// getCartItemByProduct(1,1).then(console.log)
+
+
+
+
+async function inCartItem(cart_product_id, buyer_id) {
+    // let cartItem = getCartItemByProduct(buyer_id,product_id)
+    let query = `UPDATE cart_product SET product_quantity = product_quantity + 1 WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+    return await getCartItemByProduct(buyer_id,cart_product_id)
+}
+exports.inCartItem=inCartItem
+
+
+async function deCartItem(cart_product_id, buyer_id) {
+    let query = `UPDATE cart_product SET product_quantity = product_quantity - 1 WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+    return await getCartItemByProduct(buyer_id,cart_product_id)
+}
+exports.deCartItem=deCartItem
 
 // async function getCartItemByProduct(buyer_Id,product_id) {
 //     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
@@ -579,3 +642,4 @@ async function getCartItemsLength(buyer_Id) {
 
 exports.getCartItemsLength = getCartItemsLength
 // getCartItemsLength(1).then(console.log)
+

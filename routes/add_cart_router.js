@@ -21,8 +21,6 @@ router.get("/products",  async (req, res) => {
   let productInfo = await mysqlDB.getRandomProducts(6)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
 
-
-
   res.render("add_cart/products", {productInfo:productInfo, cartItemsTotal:cartItemsTotal })
 
 })
@@ -34,8 +32,8 @@ router.get("/products",  async (req, res) => {
 // single product
 // GET /add_cart/add_cart/id
 router.get("/add_cart/:id", async(req, res) => {
-
   let product_id = req.params.id
+
   // let buyer_id = req.session.id
   let buyer_id = 1
 
@@ -43,8 +41,10 @@ router.get("/add_cart/:id", async(req, res) => {
   let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
 
+
   res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cartItemsTotal:cartItemsTotal})
 })
+
 
 
 
@@ -62,12 +62,6 @@ router.post("/add_cart/:id",  async (req, res) => {
    res.json( {quantity: cartItemsTotal })
 
 })
-
-
-
-
-
-
 
 
 

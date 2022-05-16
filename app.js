@@ -88,7 +88,7 @@ function authorized(req, res, next) {
 
 /* ROUTES */
 app.get("/a", (req, res) => {
-
+res.send('aaaaaaaaaaaaaaaaaa')
 })
 
 
@@ -104,16 +104,16 @@ app.get("/index2", (req, res) => {
   res.render("index2")
 })
 
-
-app.get("/dbtest", (req, res) => {
-  dbConnection.getStores()
-    .then((stores) => {
-      // console.log(stores)
-      res.status(200).send(stores[0])
-    })
-  
+// dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
+app.get("/dcs", (req, res) => {
+  req.session = null;
+  res.redirect("/");
 })
 
+// test 
+app.get("/t", (req, res) => {
+  res.send('exist')
+})
 
 
 // for s3 photo upload. Is an ajax route
@@ -121,7 +121,6 @@ app.get('/s3Url', async (req, res) => {
   const url = await s3.generateUploadURL()
   res.send({ url })
 })
-
 
 
 
