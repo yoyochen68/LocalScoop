@@ -6,7 +6,8 @@ const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
 
 // environment variables: for hiding api keys and mysql login
-const dotenv = require("dotenv")
+const dotenv = require("dotenv");
+const { sendFile } = require("express/lib/response");
 dotenv.config()
 
 let database;
@@ -23,6 +24,8 @@ const dbConfigHeroku = {
 };
 
 
+
+
 // Kevin's localhost
 const dbConfigLocal = {
     host: "localhost",
@@ -35,7 +38,6 @@ const dbConfigLocal = {
 };
 
 // YASMINA's localHost
-
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
@@ -421,7 +423,10 @@ exports.addNewProduct = addNewProduct
 
 
 async function addNewProductPhoto(product_id, photo_file_path) {
-    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
+    let query = `
+        INSERT INTO product_photo(product_id, photo_file_path) 
+        VALUE(?, ?)`
+        
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
