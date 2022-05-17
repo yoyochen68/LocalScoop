@@ -17,6 +17,9 @@ router.get("/follow_business_1", async(req, res) => {
     let productInfo = await mysqlDB.getRandomProducts(6)
     let storeInfo = await mysqlDB.getRandomStores(6)
 
+    console.log(productInfo)
+    console.log(storeInfo)
+
     // res.json({
     //     a: cardItemsTotal,
     //     b: productInfo,
@@ -44,6 +47,7 @@ router.get("/follow_business_2/:id", async (req, res) => {
     
     let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
     let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
+ 
 
 
     res.render("follow_business/follow_business_2",{ storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
