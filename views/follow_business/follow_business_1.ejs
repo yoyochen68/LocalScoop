@@ -15,6 +15,10 @@
 			background-color: #F7F7F3;
 		}
 
+		a {
+			color: black;
+		}
+
 		.grid {
 			display: block;
 			padding: 16px;
@@ -35,9 +39,7 @@
 			}
 		}
 
-
-
-		.cart{
+		.cart {
 			margin-bottom: 16px;
 			padding: 16px 30px 16px 16px;
 			min-width: 20vh;
@@ -50,7 +52,6 @@
 
 		}
 
-
 		.cart * {
 			background-color: white;
 
@@ -59,7 +60,7 @@
 		/* On mouse-over, add a deeper shadow */
 
 		.cart:hover {
-			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 		}
 
 		img {
@@ -95,70 +96,71 @@
 		<div class="nav-wrapper--right buyer">
 			<div class="bag">
 				<a href="/shopping_cart/shopping_cart">
-
 					<%if(cartItemsTotal !==0 ){%>
-					<div class="dot">
-						<%=cartItemsTotal%>
-					</div>
-					<%}%>
-					<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+						<div class="dot">
+							<%=cartItemsTotal%>
+						</div>
+						<%}%>
+							<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
 			</div>
 		</div>
-	</div>
-</header>
-
-
-
-
+		</div>
+	</header>
 
 
 	<main>
 		<div class="top_space"></div>
-		<div><h2>Trending Items</h2></div>
+		<div>
+			<h2>Trending Items</h2>
+		</div>
 
 		<div class="grid">
 
-			<% productInfo.forEach(product => { %>
+			<% productInfo.forEach(product=> { %>
 
 				<a href="/add_cart/add_cart/<%= product.product_id%>">
 					<div class="product-col cart">
-							<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
-							<h4><%=product.product_name%></h4>
-							<p><%=product.product_price%></p>
-
-						</div>
-
+						<img src=<%=product.image_file_paths[0]%> alt="product" style="width:100%">
+						<h4>
+							<%=product.product_name%>
+						</h4>
+						<p>
+							<%=product.product_price%>
+						</p>
+					</div>
 				</a>
-			<%})%>
-
+				<%})%>
 		</div>
-
-		<div><h2>Trending Shops</h2></div>
+		<div>
+			<h2>Trending Shops</h2>
+		</div>
 		<div class="grid">
 
-			<% storeInfo.forEach(store => { %>
+			<% storeInfo.forEach(store=> { %>
 
 				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
 					<div class="store-col cart">
-							<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
-							<!--			//<h4>storeCategory</h4>-->
+						<img src=<%=store.image_file_paths[0]%> alt="store" style="width:100%">
+						<!--			//<h4>storeCategory</h4>-->
 
-							<h4><%=store.store_name%></h4>
-							<!--				make it dynamic later -->
-							<p>Vancouver, BC</p>
+						<h4>
+							<%=store.store_name%>
+						</h4>
+						<!--				make it dynamic later -->
+						<p>Vancouver, BC</p>
 					</div>
 				</a>
 
-			<%})%>
+				<%})%>
 		</div>
 	</main>
 
 
-		<div class="bottom_space"></div>
-		<footer>
-			<%- include('../elements/seller_footer', {page:"product_post"}) %>
-		</footer>
+	<div class="bottom_space"></div>
+	<footer>
+		<%- include('../elements/seller_footer', {page:"product_post"}) %>
+	</footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
