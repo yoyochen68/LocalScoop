@@ -35,9 +35,11 @@ let numberOfProducts = fakeListFromDb.length
         <div class="nav-wrapper--right buyer">
             <div class="bag">
                 <a href="/shopping_cart/shopping_cart">
+
                 <%if(cartItemsTotal !== 0 ){%>
                 <div class="dot"> <%=cartItemsTotal%></div>
                 <%}%>
+
                 <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                 </a>
             </div>

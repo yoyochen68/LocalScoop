@@ -95,7 +95,7 @@
 		<div class="nav-wrapper--right buyer">
 			<div class="bag">
 				<a href="/shopping_cart/shopping_cart">
-				
+
 					<%if(cartItemsTotal !==0 ){%>
 					<div class="dot">
 						<%=cartItemsTotal%>
@@ -107,43 +107,53 @@
 		</div>
 	</div>
 </header>
-<main>
-	<div class="top_space"></div>
-	<div><h2>Trending Items</h2></div>
 
-	<div class="grid">
 
-		<% productInfo.forEach(product => { %>
 
-		<a href="/add_cart/add_cart/<%= product.product_id%>">
-		<div class="product-col cart">
-			<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
-			<h4><%=product.product_name%></h4>
-			<p><%=product.product_price%></p>
-		</div>
+
+
+
+	<main>
+		<div class="top_space"></div>
+		<div><h2>Trending Items</h2></div>
 
 		<div class="grid">
 
-			<% productInfo.forEach( product=> { %>
+			<% productInfo.forEach(product => { %>
+
 				<a href="/add_cart/add_cart/<%= product.product_id%>">
-					<div class="product-col card">
-						<img src=<%=product.photo_file_path[0]%> alt="product" style="width:100%">
-						<h4>
-							<%=product.product_name%>
-						</h4>
-						<p>
-							<%=product.product_price%>
-						</p>
+					<div class="product-col cart">
+							<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
+							<h4><%=product.product_name%></h4>
+							<p><%=product.product_price%></p>
 
+						</div>
 
-		<a href="/follow_business/follow_business_2/<%= store.store_id%>">
-		<div class="store-col cart">
-			<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
-<!--			//<h4>storeCategory</h4>-->
+				</a>
+			<%})%>
 
 		</div>
 
-		
+		<div><h2>Trending Shops</h2></div>
+		<div class="grid">
+
+			<% storeInfo.forEach(store => { %>
+
+				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
+					<div class="store-col cart">
+							<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
+							<!--			//<h4>storeCategory</h4>-->
+
+							<h4><%=store.store_name%></h4>
+							<!--				make it dynamic later -->
+							<p>Vancouver, BC</p>
+					</div>
+				</a>
+
+			<%})%>
+		</div>
+	</main>
+
 
 		<div class="bottom_space"></div>
 		<footer>
