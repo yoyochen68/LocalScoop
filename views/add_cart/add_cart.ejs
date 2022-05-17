@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>add to card</title>
+<title>add to cart</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../../styles.css">
@@ -35,9 +35,11 @@ let numberOfProducts = fakeListFromDb.length
         <div class="nav-wrapper--right buyer">
             <div class="bag">
                 <a href="/shopping_cart/shopping_cart">
-                <%if(cardItemsTotal !== 0 ){%>
-                <div class="dot"> <%=cardItemsTotal%></div>
+
+                <%if(cartItemsTotal !== 0 ){%>
+                <div class="dot"> <%=cartItemsTotal%></div>
                 <%}%>
+
                 <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                 </a>
             </div>
@@ -75,7 +77,7 @@ let numberOfProducts = fakeListFromDb.length
 
     </div>
 
-<div class="add_card_btn">
+<div class="add_cart_btn">
     <button class="addToCartBtn semibold l-font m-bn">Add To Cart </button>
 </div>
 

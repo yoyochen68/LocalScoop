@@ -642,7 +642,7 @@ font-size: 20px;
 
 
 
-/* the card */
+/* the cart */
 .slider-img-landing{
 
     box-sizing:border-box;
@@ -657,12 +657,12 @@ font-size: 20px;
 }
 
 
-.slider-img-landing.card1{
+.slider-img-landing.cart1{
     height: 300px;
 
 }
 
-.slider-img-landing.card2{
+.slider-img-landing.cart2{
     height: 300px;
     padding-top:20px;
 }
@@ -759,7 +759,7 @@ font-size: 20px;
 }
 
 
-.add_card_btn{
+.add_cart_btn{
     text-align: center;
 }
 
