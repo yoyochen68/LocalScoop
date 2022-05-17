@@ -13,13 +13,11 @@ const { append } = require("express/lib/response");
 
 // GET /follow_business/follow_business_1
 router.get("/follow_business_1", async(req, res) => {
-
-
     let cartItemsTotal = 0
     let productInfo = await mysqlDB.getRandomProducts(6)
     let storeInfo = await mysqlDB.getRandomStores(6)
 
-        // res.json({
+    // res.json({
     //     a: cardItemsTotal,
     //     b: productInfo,
     //     c: storeInfo
@@ -49,7 +47,6 @@ router.get("/follow_business_2/:id", async (req, res) => {
 
 
     res.render("follow_business/follow_business_2",{ storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
-
 })
 
 
