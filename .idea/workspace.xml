@@ -20,16 +20,17 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/routes/views" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\routes\views" />
+      <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\views\chat" />
       <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\views" />
       <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\routes" />
       <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop" />
-      <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\public" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\yaasm\OneDrive\Documents\GitHub\localScoop\views" />

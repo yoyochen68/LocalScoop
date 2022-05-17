@@ -37,13 +37,16 @@ const io = socketio(server);
 // app.use(express.static(path.join(__dirname, 'public')));
 // const botName = 'ChatCord Bot';
 router.get("/",  async (req, res) => {
-  res.render("chat/test")
+  // res.render("chat/test");
+  res.sendFile( __dirname + '/../views/chat/test.html');
+
 
 })
 
 
 // Run when client connects
-// io.on('connection', socket => {
+io.on('connection', socket => {
+  console.log("IO is connected now ")
 //   socket.on('joinRoom', ({ username, room }) => {
 //     const user = userJoin(socket.id, username, room);
 //
@@ -91,6 +94,6 @@ router.get("/",  async (req, res) => {
 //       });
 //     }
 //   });
-// });
+});
 
 module.exports = router;
