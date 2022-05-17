@@ -68,7 +68,7 @@ router.post("/follow_business_2", async (req, res) => {
     // let followersNum =  await mysqlDB.getStoreInfoByStoreId(storeId).followers
 
 
-    res.json( {quantity: followersNum})
+    res.json({ quantity: followersNum })
 
 })
 
