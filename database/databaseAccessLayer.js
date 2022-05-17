@@ -4,21 +4,15 @@ const res = require("express/lib/response");
 const mysql = require("mysql2");
 const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
-const dotenv = require("dotenv")
+
+// environment variables: for hiding api keys and mysql login
+const dotenv = require("dotenv");
+const { sendFile } = require("express/lib/response");
 dotenv.config()
+
 let database;
 
 
-// const dbConfigHeroku = {
-//     host: "ckshdphy86qnz0bj.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-//     user: "hct0x5slkt8i1bgn",
-//     password: "o9dc7b1zw1ho9812",
-//     database: "ht3fknlbys0qeor5",
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
-
-// .env 
 const dbConfigHeroku = {
     host: process.env.DBCONFIG_HEROKU_HOST,
     user: process.env.DBCONFIG_HEROKU_USER,
@@ -28,10 +22,20 @@ const dbConfigHeroku = {
     namedPlaceholders: true
 };
 
-console.log(dbConfigHeroku)
+
+const dbConfigLocal = {
+    host: "localhost",
+    user: process.env.DBCONFIG_LOCAL_USERNAME,
+    password: process.env.DBCONFIG_LOCAL_PASSWORD,
+    database: process.env.DBCONFIG_LOCAL_DATABASE,
+    port: 3306,
+    multipleStatements: false,
+    namedPlaceholders: true
+};
+
+
 
 // YASMINA's localHost
-
 // const dbConfigLocal = {
 // 	host: "localhost",
 // 	user: "root",
@@ -42,28 +46,9 @@ console.log(dbConfigHeroku)
 // 	namedPlaceholders: true
 // };
 
-// Kevin's localhost
-const dbConfigLocal = {
-	host: "localhost",
-	user: process.env.DBCONFIG_LOCAL_USERNAME,
-	password: process.env.DBCONFIG_LOCAL_PASSWORD,
-	database: process.env.DBCONFIG_LOCAL_DATABASE,
-	port: 3306,
-	multipleStatements: false,
-	namedPlaceholders: true
-};
 
 
-// YOYO local database
-// const dbConfigLocal = {
-//     host: "localhost",
-//     user: "root",
-//     password: "Password",
-//     database: "localscoop_local",
-//     port: 3306,
-//     multipleStatements: false,
-//     namedPlaceholders: true
-// };
+
 
 
 if (is_heroku) {
@@ -79,7 +64,7 @@ else {
  * @param {number} store_id 
  * @returns all products belonging to a store
  */
-async function getProductsByStoreId(store_id = 1) {
+async function getProductsByStoreId(store_id) {
     let query = `
     SELECT product.*, store.store_name, product_photo.photo_file_path
     FROM product
@@ -154,6 +139,33 @@ async function getAllProducts() {
 }
 exports.getAllProducts= getAllProducts
 // getAllProducts().then(console.log)
+
+
+
+
+//there canbe a better way for the store limit
+async function getRandomStores(quantity= 100){
+
+    let sqlQuery = `SELECT * FROM storesAndImages ORDER BY RAND() LIMIT ? `
+    const [stores, fields] = await database.query(sqlQuery, [quantity])
+    return stores
+}
+exports.getRandomStores = getRandomStores
+
+
+
+async function getRandomProducts(quantity=100) {
+    let sqlQuery = `SELECT * FROM productsAndImages ORDER BY RAND()LIMIT ? `
+    const [products, fields] = await database.query(sqlQuery, [quantity])
+    return products
+
+}
+
+exports.getRandomProducts= getRandomProducts
+
+
+
+
 
 
 /**
@@ -239,6 +251,7 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 async function getCategoryIdByCategoryName(categoryNameList) {
     let categoryIdList = []
 
+    // likely problem with query
     let query = `
         SELECT category.category_id
         FROM category
@@ -310,7 +323,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
@@ -427,7 +439,10 @@ exports.addNewProduct = addNewProduct
 
 
 async function addNewProductPhoto(product_id, photo_file_path) {
-    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
+    let query = `
+        INSERT INTO product_photo(product_id, photo_file_path) 
+        VALUE(?, ?)`
+        
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
@@ -449,74 +464,78 @@ async function storesAndImagesViews(){
 exports.storesAndImagesViews = storesAndImagesViews
 
 
-
-
 //======yasmina code for add to cart===
 
-// async function getCartItemsByBuyer(buyerId){
+async function getCartIdByBuyerId(buyerId){
+    let query =` SELECT cart.cart_id
+        FROM cart
+        WHERE buyer_id = ? AND purchased = "no" `
 
-//     let query = `SELECT cart.cart_id, cart.buyer_id, 
+    const [buyerActiveCartId,fields] = await database.query(query, [buyerId])
+    return buyerActiveCartId
 
-//           JSON_ARRAYAGG(cart.product_id) AS "items"
-
-//             FROM cart 
-//             LEFT JOIN product
-//             ON product.product_id = cart.product_id
-//             WHERE buyer_id = ?
-//             group by cart.buyer_id
-//              `;
-
-//     const [buyerOrders, field] = await database.query(query, [buyerId]);
-//     return buyerOrders[0].items.filter(a => a)
-
-// }
-// exports.getCartItemsByBuyer = getCartItemsByBuyer
-// getCartItemsByBuyer(1).then(console.log)
+}
+exports.getCartIdByBuyerId = getCartIdByBuyerId
+// getCartIdByBuyerId(1).then(console.log)
 
 
 
+async function addToCart(buyerId, productId){
+
+    //finding the cartId
+    let cartIdObject = await getCartIdByBuyerId(buyerId);
+    let cartId = cartIdObject[0]['cart_id']
+
+    //-----------------------------------create the cart if it soes not exist
 
 
-// async function getCartItemsLength(buyerId){
-//     let itemsArray =  await getCartItemsByBuyer(buyerId)
-//     return itemsArray.length
-// }
+    //checking if order exist already
+    let sqlQuery =` SELECT product_quantity FROM cart_product WHERE cart_id = ? AND product_id = ?`
+    let [productMatches, fields]= await database.query(sqlQuery, [ cartId, productId])
+    let cartItemExist =  productMatches.length !== 0
+    let query;
 
+    if(cartItemExist){
+        //if the item existed change the quantity
+        query = `UPDATE cart_product
+        SET cart_product.product_quantity = cart_product.product_quantity + 1
+        WHERE cart_id = ? AND product_id = ? `
 
-// exports.getCartItemsLength = getCartItemsLength
-// // getCartItemsLength(1).then(console.log)
+    }else{
+        //if the item did not exist insert new row
+         query =` INSERT INTO cart_product(cart_id, product_id, product_quantity)VALUES (?,?,1)`
+    }
 
+    await database.query(query, [ cartId, productId])
+    return getCartItemsCount(buyerId)
+        // later you can substitute it with better return value
 
+}
 
+exports.addToCart = addToCart
 
-// async function getCartItems(){
-
-//     let query = `SELECT * FROM cart`
-//      let [cartItems,fields] = await database.query(query)
-//     return cartItems
-// }
-// exports.getCartItems = getCartItems
-
-
-
-
-// async function addToCart(buyerId, productId) {
-
-//     let query = `INSERT INTO cart(buyer_id, product_id) VALUE (?, ?)`
-
-//     await database.query(query, [buyerId, productId])
-//     // return getCartItemsByBuyer(buyerId)
-//     return getCartItems()
-
-// }
-
-// exports.addToCart = addToCart
-// addToCart(1, 2).then(console.log)
-
-//======yasmina code for add to cart===
+// addToCart(1,3).then(console.log)
+//buyer id 1 has the cart number 2
 
 
 
+
+async function getCartItemsCount(buyerId){
+    let cartIdObject = await getCartIdByBuyerId(buyerId);
+    let cartId = cartIdObject[0]['cart_id']
+
+   let query=` SELECT SUM(product_quantity) AS product_quantity
+    FROM cart_product
+    WHERE cart_id = ?;`
+
+
+    const [itemsCountObject,fields] = await database.query(query, [cartId])
+    return itemsCountObject[0].product_quantity
+
+}
+exports.getCartItemsCount = getCartItemsCount
+
+// getCartItemsCount(1).then(console.log)
 
 
 //====YOYO CODE FOR ADD TO CART======

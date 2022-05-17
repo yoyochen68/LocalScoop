@@ -17,9 +17,11 @@ const res = require("express/lib/response");
 const app = express();
 app.use(express.json())
 
+
 router.get("/a", (req, res) => {
   res.send('ajsdhfklasjdhf klasjdf')
 })
+
 
 // GET /shop_setUp/login_signup
 router.get("/login_signup", (req, res) => {
@@ -155,10 +157,7 @@ router.post('/uploadS3', async (req, res) => {
   // console.log(req.session)
   let newStoreId = req.session.storeId
   
-  
   let imageUrl = req.body.imageUrl;
-  // console.log(newStoreId)
-  // console.log(typeof(imageUrl))
   
   await mysqlDB.updateShopPhotoByStoreId(newStoreId, imageUrl)
 })
