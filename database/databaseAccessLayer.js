@@ -23,8 +23,6 @@ const dbConfigHeroku = {
 };
 
 
-
-
 const dbConfigLocal = {
     host: "localhost",
     user: process.env.DBCONFIG_LOCAL_USERNAME,
@@ -36,18 +34,6 @@ const dbConfigLocal = {
 };
 
 
-
-
-// Kevin's localhost
-const dbConfigLocal = {
-    host: "localhost",
-    user: process.env.DBCONFIG_LOCAL_USERNAME,
-    password: process.env.DBCONFIG_LOCAL_PASSWORD,
-    database: process.env.DBCONFIG_LOCAL_DATABASE,
-    port: 3306,
-    multipleStatements: false,
-    namedPlaceholders: true
-};
 
 // YASMINA's localHost
 // const dbConfigLocal = {
