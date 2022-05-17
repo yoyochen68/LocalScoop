@@ -167,7 +167,7 @@ router.post('/uploadS3', async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_7
-router.get("/shop_setup_7", async(req, res) => {
+router.get("/shop_setup_7", async (req, res) => {
   let newStoreId = req.session.storeId
 
   res.render("shop_setup/shop_setup_7", {newStoreId})

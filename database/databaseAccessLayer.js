@@ -240,9 +240,9 @@ async function getCategoryIdByCategoryName(categoryNameList) {
     let categoryIdList = []
 
     let query = `
-    SELECT category.category_id
-    FROM category
-    WHERE category.category_name=?;`
+        SELECT category.category_id
+        FROM category
+        WHERE category.category_name=?;`
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
