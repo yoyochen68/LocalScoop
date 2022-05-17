@@ -176,10 +176,6 @@ router.get("/shop_setup_7", async (req, res) => {
 
 
 
-
-
-
-
 /*   Multer code that we are no longer using */
 
 // Set The Storage Engine
