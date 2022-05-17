@@ -677,3 +677,19 @@ async function getCartItemsLength(buyer_Id) {
 exports.getCartItemsLength = getCartItemsLength
 // getCartItemsLength(1).then(console.log)
 
+
+
+async function searchProduct(searchedString) {
+
+    let query = `SELECT productsandimages.*
+    FROM productsandimages
+    WHERE product_name LIKE CONCAT("%", ?, "%") OR product_category LIKE CONCAT("%", ?, "%");
+   `
+
+    let [searchResult, fields] = await database.query(query, [searchedString, searchedString])
+    return searchResult
+
+}
+
+exports.searchProduct = searchProduct
+// searchProduct("s").then(console.log)
