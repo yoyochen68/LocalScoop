@@ -35,7 +35,9 @@
 			}
 		}
 
-		.card {
+
+
+		.cart{
 			margin-bottom: 16px;
 			padding: 16px 30px 16px 16px;
 			min-width: 20vh;
@@ -48,14 +50,16 @@
 
 		}
 
-		.card * {
+
+		.cart * {
 			background-color: white;
 
 		}
 
 		/* On mouse-over, add a deeper shadow */
-		.card:hover {
-			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+
+		.cart:hover {
+			box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 		}
 
 		img {
@@ -91,64 +95,65 @@
 		<div class="nav-wrapper--right buyer">
 			<div class="bag">
 				<a href="/shopping_cart/shopping_cart">
-					<%if(cardItemsTotal !==0 ){%>
-						<div class="dot">
-							<%=cardItemsTotal%>
-						</div>
-						<%}%>
-							<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+
+					<%if(cartItemsTotal !==0 ){%>
+					<div class="dot">
+						<%=cartItemsTotal%>
+					</div>
+					<%}%>
+					<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
 			</div>
 		</div>
-		</div>
-	</header>
+	</div>
+</header>
+
+
+
+
+
+
 	<main>
 		<div class="top_space"></div>
-		
-		<div>
-			<h2>Trending Shops</h2>
-		</div>
-		<div class="grid">
-			<% storeInfo.forEach(store=> { %>
-				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
-					<div class="store-col card">
-						<img src=<%=store.image_file_paths[0]%> alt="store" style="width:100%">
-						<!--			//<h4>storeCategory</h4>-->
-
-						<h4>
-							<%=store.store_name%>
-						</h4>
-						<!--				make it dynamic later -->
-						<p>Vancouver, BC</p>
-					</div>
-				</a>
-				<%})%>
-		</div>
-		
-		<div>
-			<h2>Trending Items</h2>
-		</div>
+		<div><h2>Trending Items</h2></div>
 
 		<div class="grid">
 
-			<% productInfo.forEach( product=> { %>
+			<% productInfo.forEach(product => { %>
+
 				<a href="/add_cart/add_cart/<%= product.product_id%>">
-					<div class="product-col card">
-						<img src=<%=product.photo_file_path[0]%> alt="product" style="width:100%">
-						<h4>
-							<%=product.product_name%>
-						</h4>
-						<p>
-							<%=product.product_price%>
-						</p>
+					<div class="product-col cart">
+							<img src=<%=  product.image_file_paths[0]%> alt="product" style="width:100%">
+							<h4><%=product.product_name%></h4>
+							<p><%=product.product_price%></p>
 
-					</div>
+						</div>
+
 				</a>
-				<%})%>
+			<%})%>
 
 		</div>
 
-		
+		<div><h2>Trending Shops</h2></div>
+		<div class="grid">
+
+			<% storeInfo.forEach(store => { %>
+
+				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
+					<div class="store-col cart">
+							<img src=<%=  store.image_file_paths[0]%> alt="store" style="width:100%">
+							<!--			//<h4>storeCategory</h4>-->
+
+							<h4><%=store.store_name%></h4>
+							<!--				make it dynamic later -->
+							<p>Vancouver, BC</p>
+					</div>
+				</a>
+
+			<%})%>
+		</div>
+	</main>
+
 
 		<div class="bottom_space"></div>
 		<footer>
@@ -157,20 +162,4 @@
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
-<script>
-	// let productCards= document.querySelectorAll(".product-col")
-	// for(let productCard of productCards ){
-	// productCard.addEventListener("click", () => {
-	//
-	// 	// WE HAVE TO ADD THE PRODUCT ID
-	// 	let productId = document.querySelector(".productId").innerHTML
-	// 	// let productId = 2
-	//
-	// 	console.log("the product id is", productId)
-	// 	window.location.href = `/add_cart/add_cart/${productId}`;
-	//
-	//
-	// })
-	// }
-</script>
 </html>
