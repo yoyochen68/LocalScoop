@@ -20,10 +20,6 @@ const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
 
-// import multer from 'multer'
-// import path from 'path'
-// import crypto from 'crypto';
-
 
 // fake-database
 // import * as db from './fake-db';
@@ -44,9 +40,6 @@ const buyerSetupRouter = require("./routes/buyer_setup_router")
 const chatRouter = require("./routes/chat_router")
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
-
-
-const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
 
 /*** express ***/
 const app = express();
