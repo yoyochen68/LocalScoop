@@ -20,10 +20,6 @@ const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
 
-// import multer from 'multer'
-// import path from 'path'
-// import crypto from 'crypto';
-
 
 // fake-database
 // import * as db from './fake-db';
@@ -41,12 +37,11 @@ const addCartRouter = require("./routes/add_cart_router")
 const shoppingCartRouter = require("./routes/shopping_cart_router")
 const followBusinessRouter = require("./routes/follow_business_router")
 const buyerSetupRouter = require("./routes/buyer_setup_router")
+const chatRouter = require("./routes/chat_router")
 const checkoutRouter = require("./routes/checkout_router")
 
+
 // const sellerHomeRouter = require("./routes/seller_home_router")
-
-
-const PORT = process.env.PORT || 8000; // let express set port, else make it 8000
 
 /*** express ***/
 const app = express();
@@ -76,8 +71,8 @@ app.use("/add_cart", addCartRouter)
 app.use("/shopping_cart", shoppingCartRouter)
 app.use("/follow_business", followBusinessRouter)
 app.use("/buyer_setup", buyerSetupRouter)
+app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
-
 
 
 function authorized(req, res, next) {
@@ -109,10 +104,6 @@ app.get("/dcs", (req, res) => {
   res.redirect("/");
 })
 
-// test 
-app.get("/t", (req, res) => {
-  res.send('exist')
-})
 
 
 // for s3 photo upload. Is an ajax route
