@@ -35,21 +35,6 @@ const dbConfigLocal = {
 
 
 
-// YASMINA's localHost
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Fswd2021$",
-// 	database: "localscoop",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
-
-
-
-
-
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -615,7 +600,7 @@ async function inCartItem(cart_product_id, buyer_id,product_id) {
     // let cartItem = getCartItemByProduct(buyer_id,product_id)
     let query = `UPDATE cart_product SET product_quantity = product_quantity + 1 WHERE cart_product_id = ?`
     await database.query(query, [cart_product_id])
-    return await getCartItemByProduct(buyer_id,product_id)
+    return await getCartItemByProduct(buyer_id, product_id)
 }
 exports.inCartItem=inCartItem
 
@@ -623,7 +608,7 @@ exports.inCartItem=inCartItem
 async function deCartItem(cart_product_id, buyer_id,product_id) {
     let query = `UPDATE cart_product SET product_quantity = product_quantity - 1 WHERE cart_product_id = ?`
     await database.query(query, [cart_product_id])
-    return await getCartItemByProduct(buyer_id,product_id)
+    return await getCartItemByProduct(buyer_id, product_id)
 }
 exports.deCartItem=deCartItem
 
