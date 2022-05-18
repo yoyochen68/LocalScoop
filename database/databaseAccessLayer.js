@@ -4,13 +4,18 @@ const res = require("express/lib/response");
 const mysql = require("mysql2");
 const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
+const { sendFile } = require("express/lib/response");
+
+
 let database;
+
 
 // environment variables: for hiding api keys and mysql login
 const dotenv = require("dotenv")
 dotenv.config()
 
 
+let database;
 const dbConfigHeroku = {
     host: process.env.DBCONFIG_HEROKU_HOST,
     user: process.env.DBCONFIG_HEROKU_USER,
@@ -19,7 +24,6 @@ const dbConfigHeroku = {
     multipleStatements: false,
     namedPlaceholders: true
 };
-
 
 
 const dbConfigLocal = {
@@ -31,6 +35,21 @@ const dbConfigLocal = {
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+
+// YASMINA's localHost
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
+
+
 
 
 
@@ -123,9 +142,6 @@ async function getAllProducts() {
 }
 exports.getAllProducts = getAllProducts
 // getAllProducts().then(console.log)
-
-
-
 
 
 //there canbe a better way for the store limit
@@ -236,10 +252,11 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 async function getCategoryIdByCategoryName(categoryNameList) {
     let categoryIdList = []
 
+    // likely problem with query
     let query = `
-    SELECT category.category_id
-    FROM category
-    WHERE category.category_name=?;`
+        SELECT category.category_id
+        FROM category
+        WHERE category.category_name=?;`
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
@@ -307,8 +324,8 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
 
+    console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
@@ -424,7 +441,10 @@ exports.addNewProduct = addNewProduct
 
 
 async function addNewProductPhoto(product_id, photo_file_path) {
-    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
+    let query = `
+        INSERT INTO product_photo(product_id, photo_file_path) 
+        VALUE(?, ?)`
+        
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
@@ -580,9 +600,20 @@ async function getCartItemByProduct(buyer_id, product_id) {
 exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
 
+async function getCartItemsLength(buyer_Id) {
+    let cartItems = await getCartItemsByBuyer(buyer_Id)
+    let cartQuantity = 0
+    cartItems.forEach(item => {
+        cartQuantity = cartQuantity + item.product_quantity
+    })
+    return cartQuantity
+}
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(1).then(console.log)
 
-async function inCartItem(cart_product_id, buyer_id,product_id) {
-    // let cartItem = getCartItemByProduct(buyer_id,product_id)
+
+async function inCartItem(cart_product_id, buyer_id, product_id) {
+    // let cartItem = getCartItemByProduct(buyer_id, product_id)
     let query = `UPDATE cart_product SET product_quantity = product_quantity + 1 WHERE cart_product_id = ?`
     await database.query(query, [cart_product_id])
     return await getCartItemByProduct(buyer_id, product_id)
@@ -590,14 +621,23 @@ async function inCartItem(cart_product_id, buyer_id,product_id) {
 exports.inCartItem = inCartItem
 // inCartItem(8,1).then(console.log)
 
-async function deCartItem(cart_product_id, buyer_id,product_id) {
+async function deCartItem(cart_product_id, buyer_id, product_id) {
     let query = `UPDATE cart_product SET product_quantity = product_quantity - 1 WHERE cart_product_id = ?`
     await database.query(query, [cart_product_id])
-    return await getCartItemByProduct(buyer_id,product_id)
+    return await getCartItemByProduct(buyer_id, product_id)
 }
 exports.deCartItem = deCartItem
 
-// async function getCartItemByProduct(buyer_Id,product_id) {
+
+async function deleteCartItem(cart_product_id, buyer_id) {
+    let query = `DELETE FROM cart_product WHERE cart_product_id = ?`
+    await database.query(query, [cart_product_id])
+    return
+}
+exports.deleteCartItem = deleteCartItem
+
+
+// async function getCartItemByProduct(buyer_Id, product_id) {
 //     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
 // from buyer as b
 // left join cart as c
@@ -617,23 +657,21 @@ exports.deCartItem = deCartItem
 
 
 
-async function getCartItemsLength(buyer_Id) {
-    let cartItems = await getCartItemsByBuyer(buyer_Id)
-    // console.log("bew",cartItems)
-    let cartQuantity = 0
-    cartItems.forEach(item => {
-        cartQuantity = cartQuantity + item.product_quantity
+//=======searching =============
 
-    })
-    return cartQuantity
-}
+async function searchProduct(searchedString) {
 
-exports.getCartItemsLength = getCartItemsLength
-// getCartItemsLength(1).then(console.log)
+    let query = `SELECT productsandimages.*
+    FROM productsandimages
+    WHERE product_name LIKE CONCAT("%", ?, "%") OR product_category LIKE CONCAT("%", ?, "%");
+   `
 
-async function deleteCartItem(cart_product_id, buyer_id) {
-    let query = `DELETE FROM cart_product WHERE cart_product_id = ?`
-    await database.query(query, [cart_product_id])
-    return
-}
-exports.deleteCartItem = deleteCartItem
+    let [searchResult, fields] = await database.query(query, [searchedString, searchedString])
+    return searchResult
+
+
+exports.searchProduct = searchProduct
+// searchProduct("s").then(console.log)
+
+
+
