@@ -30,7 +30,11 @@ let cartQuantity = await mysqlDB.getCartItemsLength(buyer_Id)
 router.post("/shopping_cart_add",async (req, res)=>{
   let cart_product_id = +req.body.cart_product_id
   let buyer_id = +req.body.buyer_id
-  let cartIterm = await mysqlDB.inCartItem(cart_product_id,buyer_id)
+  let product_id = +req.body.product_id
+  console.log(cart_product_id)
+  console.log(buyer_id)
+  let cartIterm = await mysqlDB.inCartItem(cart_product_id,buyer_id,product_id)
+  console.log(cartIterm)
   let itermQuantity = cartIterm.product_quantity
   let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
   // console.log("add",itermQuantity)
@@ -41,7 +45,8 @@ router.post("/shopping_cart_add",async (req, res)=>{
 router.post("/shopping_cart_minus",async (req, res)=>{
   let cart_product_id = +req.body.cart_product_id
   let buyer_id = +req.body.buyer_id
-  let cartIterm = await mysqlDB.deCartItem(cart_product_id,buyer_id)
+  let product_id = +req.body.product_id
+  let cartIterm = await mysqlDB.deCartItem(cart_product_id,buyer_id,product_id)
   let itermQuantity = cartIterm.product_quantity
   let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
   // console.log("minus",itermQuantity)
