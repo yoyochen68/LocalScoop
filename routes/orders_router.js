@@ -26,10 +26,18 @@ router.get("/a",  async (req, res) => {
 
 
 // GET orders/orders_1
-router.get("/orders_1", (req, res) => {
-    console.log('aaaaa')
+router.get("/orders_1", async (req, res) => {
     let storeId = req.session;
-    console.log(storeId)
+
+    // if user not logged in, redirect to login page
+    if(storeId == undefined){
+        res.redirect("/")
+    }
+
+    
+    let ordersData = await mysqlDB.getOrdersAndProductsByStoreId(2)
+    console.log(ordersData)
+    // show: how long ago, product name, price
 
     let carouselSliderData = [
         { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125', link: "/Users/kevincjhung/Documents/GitHub/idsp1-localScoop/public/uploads/fbda680e1700a34f4a988c8d95fb147f.png" },
