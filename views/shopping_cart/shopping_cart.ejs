@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="/styles.css">
 </head>
+
 <body>
     <header class="fixed_header">
 
@@ -21,10 +22,12 @@
 
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
-                    <div class="dot">
-                        <%= cartQuantity %>
-                    </div>
-                    <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                    <% if(cartQuantity> 0) { %>
+                        <div class="dot">
+                            <%= cartQuantity %>
+                        </div>
+                        <% } %>
+                            <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                 </div>
             </div>
 
@@ -32,10 +35,8 @@
     </header>
 
     <div class="top_space"></div>
-
-    <% let subtotal=0 %>
-
-        <% for(let cartItem of cartIterms){ %>
+    <% if(cartQuantity> 0 ) { %>
+        <% for(let cartItem of cartItems){ %>
             <% if(cartItem.product_quantity> 0){ %>
                 <section class="shoppingCart" id="<%= cartItem.cart_product_id %>">
                     <img src="<%= cartItem.image_file_paths[0] %>" class="shopping_cart_img">
@@ -54,28 +55,41 @@
                             <button type="button"
                                 onclick="incrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#43;</button>
                             <span class="product_quantity" id="productQuantity_<%= cartItem.cart_product_id %>">
-                                <%= cartItem.product_quantity %>
+                                <% if(cartItem.product_quantity <=1){ %>
+                                    <%= cartItem.product_quantity=1%>
+                                        <% } else { %>
+                                            <%= cartItem.product_quantity %>
+                                                <% } %>
+
                             </span>
+
                             <button type="button"
                                 onclick="decrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#8211;</button>
+
                         </div>
-                        <% subtotal=subtotal+(+cartItem.product_quantity*(+cartItem.product_price)) %>
+
                 </section>
                 <% } %>
                     <% } %>
                         <div class="subtotal">
                             <div>Subtotal:</div>
-                            <!-- <script>let subtotal = <%= subtotal %></script> -->
-                            <div class="totalAmount">CAD$<%= subtotal %>.00</div>
+
+                            <div id="totalAmount">CAD $<%= subtotal %>.00</div>
                             <a href="/checkout/checkout">
                                 <button type="submit" class="yellow-bn xs-bn">checkout</button>
                             </a>
                         </div>
                         <div class="extraspace"></div>
+                        <% } else { %>
 
-                        <footer>
-                            <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
-                        </footer>
+                            <img src="https://sethisbakery.com/assets/website/images/empty-cart.png" alt=""
+                                class="emptyCart">
+                            <% } %>
+
+
+                                <footer>
+                                    <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
+                                </footer>
 </body>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -83,7 +97,7 @@
 
     // let localQuantity = []
 
-    function incrementQuantity(cart_product_id, buyer_id, product_quantity,product_id) {
+    function incrementQuantity(cart_product_id, buyer_id, product_quantity, product_id) {
 
         // localQuantity[cart_product_id] = localQuantity[cart_product_id] ? localQuantity[cart_product_id] + 1 : parseInt(product_quantity) + 1
         // let productQuan = document.getElementById("productQuantity_" + cart_product_id)
@@ -92,45 +106,47 @@
         axios.post('/shopping_cart/shopping_cart_add', {
             cart_product_id: cart_product_id,
             buyer_id: buyer_id,
-            product_id:product_id
+            product_id: product_id
         }).then(response => {
-        
             let itermQuantity = response.data.itermQuantity
-
             let cartQuantity = response.data.cartQuantity
-
+            let subtotal = response.data.subtotal
             console.log(itermQuantity)
             document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
             document.querySelector(".dot").innerText = cartQuantity
-        }).catch(error => {
-            console.log(error);
-        })
-        location.reload();
-
-    }
-
-
-    function decrementQuantity(cart_product_id, buyer_id, product_quantity,product_id) {
-        // localQuantity[cart_product_id] = localQuantity[cart_product_id] ? localQuantity[cart_product_id] - 1 : parseInt(product_quantity) - 1
-        // let productQuan = document.getElementById("productQuantity_" + cart_product_id)
-        // productQuan.innerText = localQuantity[cart_product_id]
-
-        axios.post('/shopping_cart/shopping_cart_minus', {
-            cart_product_id: cart_product_id,
-            buyer_id: buyer_id,
-            product_id:product_id
-        }).then(response => {
-       
-            let itermQuantity = response.data.itermQuantity
-            let cartQuantity = response.data.cartQuantity
-            document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
-            document.querySelector(".dot").innerText = cartQuantity
+            document.getElementById("totalAmount").innerText = "CAD $" + subtotal + ".00"
         }).catch(error => {
             console.log(error);
         })
         // location.reload();
+
     }
 
+
+    function decrementQuantity(cart_product_id, buyer_id, product_quantity, product_id) {
+        // localQuantity[cart_product_id] = localQuantity[cart_product_id] ? localQuantity[cart_product_id] - 1 : parseInt(product_quantity) - 1
+        // let productQuan = document.getElementById("productQuantity_" + cart_product_id)
+        // productQuan.innerText = localQuantity[cart_product_id]
+         
+        product_quantity = parseInt(document.querySelector("#productQuantity_" + cart_product_id).innerText)
+        if (parseInt(product_quantity) > 1) {
+            axios.post('/shopping_cart/shopping_cart_minus', {
+                cart_product_id: cart_product_id,
+                buyer_id: buyer_id,
+                product_id: product_id
+            }).then(response => {
+                let itermQuantity = response.data.itermQuantity
+                let cartQuantity = response.data.cartQuantity
+                let subtotal = response.data.subtotal
+                document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
+                document.querySelector(".dot").innerText = cartQuantity
+                document.getElementById("totalAmount").innerText = "CAD $" + subtotal + ".00"
+            }).catch(error => {
+                console.log(error);
+            })
+        }
+    }
+    // location.reload();
 
     function remove(cart_product_id) {
         axios.post('/shopping_cart/shopping_cart_removeItem', {
@@ -140,7 +156,7 @@
         }).catch(error => {
             console.log(error);
         })
-        // location.reload();
+        location.reload();
     }
 
 </script>
