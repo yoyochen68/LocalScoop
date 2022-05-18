@@ -14,19 +14,11 @@ module.exports = function(io) {
 
             socket.join(user.room);
 
-            // Welcome current user
             socket.emit('message', formatMessage("admin", 'Welcome to ChatCord!'));
 
-            // Broadcast when a user connects
-            socket.broadcast
-                .to(user.room)
-                .emit(
-                    'message',
+            socket.broadcast.to(user.room).emit('message',
                     formatMessage("admin", `${user.username} has joined the chat`)
                 );
-
-
-
 
         } )
 
@@ -35,13 +27,23 @@ module.exports = function(io) {
 
         //listen for chatInputMessage
         socket.on('chatMessage',(msg)=>{
-            io.emit('message', formatMessage('USER',msg) )
+            const user = getCurrentUser(socket.id)
+
+            io.to(user.room).emit('message', formatMessage(user.username,msg) )
         })
 
 
         socket.on ('disconnect',()=>{
-            io.emit('message',formatMessage('admin', 'user is dead'))
+            const user = userLeave(socket.id)
+            if(user){
+                io.to(user.room).emit('message',formatMessage('admin', `${user.username} is dead`))
+            }
+
+
         })
+
+
+
 
     });
 
@@ -71,24 +73,21 @@ module.exports = function(io) {
     function getCurrentUser(id) {
         return users.find(user => user.id === id);
     }
-//
-// // User leaves chat
-//     function userLeave(id) {
-//         const index = users.findIndex(user => user.id === id);
-//
-//         if (index !== -1) {
-//             return users.splice(index, 1)[0];
-//         }
-//     }
-//
-// // Get room users
-//     function getRoomUsers(room) {
-//         return users.filter(user => user.room === room);
-//     }
+
+// User leaves chat
+    function userLeave(id) {
+        const index = users.findIndex(user => user.id === id);  //DataBase Needed
+
+        if (index !== -1) {
+            return users.splice(index, 1)[0];
+        }
+    }
+
+// Get room users
+    function getRoomUsers(room) {
+        return users.filter(user => user.room === room);
+    }
 //-------------------------------------------------------------------
-
-
-
 
     
 }
