@@ -201,7 +201,7 @@ async function addShop(store_name, store_phone_number, store_email, store_passwo
     let newStoreInfo = await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
 
-    console.log(newStoreId)
+    // console.log(newStoreId)
     return getStoreInfoByStoreId(newStoreId)
 }
 exports.addShop = addShop
@@ -263,7 +263,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
-    console.log(categoryNameList)
+    // console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
     let query = `

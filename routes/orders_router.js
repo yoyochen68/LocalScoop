@@ -27,6 +27,9 @@ router.get("/a",  async (req, res) => {
 
 // GET orders/orders_1
 router.get("/orders_1", (req, res) => {
+    console.log('aaaaa')
+    let storeId = req.session;
+    console.log(storeId)
 
     let carouselSliderData = [
         { updateTime : 'Yesterday', productName : 'Nike Sage Lows', productPrice : '$125', link: "/Users/kevincjhung/Documents/GitHub/idsp1-localScoop/public/uploads/fbda680e1700a34f4a988c8d95fb147f.png" },
@@ -46,6 +49,8 @@ router.get("/orders_1", (req, res) => {
 })
 
 router.get("/orders_2", (req, res) => {
+    console.log('aaaaa')
+    
     let productListInfo = [
         { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
         { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
