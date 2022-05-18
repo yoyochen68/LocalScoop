@@ -106,10 +106,6 @@ app.get("/dcs", (req, res) => {
   res.redirect("/");
 })
 
-// test 
-app.get("/t", (req, res) => {
-  res.send('exist')
-})
 
 
 // for s3 photo upload. Is an ajax route

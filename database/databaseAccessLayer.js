@@ -4,10 +4,13 @@ const res = require("express/lib/response");
 const mysql = require("mysql2");
 const { doesShopExist } = require("../fake-db");
 const is_heroku = process.env.IS_HEROKU || false;
-const dotenv = require("dotenv")
-dotenv.config()
-let database;
 
+// environment variables: for hiding api keys and mysql login
+const dotenv = require("dotenv");
+const { sendFile } = require("express/lib/response");
+dotenv.config()
+
+let database;
 
 
 const dbConfigHeroku = {
@@ -20,7 +23,6 @@ const dbConfigHeroku = {
 };
 
 
-
 const dbConfigLocal = {
     host: "localhost",
     user: process.env.DBCONFIG_LOCAL_USERNAME,
@@ -30,6 +32,21 @@ const dbConfigLocal = {
     multipleStatements: false,
     namedPlaceholders: true
 };
+
+
+
+// YASMINA's localHost
+// const dbConfigLocal = {
+// 	host: "localhost",
+// 	user: "root",
+// 	password: "Fswd2021$",
+// 	database: "localscoop",
+// 	port: 3306,
+// 	multipleStatements: false,
+// 	namedPlaceholders: true
+// };
+
+
 
 
 
@@ -234,10 +251,11 @@ exports.updateShopAddressByStoreId = updateShopAddressByStoreId
 async function getCategoryIdByCategoryName(categoryNameList) {
     let categoryIdList = []
 
+    // likely problem with query
     let query = `
-    SELECT category.category_id
-    FROM category
-    WHERE category.category_name=?;`
+        SELECT category.category_id
+        FROM category
+        WHERE category.category_name=?;`
 
     for (let categoryName of categoryNameList) {
         let [idObjectOfName, fields] = await database.query(query, [categoryName])
@@ -305,7 +323,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
@@ -422,7 +439,10 @@ exports.addNewProduct = addNewProduct
 
 
 async function addNewProductPhoto(product_id, photo_file_path) {
-    let query = `INSERT INTO product_photo(product_id, photo_file_path ) VALUE(?, ?)`
+    let query = `
+        INSERT INTO product_photo(product_id, photo_file_path) 
+        VALUE(?, ?)`
+        
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
@@ -643,3 +663,19 @@ async function getCartItemsLength(buyer_Id) {
 exports.getCartItemsLength = getCartItemsLength
 // getCartItemsLength(1).then(console.log)
 
+
+
+async function searchProduct(searchedString) {
+
+    let query = `SELECT productsandimages.*
+    FROM productsandimages
+    WHERE product_name LIKE CONCAT("%", ?, "%") OR product_category LIKE CONCAT("%", ?, "%");
+   `
+
+    let [searchResult, fields] = await database.query(query, [searchedString, searchedString])
+    return searchResult
+
+}
+
+exports.searchProduct = searchProduct
+// searchProduct("s").then(console.log)
