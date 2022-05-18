@@ -5,8 +5,8 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const makeSocketShit = require('./socketShit')
-makeSocketShit(io)
+const makeSocketChat = require('./socketChat')
+makeSocketChat(io)
 
 const PORT = process.env.PORT || 8000; // let express set PORT, else make it 8000
 

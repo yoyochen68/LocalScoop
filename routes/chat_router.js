@@ -6,7 +6,7 @@ const path = require('path');
 const crypto = require('crypto')
 
 //formating the message shown
-const formatMessage = require('../views/chat/utils/messages')
+// const formatMessage = require('../views/chat/utils/messages')
 
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')

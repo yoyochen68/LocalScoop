@@ -17,7 +17,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
-    background: antiquewhite;
+    background: white;
     margin: 20px;
 }
 
@@ -32,8 +32,8 @@ a {
 .btn {
     cursor: pointer;
     padding: 5px 15px;
-    background: antiquewhite;
-    color: cadetblue;
+    background: #EEC195;
+    color: #fff;
     border: 0;
     font-size: 17px;
 }
@@ -48,8 +48,8 @@ a {
 }
 
 .chat-header {
-    background: cadetblue;
-    color: #fff;
+    background: antiquewhite;
+    color: #000;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     padding: 15px;
@@ -64,8 +64,8 @@ a {
 }
 
 .chat-sidebar {
-    background: cadetblue;
-    color: #fff;
+    background: antiquewhite;
+    color: #000;
     padding: 20px 20px 60px;
     overflow-y: scroll;
 }
@@ -94,7 +94,7 @@ a {
 .chat-messages .message {
     padding: 10px;
     margin-bottom: 15px;
-    background-color: antiquewhite;
+    background-color: #EEC195;
     border-radius: 5px;
     overflow-wrap: break-word;
 }
@@ -102,7 +102,7 @@ a {
 .chat-messages .message .meta {
     font-size: 15px;
     font-weight: bold;
-    color: cadetblue;
+    color: antiquewhite;
     opacity: 0.7;
     margin-bottom: 7px;
 }
@@ -113,7 +113,7 @@ a {
 
 .chat-form-container {
     padding: 20px 30px;
-    background-color: cadetblue;
+    background-color: antiquewhite;
 }
 
 .chat-form-container form {
@@ -131,20 +131,20 @@ a {
 .join-container {
     max-width: 500px;
     margin: 80px auto;
-    color: #fff;
+    color: #000;
 }
 
 .join-header {
     text-align: center;
     padding: 20px;
-    background: cadetblue;
+    background: antiquewhite;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
 .join-main {
     padding: 30px 40px;
-    background: cadetblue;
+    background: antiquewhite;
 }
 
 .join-main p {

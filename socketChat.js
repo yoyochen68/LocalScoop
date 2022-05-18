@@ -15,14 +15,19 @@ module.exports = function(io) {
             socket.join(user.room);
 
             socket.emit('message', formatMessage("admin", 'Welcome to ChatCord!'));
-
+            
             socket.broadcast.to(user.room).emit('message',
-                    formatMessage("admin", `${user.username} has joined the chat`)
-                );
+                    formatMessage("admin", `${user.username} has joined the chat`));
+
+
+            //send users and room info
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getRoomUsers(user.room)
+            });
+
 
         } )
-
-
 
 
         //listen for chatInputMessage
@@ -40,21 +45,20 @@ module.exports = function(io) {
             }
 
 
+            //send users and room info 
+            io.to(user.room).emit('roomUsers', {
+                room: user.room,
+                users: getRoomUsers(user.room)
+            });
+
         })
-
-
-
 
     });
 
 
 
-///----------------------------------move to db/different file--------------------
-    // const formatMessage = require('../views/chat/utils/messages')
-    //moving it in searate file later
+///---------------------------------- related functions - move to different file--------------------
 
-    
-    
     //geting an object from the messge input data
     function formatMessage(username, text) {
         return {username, text, time: moment().format('h:mm a')
