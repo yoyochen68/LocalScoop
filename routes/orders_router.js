@@ -30,6 +30,7 @@ const luxon = require('luxon')
 
 // GET orders/orders_1
 router.get("/orders_1", async (req, res) => {
+
     let storeId = req.session;
 
     // if user not logged in, redirect to login page
