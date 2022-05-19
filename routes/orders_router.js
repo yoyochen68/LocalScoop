@@ -26,7 +26,7 @@ router.get("/orders_1", async (req, res) => {
         res.redirect("/")
     }
 
-    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(storeId)
+    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
     
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of carouselSliderData){
@@ -48,26 +48,26 @@ router.get("/orders_1", async (req, res) => {
  * 
  */
 router.get("/orders_2", async (req, res) => {
-  
-    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(storeId)
     
+    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2);
+
+    // loop through all orders, take timestamp, calculate how long ago it was, write to {}
+    for(let order of orderData){
+        let timestamp = +order.product_timestamp;
+        let timeInfo = DateTime.fromMillis(timestamp);
+        let howManyDaysAgo = timeInfo.plus({ days: 0 }).toRelativeCalendar();
+        
+        // add how many days ago to the object returned from db
+        order.how_many_days_ago = howManyDaysAgo;
+    }
+
+    console.log(orderData)
     res.render("./orders/orders_2", {
         orderData
     })
 })
 
-let productListInfo = [
-    { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
-    { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
-    { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "3 Days Ago" },
-    { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "4 Days Ago" },
-    { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "1 Week Ago" },
-    { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "1 Week Ago" },
-    { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
-    { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
-    { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "2 Weeks Ago" },
-    { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "2 Weeks Ago" }, 
-]
+
 
 
 
