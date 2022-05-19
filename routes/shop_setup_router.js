@@ -1,4 +1,5 @@
 /* libraries */
+const help = require('../help')
 const express = require("express");
 const multer = require('multer');
 const path = require('path');
@@ -44,7 +45,8 @@ router.post("/shop_login", async (req, res) => {
   let password = req.body.store_password;
   let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
   // console.log(shopOwner)
-  if (shopOwner.length === 0) {
+  // console.log(shopOwner.length === 0)
+  if (shopOwner && shopOwner.length === 0) {
     res.redirect("/shop_setup/shop_login")
     return
   }
@@ -62,6 +64,7 @@ router.post("/shop_login", async (req, res) => {
 
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setup_1", async (req, res) => {
+  
   res.render("shop_setup/shop_setup_1")
 })
 
@@ -105,7 +108,8 @@ router.post("/shop_setup_2", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_3
-router.get("/shop_setup_3", async (req, res) => {
+
+router.get("/shop_setup_3", help.sellerAuthorized,async (req, res) => {
 
   let newStoreId = req.session.seller.seller_id
 
@@ -128,7 +132,8 @@ router.post("/shop_setup_3", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_4
-router.get("/shop_setup_4", async (req, res) => {
+
+router.get("/shop_setup_4", help.sellerAuthorized,async (req, res) => {
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_4", { newStoreId })
@@ -137,7 +142,9 @@ router.get("/shop_setup_4", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_5
-router.get("/shop_setup_5", async (req, res) => {
+
+router.get("/shop_setup_5", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_5", { newStoreId })
@@ -146,7 +153,9 @@ router.get("/shop_setup_5", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_6
-router.get("/shop_setup_6", async (req, res) => {
+
+router.get("/shop_setup_6", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_6", { newStoreId })
@@ -170,7 +179,9 @@ router.post('/uploadS3', async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_7
-router.get("/shop_setup_7", async (req, res) => {
+
+router.get("/shop_setup_7", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_7", { newStoreId })

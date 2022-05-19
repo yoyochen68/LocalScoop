@@ -20,7 +20,7 @@ app.use(express.json())
 
 router.get("/shopping_cart", async(req, res) => {
 // let buyer_id = req.session.buyer_id
-let buyer_id = 1
+let buyer_id = req.session.buyer.buyer_id
 let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
 let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
 let subtotal = 0

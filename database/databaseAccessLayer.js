@@ -270,6 +270,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 
+
 /**
  * @param store_id
  * @param categoryNameList
@@ -676,7 +677,6 @@ exports.searchProduct = searchProduct
 
 
 
-
 // -----------------------------//Chat FUNCTIONs Needed----------------------------------------------
 //
 //
@@ -735,4 +735,6 @@ exports.searchProduct = searchProduct
 // }
 //
 // exports.getChatContent = getChatContent
+
+
 

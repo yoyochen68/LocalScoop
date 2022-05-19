@@ -3,7 +3,7 @@ const express = require("express");
 const ejs = require('ejs');
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
-
+var nodemailer = require('nodemailer');
 
 
 const { append } = require("express/lib/response");
@@ -16,9 +16,13 @@ app.use(express.json())
 
 router.get("/checkout_1", async (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
-    let cartIterms = await mysqlDB.getCartItemsByBuyer(buyer_id)
     let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
-    res.render("checkout/checkout_1", { buyer_id, cartIterms, cartQuantity })
+    let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
+    let subtotal = 0
+    for (let cartItem of cartItems) {
+        subtotal = subtotal + (parseInt(cartItem.product_quantity) * parseInt(cartItem.product_price))
+    }
+    res.render("checkout/checkout_1", { buyer_id, cartItems, cartQuantity, subtotal })
 })
 
 
@@ -26,7 +30,7 @@ router.get("/checkout_confirmation", async (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
 
-    res.render("checkout/checkout_confirmation",{cartQuantity})
+    res.render("checkout/checkout_confirmation", { cartQuantity })
 })
 
 router.post("/checkout_confirmation", (req, res) => {
@@ -36,6 +40,30 @@ router.post("/checkout_confirmation", (req, res) => {
     let province = req.body.province
     let city = req.body.city
     let paymentMethod = req.body.paymentMethod
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.MY_EMAIL,
+            pass: process.env.MY_PASS
+        }
+    });
+
+    var mailOptions = {
+        from: process.env.MY_EMAIL,
+        to: 'yoyochen68@yahoo.ca',
+        subject: 'Order Confirmation',
+        text: 'Thank you for your supporting !'
+    };
+
+    transporter.sendMail(mailOptions, function (error, info) {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
 
     res.redirect("/checkout/checkout_confirmation")
 })
