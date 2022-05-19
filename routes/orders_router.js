@@ -61,7 +61,7 @@ router.get("/orders_2", async (req, res) => {
         order.how_many_days_ago = howManyDaysAgo;
     }
 
-    console.log(orderData)
+    // console.log(orderData)
     res.render("./orders/orders_2", {
         orderData
     })
