@@ -106,7 +106,7 @@ async function authenticateShopOwner(store_email, store_password) {
     return validatedShopOwner[0]
 }
 exports.authenticateShopOwner = authenticateShopOwner
-// authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
+authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
 
 
