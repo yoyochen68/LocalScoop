@@ -37,7 +37,7 @@ router.get("/orders_1", async (req, res) => {
         res.redirect("/")
     }
 
-    let ordersData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
+    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
     console.log(ordersData)
     // change the db () so that the photo shows
     // show: how long ago, product name, price
