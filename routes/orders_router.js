@@ -42,19 +42,14 @@ router.get("/orders_1", async (req, res) => {
     // change the db () so that the photo shows
     
     for(let order of carouselSliderData){
-        // format of mySQL datetime | "Thu May 12 2022 16:43:16 GMT-0700 (Pacific Daylight Time)"
         let timestamp = +order.product_timestamp;
+        let timeInfo = DateTime.fromMillis(timestamp);
+        let howManyDaysAgo = timeInfo.plus({ days: 0 }).toRelativeCalendar()
         
-        console.log()
-
-        // take the timestamp, use luxon to calculate how long ago it was
-        // write that to the order 
-        // pass it to the ejs page
+        order.how_many_days_ago = howManyDaysAgo
     }
 
-    // show: how long ago, product name, price
-
-
+    // console.log(carouselSliderData)
 
     res.render("./orders/orders_1", {
        carouselSliderData 
