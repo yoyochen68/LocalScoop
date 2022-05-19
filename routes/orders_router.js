@@ -38,11 +38,9 @@ router.get("/orders_1", async (req, res) => {
     }
 
     let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
-    console.log(ordersData)
     // change the db () so that the photo shows
     // show: how long ago, product name, price
-
-
+    console.log(carouselSliderData)
     
     let numberOfCards = carouselSliderData.length
     
