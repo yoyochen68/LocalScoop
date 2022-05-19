@@ -674,3 +674,66 @@ async function searchProduct(searchedString) {
 exports.searchProduct = searchProduct
 // searchProduct("s").then(console.log)
 
+
+
+
+
+
+// -----------------------------//Chat FUNCTIONs Needed----------------------------------------------
+//
+//
+//
+// async function createChat(buyerId, storeId) {
+//
+// }
+//
+// exports.createRoom = createRoom
+//
+//
+//
+//
+//
+// async function getBuyerChats(buyerId) {
+//
+// }
+//
+// exports.getBuyerChats = getBuyerChats
+//
+//
+//
+//
+// async function getSellerChats(storeId) {
+//
+// }
+//
+// exports.getSellerChats = getSellerChats
+//
+//
+//
+//
+//
+// async function getChatContent(chatId) {
+//
+// }
+//
+// exports.getChatContent = getChatContent
+//
+//
+//
+//
+//
+// async function addStoreChatContent(chatId, storId, text) {
+//
+// }
+//
+// exports.getChatContent = getChatContent
+//
+//
+//
+//
+//
+// async function addBuyerChatContent(chatId, buyerId, text) {
+//
+// }
+//
+// exports.getChatContent = getChatContent
