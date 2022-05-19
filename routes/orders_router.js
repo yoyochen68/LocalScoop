@@ -9,6 +9,7 @@ const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
 const luxon = require('luxon')
 
+let DateTime = luxon.DateTime;
 
 /*
     {
@@ -39,14 +40,25 @@ router.get("/orders_1", async (req, res) => {
 
     let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
     // change the db () so that the photo shows
-    // show: how long ago, product name, price
-    console.log(carouselSliderData)
     
-    let numberOfCards = carouselSliderData.length
+    for(let order of carouselSliderData){
+        // format of mySQL datetime | "Thu May 12 2022 16:43:16 GMT-0700 (Pacific Daylight Time)"
+        let timestamp = +order.product_timestamp;
+        
+        console.log()
+
+        // take the timestamp, use luxon to calculate how long ago it was
+        // write that to the order 
+        // pass it to the ejs page
+    }
+
+    // show: how long ago, product name, price
+
+
 
     res.render("./orders/orders_1", {
-        
-    })
+       carouselSliderData 
+    })  
 })
 
 
