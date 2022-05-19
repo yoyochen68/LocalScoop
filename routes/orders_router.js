@@ -52,7 +52,7 @@ router.get("/orders_2", async (req, res) => {
     let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(storeId)
     
     res.render("./orders/orders_2", {
-        productListInfo
+        orderData
     })
 })
 
