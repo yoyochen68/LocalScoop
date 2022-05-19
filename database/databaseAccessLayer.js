@@ -697,26 +697,35 @@ exports.searchProduct = searchProduct
 //
 //
 //
-//
-// async function getBuyerChats(buyerId) {
-//
-// }
-//
-// exports.getBuyerChats = getBuyerChats
-//
-//
-//
-//
-// async function getSellerChats(storeId) {
-//
-// }
-//
-// exports.getSellerChats = getSellerChats
-//
-//
-//
-//
-//
+
+async function getBuyerChats(buyerId) {
+    let query=`
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ?;`
+
+   let [buyerChat, fields] = await database.query(query, [buyerId])
+    return buyerChat
+
+}
+exports.getBuyerChats = getBuyerChats
+
+
+
+async function getSellerChats(storeId) {
+    let query=`
+    SELECT * FROM localscoop.chat
+    WHERE chat.store_id = ?;`
+
+    let [storeChat, fields] = await database.query(query, [buyerId])
+    return storeChat
+}
+
+exports.getSellerChats = getSellerChats
+
+
+
+
+
 // async function getChatContent(chatId) {
 //
 // }
