@@ -1,4 +1,8 @@
+
 /* libraries */
+
+const help = require("../help")
+
 const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
@@ -17,9 +21,8 @@ let DateTime = luxon.DateTime;
  * For demonstration purposes, change req.session.store_id to 2
  */
 // GET orders/orders_1
-router.get("/orders_1", async (req, res) => {
-    // which business is currently logged in
-    let storeId = req.session;
+
+router.get("/orders_1", help.sellerAuthorized, (req, res) => {
 
     // if user not logged in, redirect to login page
     if(storeId == undefined){
@@ -44,10 +47,19 @@ router.get("/orders_1", async (req, res) => {
 })
 
 
-/**
- * 
- */
-router.get("/orders_2", async (req, res) => {
+router.get("/orders_2", help.sellerAuthorized, (req, res) => {
+    let productListInfo = [
+        { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
+        { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
+        { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "3 Days Ago" },
+        { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "4 Days Ago" },
+        { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "1 Week Ago" },
+        { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "1 Week Ago" },
+        { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
+        { itemName: "Nike AirForce", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "1 Week Ago" },
+        { itemName: "Nike Blazer", deliveryStatus: "Delivery Pending", feedbackStatus: "", time: "2 Weeks Ago" },
+        { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "2 Weeks Ago" }, 
+    ]
     
     let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2);
 

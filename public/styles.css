@@ -778,6 +778,10 @@ font-size: 20px;
     height: 300px;
 }
 
+.extraspace2{
+    height: 100px;
+}
+
 
 /* ====for shopping cart below======== */
 
@@ -793,11 +797,13 @@ font-size: 20px;
 }
 
 .shopping_cart_img {
-    max-width: auto;
-    height: 120px;
+    max-width: 120px;
+    /* max-width: auto;
+    height: 120px; */
     border: 1px solid gray;
     border-radius: 50%;
     place-self: center;
+    clip-path: circle();
 }
 
 .productName,
@@ -872,4 +878,42 @@ font-size: 20px;
     top:5%
 }
 
+.paymentTotal{
+
+    border-radius: 20px;
+    background-color: rgb(255, 239, 214);
+  margin-top: 5%;
+  padding: 5%;
+}
+
 /* ==== for shopping cart above======== */
+
+/* ==========for analytics page========= */
+
+.box {
+    display: block;
+    text-align: center;
+
+}
+
+.analytisImg {
+    max-width: 60%;
+    max-height: auto;
+}
+
+.summaryImg {
+    max-width: 75%;
+    max-height: auto;
+}
+
+.analyticsText {
+    border-radius: 10px;
+    background-color: rgb(255, 239, 214);
+    margin: 6% 10% 6% 10%;
+}
+
+.dashboadText{
+margin-top: 8%;
+
+}
+
