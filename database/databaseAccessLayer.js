@@ -103,7 +103,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 async function authenticateShopOwner(store_email, store_password) {
     let query = `SELECT * FROM store WHERE store_email = ? and store_password = ?;`
     let [validatedShopOwner, filed] = await database.query(query, [store_email, store_password])
-    return validatedShopOwner[0]
+    return validatedShopOwner
 }
 exports.authenticateShopOwner = authenticateShopOwner
 authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
