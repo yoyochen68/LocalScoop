@@ -50,7 +50,7 @@ router.post("/follow_business_2", async (req, res) => {
     // the function that adds to the th follower to number of followers
     // the function that get the new followers quantity
 
-    // let storeId = 1
+    // let buyer_id = req.session.buyer.buyer_id
     let followersNum = 3
     // await mysqlDB.addToCart(buyer_id, product_id)
     // let followersNum =  await mysqlDB.getStoreInfoByStoreId(storeId).followers

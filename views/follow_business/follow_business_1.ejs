@@ -6,79 +6,10 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
-	<style>
-		main * {
 
-			margin: 10px;
-			padding: 0;
-			box-sizing: content-box;
-			background-color: #F7F7F3;
-		}
+	<link rel="stylesheet" href="../../styles.css">
 
-		a {
-			color: black;
-		}
 
-		.grid {
-			display: block;
-			padding: 16px;
-			grid-gap: 16px;
-		}
-
-		@media screen and (max-width:768px) {
-			.grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-			}
-		}
-
-		@media screen and (min-width:768px) {
-			.grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr 1fr;
-			}
-		}
-
-		.cart {
-			margin-bottom: 16px;
-			padding: 16px 30px 16px 16px;
-			min-width: 20vh;
-			min-height: 20vh;
-
-			border-radius: 15px;
-			box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-			transition: 0.3s;
-			background-color: white;
-
-		}
-
-		.cart * {
-			background-color: white;
-
-		}
-
-		/* On mouse-over, add a deeper shadow */
-
-		.cart:hover {
-			box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-		}
-
-		img {
-			float: left;
-			max-width: 100%;
-			height: 150px;
-			object-fit: cover;
-			border-radius: 15px;
-		}
-
-		.container * {
-			background-color: white;
-		}
-
-		a {
-			text-decoration: none;
-		}
-	</style>
 	<title>Document</title>
 </head>
 
@@ -96,11 +27,12 @@
 		<div class="nav-wrapper--right buyer">
 			<div class="bag">
 				<a href="/shopping_cart/shopping_cart">
-					<%if(cartItemsTotal !==0 ){%>
+
+					<% if(cartItemsTotal !==0 ){ %>
 						<div class="dot">
-							<%=cartItemsTotal%>
+							<%= cartItemsTotal %>
 						</div>
-						<%}%>
+						<% } %>
 							<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
 			</div>
@@ -109,7 +41,7 @@
 	</header>
 
 
-	<main>
+	<main class="buyer-grid-body">
 		<div class="top_space"></div>
 		<div>
 			<h2>Trending Items</h2>
@@ -159,7 +91,7 @@
 
 	<div class="bottom_space"></div>
 	<footer>
-		<%- include('../elements/seller_footer', {page:"product_post"}) %>
+		<%- include('../elements/buyer_footer', {page:"follow_business"}) %>
 	</footer>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>

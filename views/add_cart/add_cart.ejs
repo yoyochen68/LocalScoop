@@ -8,16 +8,31 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../../styles.css">
 
+<style>
 
+    .add-cart-body.grid {
+        display: block;
+        padding: 16px;
+        grid-gap: 16px;
+    }
+
+
+
+    @media screen and (min-width:768px) {
+
+
+        .add-cart-body .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+
+    }
+
+</style>
 </head>
 <body>
 
-<%
-
-//Here this woud be disapear since we get the numberOfProducts from router based on DB
-let fakeListFromDb = ["product1", "product2", "product3"]
-let numberOfProducts = fakeListFromDb.length
-%>
 
 
 
@@ -29,18 +44,18 @@ let numberOfProducts = fakeListFromDb.length
         </div>
 
         <div class="nav-wrapper--middle buyer">
-            Product name
+            Product Details
         </div>
 
         <div class="nav-wrapper--right buyer">
             <div class="bag">
                 <a href="/shopping_cart/shopping_cart">
 
-                <%if(cartItemsTotal !== 0 ){%>
-                <div class="dot"> <%=cartItemsTotal%></div>
-                <%}%>
+                    <%if(cartItemsTotal !== 0 ){%>
+                    <div class="dot"> <%=cartItemsTotal%></div>
+                    <%}%>
 
-                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                    <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                 </a>
             </div>
         </div>
@@ -49,43 +64,52 @@ let numberOfProducts = fakeListFromDb.length
 </header>
 
 
-    <div class="top_space"></div>
+<div class="top_space"></div>
 
 
 <div class="add-cart-body ">
+    <div class="grid">
 
-    <div class="container centerBox m-font">
-        <img  class="responsive-img product-l-image" src=<%=  productInfo.image_file_paths[0]%>>
+        <div class="container centerBox m-font grid1">
+            <img  class="responsive-img product-l-image" src=<%=  productInfo.image_file_paths[0]%>>
+        </div>
+
+
+        <!--Product Info-->
+
+
+        <div class=" grid2">
+
+            <div class="product_info">
+                <h2><%= productInfo.product_name%></h2>
+                <h4><%= productInfo.product_description%></h4>
+                <h3><%= storeInfo.store_address%></h3>
+                <h3>$<%=productInfo.product_price%> CAD</h3>
+
+            </div>
+
+
+            <div class="product_react_btn_set">
+                <button><span class="material-icons white-text ">mode_comment</span></button>
+                <button><span class="material-icons ">share</span></button>
+                <button><span class="material-icons ">star</span></button>
+
+            </div>
+
+            <div class="add_cart_btn">
+                <button class="addToCartBtn semibold l-font m-bn">Add To Cart </button>
+            </div>
+
+        </div>
+
     </div>
 
-
-    <!--Product Info-->
-    <div class="product_info">
-        <h2><%= productInfo.product_name%></h2>
-        <h4><%= productInfo.product_description%></h4>
-        <h3><%= storeInfo.store_address%></h3>
-        <h3>$<%=productInfo.product_price%> CAD</h3>
-
-    </div>
-
-
-
-    <div class="product_react_btn_set">
-        <button><span class="material-icons white-text ">mode_comment</span></button>
-        <button><span class="material-icons ">share</span></button>
-        <button><span class="material-icons ">star</span></button>
-
-    </div>
-
-<div class="add_cart_btn">
-    <button class="addToCartBtn semibold l-font m-bn">Add To Cart </button>
-</div>
 
     <div class="bottom_space"></div>
 
 </div>
 <footer>
-    <%- include('../elements/seller_footer',{page:"product_post"}) %>
+    <%- include('../elements/buyer_footer', {page:"follow_business"}) %>
 </footer>
 
 
