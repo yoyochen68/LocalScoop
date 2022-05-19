@@ -42,12 +42,10 @@ a {
 
 .chat-container {
     max-width: 1100px;
-<<<<<<< HEAD
-    background: darkgrey;
-=======
-    background: #fff;
->>>>>>> main
-    margin: 30px auto;
+    /*CHANGE THS LATER*/
+    background: white;
+    margin:0;
+
     overflow: hidden;
 }
 
@@ -62,17 +60,10 @@ a {
     justify-content: space-between;
 }
 
-<<<<<<< HEAD
 /*.chat-main {*/
 /*    display: grid;*/
 /*    grid-template-columns: 1fr 3fr;*/
 /*}*/
-=======
-.chat-main {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-}
->>>>>>> main
 
 .chat-sidebar {
     background: antiquewhite;
@@ -96,18 +87,32 @@ a {
     padding: 10px 0;
 }
 
+
+/*MAKE IT RESPONSIVE  */
 .chat-messages {
     padding: 30px;
-    max-height: 500px;
+    max-height: 650px;
     overflow-y: scroll;
-<<<<<<< HEAD
 
+}
 
 /*   me, yasmina*/
 
-=======
->>>>>>> main
-}
+/*@media  screen and (min-width: 420px) {*/
+/*    .chat-messages {*/
+/*        max-height: 600px;*/
+/*    }*/
+/*}*/
+
+
+
+/*@media  screen and (min-width: 600px) {*/
+/*    .chat-messages {*/
+/*        max-height: 800px;*/
+/*    }*/
+/*}*/
+
+
 
 .chat-messages .message {
     padding: 10px;
@@ -132,21 +137,17 @@ a {
 .chat-form-container {
     padding: 20px 30px;
     background-color: antiquewhite;
-<<<<<<< HEAD
 
 
     /*me, yasmina*/
     position: fixed;
     bottom:100px;
-    width: 100%
+    width: 100%;
+    max-width: 1100px;
 
 }
 
 
-=======
-}
-
->>>>>>> main
 .chat-form-container form {
     display: flex;
 }
@@ -211,15 +212,9 @@ a {
 }
 
 @media (max-width: 700px) {
-<<<<<<< HEAD
     /*.chat-main {*/
     /*    display: block;*/
     /*}*/
-=======
-    .chat-main {
-        display: block;
-    }
->>>>>>> main
 
     .chat-sidebar {
         display: none;
