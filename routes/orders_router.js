@@ -18,7 +18,6 @@ let DateTime = luxon.DateTime;
  */
 // GET orders/orders_1
 router.get("/orders_1", async (req, res) => {
-    // which business is currently logged in
     let storeId = req.session;
 
     // if user not logged in, redirect to login page
