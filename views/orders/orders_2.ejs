@@ -48,6 +48,7 @@
                 margin-left: 10px;
                 font-weight: normal;
                 font-size: x-small;
+                color: #333;
             }
 
             .cardDiv {
@@ -98,14 +99,14 @@
         <% for(let order of orderData) { %>
             <div class="cardDiv">
                 <div class="productClass">
-                    <img src="<%= order.photo_file_path %>" alt="image of product">
+                        <img src="<%= order.photo_file_path %>" alt="image of product">
                     <div class="textdiv">
                         <h6>
                             <%= order.product_name %>
                         </h6>
-                        <h6>
+                        <h5>
                             <%= order.order_status %>
-                        </h6>
+                        </h5>
                         <h6>
                             <%= order.how_many_days_ago %>
                         </h6>

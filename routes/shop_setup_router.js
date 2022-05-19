@@ -147,7 +147,9 @@ router.get("/shop_setup_5", async (req, res) => {
 
 // GET /shop_setUp/shop_setUp_6
 router.get("/shop_setup_6", async (req, res) => {
-  let newStoreId = req.session.seller.seller_id
+  console.log(req.session)
+  // let newStoreId = req.session.seller.seller_id
+  let newStoreId = 2
 
   res.render("shop_setup/shop_setup_6", { newStoreId })
 })

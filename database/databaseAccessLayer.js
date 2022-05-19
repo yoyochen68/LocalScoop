@@ -329,7 +329,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-
     console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
