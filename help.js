@@ -11,10 +11,20 @@ function sellerAuthorized(req, res, next) {
     next()
 
 }
-
-
-
 exports.sellerAuthorized = sellerAuthorized
+
+function buyerAuthorized(req, res, next) {
+    if (!req.session.buyer) {
+        res.redirect("/index2")
+        // console.log("index2")
+        return
+    }
+    next()
+
+}
+
+exports.buyerAuthorized = buyerAuthorized
+
 
 
 

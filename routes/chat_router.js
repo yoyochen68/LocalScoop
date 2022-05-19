@@ -1,4 +1,5 @@
 /* libraries */
+const help = require("../help")
 const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
@@ -13,14 +14,11 @@ const mysqlDB = require('../database/databaseAccessLayer')
 
 
 
-
-
 router.get("/",  async (req, res) => {
     console.log('render chat')
   res.render("chat/index");
 
 })
-
 
 
 router.get("/room",  async (req, res) => {

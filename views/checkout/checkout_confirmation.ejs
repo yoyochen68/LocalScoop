@@ -54,6 +54,9 @@
         margin-right: 20px;
 
     }
+    .confirmation{
+        text-align: center;
+    }
 </style>
 
 </head>
@@ -61,25 +64,10 @@
 <body>
     <header class="fixed_header">
 
-        <div class="nav-wrapper buyer buyer-shop-header">
-            <div class="nav-wrapper--left buyer">
-                <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
-            </div>
-
-            <div class="nav-wrapper--middle buyer">
+            <div class="nav-wrapper--middle buyer confirmation">
                 Confirmation
             </div>
 
-            <div class="nav-wrapper--right buyer">
-                <div class="bag">
-                    <div class="dot">
-<%= cartQuantity %>
-                    </div>
-                    <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
-                </div>
-            </div>
-
-        </div>
     </header>
 
     <div class="top_space"></div>
@@ -101,7 +89,7 @@
 
 
     </section>
-    <div class="extraspace"></div>
+    <div class="extraspace2"></div>
     <footer>
         <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
     </footer>
