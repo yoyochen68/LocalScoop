@@ -251,11 +251,8 @@ router.post('/upload', upload, async (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
-  // let sellerProductTypes = ["stationary", "handmaid_good"]
-
-  // console.log(req.body.productTypeList)
   let newStoreId = req.session.seller.seller_id
-  //
+  
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes)
 
   res.status(200).send(updatedStore[0].categories)
