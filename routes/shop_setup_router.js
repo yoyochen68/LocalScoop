@@ -44,8 +44,9 @@ router.post("/shop_login", async (req, res) => {
   let email = req.body.store_email;
   let password = req.body.store_password;
   let shopOwner = await mysqlDB.authenticateShopOwner(email, password)
+  // console.log(shopOwner)
   // console.log(shopOwner.length === 0)
-  if (shopOwner.length === 0) {
+  if (shopOwner && shopOwner.length === 0) {
     res.redirect("/shop_setup/shop_login")
     return
   }
