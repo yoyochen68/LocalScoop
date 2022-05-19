@@ -25,8 +25,6 @@ module.exports = function(io) {
                 room: user.room,
                 users: getRoomUsers(user.room)
             });
-
-
         } )
 
 

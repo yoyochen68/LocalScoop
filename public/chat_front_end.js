@@ -5,10 +5,26 @@ const userList = document.getElementById('users');
 
 
 //get the username and the room from url
-const {username, room} = Qs.parse(location.search, {
-    ignoreQueryPrefix:true
-})
+// const {username, room} = Qs.parse(location.search, {
+//     ignoreQueryPrefix:true
+// })
+let room = ROOM_ID
+let userName;
+let buyerId;
+
+    axios.post("/room",{roomId: ROOM_ID}).
+        .then(response => {
+            userName= responce.data.name
+            buyerId = responce.data.buyerId
+        })
+
 console.log(username, room)
+
+
+let room = ROOM_ID
+let userName = 
+
+
 
 const socket = io.connect();
 
