@@ -14,9 +14,9 @@ const mysqlDB = require('../database/databaseAccessLayer')
 //all products
 router.get("/products",  async (req, res) => {
 
+  // let buyer_id = 1
 
-  // let buyer_id = req.session.id
-  let buyer_id = 1
+  let buyer_id = req.session.buyer.buyer_id
   let searchString = null
 
   //make it based on ast added later
@@ -31,9 +31,8 @@ router.get("/products",  async (req, res) => {
 
 
   router.post("/products",  async (req, res) => {
-
-
-    let buyer_id = 1
+    // let buyer_id = 1
+    let buyer_id = req.session.buyer.buyer_id
     let searchString = req.body.search
 
     let productInfo = await mysqlDB.searchProduct(searchString)
@@ -57,9 +56,8 @@ router.get("/products",  async (req, res) => {
 // GET /add_cart/add_cart/id
 router.get("/add_cart/:id", async(req, res) => {
   let product_id = req.params.id
-
-  // let buyer_id = req.session.id
-  let buyer_id = 1
+  // let buyer_id = 1
+  let buyer_id = req.session.buyer.buyer_id
 
   let productInfo = await mysqlDB.getProductsAndImages(product_id)
   let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
@@ -74,14 +72,11 @@ router.get("/add_cart/:id", async(req, res) => {
 
 
 
-
 // ajax request destination
 router.post("/add_cart/:id",  async (req, res) => {
 
   let product_id = req.params.id
-  //let buyer_id = req.session.id
-  let buyer_id = 1
-
+  let buyer_id = req.session.buyer.buyer_id
   await mysqlDB.addToCart(buyer_id, product_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
    res.json( {quantity: cartItemsTotal })

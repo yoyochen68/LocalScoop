@@ -6,7 +6,7 @@ const crypto = require('crypto')
 // const db = require("../fake-db");
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
-const s3 = require("../s3");  
+const s3 = require("../s3");
 
 
 const { append, render } = require("express/lib/response");
@@ -49,28 +49,29 @@ router.post("/shop_login", async (req, res) => {
     return
   }
   const id = shopOwner[0].store_id
-  req.session.id = id;
-  req.session.email = email;
+
+  req.session.seller = {
+    seller_id: id,
+    seller_email: email
+  }
+
   // let store_email = req.session.store_email ? req.session.store_email : null;
   res.redirect("/seller_landing/seller_landing")
 })
 
 
-
-
-
 // GET /shop_setUp/shop_setUp_1
 router.get("/shop_setup_1", async (req, res) => {
   res.render("shop_setup/shop_setup_1")
-  })
+})
 
 
 
 
 // GET /shop_setUp/shop_setUp_2
-  router.get("/shop_setup_2", async (req, res) => {
-    res.render("shop_setup/shop_setup_2")
-  })
+router.get("/shop_setup_2", async (req, res) => {
+  res.render("shop_setup/shop_setup_2")
+})
 
 
 // POST /shop_setUp/shop_setUp_2
@@ -90,9 +91,12 @@ router.post("/shop_setup_2", async (req, res) => {
 
   // write store name into database
   let newStore = await mysqlDB.addShop(store_name, store_phone_number, store_email, store_password);
- 
-  // put store_id in cookie session
-  req.session.storeId =  newStore[0].store_id
+  let id = newStore[0].store_id
+
+  req.session.seller = {
+    seller_id: id,
+    seller_email: store_email
+  }
 
   // redirect to next page
   res.redirect(`/shop_setup/shop_setup_3`)
@@ -101,20 +105,20 @@ router.post("/shop_setup_2", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_3
-router.get("/shop_setup_3", async(req, res) => {
+router.get("/shop_setup_3", async (req, res) => {
 
-  let newStoreId = req.session.storeId
+  let newStoreId = req.session.seller.seller_id
 
-  res.render("shop_setup/shop_setup_3", { newStoreId})
+  res.render("shop_setup/shop_setup_3", { newStoreId })
 })
 
 
 // POST /shop_setUp/shop_setUp_3
 router.post("/shop_setup_3", async (req, res) => {
-  let storeAddress =  req.body.address;
-  let newStoreId = req.session.storeId
+  let storeAddress = req.body.address;
+  let newStoreId = req.session.seller.seller_id
 
-  if(storeAddress == null) return
+  if (storeAddress == null) return
 
   await mysqlDB.updateShopAddressByStoreId(newStoreId, storeAddress)
   res.redirect(`/shop_setUp/shop_setUp_4`)
@@ -124,41 +128,41 @@ router.post("/shop_setup_3", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_4
-router.get("/shop_setup_4", async(req, res) => {
-  let newStoreId = req.session.storeId
-  
-  res.render("shop_setup/shop_setup_4", {newStoreId})
+router.get("/shop_setup_4", async (req, res) => {
+  let newStoreId = req.session.seller.seller_id
+
+  res.render("shop_setup/shop_setup_4", { newStoreId })
 })
 
 
 
 // GET /shop_setUp/shop_setUp_5
-router.get("/shop_setup_5", async(req, res) => {
-  let newStoreId = req.session.storeId
-  
-  res.render("shop_setup/shop_setup_5", {newStoreId})
+router.get("/shop_setup_5", async (req, res) => {
+  let newStoreId = req.session.seller.seller_id
+
+  res.render("shop_setup/shop_setup_5", { newStoreId })
 })
 
 
 
 // GET /shop_setUp/shop_setUp_6
-router.get("/shop_setup_6", async(req, res) => {
-  let newStoreId = req.session.storeId
-  
-  res.render("shop_setup/shop_setup_6", {newStoreId})
+router.get("/shop_setup_6", async (req, res) => {
+  let newStoreId = req.session.seller.seller_id
+
+  res.render("shop_setup/shop_setup_6", { newStoreId })
 })
 
 
 
 // POST /shop_setup/uploadS3
 router.post('/uploadS3', async (req, res) => {
-  
+
   // At some point check the session exists for the logged in user
   // console.log(req.session)
-  let newStoreId = req.session.storeId
-  
+  let newStoreId = req.session.seller.seller_id
+
   let imageUrl = req.body.imageUrl;
-  
+
   await mysqlDB.updateShopPhotoByStoreId(newStoreId, imageUrl)
 })
 
@@ -167,9 +171,9 @@ router.post('/uploadS3', async (req, res) => {
 
 // GET /shop_setUp/shop_setUp_7
 router.get("/shop_setup_7", async (req, res) => {
-  let newStoreId = req.session.storeId
+  let newStoreId = req.session.seller.seller_id
 
-  res.render("shop_setup/shop_setup_7", {newStoreId})
+  res.render("shop_setup/shop_setup_7", { newStoreId })
 })
 
 
@@ -225,7 +229,7 @@ router.post('/upload', upload, async (req, res) => {
     return
   }
 
-  let newStoreId = req.session.storeId
+  let newStoreId = req.session.seller.seller_id
   let multeredFilename = '/uploads/' + req.file.filename
 
   // await mysqlDB.updateShopCategoryByStoreId(newStoreId, multeredFilename )
@@ -248,10 +252,10 @@ router.post('/product_type', async (req, res) => {
   // let sellerProductTypes = ["stationary", "handmaid_good"]
 
   // console.log(req.body.productTypeList)
-  let newStoreId = req.session.storeId
+  let newStoreId = req.session.seller.seller_id
   //
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes)
-  
+
   res.status(200).send(updatedStore[0].categories)
 })
 
@@ -259,10 +263,10 @@ router.post('/product_type', async (req, res) => {
 
 router.post('/delivery_type', async (req, res) => {
   // let storeId = req.session.storeId ? req.session.storeId : null;
-  let newStoreId = req.session.storeId
+  let newStoreId = req.session.seller.seller_id
   let deliveryMethodList = req.body.deliveryMethodList
 
-  let updatedStore = await mysqlDB.updateShopDeliveryByStoreId(newStoreId, deliveryMethodList.delivery, deliveryMethodList.pickup, deliveryMethodList.kmRadius )
+  let updatedStore = await mysqlDB.updateShopDeliveryByStoreId(newStoreId, deliveryMethodList.delivery, deliveryMethodList.pickup, deliveryMethodList.kmRadius)
   res.status(200).send(updatedStore)
 
 
