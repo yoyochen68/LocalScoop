@@ -7,8 +7,6 @@ const is_heroku = process.env.IS_HEROKU || false;
 const { sendFile } = require("express/lib/response");
 
 
-let database;
-
 
 // environment variables: for hiding api keys and mysql login
 const dotenv = require("dotenv")
@@ -278,7 +276,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-
+    console.log(store_id)
     console.log(categoryNameList)
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
@@ -444,7 +442,7 @@ async function addNewProductPhoto(product_id, photo_file_path) {
     let query = `
         INSERT INTO product_photo(product_id, photo_file_path) 
         VALUE(?, ?)`
-        
+
     const newProductPhoto = await database.query(query, [product_id, photo_file_path])
     return await getProductsAndImages(product_id)
 }
@@ -669,7 +667,7 @@ async function searchProduct(searchedString) {
     let [searchResult, fields] = await database.query(query, [searchedString, searchedString])
     return searchResult
 
-
+}
 exports.searchProduct = searchProduct
 // searchProduct("s").then(console.log)
 

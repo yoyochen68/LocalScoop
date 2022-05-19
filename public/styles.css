@@ -866,4 +866,10 @@ font-size: 20px;
 
 }
 
+.logoIcon{
+    position: absolute;
+    left: 10%;
+    top:5%
+}
+
 /* ==== for shopping cart above======== */
