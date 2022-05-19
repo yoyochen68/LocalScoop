@@ -88,18 +88,13 @@ exports.getOrdersByStoreId = getOrdersByStoreId
  * @returns array of objects, orders and info of its products by store_id 
  */
 async function getOrdersWithProductsPhotosByStoreId(store_id){
+    // if sql command run with no store_id, everything will crash
+    if(store_id == undefined){
+        return;
+    }
     
-    // query written all in 1 line because we gave the 'order' 
-    // table a reserved name, so we cannot wrap query with backtick
-    // if you change query, also change queryButReadable
-    let queryButReadable = 
-        `SELECT * FROM 'order' 
-         LEFT JOIN product ON 'order'.product_id = 'product'.product_id 
-         LEFT JOIN product_photo on 'product_photo'.product_id = 'order'.product_id
-         WHERE 'order'.store_id = ?`; 
-    queryButReadable = null; // so we are not wasting memory. 
+    let query = 'SELECT * FROM `order` LEFT JOIN product ON `order`.product_id = `product`.product_id LEFT JOIN product_photo on `product_photo`.product_id = `order`.product_id LEFT JOIN order_status ON `order_status`.order_status_id = `order`.order_status_id WHERE `order`.store_id = ?'
     
-    let query = 'SELECT * FROM `order` LEFT JOIN product ON `order`.product_id = `product`.product_id LEFT JOIN product_photo on `product_photo`.product_id = `order`.product_id WHERE `order`.store_id = ?'
 
     let orders = await database.query(query, [store_id]);
     return orders[0];
