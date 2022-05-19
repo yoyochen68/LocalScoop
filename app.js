@@ -39,6 +39,7 @@ const followBusinessRouter = require("./routes/follow_business_router")
 const buyerSetupRouter = require("./routes/buyer_setup_router")
 const chatRouter = require("./routes/chat_router")
 const checkoutRouter = require("./routes/checkout_router")
+const req = require("express/lib/request")
 
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
@@ -83,15 +84,39 @@ function authorized(req, res, next) {
   next()
 }
 
+//=======session:
+// set the session:
+// req.session.id = id
+
+// get the session:
+// let id = req.session.id
+
+// req.session.buyer = {
+//   buyer_id: id,        
+//   buyer_email:email
+
+// }
+
+// req.session.seller = {
+//   seller_id: id,
+//   seller_email: email
+// }
+
+// req.session.seller_info.email = email
+//=======session:
+
+
+
 /* ROUTES */
 
+//
 
- 
+
+
 app.get("/", (req, res) => {
-  let email = req.session.email
-  let id = req.session.id
-
-  res.render("index",{email,id})
+  let sellerSession = req.session.seller
+  let buyerSession = req.session.buyer
+  res.render("index",{sellerSession,buyerSession})
 })
 
 app.get("/index2", (req, res) => {
