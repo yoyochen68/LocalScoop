@@ -58,7 +58,7 @@
   imageForm.addEventListener("submit", async event => {
     event.preventDefault()
 
-    console.log('s3_frontend called from shop_setup')
+   
     const file = imageInput.files[0]
 
     /**
@@ -82,14 +82,14 @@
       })
 
       imageUrl = url.split('?')[0]
-      console.log(imageUrl)
+      // console.log(imageUrl)
 
       // post requst to my server to store any extra data
       const postParam = {
         imageUrl
       }
 
-      console.log(postParam)
+      // console.log(postParam)s
 
       // ajax request to routes
       await fetch("/shop_setup/uploadS3", {
@@ -106,7 +106,7 @@
     // append image on document
     const img = document.createElement("img")
     img.src = imageUrl
-    console.log(imageUrl)
+    // console.log(imageUrl)
     document.body.appendChild(img)
   })
 </script>
