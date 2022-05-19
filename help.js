@@ -2,26 +2,18 @@
 const mysqlDB = require('./database/databaseAccessLayer')
 
 
-// function authorized(req, res, next) {
-//     if (!req.session.email) {
-//         res.redirect("/")
-//         return
-//     }
-//     next()
-// }
-
-
-
-//=====function for +/- item in shopping cart=======
-
-async function incrementQuantity(cart_product_id){
-  await mysqlDB.inCartItem(cart_product_id)
-    console.log("donee")
+function sellerAuthorized(req, res, next) {
+    if (!req.session.seller) {
+        res.redirect("/index2")
+        // console.log("index2")
+        return
+    }
+    next()
 }
-exports.incrementQuantity = incrementQuantity
 
 
-function decrementQuantity(){
 
-}
+exports.sellerAuthorized = sellerAuthorized
+
+
 
