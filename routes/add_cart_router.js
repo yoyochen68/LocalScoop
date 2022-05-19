@@ -17,13 +17,37 @@ router.get("/products",  async (req, res) => {
 
   // let buyer_id = req.session.id
   let buyer_id = 1
+  let searchString = null
 
-  let productInfo = await mysqlDB.getRandomProducts(6)
+  //make it based on ast added later
+  let productInfo = await mysqlDB.getRandomProducts()
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
 
-  res.render("add_cart/products", {productInfo:productInfo, cartItemsTotal:cartItemsTotal })
+  res.render("add_cart/products", {productInfo:productInfo, cartItemsTotal:cartItemsTotal, searchString })
 
 })
+
+//all products
+
+
+  router.post("/products",  async (req, res) => {
+
+
+    let buyer_id = 1
+    let searchString = req.body.search
+
+    let productInfo = await mysqlDB.searchProduct(searchString)
+    let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
+
+  res.render("add_cart/products", {productInfo, cartItemsTotal,searchString })
+
+})
+
+
+
+
+
+
 
 
 
@@ -50,6 +74,7 @@ router.get("/add_cart/:id", async(req, res) => {
 
 
 
+
 // ajax request destination
 router.post("/add_cart/:id",  async (req, res) => {
 
@@ -60,10 +85,7 @@ router.post("/add_cart/:id",  async (req, res) => {
   await mysqlDB.addToCart(buyer_id, product_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
    res.json( {quantity: cartItemsTotal })
-
-})
-
-
+ })
 
 
 
