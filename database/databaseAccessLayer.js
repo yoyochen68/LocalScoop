@@ -36,21 +36,6 @@ const dbConfigLocal = {
 
 
 
-// YASMINA's localHost
-// const dbConfigLocal = {
-// 	host: "localhost",
-// 	user: "root",
-// 	password: "Fswd2021$",
-// 	database: "localscoop",
-// 	port: 3306,
-// 	multipleStatements: false,
-// 	namedPlaceholders: true
-// };
-
-
-
-
-
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
@@ -87,21 +72,43 @@ exports.getProductsByStoreId = getProductsByStoreId
  * get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
-function getOrdersByStoreId(store_id = 1) {
+async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
 
-    database.query(query, [store_id])
-        .then((orders) => {
-            return orders[0]
-        })
+
+    let orders = await database.query(query, [store_id]);
+    return orders[0];
 }
 exports.getOrdersByStoreId = getOrdersByStoreId
 
 
+/**
+ * @param {number} store_id 
+ * @returns array of objects, orders and info of its products by store_id 
+ */
+async function getOrdersWithProductsPhotosByStoreId(store_id){
+    // if sql command run with no store_id, everything will crash
+    if(store_id == undefined){
+        return;
+    }
+    
+    let query = 'SELECT * FROM `order` LEFT JOIN product ON `order`.product_id = `product`.product_id LEFT JOIN product_photo on `product_photo`.product_id = `order`.product_id LEFT JOIN order_status ON `order_status`.order_status_id = `order`.order_status_id WHERE `order`.store_id = ?'
+    
+
+    let orders = await database.query(query, [store_id]);
+    return orders[0];
+}
+exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
+
+
 
 async function authenticateShopOwner(store_email, store_password) {
-    let query = `SELECT * FROM store WHERE store_email = ? and store_password = ?;`
+    let query = `
+        SELECT * 
+        FROM store 
+        WHERE store_email = ? and store_password = ?;`
+
     let [validatedShopOwner, filed] = await database.query(query, [store_email, store_password])
     return validatedShopOwner
 }
@@ -215,7 +222,7 @@ async function addShop(store_name, store_phone_number, store_email, store_passwo
     let newStoreInfo = await database.query(query, [store_name, store_phone_number, store_email, store_password]);
     let newStoreId = newStoreInfo[0].insertId
 
-    console.log(newStoreId)
+    // console.log(newStoreId)
     return getStoreInfoByStoreId(newStoreId)
 }
 exports.addShop = addShop
@@ -279,8 +286,8 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
     console.log(store_id)
     console.log(categoryNameList)
-    let catIdList = await getCategoryIdByCategoryName(categoryNameList)
 
+    let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
          INSERT INTO store_category (store_id, category_id)
          VALUES (?, ?);`

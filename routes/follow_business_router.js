@@ -11,7 +11,6 @@ const mysqlDB = require('../database/databaseAccessLayer')
 const { append } = require("express/lib/response");
 
 
-
 // GET /follow_business/follow_business_1
 router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
     let cartItemsTotal = 0
@@ -46,6 +45,7 @@ router.get("/follow_business_2/:id", help.buyerAuthorized, async (req, res) => {
 
     res.render("follow_business/follow_business_2",{ storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 })
+
 
 
 router.post("/follow_business_2", help.buyerAuthorized, async (req, res) => {

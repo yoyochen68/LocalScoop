@@ -73,7 +73,7 @@
             max-height: 120px;
         }
 
-        .imgDiv {
+        img {
             max-width: 120px;
             max-height: 120px;
         }
@@ -102,26 +102,41 @@
 <div class="top_space"></div>
 
 <main class="seller-orders2-body">
-
-    <div class="cardDiv">
-        <% for( let index = 0; index < productListInfo.length; index++ ) { %>
-            <div class="productCard">
-                <div class="imageDiv">
-                    <!-- need to give picsum a different photo size so it gives you different photos -->
-                    <img src="https://picsum.photos/<%= 100 + parseInt(Math.random() * 10) %>" class="draftImg">
+    <% for(let order of orderData) { %> 
+        <div class="cardDiv">
+            <div class="productClass">
+                <div class="imgDiv">
+                    <img src="<%= order.photo_file_path %>" alt="image of product"> 
                 </div>
                 <div class="textdiv">
-                    <h6><%= productListInfo[index].itemName %> </h6>
-                    <h5><%= productListInfo[index].deliveryStatus %></h5>
-                    <h5><%= productListInfo[index].feedbackStatus %></h5>
-                    <h6><%= productListInfo[index].time %></h6>
+                    <h6><%= order.product_name %></h6>
+                    <h6><%= order.order_status %></h6>
+                    <h6><%= order.how_many_days_ago %> </h6>
                 </div>
             </div>
-        <% } %>
-    </div>
+        </div>
+    <% } %> 
+
+
+    <!-- <div class="cardDiv">
+        <p> for( let index = 0; index < productListInfo.length; index++ ) </p>
+            <div class="productCard">
+                <div class="imageDiv">
+                    <img src="" class="draftImg">
+                </div>
+                <div class="textdiv">
+                    <h6>productListInfo[index].itemName  </h6>
+                    <h5>productListInfo[irsndex].deliveryStatus </h5>
+                    <h5>productListInfo[index].feedbackStatus </h5>
+                    <h6>productListInfo[index].time </h6>
+                </div>
+            </div>
+    </div> -->
+
+
+
 
     <div class="bottom_space"></div>
-
     <footer>
         <%- include('../elements/seller_footer.ejs',{page:"orders"}) %>
     </footer>
