@@ -270,6 +270,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
 
 
 
+
 /**
  * @param store_id
  * @param categoryNameList
