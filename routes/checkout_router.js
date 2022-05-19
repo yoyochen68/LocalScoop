@@ -34,6 +34,8 @@ router.get("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
     res.render("checkout/checkout_confirmation", { cartQuantity })
 })
 
+
+
 router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let deliveryAddress = req.body.deliveryAddress
@@ -54,7 +56,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
         from: process.env.MY_EMAIL,
         to: 'yoyochen68@yahoo.ca',
         subject: 'Order Confirmation',
-        text: 'Thank you for your supporting !'
+        html: '<h1>Thank you for supporting local business</h1><p>order confirmation</p>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

@@ -22,12 +22,12 @@ let DateTime = luxon.DateTime;
  */
 // GET orders/orders_1
 
-router.get("/orders_1", help.sellerAuthorized, (req, res) => {
+router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
 
     // if user not logged in, redirect to login page
-    if(storeId == undefined){
-        res.redirect("/")
-    }
+    // if(storeId == undefined){
+    //     res.redirect("/")
+    // }
 
     let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(2)
     
@@ -47,7 +47,7 @@ router.get("/orders_1", help.sellerAuthorized, (req, res) => {
 })
 
 
-router.get("/orders_2", help.sellerAuthorized, (req, res) => {
+router.get("/orders_2", help.sellerAuthorized, async (req, res) => {
     let productListInfo = [
         { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
         { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
