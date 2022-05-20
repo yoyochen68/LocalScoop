@@ -12,7 +12,7 @@
 <header class="fixed_header">
     <div class="nav-wrapper buyer buyer-shop-header">
         <div class="nav-wrapper--left buyer">
-            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+            <a onclick="redirectBack()"><span class="material-icons nav-icon">arrow_back</span></a>
         </div>
         <div class="nav-wrapper--middle buyer">
             Cart
@@ -92,10 +92,16 @@
                                 <footer>
                                     <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
                                 </footer>
-</body>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+
+    let referrerLink = document.referrer
+    console.log(referrerLink)
+
+    function redirectBack() {
+        window.location.href=`${referrerLink}`
+    }
 
     // let localQuantity = []
 
@@ -150,6 +156,8 @@
     }
     // location.reload();
 
+
+
     function remove(cart_product_id) {
         axios.post('/shopping_cart/shopping_cart_removeItem', {
             cart_product_id: cart_product_id,
@@ -161,6 +169,7 @@
         location.reload();
     }
 
-</script>
 
+</script>
+</body>
 </html>

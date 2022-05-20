@@ -6,7 +6,7 @@
 <title>add to cart</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="/styles.css">
 
 <style>
 
@@ -75,7 +75,6 @@
     }
 
 </style>
-</head>
 <body>
 
 
@@ -144,6 +143,7 @@
             <div class="add_cart_btn">
                 <button class="addToCartBtn semibold l-font m-bn" onclick="toastFunction()">Add To Cart </button>
             </div>
+            <div class="referrer"></div>
 
 
         </div>
@@ -162,11 +162,10 @@
 </footer>
 
 
-
-</body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+    console.log("afafsfasfsgsfdg")
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 
@@ -198,5 +197,11 @@
             }, 2000);
     }
 
+
+
+    // document.querySelector(".referrer").innerHTML("<p><document.referrer</p>")
+
 </script>
+
+</body>
 </html>
