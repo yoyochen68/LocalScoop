@@ -12,23 +12,15 @@ const { append } = require("express/lib/response");
 
 
 // GET /follow_business/follow_business_1
-router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
-    let cartItemsTotal = 0
+router.get("/follow_business_1", async(req, res) => {
+
+
+    let buyer_id = req.session.buyer.buyer_id
+    let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
+
     let productInfo = await mysqlDB.getRandomProducts(6)
     let storeInfo = await mysqlDB.getRandomStores(6)
 
-    console.log(productInfo)
-    console.log(storeInfo)
-
-    // res.json({
-    //     a: cardItemsTotal,
-    //     b: productInfo,
-    //     c: storeInfo
-    // })
-
-    // res.render("follow_business/follow_business_1", { 
-    //     storeInfo, productInfo, cardItemsTotal 
-    // })
 
     res.render("follow_business/follow_business_1", { storeInfo:storeInfo, productInfo:productInfo, cartItemsTotal:cartItemsTotal })
 })
