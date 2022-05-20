@@ -6,11 +6,57 @@
 <title>add to cart</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="../../styles.css">
+<link rel="stylesheet" href="/styles.css">
 
 <style>
 
-    .add-cart-body.grid {
+/*<!--THE TOAST -->*/
+
+    #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #D4E6B5;
+        color: #000;
+        text-align: center;
+        border-radius: 10px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 40px;
+
+        font-size: 17px;
+    }
+
+    #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 1.5s;
+        animation: fadein 0.5s, fadeout 0.5s 1.5s;
+    }
+
+
+    @keyframes fadein {
+        from {bottom: 0; opacity: 0;}
+        to {bottom: 40px; opacity: 1;}
+    }
+
+
+    @keyframes fadeout {
+        from {bottom: 40px; opacity: 1;}
+        to {bottom: 0; opacity: 0;}
+
+        /*to {bottom: 0; opacity: 0;}*/
+    }
+
+
+
+
+
+/*<!--THE Responsiveness -->*/
+
+
+.add-cart-body .grid {
         display: block;
         padding: 16px;
         grid-gap: 16px;
@@ -19,7 +65,6 @@
 
 
     @media screen and (min-width:768px) {
-
 
         .add-cart-body .grid {
             display: grid;
@@ -30,7 +75,6 @@
     }
 
 </style>
-</head>
 <body>
 
 
@@ -97,27 +141,31 @@
             </div>
 
             <div class="add_cart_btn">
-                <button class="addToCartBtn semibold l-font m-bn">Add To Cart </button>
+                <button class="addToCartBtn semibold l-font m-bn" onclick="toastFunction()">Add To Cart </button>
             </div>
+            <div class="referrer"></div>
+
 
         </div>
 
     </div>
 
 
+
     <div class="bottom_space"></div>
 
 </div>
+<div id="snackbar">Added to cart</div>
+
 <footer>
-    <%- include('../elements/buyer_footer', {page:"follow_business"}) %>
+    <%- include('../elements/buyer_footer', {page:""}) %>
 </footer>
 
 
-
-</body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+    console.log("afafsfasfsgsfdg")
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 
@@ -135,5 +183,26 @@
             location.reload()
     })
 
+
+
+
+    function toastFunction() {
+        // document.querySelector(".add-cart-body").style.opacity = 0.7;
+
+        let x = document.getElementById("snackbar")
+        x.classList.add("show");
+        setTimeout(
+            function(){
+                x.className = x.className.replace("show", "");
+
+            }, 2000);
+    }
+
+
+
+    // document.querySelector(".referrer").innerHTML("<p><document.referrer</p>")
+
 </script>
+
+</body>
 </html>

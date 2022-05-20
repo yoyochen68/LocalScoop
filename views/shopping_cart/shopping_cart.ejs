@@ -36,10 +36,24 @@
                 </div>
             </div>
 
-        </div>
-    </header>
+    <div class="nav-wrapper--right buyer">
+        <div class="bag">
+            <a href="/shopping_cart/shopping_cart">
 
-    <div class="top_space"></div>
+                <% if(cartQuantity !==0 ){ %>
+                    <div class="dot">
+                        <%= cartQuantity %>
+                    </div>
+                <% } %>
+                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+            </a>
+        </div>
+    </div>
+    </div>
+</header>
+
+
+<div class="top_space"></div>
     <% if(cartQuantity> 0 ) { %>
         <% for(let cartItem of cartItems){ %>
             <% if(cartItem.product_quantity> 0){ %>
@@ -72,7 +86,7 @@
                                 onclick="decrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#8211;</button>
 
                         </div>
-
+                    </div>
                 </section>
                 <% } %>
                     <% } %>
@@ -99,10 +113,16 @@
                                 <footer>
                                     <%- include('../elements/buyer_footer',{page:"product_post"}) -%>
                                 </footer>
-</body>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script>
+
+    let referrerLink = document.referrer
+    console.log(referrerLink)
+
+    function redirectBack() {
+        window.location.href=`${referrerLink}`
+    }
 
     // let localQuantity = []
 
@@ -157,6 +177,8 @@
     }
     // location.reload();
 
+
+
     function remove(cart_product_id) {
         axios.post('/shopping_cart/shopping_cart_removeItem', {
             cart_product_id: cart_product_id,
@@ -168,6 +190,7 @@
         location.reload();
     }
 
-</script>
 
+</script>
+</body>
 </html>

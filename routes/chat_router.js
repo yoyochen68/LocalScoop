@@ -32,8 +32,6 @@ router.get("/store",  async (req, res) => {
 
 
 
-
-
 router.get("/buyer",  async (req, res) => {
 
     //Change this later
@@ -50,6 +48,7 @@ router.get("/buyer",  async (req, res) => {
 
 
 
+
 router.get("/room/:id",  async (req, res) => {
     let buyerId = 3
     let roomId = req.params.id
@@ -59,6 +58,9 @@ router.get("/room/:id",  async (req, res) => {
     res.render("chat/buyer_room",{buyerId:buyerId, roomId:roomId});
 
 })
+
+
+
 
 // router.get("/room",  async (req, res) => {
 //     console.log('render room')
