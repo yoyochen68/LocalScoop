@@ -50,7 +50,6 @@
 		<div class="grid">
 
 			<% productInfo.forEach(product=> { %>
-
 				<a href="/add_cart/add_cart/<%= product.product_id%>">
 					<div class="product-col cart">
 						<img src=<%=product.image_file_paths[0]%> alt="product" style="width:100%">
@@ -70,12 +69,10 @@
 		<div class="grid">
 
 			<% storeInfo.forEach(store=> { %>
-
 				<a href="/follow_business/follow_business_2/<%= store.store_id%>">
 					<div class="store-col cart">
 						<img src=<%=store.image_file_paths[0]%> alt="store" style="width:100%">
 						<!--			//<h4>storeCategory</h4>-->
-
 						<h4>
 							<%=store.store_name%>
 						</h4>
@@ -83,7 +80,6 @@
 						<p>Vancouver, BC</p>
 					</div>
 				</a>
-
 				<%})%>
 		</div>
 	</main>
