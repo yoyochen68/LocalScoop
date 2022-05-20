@@ -1,4 +1,5 @@
 // require
+const help = require("../help")
 const express = require('express');
 const multer = require('multer');
 const ejs = require('ejs');
@@ -22,7 +23,7 @@ app.use(express.json())
 /* Global Variables */
 
 // GET /seller_shop/seller_shop
- router.get("/seller_shop", async (req, res) => {
+ router.get("/seller_shop", help.sellerAuthorized,async (req, res) => {
 
   //WORK ON LOCALHOST
   //    let storeId = 1
