@@ -12,18 +12,17 @@ const { append } = require("express/lib/response");
 
 
 // GET /follow_business/follow_business_1
-router.get("/follow_business_1", async(req, res) => {
+router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
     console.log(req.session)
     /**
      * clients can go to this page even though they are not logged in as a buyer
      * So there is no buyer_id in cookie session
      * so when getCartItemsCount is called, it crashes the app
      */
-    
-    // let buyer_id = req.session.buyer.buyer_id
-    let buyer_id = 3
-    let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
 
+    // let buyer_id = req.session.buyer.buyer_id
+
+    let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
     let productInfo = await mysqlDB.getRandomProducts(6)
     let storeInfo = await mysqlDB.getRandomStores(6)
 
