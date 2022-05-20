@@ -154,9 +154,11 @@ router.get("/shop_setup_5", help.sellerAuthorized,async (req, res) => {
 
 // GET /shop_setUp/shop_setUp_6
 
+
 router.get("/shop_setup_6", help.sellerAuthorized,async (req, res) => {
 
   let newStoreId = req.session.seller.seller_id
+
 
   res.render("shop_setup/shop_setup_6", { newStoreId })
 })
@@ -260,11 +262,8 @@ router.post('/upload', upload, async (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
-  // let sellerProductTypes = ["stationary", "handmaid_good"]
-
-  // console.log(req.body.productTypeList)
   let newStoreId = req.session.seller.seller_id
-  //
+  
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes)
 
   res.status(200).send(updatedStore[0].categories)
