@@ -9,28 +9,31 @@
 </head>
 
 <body>
+
     <header class="fixed_header">
 
         <div class="nav-wrapper buyer buyer-shop-header">
             <div class="nav-wrapper--left buyer">
                 <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
             </div>
-
+    
             <div class="nav-wrapper--middle buyer">
-                Cart
+                Shopping Cart
             </div>
-
+    
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
-                    <% if(cartQuantity> 0) { %>
-                        <div class="dot">
-                            <%= cartQuantity %>
-                        </div>
-                        <% } %>
-                            <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                    <a href="/shopping_cart/shopping_cart">
+    
+                        <%if(cartQuantity !== 0 ){%>
+                        <div class="dot"> <%= cartQuantity %></div>
+                        <%}%>
+    
+                        <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                    </a>
                 </div>
             </div>
-
+    
         </div>
     </header>
 
