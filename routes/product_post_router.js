@@ -15,10 +15,6 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
   /* there is no signed in seller, redirect to sign in page
       if there is time, include a message that tells user they cannot post 
       product without being signed in */
-  //     let seller_id = req.session.seller.seller_id
-  // if (seller_id == undefined) {
-  //   res.redirect('/shop_setup/shop_login')
-  // }
 
   res.render("product_post/product_post_1")
 })
@@ -27,7 +23,7 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
 // is ajax route. when testing use valid store_id from db
 router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
-  req.session.storeId = 15
+  // req.session.storeId = 15
   let storeId = req.session.storeId;
 
   let product_name = productInfo.productName
