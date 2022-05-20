@@ -416,6 +416,7 @@ top:50px;
 
 /*.seller-shop-body * {box-sizing:border-box}*/
 
+
 /*Slideshow container*/
 .slideshow-container {
     max-width: 800px;
@@ -785,6 +786,10 @@ font-size: 20px;
     height: 300px;
 }
 
+.extraspace2{
+    height: 100px;
+}
+
 
 /* ====for shopping cart below======== */
 
@@ -800,11 +805,13 @@ font-size: 20px;
 }
 
 .shopping_cart_img {
-    max-width: auto;
-    height: 120px;
+    max-width: 120px;
+    /* max-width: auto;
+    height: 120px; */
     border: 1px solid gray;
     border-radius: 50%;
     place-self: center;
+    clip-path: circle();
 }
 
 .productName,
@@ -866,9 +873,29 @@ font-size: 20px;
     text-align: right;
 }
 
+
+.emptyCart{
+    display: block;
+   margin-left: auto;
+   margin-right: auto;
+ 
+ }
+ 
+ .logoIcon{
+     position: absolute;
+     left: 10%;
+     top:5%
+ }
+ 
+ .paymentTotal{
+ 
+     border-radius: 20px;
+     background-color: rgb(255, 239, 214);
+   margin-top: 5%;
+   padding: 5%;
+ }
+
 /* ==== for shopping cart above======== */
-
-
 
 
 /*===================buyer grid pages ==================*/
@@ -948,18 +975,37 @@ font-size: 20px;
 }
 
 
+/* ==========for analytics page========= */
 
-.emptyCart{
-   display: block;
-  margin-left: auto;
-  margin-right: auto;
+.box {
+    display: block;
+    text-align: center;
 
 }
 
-.logoIcon{
-    position: absolute;
-    left: 10%;
-    top:5%
+.analytisImg {
+    max-width: 60%;
+    max-height: auto;
 }
 
-/* ==== for shopping cart above======== */
+.summaryImg {
+    max-width: 75%;
+    max-height: auto;
+}
+
+.analyticsText {
+    border-radius: 10px;
+    background-color: rgb(255, 239, 214);
+    margin: 6% 10% 6% 10%;
+}
+
+.dashboadText{
+margin-top: 8%;
+
+}
+
+
+
+
+
+
