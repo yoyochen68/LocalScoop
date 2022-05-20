@@ -20,12 +20,7 @@ router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
     let productInfo = await mysqlDB.getRandomProducts(6)
     let storeInfo = await mysqlDB.getRandomStores(6)
 
-    let buyer_id = req.session.buyer.buyer_id
     let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
-
-    let productInfo = await mysqlDB.getRandomProducts(6)
-    let storeInfo = await mysqlDB.getRandomStores(6)
-
 
     res.render("follow_business/follow_business_1", { storeInfo:storeInfo, productInfo:productInfo ,cartQuantity})
 })
