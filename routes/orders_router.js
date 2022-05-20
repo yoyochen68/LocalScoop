@@ -31,7 +31,7 @@ router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
     let seller_id = req.session.seller.seller_id
 
     let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id)
-    
+    console.log(carouselSliderData)
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of carouselSliderData){
         let timestamp = +order.product_timestamp;

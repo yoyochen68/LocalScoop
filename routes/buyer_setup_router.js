@@ -12,6 +12,7 @@ const router = express.Router();
 
 const { append } = require("express/lib/response");
 const mysqlDB = require("../database/databaseAccessLayer");
+const { ConfigurationServicePlaceholders } = require("aws-sdk/lib/config_service_placeholders");
 
 
 /* express */
@@ -55,7 +56,7 @@ router.post("/buyer_login", async (req, res) => {
         buyer_id: id,
         buyer_email: email
     }
-
+console.log(buyer)
     // let store_email = req.session.store_email ? req.session.store_email : null;
     res.redirect("/follow_business/follow_business_1")
 })

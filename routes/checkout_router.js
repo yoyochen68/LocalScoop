@@ -56,7 +56,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
         from: process.env.MY_EMAIL,
         to: 'yoyochen68@yahoo.ca',
         subject: 'Order Confirmation',
-        html: '<h1>Thank you for supporting local business</h1><p>order confirmation</p>'
+        html: '<h1>Thank you for supporting local business</h1><p>order confirmation</p><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlYEzrmibR3ZXHYJeHcYvkgJAkcQmriHa9h52ku74edM6gv7OnpJhRZE_nRQRx5PI9dC0&usqp=CAU">'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
