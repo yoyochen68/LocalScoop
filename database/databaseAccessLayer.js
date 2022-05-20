@@ -330,7 +330,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-
     console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
@@ -697,26 +696,35 @@ exports.searchProduct = searchProduct
 //
 //
 //
-//
-// async function getBuyerChats(buyerId) {
-//
-// }
-//
-// exports.getBuyerChats = getBuyerChats
-//
-//
-//
-//
-// async function getSellerChats(storeId) {
-//
-// }
-//
-// exports.getSellerChats = getSellerChats
-//
-//
-//
-//
-//
+
+async function getBuyerChats(buyerId) {
+    let query=`
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ?;`
+
+   let [buyerChat, fields] = await database.query(query, [buyerId])
+    return buyerChat
+
+}
+exports.getBuyerChats = getBuyerChats
+
+
+
+async function getSellerChats(storeId) {
+    let query=`
+    SELECT * FROM localscoop.chat
+    WHERE chat.store_id = ?;`
+
+    let [storeChat, fields] = await database.query(query, [buyerId])
+    return storeChat
+}
+
+exports.getSellerChats = getSellerChats
+
+
+
+
+
 // async function getChatContent(chatId) {
 //
 // }
