@@ -52,8 +52,8 @@ router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
   let newPostedProduct = req.session.newPostedProduct[0];
 
-
   // because we weren't consistent with naming
+  
   let productInfo = {
     "productName": newPostedProduct.product_name,
     "description": newPostedProduct.product_description,
