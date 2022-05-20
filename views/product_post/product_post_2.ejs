@@ -27,11 +27,13 @@
             <p>Your <b>
                     <%= productInfo.productName %>
                 </b> product listing has been succesfully posted to your business page.</p>
-            <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            <a href="/orders/orders_1">
+                <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            </a>
         </div>
-        <a href="/orders/orders_1">
-            <div class="productList">New listing:</div>
-        </a>
+
+        <div class="productList">New listing:</div>
+
 
         <div class="imgAndProductInfo">
             <% if(productInfo){ %>
@@ -57,3 +59,5 @@
 </body>
 
 </html>
+
+

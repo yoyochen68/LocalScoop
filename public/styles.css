@@ -874,13 +874,24 @@ font-size: 20px;
     text-align: right;
 }
 
-
 .emptyCart{
+    max-width: 90%;
+}
+
+/* .cshopping{
+    position: relative;
+
+    left: 30%;
+} */
+
+/* .zerocart{
+    position: absolute;
     display: block;
    margin-left: auto;
    margin-right: auto;
- 
- }
+   top:20%;
+   
+ } */
  
  .logoIcon{
      position: absolute;
