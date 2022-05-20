@@ -1,4 +1,5 @@
 // require
+const help = require('../help')
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
@@ -9,23 +10,20 @@ const mysqlDB = require("../database/databaseAccessLayer");
 
 
 // GET /product_post/product_post_1
-router.get("/product_post_1", (req, res) => {
+
+router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
   /* there is no signed in seller, redirect to sign in page
       if there is time, include a message that tells user they cannot post 
       product without being signed in */
-      let seller_id = req.session.seller.seller_id
-  if (seller_id == undefined) {
-    res.redirect('/shop_setup/shop_login')
-  }
 
   res.render("product_post/product_post_1")
 })
 
 
 // is ajax route. when testing use valid store_id from db
-router.post("/product_post_1", async (req, res) => {
+router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
-  req.session.storeId = 15
+  // req.session.storeId = 15
   let storeId = req.session.storeId;
 
   let product_name = productInfo.productName
@@ -50,20 +48,22 @@ router.post("/product_post_1", async (req, res) => {
 
 
 // GET /product_post/product_post_2
-router.get("/product_post_2", (req, res) => {
+router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
   let newPostedProduct = req.session.newPostedProduct[0];
-  console.log('asajhsdlkjfhalksd \n', newPostedProduct)
+
 
   // because we weren't consistent with naming
   let productInfo = {
     "productName": newPostedProduct.product_name,
     "description": newPostedProduct.product_description,
     "category": newPostedProduct.product_category,
-    "deliveryFee": newPostedProduct.product_description,
+    "deliveryFee": newPostedProduct.product_delivery_fee,
     "productPrice": newPostedProduct.product_price,
     'imageFilePath': newPostedProduct.image_file_paths
   }
+
+  // console.log(newPostedProduct)
 
   res.render("product_post/product_post_2", {
     productInfo

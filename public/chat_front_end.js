@@ -4,26 +4,22 @@ const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
 
-//get the username and the room from url
+// get the username and the room from url
 // const {username, room} = Qs.parse(location.search, {
 //     ignoreQueryPrefix:true
 // })
 let room = ROOM_ID
-let userName;
-let buyerId;
+let username = USER_ID
 
-    axios.post("/room",{roomId: ROOM_ID}).
-        .then(response => {
-            userName= responce.data.name
-            buyerId = responce.data.buyerId
-        })
+//check if the current session and room are gonna be matched with one in db
+
+    // axios.post("/room",{roomId: ROOM_ID}).
+    //     .then(response => {
+    //         userName= responce.data.name
+    //         buyerId = responce.data.buyerId
+    //     })
 
 console.log(username, room)
-
-
-let room = ROOM_ID
-let userName = 
-
 
 
 const socket = io.connect();

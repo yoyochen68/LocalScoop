@@ -1,4 +1,5 @@
 /* libraries */
+const help = require("../help")
 const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
@@ -18,9 +19,9 @@ const app = express();
 app.use(express.json())
 
 
-router.get("/shopping_cart", async(req, res) => {
+router.get("/shopping_cart", help.buyerAuthorized, async(req, res) => {
 // let buyer_id = req.session.buyer_id
-let buyer_id = 1
+let buyer_id = req.session.buyer.buyer_id
 let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
 let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
 let subtotal = 0
@@ -32,7 +33,7 @@ for(let cartItem of cartItems){
 })
 
 
-router.post("/shopping_cart_add",async (req, res)=>{
+router.post("/shopping_cart_add",help.buyerAuthorized, async (req, res)=>{
   let cart_product_id = +req.body.cart_product_id
   let buyer_id = +req.body.buyer_id
   let product_id = +req.body.product_id
@@ -48,7 +49,7 @@ router.post("/shopping_cart_add",async (req, res)=>{
 })
 
 
-router.post("/shopping_cart_minus",async (req, res)=>{
+router.post("/shopping_cart_minus",help.buyerAuthorized, async (req, res)=>{
   let cart_product_id = +req.body.cart_product_id
   let buyer_id = +req.body.buyer_id
   let product_id = +req.body.product_id
@@ -63,7 +64,7 @@ router.post("/shopping_cart_minus",async (req, res)=>{
   res.json({itermQuantity,cartQuantity,subtotal})
 })
 
-router.post('/shopping_cart_removeItem', async(req, res) => {
+router.post('/shopping_cart_removeItem',help.buyerAuthorized,  async(req, res) => {
   let cart_product_id = +req.body.cart_product_id
   let buyer_id = +req.body.buyer_id
   await mysqlDB.deleteCartItem(cart_product_id)
