@@ -20,7 +20,7 @@ router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
      * so when getCartItemsCount is called, it crashes the app
      */
 
-    // let buyer_id = req.session.buyer.buyer_id
+    let buyer_id = req.session.buyer.buyer_id
 
     let cartItemsTotal = await mysqlDB.getCartItemsCount(buyer_id)
     let productInfo = await mysqlDB.getRandomProducts(6)
