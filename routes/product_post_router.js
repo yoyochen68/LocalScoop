@@ -27,8 +27,8 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
 // is ajax route. when testing use valid store_id from db
 router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
-  req.session.storeId = 15
-  let storeId = req.session.storeId;
+
+  let storeId = req.session.seller.seller_id
 
   let product_name = productInfo.productName
   let product_category = productInfo.category
@@ -55,14 +55,14 @@ router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
 router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
   let newPostedProduct = req.session.newPostedProduct[0];
-  console.log('asajhsdlkjfhalksd \n', newPostedProduct)
+  // console.log('asajhsdlkjfhalksd \n', newPostedProduct)
 
   // because we weren't consistent with naming
   let productInfo = {
     "productName": newPostedProduct.product_name,
     "description": newPostedProduct.product_description,
     "category": newPostedProduct.product_category,
-    "deliveryFee": newPostedProduct.product_description,
+    "deliveryFee": newPostedProduct.product_delivery_fee,
     "productPrice": newPostedProduct.product_price,
     'imageFilePath': newPostedProduct.image_file_paths
   }
