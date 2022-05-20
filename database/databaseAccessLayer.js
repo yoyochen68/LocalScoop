@@ -100,6 +100,7 @@ async function getOrdersWithProductsPhotosByStoreId(store_id){
     return orders[0];
 }
 exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
+// getOrdersWithProductsPhotosByStoreId(1).then(console.log)
 
 
 
