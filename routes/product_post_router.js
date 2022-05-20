@@ -51,17 +51,19 @@ router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
 router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
   let newPostedProduct = req.session.newPostedProduct[0];
-  console.log('asajhsdlkjfhalksd \n', newPostedProduct)
+
 
   // because we weren't consistent with naming
   let productInfo = {
     "productName": newPostedProduct.product_name,
     "description": newPostedProduct.product_description,
     "category": newPostedProduct.product_category,
-    "deliveryFee": newPostedProduct.product_description,
+    "deliveryFee": newPostedProduct.product_delivery_fee,
     "productPrice": newPostedProduct.product_price,
     'imageFilePath': newPostedProduct.image_file_paths
   }
+
+  // console.log(newPostedProduct)
 
   res.render("product_post/product_post_2", {
     productInfo
