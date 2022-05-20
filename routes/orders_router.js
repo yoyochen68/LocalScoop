@@ -22,8 +22,9 @@ let DateTime = luxon.DateTime;
  */
 // GET orders/orders_1
 
-router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
 
+router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
+    let storeId = req.session;
     // if user not logged in, redirect to login page
     // if(storeId == undefined){
     //     res.redirect("/")
