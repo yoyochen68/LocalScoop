@@ -1,4 +1,5 @@
 /* libraries */
+const help = require("../help")
 const express = require("express");
 const multer = require('multer');
 const ejs = require('ejs');
@@ -9,13 +10,10 @@ const mysqlDB = require('../database/databaseAccessLayer')
 
 
 
-
-
 //all products
-router.get("/products",  async (req, res) => {
+router.get("/products", help.buyerAuthorized, async (req, res) => {
 
   // let buyer_id = 1
-
   let buyer_id = req.session.buyer.buyer_id
   let searchString = null
 
@@ -30,7 +28,7 @@ router.get("/products",  async (req, res) => {
 //all products
 
 
-  router.post("/products",  async (req, res) => {
+  router.post("/products", help.buyerAuthorized, async (req, res) => {
     // let buyer_id = 1
     let buyer_id = req.session.buyer.buyer_id
     let searchString = req.body.search
@@ -44,17 +42,9 @@ router.get("/products",  async (req, res) => {
 
 
 
-
-
-
-
-
-
-
-
 // single product
 // GET /add_cart/add_cart/id
-router.get("/add_cart/:id", async(req, res) => {
+router.get("/add_cart/:id",help.buyerAuthorized, async(req, res) => {
   let product_id = req.params.id
   // let buyer_id = 1
   let buyer_id = req.session.buyer.buyer_id
@@ -73,7 +63,7 @@ router.get("/add_cart/:id", async(req, res) => {
 
 
 // ajax request destination
-router.post("/add_cart/:id",  async (req, res) => {
+router.post("/add_cart/:id", help.buyerAuthorized,  async (req, res) => {
 
   let product_id = req.params.id
   let buyer_id = req.session.buyer.buyer_id
