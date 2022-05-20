@@ -54,7 +54,7 @@
     #deliveryOption {
         display: flex;
         justify-content: space-around;
-        margin: 2%;
+        margin: 4%;
 
     }
 
@@ -63,6 +63,16 @@
         text-align: center;
         justify-content: center;
 
+    }
+
+
+    .paymentTotal {
+        max-width:85% ;
+        border-radius: 20px;
+        background-color: rgb(255, 239, 214);
+        margin-top: 5%;
+        padding: 5%;
+        text-align: right;
     }
 </style>
 
@@ -119,9 +129,8 @@
         <div class="checkoutIpt">
             <label for="paymentMethod">Payment Method:</label>
             <select name="paymentMethod" id="paymentMethod">
-                <option value="debit">Debit Card</option>
-                <option value="master">Master Card</option>
                 <option value="visa">Visa Card</option>
+                <option value="master">Master Card</option>
                 <option value="amx">American Express</option>
             </select>
         </div>
@@ -132,27 +141,31 @@
         </div>
 
         <h4>Choose a Shipping Method:</h4>
+        <div id="deliveryValue">
+            <div id="deliveryOption">
+                <label for="standardDelivery">Standard Delivery:</label>
+                <div>CAD $10.00</div>
+                <input type="radio" name="delivery" id="standardDelivery" value="10.00" checked>
+            </div>
 
-        <div id="deliveryOption">
-            <label for="standardDelivery">Standard Delivery:</label>
-            <div>CAD $10.00</div>
-            <input type="radio" name="delivery" id="standardDelivery" value="10">
+            <div id="deliveryOption">
+                <label for="expressDelivery">Express Delivery: </label>
+                <div>CAD $20.00</div>
+                <input type="radio" name="delivery" id="expressDelivery" value="20.00">
+            </div>
         </div>
-
-        <div id="deliveryOption">
-            <label for="expressDelivery">Express Delivery: </label>
-            <div>CAD $20.00</div>
-            <input type="radio" name="delivery" id="expressDelivery" value="20">
+        <div class="paymentTotal">
+            <p>Subtotal(<%= cartQuantity %> item(s)): $<span id="itemsSubtotal"><%= subtotal %></span></p>
+            <p>Shipping: $<span id="shippingFee">10</span></p>
+            <p>Tax: $<span id="taxFee"><%= subtotal * 0.12 %></span></p>
+            <h4>Order Total: CAD $<span id="orderToal"></span></h4>
         </div>
-
-
-        <h4>Order Total (3 items) CA $90.00</h4>
         <div class="center">
             <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
         </div>
     </form>
 
-    <div class="extraspace"></div>
+    <div class="extraspace2"></div>
 
 
     <footer>
@@ -162,7 +175,36 @@
 <!-- <script src="../../help.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
+<script>
 
+    let shippingFee = 10
+    let expressDelivery = document.getElementById("expressDelivery")
+    let standardDelivery = document.getElementById("standardDelivery")
+
+    let itemsSubtotal = `<%= subtotal %>`
+    let taxFee = `<%= subtotal * 0.12 %>`
+    let orderToal
+
+    expressDelivery.addEventListener("click", () => {
+        shippingFee = expressDelivery.value
+        document.getElementById('shippingFee').innerHTML = shippingFee;
+        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderToal").innerText = orderToal
+    })
+
+    standardDelivery.addEventListener("click", () => {
+        shippingFee = standardDelivery.value
+        document.getElementById('shippingFee').innerHTML = shippingFee;
+        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderToal").innerText = orderToal
+    })
+
+    orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+    document.getElementById("orderToal").innerText = orderToal
+
+
+
+</script>
 
 
 </html>

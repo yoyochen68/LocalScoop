@@ -70,6 +70,7 @@ router.get("/shop_setup_1", async (req, res) => {
 
 
 
+
 // GET /shop_setUp/shop_setUp_2
 router.get("/shop_setup_2", async (req, res) => {
   res.render("shop_setup/shop_setup_2")
@@ -107,6 +108,7 @@ router.post("/shop_setup_2", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_3
+
 router.get("/shop_setup_3", help.sellerAuthorized,async (req, res) => {
 
   let newStoreId = req.session.seller.seller_id
@@ -130,6 +132,7 @@ router.post("/shop_setup_3", async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_4
+
 router.get("/shop_setup_4", help.sellerAuthorized,async (req, res) => {
   let newStoreId = req.session.seller.seller_id
 
@@ -139,7 +142,9 @@ router.get("/shop_setup_4", help.sellerAuthorized,async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_5
+
 router.get("/shop_setup_5", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_5", { newStoreId })
@@ -148,8 +153,12 @@ router.get("/shop_setup_5", help.sellerAuthorized,async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_6
+
+
 router.get("/shop_setup_6", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
+
 
   res.render("shop_setup/shop_setup_6", { newStoreId })
 })
@@ -172,7 +181,9 @@ router.post('/uploadS3', async (req, res) => {
 
 
 // GET /shop_setUp/shop_setUp_7
+
 router.get("/shop_setup_7", help.sellerAuthorized,async (req, res) => {
+
   let newStoreId = req.session.seller.seller_id
 
   res.render("shop_setup/shop_setup_7", { newStoreId })
@@ -251,11 +262,8 @@ router.post('/upload', upload, async (req, res) => {
 // "shop_setup/product_type"
 router.post('/product_type', async (req, res) => {
   let sellerProductTypes = req.body.productTypeList
-  // let sellerProductTypes = ["stationary", "handmaid_good"]
-
-  // console.log(req.body.productTypeList)
   let newStoreId = req.session.seller.seller_id
-  //
+  
   let updatedStore = await mysqlDB.updateShopCategoryByStoreId(newStoreId, sellerProductTypes)
 
   res.status(200).send(updatedStore[0].categories)

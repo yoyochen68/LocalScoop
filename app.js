@@ -8,6 +8,7 @@ const dbConnection = require("./database/databaseConnection.js")
 // const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
+var nodemailer = require('nodemailer');
 
 
 // import cookieSession from "cookie-session"
@@ -77,7 +78,6 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
-
 
 
 
@@ -195,6 +195,35 @@ function checkFileType(file, cb) {
 //     file: `uploads/${req.file.filename}`
 //   });
 // });
+
+
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: process.env.MY_EMAIL,
+//     pass: process.env.MY_PASS
+//   }
+// });
+
+// var mailOptions = {
+//   from: process.env.MY_EMAIL,
+//   to: 'yoyochen68@yahoo.ca',
+//   subject: 'Sending Email using Node.js',
+//   text: 'That was easy!'
+// };
+
+// transporter.sendMail(mailOptions, function(error, info){
+//   if (error) {
+//     console.log(error);
+//   } else {
+//     console.log('Email sent: ' + info.response);
+//   }
+// });
+
+
+
+
+
 
 module.exports = app;
 

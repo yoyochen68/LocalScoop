@@ -8,16 +8,16 @@
     <title>Document</title>
 
     <%- include('../elements/seller_footer.ejs', {page:"page_landing"}) %>
-    <link rel="stylesheet" href="../../styles.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <style>
-        img {
-            height: 200px;
-            width: 250px;
-            border-radius: 15px;
-            object-fit: contain;
-        }
-    </style>
+        <link rel="stylesheet" href="../../styles.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <style>
+            img {
+                height: 200px;
+                width: 250px;
+                border-radius: 15px;
+                object-fit: contain;
+            }
+        </style>
 </head>
 
 <body>
@@ -27,14 +27,17 @@
             <p>Your <b>
                     <%= productInfo.productName %>
                 </b> product listing has been succesfully posted to your business page.</p>
-            <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            <a href="/orders/orders_1">
+                <button type=" button" class="yellow-bn m-bn">Go to listing</button>
+            </a>
         </div>
 
         <div class="productList">New listing:</div>
 
+
         <div class="imgAndProductInfo">
             <% if(productInfo){ %>
-                <img src="<%= productInfo.imageFilePath %>"  alt="">
+                <img src="<%= productInfo.imageFilePath %>" alt="">
                 <div class="productInfo">
                     <div>Product Name : <%= productInfo.productName %>
                     </div>

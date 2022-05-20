@@ -10,6 +10,7 @@ const mysqlDB = require("../database/databaseAccessLayer");
 
 
 // GET /product_post/product_post_1
+
 router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
   /* there is no signed in seller, redirect to sign in page
       if there is time, include a message that tells user they cannot post 
@@ -56,7 +57,7 @@ router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
   let newPostedProduct = req.session.newPostedProduct[0];
   console.log('asajhsdlkjfhalksd \n', newPostedProduct)
 
-  // because we weren't consistent with nameing
+  // because we weren't consistent with naming
   let productInfo = {
     "productName": newPostedProduct.product_name,
     "description": newPostedProduct.product_description,
