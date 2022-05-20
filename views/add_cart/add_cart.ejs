@@ -51,7 +51,7 @@
             <div class="bag">
                 <a href="/shopping_cart/shopping_cart">
 
-                    <%if(cartItemsTotal !== 0 ){%>
+                    <%if(cartItemsTotal){%>
                     <div class="dot"> <%=cartItemsTotal%></div>
                     <%}%>
 
@@ -132,6 +132,7 @@
             .catch(error => {
                 console.log(error);
             })
+            location.reload()
     })
 
 </script>

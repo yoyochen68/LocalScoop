@@ -29,14 +29,13 @@ router.get("/checkout_1", help.buyerAuthorized, async (req, res) => {
 
 router.get("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
-    let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
-
-    res.render("checkout/checkout_confirmation", { cartQuantity })
+    // let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
+    res.render("checkout/checkout_confirmation")
 })
 
 
 
-router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
+router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let deliveryAddress = req.body.deliveryAddress
     let postalCode = req.body.postalCode
@@ -44,6 +43,8 @@ router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
     let city = req.body.city
     let paymentMethod = req.body.paymentMethod
 
+    await mysqlDB.completeCartAfterOrder(buyer_id)
+    
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -56,7 +57,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, (req, res) => {
         from: process.env.MY_EMAIL,
         to: 'yoyochen68@yahoo.ca',
         subject: 'Order Confirmation',
-        html: '<h1>Thank you for supporting local business</h1><p>order confirmation</p>'
+        html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>order confirmation</p></div>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {

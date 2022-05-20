@@ -16,24 +16,26 @@
             <div class="nav-wrapper--left buyer">
                 <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
             </div>
-    
+
             <div class="nav-wrapper--middle buyer">
                 Shopping Cart
             </div>
-    
+
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
-    
-                        <%if(cartQuantity !== 0 ){%>
-                        <div class="dot"> <%= cartQuantity %></div>
-                        <%}%>
-    
-                        <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+
+                        <%if(cartQuantity !==0 ){%>
+                            <div class="dot">
+                                <%= cartQuantity %>
+                            </div>
+                            <%}%>
+
+                                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                     </a>
                 </div>
             </div>
-    
+
         </div>
     </header>
 
@@ -84,9 +86,13 @@
                         </div>
                         <div class="extraspace"></div>
                         <% } else { %>
-
-                            <img src="https://sethisbakery.com/assets/website/images/empty-cart.png" alt=""
-                                class="emptyCart">
+                            <div class="displayBlock">
+                                <img src="https://sethisbakery.com/assets/website/images/empty-cart.png" alt=""
+                                    class="emptyCart">
+                                <a href="/add_cart/products">
+                                    <button type="button" class="yellow-bn s-bn">Continue shopping</button>
+                                </a>
+                            </div>
                             <% } %>
 
 
@@ -130,7 +136,7 @@
         // localQuantity[cart_product_id] = localQuantity[cart_product_id] ? localQuantity[cart_product_id] - 1 : parseInt(product_quantity) - 1
         // let productQuan = document.getElementById("productQuantity_" + cart_product_id)
         // productQuan.innerText = localQuantity[cart_product_id]
-         
+
         product_quantity = parseInt(document.querySelector("#productQuantity_" + cart_product_id).innerText)
         if (parseInt(product_quantity) > 1) {
             axios.post('/shopping_cart/shopping_cart_minus', {
