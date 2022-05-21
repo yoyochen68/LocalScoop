@@ -12,14 +12,6 @@ const mysqlDB = require("../database/databaseAccessLayer");
 // GET /product_post/product_post_1
 
 router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
-  /* there is no signed in seller, redirect to sign in page
-      if there is time, include a message that tells user they cannot post 
-      product without being signed in */
-  //     let seller_id = req.session.seller.seller_id
-  // if (seller_id == undefined) {
-  //   res.redirect('/shop_setup/shop_login')
-  // }
-
   res.render("product_post/product_post_1")
 })
 
@@ -28,6 +20,7 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
 router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
   req.session.storeId = 15
+
   let storeId = req.session.storeId;
 
   let product_name = productInfo.productName
@@ -54,17 +47,17 @@ router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
 // GET /product_post/product_post_2
 router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
 
-  let newPostedProduct = req.session.newPostedProduct[0];
-  console.log('asajhsdlkjfhalksd \n', newPostedProduct)
+  let theProduct = req.session.newPostedProduct[0];
+  
 
   // because we weren't consistent with naming
   let productInfo = {
-    "productName": newPostedProduct.product_name,
-    "description": newPostedProduct.product_description,
-    "category": newPostedProduct.product_category,
-    "deliveryFee": newPostedProduct.product_description,
-    "productPrice": newPostedProduct.product_price,
-    'imageFilePath': newPostedProduct.image_file_paths
+    "productName": theProduct.product_name,
+    "description": theProduct.product_description,
+    "category": theProduct.product_category,
+    "deliveryFee": theProduct.product_description,
+    "productPrice": theProduct.product_price,
+    'imageFilePath': theProduct.image_file_paths
   }
 
   res.render("product_post/product_post_2", {
