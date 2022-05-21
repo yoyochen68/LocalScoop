@@ -87,14 +87,14 @@ exports.getOrdersByStoreId = getOrdersByStoreId
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
-async function getOrdersWithProductsPhotosByStoreId(store_id){
+async function getOrdersWithProductsPhotosByStoreId(store_id) {
     // if sql command run with no store_id, everything will crash
-    if(store_id == undefined){
+    if (store_id == undefined) {
         return;
     }
-    
+
     let query = 'SELECT * FROM `order` LEFT JOIN product ON `order`.product_id = `product`.product_id LEFT JOIN product_photo on `product_photo`.product_id = `order`.product_id LEFT JOIN order_status ON `order_status`.order_status_id = `order`.order_status_id WHERE `order`.store_id = ?'
-    
+
 
     let orders = await database.query(query, [store_id]);
     return orders[0];
@@ -474,27 +474,30 @@ exports.storesAndImagesViews = storesAndImagesViews
 //======yasmina code for add to cart===
 
 async function getCartIdByBuyerId(buyerId) {
-    let query = ` SELECT cart.cart_id
+    let query = ` SELECT cart_id
         FROM cart
         WHERE buyer_id = ? AND purchased = "no" `
+    const [buyerActiveCartId] = await database.query(query, [buyerId])
 
-    const [buyerActiveCartId, fields] = await database.query(query, [buyerId])
-    return buyerActiveCartId
-
+    if (buyerActiveCartId.length) {
+        return buyerActiveCartId[0]['cart_id']
+    } else {
+        let addNewCartquery = `INSERT INTO cart(buyer_id) VALUE (?)`
+        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId])
+        let cart_id = buyerActiveCartId.insertId
+        return cart_id;
+    }
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
-// getCartIdByBuyerId(1).then(console.log)
-
+// getCartIdByBuyerId(3).then((res) => console.log("useful", res))
+getCartIdByBuyerId(3).then(console.log)
 
 
 async function addToCart(buyerId, productId) {
-
     //finding the cartId
-    let cartIdObject = await getCartIdByBuyerId(buyerId);
-    let cartId = cartIdObject[0]['cart_id']
+    let cartId = await getCartIdByBuyerId(buyerId);
 
     //-----------------------------------create the cart if it soes not exist
-
 
     //checking if order exist already
     let sqlQuery = ` SELECT product_quantity FROM cart_product WHERE cart_id = ? AND product_id = ?`
@@ -528,13 +531,11 @@ exports.addToCart = addToCart
 
 
 async function getCartItemsCount(buyerId) {
-    let cartIdObject = await getCartIdByBuyerId(buyerId);
-    let cartId = cartIdObject[0]['cart_id']
-
+    let cartId = await getCartIdByBuyerId(buyerId);
+   
     let query = ` SELECT SUM(product_quantity) AS product_quantity
     FROM cart_product
     WHERE cart_id = ?;`
-
 
     const [itemsCountObject, fields] = await database.query(query, [cartId])
     return itemsCountObject[0].product_quantity
@@ -542,7 +543,7 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-// getCartItemsCount(1).then(console.log)
+getCartItemsCount(1).then(console.log)
 
 
 //====YOYO CODE FOR ADD TO CART======
@@ -569,6 +570,7 @@ async function getCartItemsByBuyer(buyer_id) {
 
 exports.getCartItemsByBuyer = getCartItemsByBuyer
 // getCartItemsByBuyer(1).then(console.log)
+// getCartItemsByBuyer(3).then(console.log)
 
 
 
@@ -642,6 +644,16 @@ async function deleteCartItem(cart_product_id, buyer_id) {
 exports.deleteCartItem = deleteCartItem
 
 
+
+async function completeCartAfterOrder(buyerId) {
+    let cart_id = await getCartIdByBuyerId(buyerId);
+    let query = `UPDATE cart SET cart.purchased = "yes" WHERE cart_id = ?`
+    await database.query(query, [cart_id])
+}
+exports.completeCartAfterOrder = completeCartAfterOrder
+// completeCartAfterOrder(3).then(console.log)
+
+
 // async function getCartItemByProduct(buyer_Id, product_id) {
 //     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
 // from buyer as b
@@ -698,11 +710,11 @@ exports.searchProduct = searchProduct
 //
 
 async function getBuyerChats(buyerId) {
-    let query=`
+    let query = `
     SELECT * FROM localscoop.chat
     WHERE chat.buyer_id = ?;`
 
-   let [buyerChat, fields] = await database.query(query, [buyerId])
+    let [buyerChat, fields] = await database.query(query, [buyerId])
     return buyerChat
 
 }
@@ -711,7 +723,7 @@ exports.getBuyerChats = getBuyerChats
 
 
 async function getSellerChats(storeId) {
-    let query=`
+    let query = `
     SELECT * FROM localscoop.chat
     WHERE chat.store_id = ?;`
 
