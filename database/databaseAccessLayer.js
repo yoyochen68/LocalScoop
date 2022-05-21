@@ -284,8 +284,8 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-    console.log(store_id)
-    console.log(categoryNameList)
+    console.log('store_id:    ' + store_id)
+    console.log('category name list:   ' + categoryNameList)
 
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
@@ -330,7 +330,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
@@ -490,7 +489,7 @@ async function getCartIdByBuyerId(buyerId) {
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-getCartIdByBuyerId(3).then(console.log)
+// getCartIdByBuyerId(3).then(console.log)
 
 
 async function addToCart(buyerId, productId) {
@@ -544,6 +543,7 @@ async function getCartItemsCount(buyerId) {
 exports.getCartItemsCount = getCartItemsCount
 
 getCartItemsCount(1).then(console.log)
+
 
 
 //====YOYO CODE FOR ADD TO CART======
