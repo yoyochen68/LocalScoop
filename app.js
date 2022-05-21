@@ -20,10 +20,8 @@ var nodemailer = require('nodemailer');
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
+const req = require("express/lib/request")
 
-
-// fake-database
-// import * as db from './fake-db';
 
 // other files 
 const server = require("./server.js")
@@ -40,8 +38,8 @@ const followBusinessRouter = require("./routes/follow_business_router")
 const buyerSetupRouter = require("./routes/buyer_setup_router")
 const chatRouter = require("./routes/chat_router")
 const checkoutRouter = require("./routes/checkout_router")
-const req = require("express/lib/request")
 const analyticsRouter = require("./routes/analytics_router")
+const mapsRouter = require("./routes/map_router")
 
 
 
@@ -78,7 +76,7 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
-
+app.use("/map", mapsRouter)
 
 
 function authorized(req, res, next) {

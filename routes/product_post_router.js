@@ -5,21 +5,11 @@ const multer = require('multer');
 const path = require('path');
 const crypto = require('crypto')
 const router = express.Router();
-
 const mysqlDB = require("../database/databaseAccessLayer");
 
 
 // GET /product_post/product_post_1
-
 router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
-  /* there is no signed in seller, redirect to sign in page
-      if there is time, include a message that tells user they cannot post 
-      product without being signed in */
-  //     let seller_id = req.session.seller.seller_id
-  // if (seller_id == undefined) {
-  //   res.redirect('/shop_setup/shop_login')
-  // }
-
   res.render("product_post/product_post_1")
 })
 
@@ -27,55 +17,47 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
 // is ajax route. when testing use valid store_id from db
 router.post("/product_post_1", help.sellerAuthorized, async (req, res) => {
   let productInfo = req.body
+  
   req.session.storeId = 15
-  let storeId = req.session.storeId;
-
+  // let storeId = req.session.seller.seller_id;
+  
   let product_name = productInfo.productName
   let product_category = productInfo.category
   let product_description = productInfo.description
   let product_price = productInfo.productPrice
   let product_delivery_fee = productInfo.deliveryFee
 
+  // ***** error says imageUrl is null
   let imageUrl = req.body.imageUrl
-
 
   // add product into db. must provide store_id that exists in db when testing, else will crash
   let productId = await mysqlDB.addNewProduct(storeId, product_name, product_category, product_description, product_price, product_delivery_fee)
 
   // product photo and its link to the db
-  let newProductPhoto = await mysqlDB.addNewProductPhoto(productId, imageUrl)
-
-
-  req.session.newPostedProduct = newProductPhoto
+  
+  req.session.newPostedProduct = await mysqlDB.addNewProductPhoto(productId, imageUrl)
   res.redirect('/product_post/product_post_2')
 })
 
 
 // GET /product_post/product_post_2
 router.get("/product_post_2", help.sellerAuthorized,(req, res) => {
-
-  let newPostedProduct = req.session.newPostedProduct[0];
-  console.log('asajhsdlkjfhalksd \n', newPostedProduct)
-
+  let theProduct = req.session.newPostedProduct[0];
+  
   // because we weren't consistent with naming
   let productInfo = {
-    "productName": newPostedProduct.product_name,
-    "description": newPostedProduct.product_description,
-    "category": newPostedProduct.product_category,
-    "deliveryFee": newPostedProduct.product_description,
-    "productPrice": newPostedProduct.product_price,
-    'imageFilePath': newPostedProduct.image_file_paths
+    "productName": theProduct.product_name,
+    "description": theProduct.product_description,
+    "category": theProduct.product_category,
+    "deliveryFee": theProduct.product_delivery_fee,
+    "productPrice": theProduct.product_price,
+    'imageFilePath': theProduct.image_file_paths[0]
   }
-
+  
   res.render("product_post/product_post_2", {
     productInfo
   })
 })
-
-/**
- * looks like s3 photo upload in product_post_1 will return an aws url, 
- * but the url does now have anything associated with it
- */
 
 
 
