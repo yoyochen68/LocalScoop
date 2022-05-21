@@ -119,7 +119,7 @@ function authorized(req, res, next) {
 app.get("/", (req, res) => {
   let sellerSession = req.session.seller
   let buyerSession = req.session.buyer
-  res.render("index",{sellerSession,buyerSession})
+  res.render("index",{ sellerSession,buyerSession })
 })
 
 app.get("/index2", (req, res) => {
