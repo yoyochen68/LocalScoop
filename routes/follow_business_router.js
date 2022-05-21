@@ -12,16 +12,6 @@ const { append } = require("express/lib/response");
 
 
 // GET /follow_business/follow_business_1
-
-router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
-    console.log(req.session)
-    /**
-     * clients can go to this page even though they are not logged in as a buyer
-     * So there is no buyer_id in cookie session
-     * so when getCartItemsCount is called, it crashes the app
-     */
-})
-
 router.get("/follow_business_1", help.buyerAuthorized, async (req, res) => {
     // let cartItemsTotal = 0
     let buyer_id = req.session.buyer.buyer_id
@@ -38,15 +28,14 @@ router.get("/follow_business_1", help.buyerAuthorized, async (req, res) => {
 
 
 // GET /follow_business/follow_business_2
-
 router.get("/follow_business_2/:id", help.buyerAuthorized, async (req, res) => {
-    res.send('aaaaa')
-    // let storeId = req.params.id
-    // let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
-    // let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
-    // let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
 
-    // res.render("follow_business/follow_business_2",{ storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
+    let storeId = req.params.id
+    let storeInfo = await mysqlDB.getStoreInfoByStoreId(storeId)
+    let productInfo = await mysqlDB.getProductsAndImagesByStoreID(storeId)
+    let storeImages = await mysqlDB.getShopPhotoByStoreId(storeId)
+
+    res.render("follow_business/follow_business_2",{ storeInfo:storeInfo[0], productInfo:productInfo, storeImages:storeImages })
 })
 
 
