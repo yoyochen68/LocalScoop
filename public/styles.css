@@ -874,13 +874,24 @@ font-size: 20px;
     text-align: right;
 }
 
-
 .emptyCart{
+    max-width: 90%;
+}
+
+/* .cshopping{
+    position: relative;
+
+    left: 30%;
+} */
+
+/* .zerocart{
+    position: absolute;
     display: block;
    margin-left: auto;
    margin-right: auto;
- 
- }
+   top:20%;
+   
+ } */
  
  .logoIcon{
      position: absolute;
@@ -935,11 +946,13 @@ font-size: 20px;
 }
 
 .buyer-grid-body .cart {
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     /*padding: 16px 30px 16px 16px;*/
+    width:100%;
+    height:100%;
     padding:10px;
-    min-width: 20vh;
-    min-height: 30vh;
+    /*min-width: 20vh;*/
+    /*min-height: 30vh;*/
 
     border-radius: 15px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
