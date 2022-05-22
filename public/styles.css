@@ -876,6 +876,7 @@ font-size: 20px;
 
 .emptyCart{
     max-width: 90%;
+    object-fit: contain;
 }
 
 /* .cshopping{
@@ -1022,7 +1023,10 @@ margin-top: 8%;
 
 }
 
-
+.emt{
+    display: grid;
+     place-items: center;
+}
 
 
 

@@ -57,7 +57,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
         from: process.env.MY_EMAIL,
         to: 'yoyochen68@yahoo.ca',
         subject: 'Order Confirmation',
-        html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>order confirmation</p></div>'
+        html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>Your order will be delivery in 10 days</p></div>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
