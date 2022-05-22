@@ -35,7 +35,9 @@ router.get("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
 
 
 
+
 router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
+
     let buyer_id = req.session.buyer.buyer_id
     let deliveryAddress = req.body.deliveryAddress
     let postalCode = req.body.postalCode
