@@ -4,7 +4,10 @@ const express = require("express");
 const ejs = require('ejs');
 const router = express.Router();
 const mysqlDB = require('../database/databaseAccessLayer')
-var nodemailer = require('nodemailer');
+const nodemailer = require('nodemailer');
+const bodyParser = require('body-parser');
+const path = require('path');
+const stripe = require('stripe')('sk_test_51L0LzJFUoS9VoaHuddHy3X76sZD0HlNXfA1vLlbSApcTpfVDiVwyrvZxQ5NjqxgWwA8AQlTHVu0Gmp3fxOprEoUS00zDRG81lN'); // Add your Secret Key Here
 
 
 const { append } = require("express/lib/response");
@@ -14,6 +17,10 @@ const { append } = require("express/lib/response");
 const app = express();
 app.use(express.json())
 
+
+//for payment 
+app.engine('html', require('ejs').renderFile);
+// app.use(express.static(path.join(__dirname, './views')));
 
 router.get("/checkout_1", help.buyerAuthorized, async (req, res) => {
     let buyer_id = req.session.buyer.buyer_id
@@ -37,8 +44,8 @@ router.get("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
 
 
 router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
-
     let buyer_id = req.session.buyer.buyer_id
+    let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
     let deliveryAddress = req.body.deliveryAddress
     let postalCode = req.body.postalCode
     let province = req.body.province
@@ -46,7 +53,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
     let paymentMethod = req.body.paymentMethod
 
     await mysqlDB.completeCartAfterOrder(buyer_id)
-    
+
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -54,12 +61,12 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
             pass: process.env.MY_PASS
         }
     });
-
+    let day = 10
     var mailOptions = {
         from: process.env.MY_EMAIL,
         to: 'yoyochen68@yahoo.ca',
         subject: 'Order Confirmation',
-        html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>Your order will be delivery in 10 days</p></div>'
+        html: '<div style="border: 2px solid bisque; background-color: bisque; text-align: center;" ><h1>Thank you for supporting local business</h1><p>Your order will be delivery in' + day + 'days</p></div>'
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -69,6 +76,36 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
             console.log('Email sent: ' + info.response);
         }
     });
+
+    console.log("total", req.body)
+
+    //==for payment
+    try {
+        stripe.customers
+            .create({
+                name: req.body.name,
+                email: req.body.email,
+                source: req.body.stripeToken,
+
+            })
+            .then(customer =>
+                stripe.charges.create({
+                    amount: req.body.totalAmount * 100,
+                    currency: "CAD",
+                    country: "CA",
+                    customer: customer.id
+                    //add item info
+                })
+            )
+            .then(() => res.render("checkout_confirmation.ejs"))
+            .catch(err => console.log(err));
+    } catch (err) {
+        res.send(err);
+    }
+
+
+
+
 
 
     res.redirect("/checkout/checkout_confirmation")

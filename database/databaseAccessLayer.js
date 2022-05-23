@@ -284,8 +284,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
-    console.log(store_id)
-    console.log(categoryNameList)
+ 
 
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
@@ -490,7 +489,7 @@ async function getCartIdByBuyerId(buyerId) {
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-getCartIdByBuyerId(3).then(console.log)
+
 
 
 async function addToCart(buyerId, productId) {
@@ -543,7 +542,7 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-getCartItemsCount(1).then(console.log)
+// getCartItemsCount(1).then(console.log)
 
 
 //====YOYO CODE FOR ADD TO CART======

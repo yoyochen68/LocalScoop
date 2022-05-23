@@ -9,12 +9,17 @@
 <link rel="stylesheet" href="../../styles.css">
 
 <style>
+    body {
+        overflow: scroll;
+    }
+
     .submitOder {
         display: grid;
         margin: 7%;
     }
 
     .submitOder input[type='text'],
+    .submitOder input[type='email'],
     select {
         border-radius: 10px;
         height: 40px;
@@ -67,7 +72,7 @@
 
 
     .paymentTotal {
-        max-width:85% ;
+        max-width: 85%;
         border-radius: 20px;
         background-color: rgb(255, 239, 214);
         margin-top: 5%;
@@ -85,30 +90,32 @@
             <div class="nav-wrapper--left buyer">
                 <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
             </div>
-    
+
             <div class="nav-wrapper--middle buyer">
                 Shopping Cart
             </div>
-    
+
             <div class="nav-wrapper--right buyer">
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
-    
-                        <%if(cartQuantity !== 0 ){%>
-                        <div class="dot"> <%= cartQuantity %></div>
-                        <%}%>
-    
-                        <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+
+                        <%if(cartQuantity !==0 ){%>
+                            <div class="dot">
+                                <%= cartQuantity %>
+                            </div>
+                            <%}%>
+
+                                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
                     </a>
                 </div>
             </div>
-    
+
         </div>
     </header>
 
     <div class="top_space"></div>
 
-    <form action="/checkout/checkout_confirmation" class="submitOder" method="POST">
+    <form action="/checkout/checkout_confirmation" class="submitOder" method="POST" id="submitForm">
         <div class="checkoutIpt">
             <label for="deliveryAddress">Delivery Address:</label>
             <input type="text" name="deliveryAddress" id="deliveryAddress">
@@ -129,6 +136,17 @@
             </div>
         </div>
 
+        <div class="checkoutIpt">
+            <label for="name">Name on Card:</label>
+            <input type="text" name="name" id="name">
+        </div>
+
+
+        <div class="checkoutIpt">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email">
+        </div>
+
 
         <div class="checkoutIpt">
             <label for="paymentMethod">Payment Method:</label>
@@ -143,6 +161,57 @@
             <label for="cartNumber">Card Number:</label>
             <input type="text" name="cartNumber" id="cartNumber">
         </div>
+
+        <div class="checkoutIpt">
+            <label for="expirationdate">Expiration (mm/yy)</label>
+            <input id="expirationdate" type="text" pattern="[0-9]*" inputmode="numeric">
+        </div>
+        <div class="checkoutIpt">
+            <label for="cvc">CVC:</label>
+            <input type="text" name="cvc" id="cvc">
+        </div>
+        <div id="card-element" class="bg-transparent text-white p-2 h-10 mb-4"></div>
+        <div id="card-errors" role="alert"></div>
+        <!-- <div class="provinceCity">
+            <div class="checkoutIpt">
+                <label for="expireDate">Expire Date:</label>
+                <input type="text" name="expireDate" id="expireDate">
+            </div>
+
+            <div class="checkoutIpt">
+                <label for="cvc">CVC:</label>
+                <input type="text" name="cvc" id="cvc">
+            </div>
+        </div> -->
+        <!-- <div class="checkoutIpt">
+            <select name='expireMM' id='expireMM'>
+                <option value=''>Month</option>
+                <option value='01'>January</option>
+                <option value='02'>February</option>
+                <option value='03'>March</option>
+                <option value='04'>April</option>
+                <option value='05'>May</option>
+                <option value='06'>June</option>
+                <option value='07'>July</option>
+                <option value='08'>August</option>
+                <option value='09'>September</option>
+                <option value='10'>October</option>
+                <option value='11'>November</option>
+                <option value='12'>December</option>
+            </select>
+        </div>
+        <div class="checkoutIpt">
+            <select name='expireYY' id='expireYY'>
+                <option value=''>Year</option>
+                <option value='20'>2020</option>
+                <option value='21'>2021</option>
+                <option value='22'>2022</option>
+                <option value='23'>2023</option>
+                <option value='24'>2024</option>
+            </select>
+        </div> -->
+        <!-- <input class="inputCard" type="hidden" name="expiry" id="expiry" maxlength="4"/> -->
+
 
         <h4>Choose a Shipping Method:</h4>
         <div id="deliveryValue">
@@ -159,10 +228,14 @@
             </div>
         </div>
         <div class="paymentTotal">
-            <p>Subtotal(<%= cartQuantity %> item(s)): $<span id="itemsSubtotal"><%= subtotal %></span></p>
+            <p>Subtotal(<%= cartQuantity %> item(s)): $<span id="itemsSubtotal">
+                        <%= subtotal %>
+                    </span></p>
             <p>Shipping: $<span id="shippingFee">10</span></p>
-            <p>Tax: $<span id="taxFee"><%= subtotal * 0.12 %></span></p>
-            <h4>Order Total: CAD $<span id="orderToal"></span></h4>
+            <p>Tax: $<span id="taxFee">
+                    <%= subtotal * 0.12 %>
+                </span></p>
+            <h4>Order Total: CAD $<span id="orderTotal"></span></h4>
         </div>
         <div class="center">
             <button type="submit" class="yellow-bn s-bn"> Submit Order</button>
@@ -178,6 +251,8 @@
 </body>
 <!-- <script src="../../help.js"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://js.stripe.com/v3/"></script>
+<script src="../../checkout_payment.js"></script>
 
 <script>
 
@@ -187,26 +262,35 @@
 
     let itemsSubtotal = `<%= subtotal %>`
     let taxFee = `<%= subtotal * 0.12 %>`
-    let orderToal
+    let orderTotal = 0
 
     expressDelivery.addEventListener("click", () => {
         shippingFee = expressDelivery.value
         document.getElementById('shippingFee').innerHTML = shippingFee;
-        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-        document.getElementById("orderToal").innerText = orderToal
+        orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderTotal").innerText = orderTotal
     })
 
     standardDelivery.addEventListener("click", () => {
         shippingFee = standardDelivery.value
         document.getElementById('shippingFee').innerHTML = shippingFee;
-        orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-        document.getElementById("orderToal").innerText = orderToal
+        orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+        document.getElementById("orderTotal").innerText = orderTotal
     })
 
-    orderToal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
-    document.getElementById("orderToal").innerText = orderToal
+    orderTotal = parseInt(shippingFee) + parseInt(itemsSubtotal) + parseInt(taxFee)
+    document.getElementById("orderTotal").innerText = orderTotal
+    console.log("amount", orderTotal)
 
-
+    if (orderTotal > 0) {
+        const submitform = document.getElementById('submitForm');
+        const hiddenAmount = document.createElement('input');
+        hiddenAmount.setAttribute('type', 'hidden');
+        hiddenAmount.setAttribute('name', 'totalAmount');
+        hiddenAmount.setAttribute('value', parseInt(orderTotal));
+        console.log("hiddenamount", hiddenAmount)
+        submitform.appendChild(hiddenAmount);
+    }
 
 </script>
 
