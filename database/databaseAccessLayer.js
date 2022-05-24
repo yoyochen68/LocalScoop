@@ -682,27 +682,31 @@ exports.searchProduct = searchProduct
 
 
 
-
 // -----------------------------//Chat FUNCTIONs Needed----------------------------------------------
-//
-//
-//
-// async function createChat(buyerId, storeId) {
-//
-// }
-//
-// exports.createRoom = createRoom
-//
-//
-//
-//
+
+
+
+async function createChat(buyerId, storeId) {
+    let query  = `
+    INSERT INTO chat (chat_name, buyer_id, store_id)
+    VALUES (?, ?, ?);`
+
+
+    await database.query(query, [buyerId+storeId,buyerId, storeId])
+    return
+
+}
+
+exports.createChat = createChat
+
+
 
 async function getBuyerChats(buyerId) {
     let query=`
     SELECT * FROM localscoop.chat
     WHERE chat.buyer_id = ?;`
 
-   let [buyerChat, fields] = await database.query(query, [buyerId])
+    let [buyerChat, fields] = await database.query(query, [buyerId])
     return buyerChat
 
 }
@@ -710,42 +714,77 @@ exports.getBuyerChats = getBuyerChats
 
 
 
-async function getSellerChats(storeId) {
+async function getStoreChats(storeId) {
     let query=`
     SELECT * FROM localscoop.chat
     WHERE chat.store_id = ?;`
 
-    let [storeChat, fields] = await database.query(query, [buyerId])
+    let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
 }
 
-exports.getSellerChats = getSellerChats
+exports.getStoreChats = getStoreChats
 
 
+
+
+async function chatUsersName(groupId) {
+
+    let query =`select chat.chat_id , buyer.buyer_firstname AS "buyerName", store.store_name AS "storeName"
+    from chat
+    left join buyer
+    on chat.buyer_id = buyer.buyer_id
+    left join store
+    on chat.store_id = store.store_id
+    where chat_id= ?`
+
+    let [chatUsers, fields] = await database.query(query, [groupId])
+    return chatUsers[0]
+
+}
+exports.chatUsersName = chatUsersName
+// chatUsersName(1).then(console.log)
+
+
+
+
+
+
+
+async function addStoreChatContent(chatId, msgList) {
+
+    let query  = `
+    INSERT INTO store_messages (chat_id, text, timestamp)
+    VALUES (?,?,?);`
+
+    for (let i=0; i < msgList.length; i++) {
+        await database.query(query, [chatId, msgList[i].msg, msgList[i].timestamp])
+    }
+
+}
+
+exports.addStoreChatContent = addStoreChatContent
+
+
+
+
+async function addBuyerChatContent(chatId, msgList) {
+
+    let query  = `
+    INSERT INTO buyer_messages (chat_id, text, timestamp)
+    VALUES (?,?,?);`
+
+    for (let i=0; i < msgList.length; i++) {
+        await database.query(query, [chatId, msgList[i].msg, msgList[i].timestamp])
+    }
+
+}
+
+exports.addBuyerChatContent = addBuyerChatContent
 
 
 
 // async function getChatContent(chatId) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
-//
-//
-//
-//
-//
-// async function addStoreChatContent(chatId, storId, text) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
-//
-//
-//
-//
-//
-// async function addBuyerChatContent(chatId, buyerId, text) {
 //
 // }
 //

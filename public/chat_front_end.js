@@ -4,12 +4,13 @@ const roomName = document.getElementById('room-name');
 const userList = document.getElementById('users');
 
 
+
 // get the username and the room from url
 // const {username, room} = Qs.parse(location.search, {
 //     ignoreQueryPrefix:true
 // })
-let room = ROOM_ID
-let username = USER_ID
+// let roomInfo = ROOM_ID
+// let username = USER_ID
 
 //check if the current session and room are gonna be matched with one in db
 
@@ -19,15 +20,12 @@ let username = USER_ID
     //         buyerId = responce.data.buyerId
     //     })
 
-console.log(username, room)
-
 
 const socket = io.connect();
 
 
-
 // Join chatroom
-socket.emit('joinRoom', { username, room });
+socket.emit('joinRoom',  { ROOM_ID: ROOM_ID});
 
 // Get room and users
 // socket.on('roomUsers', ({ room, users }) => {
@@ -36,13 +34,22 @@ socket.emit('joinRoom', { username, room });
 // });
 
 
+
+
 //message from server
 socket.on('message', message=>{
-    console.log(message)
+    // console.log(message)
     outputMessage(message)
 
     // Scroll down
     chatMessages.scrollTop = chatMessages.scrollHeight;
+})
+
+
+
+socket.on('GTFO', () => {
+    // Redirects the user
+    window.location = "/"
 })
 
 
@@ -75,6 +82,8 @@ function outputMessage(message){
 //     roomName.innerText = room;
 // }
 
+
+
 // Add users to DOM
 function outputUsers(users) {
     userList.innerHTML = '';
@@ -89,4 +98,11 @@ function outputUsers(users) {
 // user leave chat room
 document.getElementById('leave-btn').addEventListener('click', () => {
     window.location = '../index.html';
+});
+
+
+document.addEventListener("beforeunload", () => {
+    socket.emit('disconnect')
+    
+
 });

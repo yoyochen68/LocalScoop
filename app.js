@@ -2,13 +2,15 @@
 const express = require("express")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-const cookieSession = require("cookie-session")
+// const cookieSession = require("cookie-session")
+const session = require('express-session')
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
 // const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 var nodemailer = require('nodemailer');
+
 
 
 // import cookieSession from "cookie-session"
@@ -47,9 +49,17 @@ const analyticsRouter = require("./routes/analytics_router")
 
 // const sellerHomeRouter = require("./routes/seller_home_router")
 
+// Session Middleware
+const sessionMiddleware = session({
+  secret: 'localscoop:8000',
+  resave: false,
+  saveUninitialized: false,
+})
+
 /*** express ***/
 const app = express();
 
+app.use(sessionMiddleware)
 app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
@@ -57,12 +67,15 @@ app.use(express.json());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 
 
+
 // cookie sessions
-app.use(cookieSession({
-  name:'session',
-  keys:['localscoop:8000'],
-  maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
-}))
+// app.use(cookieSession({
+//   name:'session',
+//   keys:['localscoop:8000'],
+//   maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
+// }))
+
+
 
 
 /**   router routes, set beginning of path   **/
@@ -225,5 +238,5 @@ function checkFileType(file, cb) {
 
 
 
-module.exports = app;
+module.exports = { app, sessionMiddleware };
 

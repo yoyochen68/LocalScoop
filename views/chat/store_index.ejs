@@ -22,9 +22,8 @@
     </header>
     <main class="join-main">
 
-        <% buyerChatList.forEach(chat=>{
-          <a href="">  chat.chat_name</a>
-        })%>
+<!--for number of rooms exist for this buyer loop-->
+<!--        link of all that directs to their chat -->
 
 
 
@@ -32,13 +31,17 @@
 <!--        <form action="/chat/room">-->
 <!--            <div class="form-control">-->
 <!--                <label for="username">Username</label>-->
-<!--                <input-->
-<!--                        type="text"-->
-<!--                        name="username"-->
-<!--                        id="username"-->
-<!--                        placeholder="Enter username..."-->
-<!--                        required-->
-<!--                />-->
+<!--                <input type="text"  name="username" id="username" placeholder="Enter username..." required/>-->
+<!--            </div>-->
+<!--            <div>-->
+
+
+                <% storeChatList.forEach(chat=>{ %>
+                    <p><a href="/chat/room/<%=chat.chat_id%>"><%=chat.chat_name%></a></p>
+                <%  }); %>
+
+
+
 <!--            </div>-->
 <!--            <div class="form-control">-->
 <!--                <label for="room">Room</label>-->
