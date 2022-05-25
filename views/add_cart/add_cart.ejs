@@ -134,7 +134,9 @@
 
 
             <div class="product_react_btn_set">
-                <button><span class="material-icons white-text ">mode_comment</span></button>
+               <button class ="chatBtn">
+                  <a href='/chat/create/<%= productId%>'>  <span class="material-icons white-text " style="color:white;">mode_comment</span></a>
+               </button>
                 <button><span class="material-icons ">share</span></button>
                 <button><span class="material-icons ">star</span></button>
 
@@ -165,6 +167,16 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+
+
+
+    //To Create the group chat if it does not exist
+
+
+
+
+
+    ///TO GET THE ITEMS IN CART
 
     document.querySelector(".addToCartBtn").addEventListener("click", () => {
 

@@ -12,7 +12,7 @@
     />
 
 <!--        <link rel="stylesheet" href="../../styles.css">-->
-    <link rel="stylesheet" href="../../chat.css">
+    <link rel="stylesheet" href="/chat.css">
 
 
     <style>
@@ -38,20 +38,29 @@
 </head>
 <body>
 
-<div class="chat-container">
-    <header class="chat-header">
-        <h1>Messages</h1>
-<!--        <a id="leave-btn" class="btn">Leave Room</a>-->
-    </header>
-<!--    <main class="chat-main">-->
-<!--        <div class="chat-sidebar">-->
-<!--            <h3><i class="fas fa-comments"></i> Room Name:</h3>-->
-<!--            <h2 id="room-name"></h2>-->
-<!--            <h3><i class="fas fa-users"></i> Users</h3>-->
-<!--            <ul id="users"></ul>-->
-<!--        </div>-->
 
-        <div class="chat-messages"></div>
+<div class="chat-container">
+<!--    <header class="chat-header">-->
+<!--        <h1>Messages</h1>-->
+<!--&lt;!&ndash;        <a id="leave-btn" class="btn">Leave Room</a>&ndash;&gt;-->
+<!--    </header>-->
+
+        <div class="chat-messages">
+
+            <% for (let message of chistory) {
+                let timestamp = message.timestamp
+                let date = new Date(timestamp);
+            %>
+            <div class="message">
+                <p class="meta"> <%=message.username%> <span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p>
+
+                <p class="text">
+                    <%=message.text%>
+                </p>
+            </div>
+            <% } %>
+
+        </div>
 <!--    </main>-->
     <div class="chat-form-container">
         <form id="chat-form">

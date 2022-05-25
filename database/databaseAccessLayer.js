@@ -685,19 +685,50 @@ exports.searchProduct = searchProduct
 // -----------------------------//Chat FUNCTIONs Needed----------------------------------------------
 
 
+async function chatExist(buyerId, storeId) {
+    let query  = `
+   
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ? AND chat.store_id = ?;
+   `
+    let [theChat, fields] = await database.query(query, [buyerId, storeId])
+    console.log("chatExist: ",theChat.length === 1)
+    return theChat.length === 1
+    
+
+}
+exports.chatExist = chatExist
+// chatExist(1,3).then(console.log)
+
+
 
 async function createChat(buyerId, storeId) {
     let query  = `
     INSERT INTO chat (chat_name, buyer_id, store_id)
     VALUES (?, ?, ?);`
 
-
-    await database.query(query, [buyerId+storeId,buyerId, storeId])
-    return
+    await database.query(query, [buyerId.toString()+ storeId.toString(),buyerId, storeId])
+    console.log("chat has been created")
 
 }
 
 exports.createChat = createChat
+
+
+
+
+
+
+async function getChat(buyerId, storeId) {
+    let query  = `
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ? AND chat.store_id = ?;
+   `
+    let [theChat, fields] = await database.query(query, [buyerId, storeId])
+    return theChat[0]
+}
+exports.getChat = getChat
+
 
 
 
@@ -747,19 +778,13 @@ exports.chatUsersName = chatUsersName
 
 
 
-
-
-
-
-async function addStoreChatContent(chatId, msgList) {
+async function addStoreChatContent(chatId, msgObj) {
 
     let query  = `
     INSERT INTO store_messages (chat_id, text, timestamp)
     VALUES (?,?,?);`
 
-    for (let i=0; i < msgList.length; i++) {
-        await database.query(query, [chatId, msgList[i].msg, msgList[i].timestamp])
-    }
+        await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
 
 }
 
@@ -768,15 +793,13 @@ exports.addStoreChatContent = addStoreChatContent
 
 
 
-async function addBuyerChatContent(chatId, msgList) {
+async function addBuyerChatContent(chatId, msgObj) {
 
     let query  = `
     INSERT INTO buyer_messages (chat_id, text, timestamp)
     VALUES (?,?,?);`
 
-    for (let i=0; i < msgList.length; i++) {
-        await database.query(query, [chatId, msgList[i].msg, msgList[i].timestamp])
-    }
+    await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
 
 }
 
@@ -784,11 +807,47 @@ exports.addBuyerChatContent = addBuyerChatContent
 
 
 
-// async function getChatContent(chatId) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
+
+async function getStoreIdFromProductId (productId) {
+
+    let query  = `
+    SELECT store_id FROM localscoop.product
+     WHERE product_id = ?;`
+
+    let [storeIdObject, fields] = await database.query(query, [productId])
+    return storeIdObject[0].store_id
+
+}
+
+exports.getStoreIdFromProductId = getStoreIdFromProductId
+// getStoreIdFromProductId(3).then(console.log)
 
 
+async function getChatContent(chatId) {
+
+    let query  =
+    
+             ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+                FROM buyer_messages 
+                JOIN chat on chat.chat_id = buyer_messages.chat_id
+                JOIN buyer ON buyer.buyer_id = chat.buyer_id
+                WHERE chat.chat_id = ?
+                UNION
+                select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
+                FROM store_messages 
+                JOIN chat on chat.chat_id = store_messages.chat_id
+                JOIN store ON store.store_id = chat.store_id
+                WHERE chat.chat_id = ?  
+                ORDER BY timestamp asc;`
+             
+
+    let [AllChats, fields] = await database.query(query, [chatId, chatId])
+    return AllChats
+
+}
+
+
+exports.getChatContent = getChatContent
+
+// getChatContent(2).then(console.log)
 

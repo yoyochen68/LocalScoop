@@ -5,40 +5,19 @@ const userList = document.getElementById('users');
 
 
 
-// get the username and the room from url
-// const {username, room} = Qs.parse(location.search, {
-//     ignoreQueryPrefix:true
-// })
-// let roomInfo = ROOM_ID
-// let username = USER_ID
-
-//check if the current session and room are gonna be matched with one in db
-
-    // axios.post("/room",{roomId: ROOM_ID}).
-    //     .then(response => {
-    //         userName= responce.data.name
-    //         buyerId = responce.data.buyerId
-    //     })
-
 
 const socket = io.connect();
 
 
 // Join chatroom
 socket.emit('joinRoom',  { ROOM_ID: ROOM_ID});
-
-// Get room and users
-// socket.on('roomUsers', ({ room, users }) => {
-//     outputRoomName(room);
-//     outputUsers(users);
-// });
+chatMessages.scrollTop = chatMessages.scrollHeight;
 
 
 
 
 //message from server
 socket.on('message', message=>{
-    // console.log(message)
     outputMessage(message)
 
     // Scroll down
@@ -56,10 +35,15 @@ socket.on('GTFO', () => {
 //message submit
 chatForm.addEventListener('submit',(e)=>{
     e.preventDefault();
-    const msg = e.target.elements.msg.value
+    let msg = e.target.elements.msg.value
 
     //emitting the message in input to server side
     socket.emit('chatMessage', msg)
+
+    // 👇️ clear input field
+       msg = '';
+
+
 
 })
 
@@ -67,8 +51,10 @@ chatForm.addEventListener('submit',(e)=>{
 //output message from server
 function outputMessage(message){
     const div = document.createElement('div');
+
+
     div.classList.add('message');
-    div.innerHTML = `<p class="meta"> ${message.username} <span> ${message.time}</span></p>
+    div.innerHTML = `<p class="meta"> ${message.username} <span> ${message.timestamp}</span></p>
                          <p class="text">
                             ${message.text}
                          </p>`;
@@ -96,13 +82,13 @@ function outputUsers(users) {
 
 
 // user leave chat room
-document.getElementById('leave-btn').addEventListener('click', () => {
-    window.location = '../index.html';
-});
+// document.getElementById('leave-btn').addEventListener('click', () => {
+//     window.location = '../index.html';
+// });
 
 
 document.addEventListener("beforeunload", () => {
     socket.emit('disconnect')
-    
+
 
 });

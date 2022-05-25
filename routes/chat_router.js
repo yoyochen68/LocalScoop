@@ -19,7 +19,7 @@ router.get("/store",  async (req, res) => {
 
     let storeId = req.session.seller.seller_id
 
-        // Geting the chatrooms related to the store id
+    // Geting the chatrooms related to the store id
     let storeChatList = await mysqlDB.getStoreChats(storeId)
     console.log(storeChatList)
 
@@ -31,18 +31,46 @@ router.get("/store",  async (req, res) => {
 
 
 
+//chat/create
+router.get("/create/:id",  async (req, res) => {
+
+    let buyerId = req.session.buyer.buyer_id
+    let storeId = await mysqlDB.getStoreIdFromProductId(req.params.id)
+
+    //check if chatroom already exist if not creates it
+    let chatExist= await mysqlDB.chatExist(buyerId, storeId)
+    if(!chatExist) mysqlDB.createChat(buyerId, storeId)
+
+    let chat = await mysqlDB.getChat(buyerId, storeId)
+    let chatId = chat.chat_id
+
+    res.redirect(`/chat/room/${chatId}`)
+
+})
+
+
+
+
+
+
+//chat/buyer
 router.get("/buyer",  async (req, res) => {
 
     let buyerId = req.session.buyer.buyer_id
+
 
     // Geting the chatrooms related to the store id
     let buyerChatList = await mysqlDB.getBuyerChats(buyerId)
     console.log(buyerChatList)
 
 
-
-        res.render("chat/buyer_index", {buyerChatList:buyerChatList});
+    res.render("chat/buyer_index", {buyerChatList:buyerChatList});
 })
+
+
+
+
+
 
 
 
@@ -51,25 +79,26 @@ router.get("/room/:id",  async (req, res) => {
 
     let roomId = req.params.id
 
-    let roomUsers = await mysqlDB.chatUsersName(roomId)
-    console.log("routerObejct", roomUsers)
+    
+    //Assign the name of the user seller/buyer to sessions
 
+    let roomUsers = await mysqlDB.chatUsersName(roomId)
+    // console.log("routerObject", roomUsers)
+    
     if(req.session.seller) {
         req.session.seller.name = roomUsers.storeName
-        console.log(req.session.seller.name)
 
     }else {
         req.session.buyer.name = roomUsers.buyerName
-        console.log(req.session.buyer.name)
     }
-    // let storeName = roomUsers.buyerName
-    // let buyerName = roomUsers.storeName
 
-    // req.session.buyer.buyer_id = 3
-    // req.session.buyer.chathistory = ['allo', 'get umbrella!']
-  
+
+    let chistory =  await mysqlDB.getChatContent(roomId)
+
     console.log('render room')
-    res.render("chat/room",{roomId:roomId});
+    console.log("roomId:",roomId)
+    
+    res.render("chat/room",{ roomId:roomId, chistory: chistory});
     // res.render("chat/room",{roomId:roomId, storeName:storeName, buyerName:buyerName});
 
 })
@@ -77,10 +106,8 @@ router.get("/room/:id",  async (req, res) => {
 
 
 
-// router.get("/room",  async (req, res) => {
-//     console.log('render room')
-//     res.render("chat/room");
-//
-// })
+
+
+
 
 module.exports = router;

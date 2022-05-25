@@ -52,9 +52,9 @@ router.get("/add_cart/:id",help.buyerAuthorized, async(req, res) => {
   let productInfo = await mysqlDB.getProductsAndImages(product_id)
   let storeInfo = await mysqlDB.getStoreInfoByStoreId(productInfo[0].store_id)
   let cartItemsTotal =  await mysqlDB.getCartItemsCount(buyer_id)
+console.log(product_id)
 
-
-  res.render("add_cart/add_cart", {productInfo: productInfo[0], storeInfo:storeInfo[0], cartItemsTotal:cartItemsTotal})
+  res.render("add_cart/add_cart", {productId:product_id, productInfo: productInfo[0], storeInfo:storeInfo[0], cartItemsTotal:cartItemsTotal})
 })
 
 
