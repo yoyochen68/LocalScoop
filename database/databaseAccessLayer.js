@@ -284,7 +284,7 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  * @returns {Promise<*>}
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
- 
+
 
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
@@ -531,7 +531,7 @@ exports.addToCart = addToCart
 
 async function getCartItemsCount(buyerId) {
     let cartId = await getCartIdByBuyerId(buyerId);
-   
+
     let query = ` SELECT SUM(product_quantity) AS product_quantity
     FROM cart_product
     WHERE cart_id = ?;`
@@ -546,7 +546,6 @@ exports.getCartItemsCount = getCartItemsCount
 
 
 //====YOYO CODE FOR ADD TO CART======
-
 
 
 async function getCartItemsByBuyer(buyer_id) {
@@ -653,6 +652,23 @@ exports.completeCartAfterOrder = completeCartAfterOrder
 // completeCartAfterOrder(3).then(console.log)
 
 
+
+async function createOrderAfterPayment(cart_id, totalAmount, stripePaymentId, fullAddress, deliveryfee) {
+
+    let query = 'INSERT INTO `order`(cart_id, totalAmount, stripe_payment_id, delivery_address, deliveryfee) VALUE(?, ?, ?, ?, ?)'
+    let [creatNewOrder] = await database.query(query, [cart_id, totalAmount, stripePaymentId, fullAddress, deliveryfee])
+    let order_id = creatNewOrder.insertId
+    return order_id
+}
+exports.createOrderAfterPayment = createOrderAfterPayment
+// createOrderAfterPayment(3,50,"dfdrgtfghdf","eded",10).then(console.log)
+
+
+
+
+
+
+
 // async function getCartItemByProduct(buyer_Id, product_id) {
 //     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
 // from buyer as b
@@ -669,6 +685,8 @@ exports.completeCartAfterOrder = completeCartAfterOrder
 // }
 // exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
+
+
 
 
 

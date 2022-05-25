@@ -75,7 +75,7 @@
                                 onclick="incrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#43;</button>
                             <span class="product_quantity" id="productQuantity_<%= cartItem.cart_product_id %>">
                                 <% if(cartItem.product_quantity <=1){ %>
-                                    <%= cartItem.product_quantity=1%>
+                                    <%= cartItem.product_quantity=1 %>
                                         <% } else { %>
                                             <%= cartItem.product_quantity %>
                                                 <% } %>
@@ -93,7 +93,7 @@
                         <div class="subtotal">
                             <div>Subtotal:</div>
 
-                            <div id="totalAmount">CAD $<%= subtotal %>.00</div>
+                            <div id="totalAmount">CAD $<%= subtotal.toFixed(2) %></div>
                             <a href="/checkout/checkout_1">
                                 <button type="submit" class="yellow-bn xs-bn">checkout</button>
                             </a>
@@ -140,10 +140,10 @@
             let itermQuantity = response.data.itermQuantity
             let cartQuantity = response.data.cartQuantity
             let subtotal = response.data.subtotal
-            console.log(itermQuantity)
+           
             document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
             document.querySelector(".dot").innerText = cartQuantity
-            document.getElementById("totalAmount").innerText = "CAD $" + subtotal + ".00"
+            document.getElementById("totalAmount").innerText = "CAD $" + subtotal
         }).catch(error => {
             console.log(error);
         })
@@ -169,7 +169,7 @@
                 let subtotal = response.data.subtotal
                 document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
                 document.querySelector(".dot").innerText = cartQuantity
-                document.getElementById("totalAmount").innerText = "CAD $" + subtotal + ".00"
+                document.getElementById("totalAmount").innerText = "CAD $" + subtotal
             }).catch(error => {
                 console.log(error);
             })
