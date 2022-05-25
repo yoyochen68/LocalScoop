@@ -12,7 +12,7 @@ const { append } = require("express/lib/response");
 
 
 // GET /follow_business/follow_business_1
-router.get("/follow_business_1", help.buyerAuthorized, async (req, res) => {
+router.get("/follow_business_1", help.buyerAuthorized, async(req, res) => {
     // let cartItemsTotal = 0
     let buyer_id = req.session.buyer.buyer_id
     let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
@@ -52,4 +52,4 @@ router.post("/follow_business_2", help.buyerAuthorized, async (req, res) => {
 
 
 
-module.exports = router;
+module.exports = router
