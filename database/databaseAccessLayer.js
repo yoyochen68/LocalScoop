@@ -69,7 +69,8 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * get all the orders by the giving store id in the order table
+ * NEEDS TO BE REWRITTEN
+ *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
 async function getOrdersByStoreId(store_id) {
@@ -84,6 +85,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
+ * NEEDS TO BE REWRITTEN
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
