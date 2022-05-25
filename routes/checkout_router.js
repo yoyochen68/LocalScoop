@@ -72,7 +72,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
     }
 
     //=========for email======
-    function autoEmailSent(order_id) {
+   async function autoEmailSent(order_id) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -83,44 +83,44 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
 
         var mailOptions = {
             from: process.env.MY_EMAIL,
-            to: 'yoyochen68@yahoo.ca',
+            to: req.body.email,
             subject: 'Order Confirmation',
-            html: `<div style="background-color: rgba(238, 193, 149, 0.19); display: grid; place-items: center; text-align: center; ">
+            html: `<div style="background-color: rgba(238, 193, 149, 0.19);  text-align: center; padding-top:50px; padding-bottom:30px; max-with:60%; font-size:18px">
             <h1 style="color: #e3974f;">L<span style="color: #c3d99d;">O</span>CALSCOOP</h1>
             <h3>Thank You For Supporting Local Business</h3>
             
             <h4>Order Detail:</h4>
-            <table>
+            <table style="width: 400px; height: 200px; border:4px double #e3974f;margin-left:auto;margin-right:auto;">
                 <tr>
-                    <th style="padding-right: 60px;">Order Confirmation</th>
-                    <th style="text-align: right">#` + order_id + `</th>
+                    <th style="padding-right: 80px;  margin-left:60px; text-align:left;">Order Confirmation</th>
+                    <th style="text-align:right;">#` + order_id + `</th>
                 </tr>
                 <tr>
-                    <td style="padding-right: 60px;">Purchased Iterm(` + cartQuantity + `)</td>
-                    <td style="text-align: right">$`+ subtotal.toFixed(2) + `</td>
+                    <td style="padding-right: 80px;  margin-left:60px; text-align:left;">Purchased Iterm(` + cartQuantity + `)</td>
+                    <td style="text-align:right;">$`+ subtotal.toFixed(2) + `</td>
                 </tr>
                 <tr>
-                    <td style="padding-right: 60px;">Shipping Fee</td>
-                    <td style="text-align: right">$`+ parseInt(deliveryfee).toFixed(2) + `</td>
+                    <td style="padding-right: 80px;  margin-left:60px; text-align:left;">Shipping Fee</td>
+                    <td style="text-align:right;">$`+ parseInt(deliveryfee).toFixed(2) + `</td>
                 </tr>
                 <tr>
-                    <td style="padding-right: 60px;">Sales Tax</td>
-                    <td style="text-align: right">$`+ (subtotal * 0.12).toFixed(2) + `</td>
+                    <td style="padding-right: 80px; margin-left:60px; text-align:left;">Sales Tax</td>
+                    <td style="text-align:right;">$`+ (subtotal * 0.12).toFixed(2) + `</td>
                 </tr>
                 <tr>
-                    <th style="padding-right: 60px;">TOTAL</th>
-                    <th style="text-align: right">$`+ parseInt(totalAmount).toFixed(2) + `</th>
+                    <th style="padding-right: 80px;  margin-left:60px; text-align:left;">TOTAL</th>
+                    <th style="text-align:right;">$`+ parseInt(totalAmount).toFixed(2) + `</th>
                 </tr>
             </table>
            
     <div>
         <h4>Delivery Address:</h4>` + fullAddress + `
     </div>
-    <h4>Your order will be delivery in `+ deliveryDays + ` days</h4>
+    <h4 style="margin-bottom:50px;" >Your order will be delivery in `+ deliveryDays + ` days</h4>
         </div>`
         };
 
-        transporter.sendMail(mailOptions, function (error, info) {
+      await transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
             } else {
@@ -159,9 +159,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
                 stripe.charges.create({
                     amount: totalAmount * 100,
                     currency: "CAD",
-                    // country: "CA",
                     customer: customer.id,
-                    //add item info, 
                     metadata: {
                         ...stripCartItems,
                         customKey: ":)"
@@ -169,15 +167,15 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
                 })
             )
             // .then(() => res.render("checkout_confirmation.ejs"))
-            .then((responses) => {
+            .then(async (responses) => {
 
                 let stripePaymentId = responses.id
 
-                let order_id = mysqlDB.createOrderAfterPayment(cart_id, totalAmount, stripePaymentId, fullAddress, deliveryfee)
+                let order_id = await mysqlDB.createOrderAfterPayment(cart_id, totalAmount, stripePaymentId, fullAddress, deliveryfee)
                 console.log("ooooo", order_id)
-                mysqlDB.completeCartAfterOrder(buyer_id)
+                await mysqlDB.completeCartAfterOrder(buyer_id)
 
-                autoEmailSent(order_id)
+                await autoEmailSent(order_id)
 
                 res.redirect("/checkout/checkout_confirmation")
             })
