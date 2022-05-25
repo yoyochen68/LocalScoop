@@ -119,7 +119,6 @@ exports.authenticateShopOwner = authenticateShopOwner
 
 
 
-
 async function authenticateBuyer(buyer_email, buyer_password) {
     let query = `SELECT * FROM buyer WHERE buyer_email = ? and buyer_password = ?;`
     let [validatedBuyer, filed] = await database.query(query, [buyer_email, buyer_password])
@@ -764,4 +763,20 @@ exports.getSellerChats = getSellerChats
 // exports.getChatContent = getChatContent
 
 
+
+
+/***   Maps  */
+
+async function storesAndCategoryNames(){
+    let query = `
+    SELECT *
+    FROM store
+    LEFT JOIN store_category ON store.store_id = store_category.store_id
+    LEFT JOIN category ON store_category.category_id = category.category_id`
+
+    let result =  await database.query(query)
+    console.log(result[0] + '\n')
+    return result[0]
+}
+exports.storesAndCategoryNames = storesAndCategoryNames
 
