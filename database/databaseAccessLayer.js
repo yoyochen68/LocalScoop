@@ -67,14 +67,13 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * NEEDS TO BE REWRITTEN
+ * NEEDS TO BE REWRITTEN  asdf
  *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
 async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
-
 
     let orders = await database.query(query, [store_id]);
     return orders[0];
@@ -83,7 +82,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
- * NEEDS TO BE REWRITTEN
+ * NEEDS TO BE REWRITTEN  asdf
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
@@ -525,7 +524,6 @@ async function addToCart(buyerId, productId) {
     await database.query(query, [cartId, productId])
     return getCartItemsCount(buyerId)
     // later you can substitute it with better return value
-
 }
 
 exports.addToCart = addToCart
@@ -539,9 +537,10 @@ exports.addToCart = addToCart
 async function getCartItemsCount(buyerId) {
     let cartId = await getCartIdByBuyerId(buyerId);
 
-    let query = ` SELECT SUM(product_quantity) AS product_quantity
-    FROM cart_product
-    WHERE cart_id = ?;`
+    let query = ` 
+        SELECT SUM(product_quantity) AS product_quantity
+        FROM cart_product
+        WHERE cart_id = ?;`
 
     const [itemsCountObject, fields] = await database.query(query, [cartId])
     return itemsCountObject[0].product_quantity
@@ -557,7 +556,6 @@ getCartItemsCount(8).then(console.log)
 
 
 async function getCartItemsByBuyer(buyer_id) {
-
     let query = `
         select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
         from buyer as b
