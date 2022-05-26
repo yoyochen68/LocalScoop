@@ -52,10 +52,15 @@ router.post("/buyer_login", async (req, res) => {
     }
     console.log("byyy",buyer)
     const id = buyer[0].buyer_id
-    req.session.buyer = {
-        buyer_id: id,
-        buyer_email: email
-    }
+
+    req.session.buyer = {}
+    req.session.buyer.buyer_id = id
+    req.session.buyer.buyer_email = email
+
+    // req.session.buyer = {
+    //     buyer_id: id,
+    //     buyer_email: email
+    // }
 
     // let store_email = req.session.store_email ? req.session.store_email : null;
     res.redirect("/follow_business/follow_business_1")

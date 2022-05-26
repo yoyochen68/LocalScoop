@@ -56,25 +56,20 @@ const sessionMiddleware = session({
   saveUninitialized: false,
 })
 
+
 /*** express ***/
 const app = express();
 
-app.use(express.urlencoded({ extended: false }))
-
+app.use(sessionMiddleware)
+app.use(express.urlencoded({extended: false}))
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
 app.use(express.json());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 
 
-
 // cookie sessions
 
-app.use(cookieSession({
-    name: 'session',
-    keys: ['localscoop:8000'],
-    maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
-}))
 
 // app.use(cookieSession({
 //   name:'session',
@@ -99,7 +94,7 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
-app.use("/map", mapsRouter)
+// app.use("/map", mapsRouter)
 app.use("/wishlist", wishlistRouter)
 app.use("/buyer_profile", buyerProfileRouter)
 
@@ -113,40 +108,58 @@ function authorized(req, res, next) {
     next()
 }
 
-//=======session:
-// set the session:
+// =======session:
+//set the session:
 // req.session.id = id
-
+//
 // get the session:
 // let id = req.session.id
-
+//
 // req.session.buyer = {
-//   buyer_id: id,        
+//   buyer_id: id,
 //   buyer_email:email
-
+//
 // }
-
+//
 // req.session.seller = {
 //   seller_id: id,
 //   seller_email: email
 // }
 
 // req.session.seller_info.email = email
-//=======session:
+// ==:
 
 
 
 /* ROUTES */
 
-//
-
-
+/
 
 app.get("/", (req, res) => {
     let sellerSession = req.session.seller
     let buyerSession = req.session.buyer
-    res.render("index", { sellerSession, buyerSession })
+    res.render("index",{sellerSession,buyerSession})
 })
+
+
+// app.get("/", (req, res) => {
+//     console.log(req.session)
+//     if (!req.session) {
+//         res.render("index")
+//     }
+//     if(req.session.seller) {
+//         let sellerSession = req.session.seller
+//         let buyerSession = null
+//     }
+//     if (req.session.buyer) {
+//         let buyerSession = req.session.buyer
+//         let sellerSession = null
+//     }
+//
+//
+//
+//     res.render("index", { sellerSession, buyerSession })
+// })
 
 app.get("/index2", (req, res) => {
     res.render("index2")
@@ -154,7 +167,7 @@ app.get("/index2", (req, res) => {
 
 // dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
 app.get("/dcs", (req, res) => {
-    req.session = null;
+    req.session.destroy()
     res.redirect("/");
 })
 
@@ -249,5 +262,4 @@ function checkFileType(file, cb) {
 
 
 
-module.exports = app;
-
+module.exports = { app, sessionMiddleware };
