@@ -55,6 +55,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async(req, res) => {
     let postalCode = req.body.postalCode
     let province = req.body.province
     let city = req.body.city
+
     let totalAmount = req.body.totalAmount
 
     let fullAddress = `${deliveryAddress}, ${city}, ${province} ${postalCode}`
