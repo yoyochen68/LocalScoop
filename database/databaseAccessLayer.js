@@ -67,7 +67,8 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * get all the orders by the giving store id in the order table
+ * NEEDS TO BE REWRITTEN
+ *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
 async function getOrdersByStoreId(store_id) {
@@ -82,6 +83,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
+ * NEEDS TO BE REWRITTEN
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
@@ -113,7 +115,6 @@ async function authenticateShopOwner(store_email, store_password) {
 exports.authenticateShopOwner = authenticateShopOwner
 // authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
-
 
 
 
@@ -287,6 +288,9 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
+    console.log('store_id:    ' + store_id)
+    console.log('category name list:   ' + categoryNameList)
+
 
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
@@ -331,7 +335,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
@@ -492,6 +495,8 @@ async function getCartIdByBuyerId(buyerId) {
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
 
+// getCartIdByBuyerId(3).then(console.log)
+
 
 
 async function addToCart(buyerId, productId) {
@@ -545,6 +550,7 @@ async function getCartItemsCount(buyerId) {
 exports.getCartItemsCount = getCartItemsCount
 
 getCartItemsCount(8).then(console.log)
+
 
 
 //====YOYO CODE FOR ADD TO CART======
@@ -970,6 +976,7 @@ exports.getChatContent = getChatContent
 
 
 
+
 //showing chat  users names, ids and their photos 
 async function getChatUserinfo(chatId) {
 
@@ -981,19 +988,15 @@ async function getChatUserinfo(chatId) {
             JOIN buyer ON buyer.buyer_id = chat.buyer_id
             WHERE chat.chat_id = ?`
 
-
     let [chatUserInfo, fields] = await database.query(query, [chatId])
     return chatUserInfo
-
 }
 exports.getChatUserinfo = getChatUserinfo
 // getChatUserinfo(2).then(console.log)
 
 
 
-
 async function getLastMessage(chatId) {
-
     let query  =
         ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
             FROM buyer_messages
@@ -1008,7 +1011,6 @@ async function getLastMessage(chatId) {
             WHERE chat.chat_id = ?
             ORDER BY timestamp Desc
             Limit 1;`
-
 
     let [lastMessage, fields] = await database.query(query, [chatId])
     return lastMessage
@@ -1050,3 +1052,22 @@ exports.getLastMessage = getLastMessage
 // }
 // exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
+
+/***   Maps  */
+
+async function storesAndCategoryNames(){
+    let query = `
+        SELECT store.store_id, 
+        store.store_name, store.store_address, 
+        store.store_phone_number, store.rating, 
+        store.coordinates, category.category_name
+        FROM store
+        LEFT JOIN store_category ON store.store_id = store_category.store_id
+        LEFT JOIN category ON store_category.category_id = category.category_id`
+
+    let result =  await database.query(query)
+    console.log(result[0] + '\n')
+    return result[0]
+}
+exports.storesAndCategoryNames = storesAndCategoryNames
+
