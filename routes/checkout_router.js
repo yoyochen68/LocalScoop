@@ -135,14 +135,11 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async(req, res) => {
     const stripCartItems = {}
     for (const item in cartItems) {
         const newItem = {}
-        newItem.cart_product_id = cartItems[item].cart_product_id
         newItem.buyer_id = cartItems[item].buyer_id
         newItem.cart_id = cartItems[item].cart_id
         newItem.product_id = cartItems[item].product_id
         newItem.product_name = cartItems[item].product_name
         newItem.product_price = cartItems[item].product_price
-        newItem.product_quantity = cartItems[item].product_quantity
-        newItem.purchased = cartItems[item].purchased
         stripCartItems[item] = JSON.stringify(newItem)
     }
 

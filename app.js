@@ -85,14 +85,6 @@ app.use("/wishlist", wishlistRouter)
 
 
 
-function authorized(req, res, next) {
-    if (!req.session.email) {
-        res.redirect("/login")
-        return
-    }
-    next()
-}
-
 //=======session:
 // set the session:
 // req.session.id = id

@@ -50,7 +50,7 @@ router.post("/buyer_login", async (req, res) => {
         res.redirect("/buyer_setup/buyer_login")
         return
     }
-    console.log("byyy",buyer)
+  
     const id = buyer[0].buyer_id
     req.session.buyer = {
         buyer_id: id,
