@@ -19,10 +19,4 @@ let s = [
     { lat: 49.268059, lng: -123.167057}
 ]
 
-for(let index of s){
-    // let coordinatesString = JSON.stringify(index);
-    console.log(index)
-
-    // let coordsArr = coordinatesString.split(" ");
-    // console.log(coordsArr)
-}
+console.log(s)
