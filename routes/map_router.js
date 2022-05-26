@@ -20,10 +20,10 @@ router.post('/get_store_info', async (req, res) => {
 		let theContent = `
 			<div style="background-color: #F7F7F3; height: 200px; width: 200px; border-radius: 10px;">	
 				<h4>${store.store_name}</h4> 
-				<p>Address: ${store.store_address}</p>
-				<p>Phone: ${store.store_phone_number}</p>
-				<p>Rating: ${store.rating}</p>
-				<p>We do: ${store.category_name}
+				<p><b>Address:</b> ${store.store_address}</p>
+				<p><b>Phone:</b> ${store.store_phone_number}</p>
+				<p><b>Rating:</b> ${store.rating}</p>
+				<p><b>Specialty:</b> ${store.category_name}
 			</div>`
 
 		let coordinatesJSON = JSON.parse(`{ ${store.coordinates} }`)
