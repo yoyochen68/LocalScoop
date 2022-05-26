@@ -230,6 +230,10 @@ exports.addShop = addShop
 
 
 
+
+
+
+
 /**
  * @param store_id
  * @param store_address
@@ -528,8 +532,10 @@ exports.addToCart = addToCart
 
 
 async function getCartItemsCount(buyerId) {
-    let cartIdObject = await getCartIdByBuyerId(buyerId);
-    let cartId = cartIdObject[0]['cart_id']
+    let cartId = await getCartIdByBuyerId(buyerId);
+
+
+
 
     let query = ` SELECT SUM(product_quantity) AS product_quantity
     FROM cart_product
@@ -542,7 +548,7 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-// getCartItemsCount(1).then(console.log)
+getCartItemsCount(8).then(console.log)
 
 
 //====YOYO CODE FOR ADD TO CART======
@@ -679,6 +685,20 @@ exports.searchProduct = searchProduct
 // searchProduct("s").then(console.log)
 
 
+//=============Buyer=============
+
+async function addBuyer(buyer_name, buyer_lastname="", buyer_phone_number, buyer_email, buyer_password) {
+    let query = `
+    INSERT INTO buyer (buyer_firstname, buyer_lastname, buyer_phone_number, buyer_email, buyer_password) 
+    VALUES ( ?, ?, ?, ?, ?);`;
+
+    let newBuyerInfo = await database.query(query, [buyer_name, buyer_lastname, buyer_phone_number, buyer_email, buyer_password]);
+    let newBuyerId = newBuyerInfo[0].insertId
+
+    // console.log(newStoreId)
+    return getBuyer(newBuyerId)
+}
+exports.addBuyer = addBuyer
 
 
 
@@ -734,7 +754,10 @@ exports.getChat = getChat
 
 async function getBuyerChats(buyerId) {
     let query=`
-    SELECT * FROM localscoop.chat
+    SELECT chat.* , storesandimages.store_name, storesandimages.image_file_paths
+    FROM chat
+    JOIN store ON chat.store_id = store.store_id
+    JOIN storesandimages ON store.store_id=storesandimages.store_id
     WHERE chat.buyer_id = ?;`
 
     let [buyerChat, fields] = await database.query(query, [buyerId])
@@ -746,9 +769,11 @@ exports.getBuyerChats = getBuyerChats
 
 
 async function getStoreChats(storeId) {
-    let query=`
-    SELECT * FROM localscoop.chat
-    WHERE chat.store_id = ?;`
+    let query= `
+    SELECT chat.* , buyer.buyer_firstname, buyer.buyer_profile_photo
+    FROM chat
+    LEFT JOIN buyer ON chat.buyer_id = buyer.buyer_id
+    WHERE chat.store_id = ?`
 
     let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
@@ -850,4 +875,59 @@ async function getChatContent(chatId) {
 exports.getChatContent = getChatContent
 
 // getChatContent(2).then(console.log)
+
+
+
+
+
+//showing chat  users names, ids and their photos 
+async function getChatUserinfo(chatId) {
+
+    let query  =
+        ` select chat.chat_id as chat_id, chat.buyer_id, buyer.buyer_firstname AS "buyer_name" , buyer.buyer_profile_photo AS "buyer_image",  
+            chat.store_id, storesandimages.store_name AS "store_name", storesandimages.image_file_paths AS "store_images"
+            FROM chat 
+            JOIN storesandimages on storesandimages.store_id = chat.store_id 
+            JOIN buyer ON buyer.buyer_id = chat.buyer_id
+            WHERE chat.chat_id = ?`
+
+
+    let [chatUserInfo, fields] = await database.query(query, [chatId])
+    return chatUserInfo
+
+}
+exports.getChatUserinfo = getChatUserinfo
+// getChatUserinfo(2).then(console.log)
+
+
+
+
+async function getLastMessage(chatId) {
+
+    let query  =
+        ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+            FROM buyer_messages
+            JOIN chat on chat.chat_id = buyer_messages.chat_id
+            JOIN buyer ON buyer.buyer_id = chat.buyer_id
+            WHERE chat.chat_id = ?
+            UNION
+            select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
+            FROM store_messages
+            JOIN chat on chat.chat_id = store_messages.chat_id
+            JOIN store ON store.store_id = chat.store_id
+            WHERE chat.chat_id = ?
+            ORDER BY timestamp Desc
+            Limit 1;`
+
+
+    let [lastMessage, fields] = await database.query(query, [chatId])
+    return lastMessage
+
+}
+exports.getLastMessage = getLastMessage
+// getChatUserinfo(2).then(console.log)
+
+
+
+
 

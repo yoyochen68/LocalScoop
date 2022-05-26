@@ -44,6 +44,7 @@ const chatRouter = require("./routes/chat_router")
 const checkoutRouter = require("./routes/checkout_router")
 const req = require("express/lib/request")
 const analyticsRouter = require("./routes/analytics_router")
+const buyerProfileRouter = require("./routes/buyer_profile_router")
 
 
 
@@ -91,6 +92,7 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
+app.use("/buyer_profile", buyerProfileRouter)
 
 
 

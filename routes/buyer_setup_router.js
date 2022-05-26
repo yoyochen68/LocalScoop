@@ -62,4 +62,42 @@ router.post("/buyer_login", async (req, res) => {
 
 
 
+
+router.get("/buyer_signup", async (req, res) => {
+    res.render("buyer_setup/buyer_signup")
+})
+
+router.post("/buyer_signup", async (req, res) => {
+
+// retrieve user input from req.body
+    let buyer_name = req.body.buyerName;
+    let buyer_lastname= ""
+    let buyer_phone_number = req.body.phoneNum;
+    let buyer_email = req.body.email;
+    let buyer_password = req.body.password;
+
+    if (buyer_name == null || buyer_phone_number == null || buyer_email == null || buyer_password == null) {
+        res.redirect("/shop_setup/shop_setup")
+    }
+
+// write store name into database
+    let newBuyer = await mysqlDB.addBuyer(buyer_name,buyer_lastname, buyer_phone_number, buyer_email, buyer_password);
+    let id = newBuyer.buyer_id
+
+    req.session.buyer = {
+        buyer_id: id,
+        buyer_email: buyer_email
+    }
+
+
+// redirect to next page
+    res.redirect(`/follow_business/follow_business_1`)
+
+
+
+
+
+
+})
+
 module.exports = router;

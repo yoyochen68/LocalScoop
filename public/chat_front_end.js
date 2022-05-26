@@ -35,13 +35,13 @@ socket.on('GTFO', () => {
 //message submit
 chatForm.addEventListener('submit',(e)=>{
     e.preventDefault();
-    let msg = e.target.elements.msg.value
+    let msg = e.target.elements.msg.value;
 
     //emitting the message in input to server side
     socket.emit('chatMessage', msg)
 
     // 👇️ clear input field
-       msg = '';
+    e.target.elements.msg.value = '';
 
 
 

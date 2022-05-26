@@ -110,6 +110,10 @@ module.exports = function(io) {
 
 
             }
+            // Update the chat table
+            // UPDATE chat
+            // SET last_posted_message = msg, last_posted_timestamp = timestamp
+            // WHERE chat_id = room.roomId
             
 
 

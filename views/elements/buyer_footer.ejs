@@ -1,11 +1,4 @@
 
-    <title>Footer</title>
-    <!-- Material.io/ CSS -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="../../styles.css">
-</head>
-<body>
-
 <nav class="nav">
     <a href="/follow_business/follow_business_1" class="nav-link  <%= page === "follow_business" ? "link-active" : "" %>  ">
         <i class=" material-icons nav-icon">home</i>
@@ -23,8 +16,8 @@
         <i class=" material-icons nav-icon">star_outline</i>
         <span class="nav-text"> wishlist</span>
     </a>
-    <a href="#" class="nav-link" style="color: lightgray;">
-        <i class=" material-icons nav-icon">manage_accounts</i>
+    <a href="#" class="nav-link  <%= page === "profile" ? "link-active" : "" %>">
+        <i class=" material-icons nav-icon ">manage_accounts</i>
         <span class="nav-text"> profile </span>
     </a>
 </nav>
