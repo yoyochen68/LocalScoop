@@ -6,9 +6,12 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
-
 	<link rel="stylesheet" href="/styles.css">
-
+	<style>
+		.categoryHeader {
+			margin-top: 15px;
+		}
+	</style>
 
 	<title>Home</title>
 </head>
@@ -33,7 +36,7 @@
 							<%= cartQuantity %>
 						</div>
 						<% } %>
-							<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+						<span class="material-icons nav-icon seller-shop"> shopping_cart </span>
 				</a>
 			</div>
 		</div>
@@ -44,7 +47,7 @@
 	<main class="buyer-grid-body">
 		<div class="top_space"></div>
 		<div>
-			<h2>Trending Items</h2>
+			<h2 class="categoryHeader">Trending Items</h2>
 		</div>
 
 		<div class="grid">
@@ -64,7 +67,7 @@
 				<%})%>
 		</div>
 		<div>
-			<h2>Trending Shops</h2>
+			<h2 class="categoryHeader">Trending Shops</h2>
 		</div>
 		<div class="grid">
 
