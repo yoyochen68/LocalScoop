@@ -11,7 +11,7 @@ function addMarker(props) {
 	let infoWindow;
 
 	let marker = new google.maps.Marker({
-		position: props.coords,
+		position: props.coordinates,
 		map: map,
 	});
 
@@ -36,12 +36,12 @@ function addMarker(props) {
 // google maps API will call this automatically
 function initMap() {
 	let options = {
-		zoom: 9,
+		zoom: 10,
 		center: { lat: 49.2827, lng: -123.1207 },
 	}
-	
+
 	map = new google.maps.Map(document.getElementById("map"), options);
-	
+
 	// ajax request to get the store data
 	fetch("/map/get_store_info", {
 		method: "POST",
@@ -50,26 +50,30 @@ function initMap() {
 			"Content-Type": "application/json"
 		},
 	})
-	.then(function (response){
-		return response.json();
-	})
-	.then((data) => {
-		let storeDataForMarkers = JSON.stringify(data);
-
-		// call addMarker() here
-		addMarker({
-			coords: { lat: 49.0321, lng: -123.1222 },
-			icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
-			content: `
-				<div style="background-color: #F7F7F3; height: 200px; width: 200px; border-radius: 10px;">
-					<img class="markerImg"src="/logo/localscooplogo2.png" alt="">	
-					<h4> store_name </h4> 
-					<p>store_address</p>
-					<p>store_phone_number</p>
-					<p>store_rating</p>
-				</div>`
+		.then(function (response) {
+			return response.json();
+		})
+		.then((storeMarkerData) => {
+			
+			// loop through all the storesMarkerData, add marker
+			for (let storeIndex of storeMarkerData){
+				addMarker(storeIndex)
+			}
 		})
 
-	})
-	window.initMap = initMap;
-}
+		window.initMap = initMap;
+	}
+	
+	// // call addMarker() here
+	// addMarker({
+	// 	coordinates: { lat: 49.0321, lng: -123.1222 },
+	// 	icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+	// 	content: 
+	// 		`<div style="background-color: #F7F7F3; height: 200px; width: 200px; border-radius: 10px;">
+	//       <h4>Bioglow</h4> 
+	//       <p>2340 W 4th Avenue, Vancouver</p>
+	//       <p>7785629034</p>
+	//       <p>4.70</p>
+	//       <p>Fashion/Beauty
+	//     </div>`
+	// })

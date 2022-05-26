@@ -773,8 +773,8 @@ async function storesAndCategoryNames(){
     let query = `
         SELECT store.store_id, 
         store.store_name, store.store_address, 
-        store.store_phone_number, store.rating,
-        category.category_name
+        store.store_phone_number, store.rating, 
+        store.coordinates, category.category_name
         FROM store
         LEFT JOIN store_category ON store.store_id = store_category.store_id
         LEFT JOIN category ON store_category.category_id = category.category_id`
