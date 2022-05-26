@@ -138,9 +138,6 @@ function authorized(req, res, next) {
 
 /* ROUTES */
 
-//
-
-
 
 app.get("/", (req, res) => {
     let sellerSession = req.session.seller
