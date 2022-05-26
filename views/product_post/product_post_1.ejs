@@ -7,7 +7,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="../../styles.css">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-
+	<style>
+		 img {
+                height: 200px;
+                width: 250px;
+                border-radius: 15px;
+                object-fit: contain;
+            }
+	</style>
 	<title>Product Posting: step1</title>
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css"> -->
 </head>
@@ -25,6 +32,8 @@
 		<img
 			src="<%= typeof file != 'undefined' ? file : 'https://majobacooks.com/wp-content/uploads/2021/03/pngkey.com-ega-png-2332677.png' %>"
 			class="responsive-img" style="max-width: 60%; margin-top: 10px; border-radius: 10%;">
+
+		<div class="imageInsertLocation"></div>
 
 		<form id="imageForm">
 			<div class="file-field input-field">
@@ -87,7 +96,7 @@
 			</div>
 			<hr>
 			<div class="center">
-				<button class="yellow-bn m-bn extraSpace">Post Product</button>
+				<button class="yellow-bn m-bn extraSpace postProduct">Post Product</button>
 			</div>
 		</form>
 		<div class="extraspace"></div>
@@ -95,6 +104,7 @@
 			<%- include('../elements/seller_footer',{page:"product_post"}) %>
 		</footer>
 </body>
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"
 	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
@@ -103,6 +113,15 @@
 <script>
 	const imageForm = document.querySelector("#imageForm")
 	const imageInput = document.querySelector("#imageInput")
+
+
+	// post product button at the bottom redirects to the next page
+	const postProductButton = document.querySelector(".postProduct")
+	postProductButton.addEventListener("click", (event) => {
+		window.location = "/product_post/product_post_2"
+	})
+
+
 
 	imageForm.addEventListener("submit", async event => {
 		event.preventDefault()
@@ -151,13 +170,27 @@
 			console.log("ERROR", error)
 		}
 
+
+		// if the user already added a photo on the page, delete it
+		if(document.querySelector(".newProductImage") !== null){
+			document.querySelector(".newProductImage").remove()
+		}
+
 		// append image on document
 		const img = document.createElement("img")
 		img.src = imageUrl
-		console.log(imageUrl)
-		document.body.appendChild(img)
+		img.classList = 'newProductImage'
 
+		let imageLogo = document.querySelector(".responsive-img")
 
+		let imageInsertionLocation = document.querySelector(".imageInsertLocation")
+		console.log(imageInsertionLocation)
+
+		// append the new image where the image logo used to be
+		imageInsertionLocation.appendChild(img)
+
+		// remove the image logo
+		imageLogo.remove()
 
 		const productName = document.querySelector("#productName").value
 		const description = document.querySelector("#description").value
@@ -166,9 +199,6 @@
 		const productPrice = document.querySelector("#productPrice").value
 
 		let productPostInfo = { imageUrl, productName, description, category, deliveryFee, productPrice };
-
-		console.log("post all data together to create the listing")
-		console.log(productPostInfo)
 
 
 		// ajax request to routes
@@ -181,7 +211,7 @@
 			},
 		})
 
-		window.location = "/product_post/product_post_2"
+		// window.location = "/product_post/product_post_2"
 	})
 </script>
 </html>

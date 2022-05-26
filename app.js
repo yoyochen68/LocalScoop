@@ -6,7 +6,7 @@ const cookieParser = require("cookie-parser")
 const session = require('express-session')
 const mysql = require("mysql2")
 const dbConnection = require("./database/databaseConnection.js")
-// const mysqlDB = require("./database/databaseAccessLayer.js")
+    // const mysqlDB = require("./database/databaseAccessLayer.js")
 const ejs = require("ejs")
 const s3 = require("./s3")
 var nodemailer = require('nodemailer');
@@ -22,10 +22,8 @@ var nodemailer = require('nodemailer');
 const multer = require("multer")
 const path = require("path")
 const crypto = require("crypto")
+const req = require("express/lib/request")
 
-
-// fake-database
-// import * as db from './fake-db';
 
 // other files 
 const server = require("./server.js")
@@ -42,9 +40,10 @@ const followBusinessRouter = require("./routes/follow_business_router")
 const buyerSetupRouter = require("./routes/buyer_setup_router")
 const chatRouter = require("./routes/chat_router")
 const checkoutRouter = require("./routes/checkout_router")
-const req = require("express/lib/request")
 const analyticsRouter = require("./routes/analytics_router")
+const wishlistRouter = require("./routes/wishlist_router")
 const buyerProfileRouter = require("./routes/buyer_profile_router")
+
 
 
 
@@ -60,21 +59,29 @@ const sessionMiddleware = session({
 /*** express ***/
 const app = express();
 
-app.use(sessionMiddleware)
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }))
+
 app.use(cookieParser());
 app.use(express.static("public")); // allow front end to use the /public folder
-app.use(express.json()); 
+app.use(express.json());
 app.set('view engine', 'ejs'); // set templating engine to ejs
 
 
 
 // cookie sessions
+
+app.use(cookieSession({
+    name: 'session',
+    keys: ['localscoop:8000'],
+    maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
+}))
+
 // app.use(cookieSession({
 //   name:'session',
 //   keys:['localscoop:8000'],
 //   maxAge: 24 * 60 * 60 * 1000 // expired in 24 hours
 // }))
+
 
 
 
@@ -92,16 +99,18 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
+app.use("/map", mapsRouter)
+app.use("/wishlist", wishlistRouter)
 app.use("/buyer_profile", buyerProfileRouter)
 
 
 
 function authorized(req, res, next) {
-  if (!req.session.email) {
-      res.redirect("/login")
-      return
-  }
-  next()
+    if (!req.session.email) {
+        res.redirect("/login")
+        return
+    }
+    next()
 }
 
 //=======session:
@@ -134,64 +143,64 @@ function authorized(req, res, next) {
 
 
 app.get("/", (req, res) => {
-  let sellerSession = req.session.seller
-  let buyerSession = req.session.buyer
-  res.render("index",{sellerSession,buyerSession})
+    let sellerSession = req.session.seller
+    let buyerSession = req.session.buyer
+    res.render("index", { sellerSession, buyerSession })
 })
 
 app.get("/index2", (req, res) => {
-  res.render("index2")
+    res.render("index2")
 })
 
 // dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
 app.get("/dcs", (req, res) => {
-  req.session = null;
-  res.redirect("/");
+    req.session = null;
+    res.redirect("/");
 })
 
 
 
 // for s3 photo upload. Is an ajax route
-app.get('/s3Url', async (req, res) => {
-  const url = await s3.generateUploadURL()
-  res.send({ url })
+app.get('/s3Url', async(req, res) => {
+    const url = await s3.generateUploadURL()
+    res.send({ url })
 })
 
 
 
 //====image upload===
 const storage = multer.diskStorage({
-  destination: './public/uploads/',
-  filename: function (req, file, cb) {
-    const bytes = crypto.randomBytes(16).toString('hex')
-    cb(null, bytes + path.extname(file.originalname));
-  }
+    destination: './public/uploads/',
+    filename: function(req, file, cb) {
+        const bytes = crypto.randomBytes(16).toString('hex')
+        cb(null, bytes + path.extname(file.originalname));
+    }
 });
 
 // Init Upload
 const upload = multer({
-  storage: storage,
-  limits: { fileSize: 10000000 },
-  fileFilter: function (req, file, cb) {
-    checkFileType(file, cb);
-  }
+    storage: storage,
+    limits: { fileSize: 10000000 },
+    fileFilter: function(req, file, cb) {
+        checkFileType(file, cb);
+    }
 }).single('myImage');
 // can do .array() if you want to upload multiple images
 
 // Check File Type
 function checkFileType(file, cb) {
-  // Allowed ext
-  const filetypes = /jpeg|jpg|png|gif/;
-  // Check ext
-  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-  // Check mime
-  const mimetype = filetypes.test(file.mimetype);
+    // Allowed ext
+    const filetypes = /jpeg|jpg|png|gif/;
+    // Check ext
+    const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+    // Check mime
+    const mimetype = filetypes.test(file.mimetype);
 
-  if (mimetype && extname) {
-    return cb(null, true);
-  } else {
-    cb('Error: Images Only!');
-  }
+    if (mimetype && extname) {
+        return cb(null, true);
+    } else {
+        cb('Error: Images Only!');
+    }
 }
 
 
@@ -240,5 +249,5 @@ function checkFileType(file, cb) {
 
 
 
-module.exports = { app, sessionMiddleware };
+module.exports = app;
 
