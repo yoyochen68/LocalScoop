@@ -133,33 +133,37 @@ function authorized(req, res, next) {
 
 /* ROUTES */
 
-/
-
-app.get("/", (req, res) => {
-    let sellerSession = req.session.seller
-    let buyerSession = req.session.buyer
-    res.render("index",{sellerSession,buyerSession})
-})
 
 
 // app.get("/", (req, res) => {
-//     console.log(req.session)
-//     if (!req.session) {
-//         res.render("index")
-//     }
-//     if(req.session.seller) {
-//         let sellerSession = req.session.seller
-//         let buyerSession = null
-//     }
-//     if (req.session.buyer) {
-//         let buyerSession = req.session.buyer
-//         let sellerSession = null
-//     }
-//
-//
-//
-//     res.render("index", { sellerSession, buyerSession })
+//     let sellerSession = req.session.seller
+//     let buyerSession = req.session.buyer
+//     res.render("index",{sellerSession,buyerSession})
 // })
+
+
+app.get("/", (req, res) => {
+    req.session.apples = 3
+    console.log(req.session.apples)
+    if (!req.session) {
+        res.render("index")
+    }
+    let sellerSession
+    let buyerSession
+    if(req.session.seller) {
+        sellerSession = req.session.seller
+        buyerSession = null
+    }
+    if (req.session.buyer) {
+        buyerSession = req.session.buyer
+        sellerSession = null
+    }
+console.log('seller', sellerSession)
+    console.log('buyer', buyerSession)
+
+
+    res.render("index", { sellerSession, buyerSession })
+})
 
 app.get("/index2", (req, res) => {
     res.render("index2")
