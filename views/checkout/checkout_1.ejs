@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>shopping cart</title>
+<title>checkout</title>
 <!-- Material.io/ CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="../../styles.css">
@@ -12,12 +12,12 @@
     body {
         overflow: scroll;
     }
-
+    
     .submitOder {
         display: grid;
         margin: 7%;
     }
-
+    
     .submitOder input[type='text'],
     .submitOder input[type='email'],
     #card-element,
@@ -28,51 +28,41 @@
         width: 80%;
         background-color: white;
     }
-
-
+    
     .checkoutIpt {
         display: grid;
         margin: 2%;
     }
-
-
+    
     #PostalCode {
         width: 40%;
     }
-
+    
     #province,
     #city {
         width: 70%;
     }
-
+    
     .provinceCity {
         display: flex;
-
     }
-
-
-
+    
     .submitOder input[type='radio'] {
         width: 20px;
         height: 20px;
-
     }
-
+    
     #deliveryOption {
         display: flex;
         justify-content: space-around;
         margin: 4%;
-
     }
-
+    
     #submitBtn {
-
         text-align: center;
         justify-content: center;
-
     }
-
-
+    
     .paymentTotal {
         max-width: 85%;
         border-radius: 20px;
@@ -179,7 +169,8 @@
             </div>
         </div>
         <div class="paymentTotal">
-            <p>Subtotal(<%= cartQuantity %> item(s)): $<span id="itemsSubtotal">
+            <p>Subtotal(
+                <%= cartQuantity %> item(s)): $<span id="itemsSubtotal">
                         <%= subtotal.toFixed(2) %>
                     </span></p>
             <% if(cartQuantity>0) { %>
@@ -211,7 +202,6 @@
 <script src="../../checkout_payment.js"></script>
 
 <script>
-
     let shippingFee = 0
     let expressDelivery = document.getElementById("expressDelivery")
     let standardDelivery = document.getElementById("standardDelivery")
@@ -261,7 +251,6 @@
     //         })
 
     // })
-
 </script>
 
 

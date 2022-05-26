@@ -1,4 +1,3 @@
-
 /** database setup */
 const res = require("express/lib/response");
 const mysql = require("mysql2");
@@ -39,8 +38,7 @@ const dbConfigLocal = {
 
 if (is_heroku) {
     database = mysql.createPool(dbConfigHeroku).promise();
-}
-else {
+} else {
     database = mysql.createPool(dbConfigLocal).promise();
 }
 
@@ -496,7 +494,7 @@ async function addToCart(buyerId, productId) {
     //finding the cartId
     let cartId = await getCartIdByBuyerId(buyerId);
 
-    //-----------------------------------create the cart if it soes not exist
+    //-----------------------------------create the cart if it does not exist
 
     //checking if order exist already
     let sqlQuery = ` SELECT product_quantity FROM cart_product WHERE cart_id = ? AND product_id = ?`
@@ -665,27 +663,91 @@ exports.createOrderAfterPayment = createOrderAfterPayment
 
 
 
+//=========wishlist===============
 
 
 
+//get wishlist ID: if no exist wishlist ,then create one and return the wishlist_id
+async function getWishlistIdbyBuyerId(buyer_id) {
 
-// async function getCartItemByProduct(buyer_Id, product_id) {
-//     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
-// from buyer as b
-// left join cart as c
-// on b.buyer_id = c.buyer_id
-// left join cart_product as cp
-// on c.cart_id = cp.cart_id
-// left join productsandimages as p
-// on cp.product_id = p.product_id
-// where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
+    let queryOne = `Select wishlist_id from wishlist WHERE buyer_id = ?`
+    let [getWishlistId] = await database.query(queryOne, [buyer_id])
+    let wishlist_id = getWishlistId[0].wishlist_id
 
-//     let [cartItem] = await database.query(query, [buyer_Id,product_id])
-//     return cartItem[0]
-// }
-// exports.getCartItemByProduct = getCartItemByProduct
-// getCartItemByProduct(1,1).then(console.log)
+    if (!wishlist_id) {
+        let queryTwo = `INSERT INTO wishlist(buyer_id, quantity) VALUE(?, ?)`
+        let [createWishlist] = await database.query(queryTwo, [buyer_id, 1])
+        let newWishlist_id = createWishlist.insertId
+        return newWishlist_id
+    } else {
+        return wishlist_id
+    }
+}
 
+exports.getWishlistIdbyBuyerId = getWishlistIdbyBuyerId
+// getWishlistIdbyBuyerId(1).then(console.log)
+
+
+
+//checking if iterm exist in the wishlist already,and return the item
+async function getItemInWishlistProduct(buyer_id, product_id) {
+    let wishlist_id = await getWishlistIdbyBuyerId(buyer_id);
+
+    let querySelect = ` SELECT * FROM wishlist_product WHERE wishlist_id = ? AND product_id = ?`
+    let [wishlistItem] = await database.query(querySelect, [wishlist_id, product_id])
+    return wishlistItem
+}
+exports.getItemInWishlistProduct = getItemInWishlistProduct
+// getItemInWishlistProduct(3, 6).then(console.log)
+
+
+// if the item is not in the wishlist ,add it into the wishlist_product table and upate the wishlist quantity in wishlist table
+async function addToWishlist(buyer_id, product_id) {
+
+    let wishlistItem = await getItemInWishlistProduct(buyer_id, product_id)
+    let wishlist_id = await getWishlistIdbyBuyerId(buyer_id);
+
+    if (!wishlistItem.length) {
+        let queryInsert = `INSERT INTO wishlist_product(wishlist_id, product_id) VALUE(?,?)`
+        await database.query(queryInsert, [wishlist_id, product_id])
+
+        let quetyUpdate = `UPDATE wishlist Set quantity = quantity +1 WHERE wishlist_id = ?`
+        await database.query(quetyUpdate, [wishlist_id])
+        return true
+    } else {
+        return false
+    }
+
+}
+
+
+async function getAllWishlistByBuyer(buyer_id) {
+    let wishlist_id = await getWishlistIdbyBuyerId(buyer_id);
+
+    let query = `SELECT w.wishlist_product_id, w.wishlist_id, w.product_id, p.product_name, p.product_price, s.store_name,s.store_id, ph.photo_file_path
+                 from wishlist_product as w
+                 left join product as p
+                 on w.product_id = p.product_id
+                 left join store as s
+                 on p.store_id = s.store_id
+                 left join product_photo as ph
+                 on p.product_id = ph.product_id 
+                 where w.wishlist_id = ?;`
+
+    let [allWishlist] = await database.query(query, [wishlist_id])
+    return allWishlist
+}
+
+exports.getAllWishlistByBuyer = getAllWishlistByBuyer
+// getAllWishlistByBuyer(1).then(console.log)
+
+
+async function deleteWishlistItem(wishlist_product_id) {
+    let query = `DELETE FROM wishlist_product WHERE wishlist_product_id = ?`
+    await database.query(query, [wishlist_product_id])
+    return
+}
+exports.deleteWishlistItem = deleteWishlistItem
 
 
 
@@ -738,7 +800,6 @@ async function getBuyerChats(buyerId) {
 exports.getBuyerChats = getBuyerChats
 
 
-
 async function getSellerChats(storeId) {
     let query = `
     SELECT * FROM localscoop.chat
@@ -782,3 +843,32 @@ exports.getSellerChats = getSellerChats
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+// async function getCartItemByProduct(buyer_Id, product_id) {
+//     let query = `select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
+// from buyer as b
+// left join cart as c
+// on b.buyer_id = c.buyer_id
+// left join cart_product as cp
+// on c.cart_id = cp.cart_id
+// left join productsandimages as p
+// on cp.product_id = p.product_id
+// where b.buyer_id = ? and p.product_id = ? and c.purchased = "no";`
+
+//     let [cartItem] = await database.query(query, [buyer_Id,product_id])
+//     return cartItem[0]
+// }
+// exports.getCartItemByProduct = getCartItemByProduct
+// getCartItemByProduct(1,1).then(console.log)

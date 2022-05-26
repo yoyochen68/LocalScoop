@@ -22,7 +22,7 @@ app.use(express.json())
 app.engine('html', require('ejs').renderFile);
 // app.use(express.static(path.join(__dirname, './views')));
 
-router.get("/checkout_1", help.buyerAuthorized, async (req, res) => {
+router.get("/checkout_1", help.buyerAuthorized, async(req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
     let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
@@ -37,14 +37,14 @@ router.get("/checkout_1", help.buyerAuthorized, async (req, res) => {
 
 
 
-router.get("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
+router.get("/checkout_confirmation", help.buyerAuthorized, async(req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let cartQuantity = await mysqlDB.getCartItemsLength(buyer_id)
     res.render("checkout/checkout_confirmation", { cartQuantity })
 })
 
 
-router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => {
+router.post("/checkout_confirmation", help.buyerAuthorized, async(req, res) => {
     let buyer_id = req.session.buyer.buyer_id
     let cartItems = await mysqlDB.getCartItemsByBuyer(buyer_id)
     let cart_id = await mysqlDB.getCartIdByBuyerId(buyer_id)
@@ -72,7 +72,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
     }
 
     //=========for email======
-   async function autoEmailSent(order_id) {
+    async function autoEmailSent(order_id) {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
@@ -97,30 +97,30 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
                 </tr>
                 <tr>
                     <td style="padding-right: 80px;  margin-left:60px; text-align:left;">Purchased Iterm(` + cartQuantity + `)</td>
-                    <td style="text-align:right;">$`+ subtotal.toFixed(2) + `</td>
+                    <td style="text-align:right;">$` + subtotal.toFixed(2) + `</td>
                 </tr>
                 <tr>
                     <td style="padding-right: 80px;  margin-left:60px; text-align:left;">Shipping Fee</td>
-                    <td style="text-align:right;">$`+ parseInt(deliveryfee).toFixed(2) + `</td>
+                    <td style="text-align:right;">$` + parseInt(deliveryfee).toFixed(2) + `</td>
                 </tr>
                 <tr>
                     <td style="padding-right: 80px; margin-left:60px; text-align:left;">Sales Tax</td>
-                    <td style="text-align:right;">$`+ (subtotal * 0.12).toFixed(2) + `</td>
+                    <td style="text-align:right;">$` + (subtotal * 0.12).toFixed(2) + `</td>
                 </tr>
                 <tr>
                     <th style="padding-right: 80px;  margin-left:60px; text-align:left;">TOTAL</th>
-                    <th style="text-align:right;">$`+ parseInt(totalAmount).toFixed(2) + `</th>
+                    <th style="text-align:right;">$` + parseInt(totalAmount).toFixed(2) + `</th>
                 </tr>
             </table>
            
     <div>
         <h4>Delivery Address:</h4>` + fullAddress + `
     </div>
-    <h4 style="margin-bottom:50px;" >Your order will be delivery in `+ deliveryDays + ` days</h4>
+    <h4 style="margin-bottom:50px;" >Your order will be delivery in ` + deliveryDays + ` days</h4>
         </div>`
         };
 
-      await transporter.sendMail(mailOptions, function (error, info) {
+        transporter.sendMail(mailOptions, function(error, info) {
             if (error) {
                 console.log(error);
             } else {
@@ -167,7 +167,7 @@ router.post("/checkout_confirmation", help.buyerAuthorized, async (req, res) => 
                 })
             )
             // .then(() => res.render("checkout_confirmation.ejs"))
-            .then(async (responses) => {
+            .then(async(responses) => {
 
                 let stripePaymentId = responses.id
 

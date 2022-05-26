@@ -43,6 +43,7 @@
     <% if(cartQuantity> 0 ) { %>
         <% for(let cartItem of cartItems){ %>
             <% if(cartItem.product_quantity> 0){ %>
+
                 <section class="shoppingCart" id="<%= cartItem.cart_product_id %>">
                     <img src="<%= cartItem.image_file_paths[0] %>" class="shopping_cart_img">
                     <div>
@@ -53,12 +54,12 @@
                         <p class="saveForLater">Save for later</p>
                     </div>
                     <div class="priceAndQuantity">
-                        <p class="price">$<%= cartItem.product_price %>
+                        <p class="price">$
+                            <%= cartItem.product_price %>
                         </p>
                         <div class="quantityBtn">
 
-                            <button type="button"
-                                onclick="incrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#43;</button>
+                            <button type="button" onclick="incrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#43;</button>
                             <span class="product_quantity" id="productQuantity_<%= cartItem.cart_product_id %>">
                                 <% if(cartItem.product_quantity <=1){ %>
                                     <%= cartItem.product_quantity=1 %>
@@ -68,8 +69,7 @@
 
                             </span>
 
-                            <button type="button"
-                                onclick="decrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#8211;</button>
+                            <button type="button" onclick="decrementQuantity('<%= cartItem.cart_product_id %>','<%= cartItem.buyer_id %>','<%= cartItem.product_quantity %>','<%= cartItem.product_id %>')">&#8211;</button>
 
                         </div>
                     </div>
@@ -79,7 +79,8 @@
                         <div class="subtotal">
                             <div>Subtotal:</div>
 
-                            <div id="totalAmount">CAD $<%= subtotal.toFixed(2) %>
+                            <div id="totalAmount">CAD $
+                                <%= subtotal.toFixed(2) %>
                             </div>
                             <a href="/checkout/checkout_1">
                                 <button type="submit" class="yellow-bn xs-bn">checkout</button>
@@ -88,8 +89,7 @@
                         <div class="extraspace"></div>
                         <% } else { %>
                             <div class="emt">
-                                <img src="https://sethisbakery.com/assets/website/images/empty-cart.png" alt=""
-                                    class="emptyCart">
+                                <img src="https://sethisbakery.com/assets/website/images/empty-cart.png" alt="" class="emptyCart">
                                 <a href="/add_cart/products">
                                     <button type="button" class="yellow-bn s-bn">Continue shopping</button>
                                 </a>
@@ -103,7 +103,6 @@
 
                                 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                                 <script>
-
                                     // let referrerLink = document.referrer
                                     // console.log(referrerLink)
 
@@ -120,21 +119,21 @@
                                         // productQuan.innerText = localQuantity[cart_product_id]
 
                                         axios.post('/shopping_cart/shopping_cart_add', {
-                                            cart_product_id: cart_product_id,
-                                            buyer_id: buyer_id,
-                                            product_id: product_id
-                                        }).then(response => {
-                                            let itermQuantity = response.data.itermQuantity
-                                            let cartQuantity = response.data.cartQuantity
-                                            let subtotal = response.data.subtotal
+                                                cart_product_id: cart_product_id,
+                                                buyer_id: buyer_id,
+                                                product_id: product_id
+                                            }).then(response => {
+                                                let itermQuantity = response.data.itermQuantity
+                                                let cartQuantity = response.data.cartQuantity
+                                                let subtotal = response.data.subtotal
 
-                                            document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
-                                            document.querySelector(".dot").innerText = cartQuantity
-                                            document.getElementById("totalAmount").innerText = "CAD $" + subtotal.toFixed(2)
-                                        }).catch(error => {
-                                            console.log(error);
-                                        })
-                                        // location.reload();
+                                                document.querySelector("#productQuantity_" + cart_product_id).innerText = itermQuantity
+                                                document.querySelector(".dot").innerText = cartQuantity
+                                                document.getElementById("totalAmount").innerText = "CAD $" + subtotal.toFixed(2)
+                                            }).catch(error => {
+                                                console.log(error);
+                                            })
+                                            // location.reload();
 
                                     }
 
@@ -176,8 +175,6 @@
                                         })
                                         location.reload();
                                     }
-
-
                                 </script>
 </body>
 
