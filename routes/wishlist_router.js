@@ -37,7 +37,7 @@ router.get("/wishlist_1", help.buyerAuthorized, async (req, res) => {
 
 router.post("/wishlist_removeItem", help.buyerAuthorized, async (req, res) => {
     let wishlist_product_id = +req.body.wishlist_product_id
-    console.log(wishlist_product_id)
+    
     await mysqlDB.deleteWishlistItem(wishlist_product_id)
 
     res.json({ message: "Have removed the item in wishlist" })
