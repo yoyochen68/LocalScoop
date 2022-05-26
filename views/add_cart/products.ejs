@@ -13,7 +13,7 @@
 			width:100%;
 			display: flex;
 			align-items:center;
-			justify-content: center;
+			justify-content: center
 		}
 
 
@@ -50,6 +50,11 @@
 		}
 
 
+		.search-btn span{
+			background-color: white;
+		}
+
+
 	</style>
 	<title>Document</title>
 </head>
@@ -68,7 +73,7 @@
 	<div class="nav-wrapper--right buyer">
 		<div class="bag">
 			<a href="/shopping_cart/shopping_cart">
-				<%if(cartItemsTotal !==0 ){%>
+				<%if(cartItemsTotal){%>
 				<div class="dot">
 					<%=cartItemsTotal%>
 				</div>
@@ -81,6 +86,7 @@
 </header>
 <main class="products-body buyer-grid-body">
 	<div class="top_space"></div>
+
 
 	<div class="search-div">
 		<form action="/add_cart/products" method="post" class="search-bar">
