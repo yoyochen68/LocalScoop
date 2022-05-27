@@ -33,8 +33,8 @@ router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
 
     let seller_id = req.session.seller.seller_id
     
-    // let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id)
-    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(2)
+   
+    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(seller_id)
     console.log(carouselSliderData)
     
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
@@ -68,7 +68,7 @@ router.get("/orders_2", help.sellerAuthorized, async (req, res) => {
         { itemName: "Mens Leather Boots", deliveryStatus: "Delivered", feedbackStatus: "", time: "2 Weeks Ago" }, 
     ]
     
-    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id);
+    let orderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(seller_id);
 
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of orderData){

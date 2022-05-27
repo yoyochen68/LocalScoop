@@ -83,25 +83,6 @@ async function getOrdersByStoreId(store_id) {
 exports.getOrdersByStoreId = getOrdersByStoreId
 
 
-/**
- * NEEDS TO BE REWRITTEN  
- * @param {number} store_id 
- * @returns array of objects, orders and info of its products by store_id 
- */
-async function getOrdersWithProductsPhotosByStoreId(store_id) {
-    // if sql command run with no store_id, everything will crash
-    if (store_id == undefined) {
-        return;
-    }
-
-    let query = 'SELECT * FROM `order` LEFT JOIN product ON `order`.product_id = `product`.product_id LEFT JOIN product_photo on `product_photo`.product_id = `order`.product_id LEFT JOIN order_status ON `order_status`.order_status_id = `order`.order_status_id WHERE `order`.store_id = ?'
-
-
-    let orders = await database.query(query, [store_id]);
-    return orders[0];
-}
-exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
-// getOrdersWithProductsPhotosByStoreId(1).then(console.log)
 
 
 async function getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(store_id){
@@ -120,27 +101,6 @@ async function getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(store_id
 exports.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable = getOrdersWithProductsPhotosByStoreId_NoOrderProductTable
 
 
-// select p.product_id, s.store_id, p.product_name, o.order_id, c.cart_id, o.totalAmount,o.order_status_id,o.order_timestamp,o.delivery_address,c.buyer_id, pp.photo_file_path
-// from `order` as o
-// left join cart as c
-// on o.cart_id = c.cart_id
-// left join cart_product as cp
-// on c.cart_id = cp.cart_id
-// left join product as p 
-// on cp.product_id = p.product_id
-// left join product_photo as pp
-// on p.product_id = pp.product_id
-// left join store as s
-// on s.store_id = p.store_id
-// where s.store_id = 1;
-
-
-
-
-
-
-
-
 async function authenticateShopOwner(store_email, store_password) {
     let query = `
         SELECT * 
@@ -153,8 +113,6 @@ async function authenticateShopOwner(store_email, store_password) {
 exports.authenticateShopOwner = authenticateShopOwner
 // authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
-
-
 
 
 async function authenticateBuyer(buyer_email, buyer_password) {
