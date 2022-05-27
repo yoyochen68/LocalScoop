@@ -273,7 +273,7 @@
         function addToCartBtnFromWishlist(product_id) {
             axios.post('/add_cart/add_cart/' + product_id)
                 .then(response => {
-                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    document.querySelector(".dot").innerHTML = response.data.cartQuantity
                     // console.log(cartItemsTotal, "the item has been added to the bag ")
                 })
                 .catch(error => {
