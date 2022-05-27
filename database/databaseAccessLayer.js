@@ -551,7 +551,9 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
+
 // getCartItemsCount(3).then(console.log)
+
 
 
 
