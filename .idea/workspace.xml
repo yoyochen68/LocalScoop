@@ -6,9 +6,20 @@
   <component name="ChangeListManager">
     <list default="true" id="5fe0e7c9-5a18-4399-924e-56cda7999d5f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/databaseAccessLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/database/databaseAccessLayer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/chat.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/chat.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/buyer_setup_router.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/buyer_setup_router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/chat_router.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/chat_router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/chat/room.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/room.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/socketChat.js" beforeDir="false" afterPath="$PROJECT_DIR$/socketChat.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/buyer_setup/buyer_signup.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/buyer_setup/buyer_signup.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/chat/buyer_index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/buyer_index.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/chat/store_index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/store_index.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_setup_2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_setup_2.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_setup_3.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_setup_3.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_setup_4.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_setup_4.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_setup_6.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_setup_6.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/shop_setup/shop_setup_7.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/shop_setup/shop_setup_7.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

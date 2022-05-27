@@ -65,21 +65,30 @@
         <div class="lobby-container">
             <div class="lobby-users ">
 
-                <% buyerChatList.forEach(chat=>{ %>
-                <div class="user">
-                    <div class="img-container"> <img src=<%=chat.image_file_paths[0]%>>   </div>
-                    <div class="messageInfo_container">
-                        <div>
-                        <p><a href="/chat/room/<%=chat.chat_id%>"><%=chat.store_name%></a></p>
-<!--                        <p>This will be the message </p>-->
-<!--                            PLACEHOLDER-->
-                        </div>
-                    </div>
-                    <!--                            PLACEHOLDER-->
-                    <div class="date_container"><p>Today</p></div>
-                </div>
+                <%if( buyerChatList.length !== 0){
+                    buyerChatList.forEach(chat=>{
 
-                <%  }); %>
+                    let last_timestamp = parseInt(chat.last_timestamp)
+                    let date = new Date(last_timestamp);%>
+
+                <a href="/chat/room/<%=chat.chat_id%>">
+                    <div class="user">
+                        <div class="img-container"> <img src=<%=chat.image_file_paths[0]%>>   </div>
+                        <div class="messageInfo_container">
+                            <div>
+                                <p class="storeName"><%=chat.store_name%></p>
+                                <p><%=chat.last_message%></p>
+                            </div>
+                        </div>
+                        <!--                            PLACEHOLDER-->
+                        <div class="date_container"><p><span><%= date.getHours()+ ":"+ date.getMinutes()%></span></p></div>
+                    </div>
+                </a>
+
+                 <%  });
+                }else{%>
+                    <div class="comingSoon">Your inbox is empty.</div>
+                <%  } %>
 
             </div>
         </div>
