@@ -22,10 +22,14 @@ app.use(express.json())
 
 
 // GET /buyer_profile/profile_setup
+<<<<<<< HEAD
 router.get("/profile_setup", help.buyerAuthorized,async (req, res) => {
+=======
+router.get("/profile_setup", help.buyerAuthorized, async (req, res) => {
+>>>>>>> develop
   // res.send("hi")
   let buyer_id = req.session.buyer.buyer_id
-  let cartQuantity= await mysqlDB.getCartItemsCount(buyer_id)
+  let cartQuantity= await mysqlDB.getCartItemsLength(buyer_id)
 
   res.render("buyer_profile/profile_setup",{cartQuantity})
 })

@@ -8,6 +8,8 @@
 <!--    <link rel="stylesheet" href="../../styles.css">-->
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="icon" type="image/x-icon" href="/logo/localscooplogo2.png">
+
 
 
     <link
@@ -46,16 +48,26 @@
 <header class="fixed_header">
     <div class="nav-wrapper buyer buyer-shop-header">
         <div class="nav-wrapper--left buyer">
-            <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+            <%if(onlineUser =="buyer"){%>
+                <a href="/chat/buyer"> <span class="material-icons nav-icon">arrow_back</span></a>
+            <%} else {%>
+                <a href="/chat/store"> <span class="material-icons nav-icon">arrow_back</span></a>
+
+            <%}%>
         </div>
         <div class="nav-wrapper--middle buyer">
             Messages
         </div>
         <div class="nav-wrapper--right buyer">
-
             <div>
-                <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+                <%if(onlineUser =="buyer"){%>
+                <a href="/chat/buyer"> <span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+                    <%} else {%>
+                    <a href="/chat/store"> <span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+
+                    <%}%>
             </div>
+
             <div class="bag">
 
             </div>
