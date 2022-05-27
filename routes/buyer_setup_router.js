@@ -99,11 +99,9 @@ router.post("/buyer_signup", async (req, res) => {
 // redirect to next page
     res.redirect(`/follow_business/follow_business_1`)
 
-
-
-
-
-
 })
+
+
+
 
 module.exports = router;

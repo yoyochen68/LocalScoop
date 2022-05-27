@@ -43,7 +43,7 @@ const checkoutRouter = require("./routes/checkout_router")
 const analyticsRouter = require("./routes/analytics_router")
 const wishlistRouter = require("./routes/wishlist_router")
 const buyerProfileRouter = require("./routes/buyer_profile_router")
-
+const mapsRouter = require("./routes/map_router")
 
 
 
@@ -94,7 +94,7 @@ app.use("/buyer_setup", buyerSetupRouter)
 app.use("/chat", chatRouter)
 app.use("/checkout", checkoutRouter)
 app.use("/analytics", analyticsRouter)
-// app.use("/map", mapsRouter)
+app.use("/map", mapsRouter)
 app.use("/wishlist", wishlistRouter)
 app.use("/buyer_profile", buyerProfileRouter)
 
@@ -145,7 +145,6 @@ function authorized(req, res, next) {
 
 
 app.get("/", (req, res) => {
-    req.session.apples = 3
     console.log(req.session.apples)
     if (!req.session) {
         res.render("index")
@@ -172,7 +171,7 @@ app.get("/index2", (req, res) => {
 })
 
 // dcs = delete cookie session. unnecessary, but for ease of deleting cookies during dev
-app.get("/dcs", (req, res) => {
+app.get("/logout", (req, res) => {
     req.session.destroy()
     res.redirect("/");
 })

@@ -41,13 +41,17 @@ router.get("/create/:id",  async (req, res) => {
 router.get("/store", help.sellerAuthorized,  async (req, res) => {
 
     let storeId = req.session.seller.seller_id
+    let buyerId = req.session.buyer.buyer_id
+
 
     // Geting the chatrooms related to the store id
     let storeChatList = await mysqlDB.getStoreChats(storeId)
+    let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
+
     console.log(storeChatList)
 
 
-    res.render("chat/store_index",{storeChatList:storeChatList});
+    res.render("chat/store_index",{storeChatList:storeChatList, cartQuantity});
 
 })
 
@@ -64,10 +68,11 @@ router.get("/buyer",async (req, res) => {
 
     // Geting the chatrooms related to the store id
     let buyerChatList = await mysqlDB.getBuyerChats(buyerId)
+    let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
     console.log("buyerChatList", buyerChatList)
 
 
-    res.render("chat/buyer_index", {buyerChatList:buyerChatList});
+    res.render("chat/buyer_index", {buyerChatList:buyerChatList, cartQuantity});
 })
 
 
@@ -81,8 +86,12 @@ router.get("/room/:id",  async (req, res) => {
     req.session.authenticated = true
 
     let roomId = req.params.id
+    let buyerId = req.session.buyer.buyer_id
+
     let chatUserInfo = await mysqlDB.getChatUserinfo(roomId)
     let roomUsers = await mysqlDB.chatUsersName(roomId)
+    let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
+
 
     let cp={}
     console.log("chatUserInfo",chatUserInfo)
@@ -116,7 +125,7 @@ router.get("/room/:id",  async (req, res) => {
 
     console.log(cp.id, cp.name, cp.image)
     
-    res.render("chat/room",{ roomId:roomId, chistory: chistory,cp});
+    res.render("chat/room",{ roomId:roomId, chistory: chistory,cp, cartQuantity});
     // res.render("chat/room",{roomId:roomId, storeName:storeName, buyerName:buyerName});
 
 })

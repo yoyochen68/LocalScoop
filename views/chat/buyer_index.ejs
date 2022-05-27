@@ -28,23 +28,34 @@
 
 
 
-    <header class="fixed_header">
-        <div class="nav-wrapper buyer buyer-shop-header">
-            <div class="nav-wrapper--left buyer">
-                <a href="/add_cart/products"><span class="material-icons nav-icon">arrow_back</span></a>
-            </div>
-            <div class="nav-wrapper--middle buyer">
-                Messages
-            </div>
+<header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+        <div class="nav-wrapper--left buyer">
+            <a href="/add_cart/products"><span class="material-icons nav-icon">arrow_back</span></a>
         </div>
-
+        <div class="nav-wrapper--middle buyer">
+            Inbox
+        </div>
         <div class="nav-wrapper--right buyer">
-                hi?
-                <!--            <a href="/shopping_cart/shopping_cart">-->
-                <!--                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>-->
-                <!--            </a>-->
+
+            <div>
+                <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+            </div>
+            <div class="bag">
+                <a href="/shopping_cart/shopping_cart">
+                    <% if(cartQuantity !==0 ){ %>
+                        <div class="dot">
+                            <%= cartQuantity %>
+                        </div>
+                    <% } %>
+                    <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+                </a>
+            </div>
 
         </div>
+    </div>
+
+
 </header>
     <main>
 
