@@ -19,8 +19,8 @@ router.get("/product_post_1", help.sellerAuthorized, (req, res) => {
 router.post("/product_post_1", help.sellerAuthorized, async(req, res) => {
     let productInfo = req.body
 
-    req.session.storeId = 15
-        // let storeId = req.session.seller.seller_id;
+    // req.session.storeId = 15
+        let storeId = req.session.seller.seller_id;
 
     let product_name = productInfo.productName
     let product_category = productInfo.category

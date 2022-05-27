@@ -720,7 +720,7 @@ async function addToWishlist(buyer_id, product_id) {
     }
 
 }
-
+exports.addToWishlist = addToWishlist
 
 async function getAllWishlistByBuyer(buyer_id) {
     let wishlist_id = await getWishlistIdbyBuyerId(buyer_id);
