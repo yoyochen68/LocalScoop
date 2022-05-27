@@ -7,17 +7,8 @@
     <list default="true" id="5fe0e7c9-5a18-4399-924e-56cda7999d5f" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/chat_router.js" beforeDir="false" afterPath="$PROJECT_DIR$/routes/chat_router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add_cart/add_cart.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/add_cart/add_cart.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add_cart/product_search.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/add_cart/product_search.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/add_cart/products.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/add_cart/products.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/buyer_profile/profile_setup.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/buyer_profile/profile_setup.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/chat/buyer_index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/buyer_index.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/chat/room.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/room.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/chat/store_index.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/chat/store_index.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orders/orders_1.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders/orders_1.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/orders/orders_2.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/orders/orders_2.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/seller_landing/seller_landing.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/seller_landing/seller_landing.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/seller_shop/seller_shop.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/views/seller_shop/seller_shop.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
