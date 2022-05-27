@@ -477,7 +477,8 @@ exports.storesAndImagesViews = storesAndImagesViews
 //======yasmina code for add to cart===
 
 async function getCartIdByBuyerId(buyerId) {
-    let query = ` SELECT cart_id
+    let query = `
+        SELECT cart_id
         FROM cart
         WHERE buyer_id = ? AND purchased = "no" `
     const [buyerActiveCartId] = await database.query(query, [buyerId])
@@ -486,14 +487,13 @@ async function getCartIdByBuyerId(buyerId) {
         return buyerActiveCartId[0]['cart_id']
     } else {
         let addNewCartquery = `INSERT INTO cart(buyer_id) VALUE (?)`
-        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId])
+        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId]) 
         let cart_id = buyerActiveCartId.insertId
         return cart_id;
     }
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-
 // getCartIdByBuyerId(3).then(console.log)
 
 
