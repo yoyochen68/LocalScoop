@@ -22,7 +22,7 @@ app.use(express.json())
 
 
 // GET /buyer_profile/profile_setup
-router.get("/profile_setup", async (req, res) => {
+router.get("/profile_setup", help.buyerAuthorized,async (req, res) => {
   // res.send("hi")
   res.render("buyer_profile/profile_setup")
 })
