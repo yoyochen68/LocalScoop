@@ -98,18 +98,22 @@
             </div>
 
             <div class="nav-wrapper--right buyer">
+
+                <div>
+                    <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+                </div>
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
-
-                        <%if(cartItemsTotal){%>
+                        <% if(cartQuantity !==0 && cartQuantity !==null ){ %>
+                        
                             <div class="dot">
-                                <%=cartItemsTotal%>
+                                <%= cartQuantity %>
                             </div>
-                            <%}%>
-
-                                <span class="material-icons nav-icon seller-shop"> shopping_cart </span>
+                        <% } %>
+                        <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
                     </a>
                 </div>
+
             </div>
 
         </div>
@@ -150,7 +154,7 @@
 
 
                 <div class="product_react_btn_set">
-                    <button><span class="material-icons white-text">mode_comment</span></button>
+                    <a href="/create/<%=productInfo.product_id%>"><button><span class="material-icons white-text">mode_comment</span></button></a>
                     <button class="cc"><span class="material-icons">share</span></button>
 
 
@@ -199,7 +203,7 @@
         document.querySelector(".addToCartBtn").addEventListener("click", () => {
             axios.post('/add_cart/add_cart/<%= productInfo.product_id %>')
                 .then(response => {
-                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    document.querySelector(".dot").innerHTML = response.data.cartQuantity
                     // console.log(cartItemsTotal, "the item has been added to the bag ")
                 })
                 .catch(error => {

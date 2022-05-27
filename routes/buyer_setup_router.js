@@ -82,7 +82,7 @@ router.post("/buyer_signup", async (req, res) => {
     let buyer_password = req.body.password;
 
     if (buyer_name == null || buyer_phone_number == null || buyer_email == null || buyer_password == null) {
-        res.redirect("/shop_setup/shop_setup")
+        res.redirect("/buyer_setup/buyer_signup")
     }
 
 // write store name into database
@@ -98,11 +98,9 @@ router.post("/buyer_signup", async (req, res) => {
 // redirect to next page
     res.redirect(`/follow_business/follow_business_1`)
 
-
-
-
-
-
 })
+
+
+
 
 module.exports = router;
