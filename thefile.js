@@ -2,4 +2,6 @@ function a(para){
     return para
 }
 
-console.log(a('aaa'))
+
+console.log('7:50pm')
+
