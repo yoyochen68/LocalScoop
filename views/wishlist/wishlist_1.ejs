@@ -168,7 +168,7 @@
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
 
-                        <%if(cartQuantity !==0 ){%>
+                        <% if(cartQuantity !==0 && cartQuantity !==null ){ %>
                             <div class="dot">
                                 <%= cartQuantity %>
                             </div>
@@ -279,7 +279,7 @@
                 .catch(error => {
                     console.log(error);
                 })
-
+       
         }
 
 
