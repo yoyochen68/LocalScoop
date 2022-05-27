@@ -37,13 +37,44 @@
 
 
   <!-- back button -->
-  <div class="buyer-setup-header">
-    <div class="back-btn"><a  onclick="history.back()"><span style="margin-left:50px" class="material-icons back-icon">arrow_back</span></a></div>
-        <div class="header_title">Profile</div>
-    <div></div>
+<!--  <div class="buyer-setup-header">-->
+<!--    <div class="back-btn"><a  onclick="history.back()"><span style="margin-left:50px" class="material-icons back-icon">arrow_back</span></a></div>-->
+<!--        <div class="header_title">Profile</div>-->
+<!--    <div></div>-->
 
 
-  </div>
+<!--  </div>-->
+  <header class="fixed_header">
+    <div class="nav-wrapper buyer buyer-shop-header">
+      <div class="nav-wrapper--left buyer">
+        <a onclick="history.back()"><span class="material-icons nav-icon">arrow_back</span></a>
+      </div>
+      <div class="nav-wrapper--middle buyer">
+        Products
+      </div>
+      <div class="nav-wrapper--right buyer">
+
+        <div>
+          <a href="/chat/buyer"><span class="material-icons white-text nav-icon buyer">mode_comment</span></a>
+        </div>
+        <div class="bag">
+          <a href="/shopping_cart/shopping_cart">
+            <% if(cartQuantity !==0 ){ %>
+              <div class="dot">
+                <%= cartQuantity %>
+              </div>
+            <% } %>
+            <span class="material-icons nav-icon buyer nav-icon"> shopping_cart </span>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </header>
+
+  <div class="top_space"></div>
+
 
 
   <div class="centerBox m-font signupIntro ">
@@ -52,6 +83,8 @@
       So buyers know who you are!</p>
       <img class="defaultImage"src="https://cdn-icons-png.flaticon.com/512/1255/1255134.png?w=740">
       <button type="button" class="yellow-bn s-bn">Let's start</button>
+    <a href="/logout"><button type="button" class="logout-bn s-bn">Log Out</button></a>
+
 
 
   </div>
