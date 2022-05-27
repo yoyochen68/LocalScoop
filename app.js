@@ -100,16 +100,11 @@ app.use("/buyer_profile", buyerProfileRouter)
 
 
 
-function authorized(req, res, next) {
-    if (!req.session.email) {
-        res.redirect("/login")
-        return
-    }
-    next()
-}
 
-// =======session:
-//set the session:
+
+//=======session:
+// set the session:
+
 // req.session.id = id
 //
 // get the session:
@@ -145,7 +140,7 @@ function authorized(req, res, next) {
 
 
 app.get("/", (req, res) => {
-    console.log(req.session.apples)
+
     if (!req.session) {
         res.render("index")
     }

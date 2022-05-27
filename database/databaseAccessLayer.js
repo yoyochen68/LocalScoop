@@ -67,14 +67,13 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * NEEDS TO BE REWRITTEN
+ * NEEDS TO BE REWRITTEN  asdf
  *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
 async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
-
 
     let orders = await database.query(query, [store_id]);
     return orders[0];
@@ -83,7 +82,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
- * NEEDS TO BE REWRITTEN
+ * NEEDS TO BE REWRITTEN  asdf
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
@@ -100,6 +99,7 @@ async function getOrdersWithProductsPhotosByStoreId(store_id) {
     return orders[0];
 }
 exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
+// getOrdersWithProductsPhotosByStoreId(1).then(console.log)
 
 
 
@@ -478,7 +478,8 @@ exports.storesAndImagesViews = storesAndImagesViews
 //======yasmina code for add to cart===
 
 async function getCartIdByBuyerId(buyerId) {
-    let query = ` SELECT cart_id
+    let query = `
+        SELECT cart_id
         FROM cart
         WHERE buyer_id = ? AND purchased = "no" `
     const [buyerActiveCartId] = await database.query(query, [buyerId])
@@ -487,14 +488,13 @@ async function getCartIdByBuyerId(buyerId) {
         return buyerActiveCartId[0]['cart_id']
     } else {
         let addNewCartquery = `INSERT INTO cart(buyer_id) VALUE (?)`
-        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId])
+        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId]) 
         let cart_id = buyerActiveCartId.insertId
         return cart_id;
     }
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-
 // getCartIdByBuyerId(3).then(console.log)
 
 
@@ -525,7 +525,6 @@ async function addToCart(buyerId, productId) {
     await database.query(query, [cartId, productId])
     return getCartItemsCount(buyerId)
     // later you can substitute it with better return value
-
 }
 
 exports.addToCart = addToCart
@@ -539,9 +538,10 @@ exports.addToCart = addToCart
 async function getCartItemsCount(buyerId) {
     let cartId = await getCartIdByBuyerId(buyerId);
 
-    let query = ` SELECT SUM(product_quantity) AS product_quantity
-    FROM cart_product
-    WHERE cart_id = ?;`
+    let query = ` 
+        SELECT SUM(product_quantity) AS product_quantity
+        FROM cart_product
+        WHERE cart_id = ?;`
 
     const [itemsCountObject, fields] = await database.query(query, [cartId])
     return itemsCountObject[0].product_quantity
@@ -551,11 +551,11 @@ exports.getCartItemsCount = getCartItemsCount
 
 
 
+
 //====YOYO CODE FOR ADD TO CART======
 
 
 async function getCartItemsByBuyer(buyer_id) {
-
     let query = `
         select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
         from buyer as b
@@ -727,7 +727,7 @@ async function addToWishlist(buyer_id, product_id) {
     }
 
 }
-
+exports.addToWishlist = addToWishlist
 
 async function getAllWishlistByBuyer(buyer_id) {
     let wishlist_id = await getWishlistIdbyBuyerId(buyer_id);
