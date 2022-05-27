@@ -548,6 +548,23 @@ async function getCartItemsCount(buyerId) {
 
 }
 exports.getCartItemsCount = getCartItemsCount
+// getCartItemsCount(3).then(console.log)
+
+
+
+async function getCartItemsLength(buyer_id) {
+    let cartItems = await getCartItemsByBuyer(buyer_id)
+    // console.log("bew",cartItems)
+    let cartQuantity = 0
+    cartItems.forEach(item => {
+        cartQuantity = cartQuantity + item.product_quantity
+
+    })
+    return cartQuantity
+}
+
+exports.getCartItemsLength = getCartItemsLength
+// getCartItemsLength(3).then(console.log)
 
 
 
@@ -578,20 +595,6 @@ exports.getCartItemsByBuyer = getCartItemsByBuyer
 
 
 
-async function getCartItemsLength(buyer_id) {
-    let cartItems = await getCartItemsByBuyer(buyer_id)
-    // console.log("bew",cartItems)
-    let cartQuantity = 0
-    cartItems.forEach(item => {
-        cartQuantity = cartQuantity + item.product_quantity
-
-    })
-    return cartQuantity
-}
-
-exports.getCartItemsLength = getCartItemsLength
-// getCartItemsLength(1).then(console.log)
-
 
 
 async function getCartItemByProduct(buyer_id, product_id) {
@@ -611,16 +614,21 @@ async function getCartItemByProduct(buyer_id, product_id) {
 exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
 
-async function getCartItemsLength(buyer_Id) {
-    let cartItems = await getCartItemsByBuyer(buyer_Id)
-    let cartQuantity = 0
-    cartItems.forEach(item => {
-        cartQuantity = cartQuantity + item.product_quantity
-    })
-    return cartQuantity
-}
-exports.getCartItemsLength = getCartItemsLength
-// getCartItemsLength(1).then(console.log)
+
+
+
+// async function getCartItemsLength(buyer_Id) {
+//     let cartItems = await getCartItemsByBuyer(buyer_Id)
+//     let cartQuantity = 0
+//     cartItems.forEach(item => {
+//         cartQuantity = cartQuantity + item.product_quantity
+//     })
+//     return cartQuantity
+// }
+// exports.getCartItemsLength = getCartItemsLength
+// // getCartItemsLength(1).then(console.log)
+//
+
 
 
 async function inCartItem(cart_product_id, buyer_id, product_id) {
@@ -853,7 +861,7 @@ async function getBuyerChats(buyerId) {
     JOIN store ON chat.store_id = store.store_id
     JOIN storesandimages ON store.store_id=storesandimages.store_id
     WHERE chat.buyer_id = ?
-    ORDER BY chat.store_id DESC`
+    ORDER BY chat.last_timestamp DESC`
 
     let [buyerChat, fields] = await database.query(query, [buyerId])
     return buyerChat
@@ -869,7 +877,7 @@ async function getStoreChats(storeId) {
     FROM chat
     LEFT JOIN buyer ON chat.buyer_id = buyer.buyer_id
     WHERE chat.store_id = ?
-    ORDER BY chat.store_id DESC`
+    ORDER BY chat.last_timestamp DESC`
 
     let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
