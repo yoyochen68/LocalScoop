@@ -105,6 +105,27 @@ exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStor
 
 
 
+// select p.product_id, s.store_id, p.product_name, o.order_id, c.cart_id, o.totalAmount,o.order_status_id,o.order_timestamp,o.delivery_address,c.buyer_id, pp.photo_file_path
+// from `order` as o
+// left join cart as c
+// on o.cart_id = c.cart_id
+// left join cart_product as cp
+// on c.cart_id = cp.cart_id
+// left join product as p 
+// on cp.product_id = p.product_id
+// left join product_photo as pp
+// on p.product_id = pp.product_id
+// left join store as s
+// on s.store_id = p.store_id
+// where s.store_id = 1;
+
+
+
+
+
+
+
+
 async function authenticateShopOwner(store_email, store_password) {
     let query = `
         SELECT * 
