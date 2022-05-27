@@ -969,12 +969,11 @@ hr {
 
 .analytisImg {
     max-width: 60%;
-    max-height: auto;
+   
 }
 
 .summaryImg {
     max-width: 75%;
-    max-height: auto;
 }
 
 .analyticsText {
@@ -1034,7 +1033,7 @@ hr {
     justify-content: center;
 
   
-  
+}
   /* ==============for wishlist=========== */
 
 .wishlistBody {

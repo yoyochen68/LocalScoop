@@ -71,6 +71,8 @@ exports.getProductsByStoreId = getProductsByStoreId
  *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
+
+
 async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
@@ -495,7 +497,7 @@ async function getCartIdByBuyerId(buyerId) {
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-// getCartIdByBuyerId(3).then(console.log)
+// getCartIdByBuyerId(2).then(console.log)
 
 
 
@@ -549,7 +551,7 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-getCartItemsCount(8).then(console.log)
+// getCartItemsCount(3).then(console.log)
 
 
 
