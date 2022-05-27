@@ -578,6 +578,7 @@ exports.getCartItemsCount = getCartItemsCount
 
 
 
+
 //====YOYO CODE FOR ADD TO CART======
 
 
@@ -878,7 +879,8 @@ async function getBuyerChats(buyerId) {
     FROM chat
     JOIN store ON chat.store_id = store.store_id
     JOIN storesandimages ON store.store_id=storesandimages.store_id
-    WHERE chat.buyer_id = ?;`
+    WHERE chat.buyer_id = ?
+    ORDER BY chat.store_id DESC`
 
     let [buyerChat, fields] = await database.query(query, [buyerId])
     return buyerChat
@@ -893,7 +895,8 @@ async function getStoreChats(storeId) {
     SELECT chat.* , buyer.buyer_firstname, buyer.buyer_profile_photo
     FROM chat
     LEFT JOIN buyer ON chat.buyer_id = buyer.buyer_id
-    WHERE chat.store_id = ?`
+    WHERE chat.store_id = ?
+    ORDER BY chat.store_id DESC`
 
     let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
@@ -1020,43 +1023,42 @@ exports.getChatUserinfo = getChatUserinfo
 
 
 
-async function getLastMessage(chatId) {
+async function getLastMessage(chatId ) {
     let query  =
-        ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
-            FROM buyer_messages
-            JOIN chat on chat.chat_id = buyer_messages.chat_id
-            JOIN buyer ON buyer.buyer_id = chat.buyer_id
-            WHERE chat.chat_id = ?
-            UNION
-            select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
-            FROM store_messages
-            JOIN chat on chat.chat_id = store_messages.chat_id
-            JOIN store ON store.store_id = chat.store_id
-            WHERE chat.chat_id = ?
-            ORDER BY timestamp Desc
-            Limit 1;`
+        `SELECT chat.*
+         FROM chat
+        WHERE chat.chat_id = ?;`
 
     let [lastMessage, fields] = await database.query(query, [chatId])
     return lastMessage
 
 }
 exports.getLastMessage = getLastMessage
-// getChatUserinfo(2).then(console.log)
+// getLastMessage(4).then(console.log)
+
+
+
+async function updateLastMessage(chatId, lastMessage, timestamp ) {
+    let query  = `
+        UPDATE chat
+        SET last_message = ?, last_timestamp = ?
+        WHERE chat.chat_id=?;`
+
+    await database.query(query, [lastMessage, timestamp, chatId])
+    return await getLastMessage (chatId)
+    // return lastMessage[0].chat_id
+
+}
+exports.updateLastMessage = updateLastMessage
+// updateLastMessage(2 ,"i love you ", 12345678).then(console.log)
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
+// SET chat.last_message = ?, chat.last_timestamp = ?
+//     WHERE chat_id = ?
 
 
 
@@ -1076,6 +1078,34 @@ exports.getLastMessage = getLastMessage
 // }
 // exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
+
+
+
+
+// async function getLastMessage(chatId) {
+//     let query  =
+//         ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+//             FROM buyer_messages
+//             JOIN chat on chat.chat_id = buyer_messages.chat_id
+//             JOIN buyer ON buyer.buyer_id = chat.buyer_id
+//             WHERE chat.chat_id = ?
+//             UNION
+//             select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
+//             FROM store_messages
+//             JOIN chat on chat.chat_id = store_messages.chat_id
+//             JOIN store ON store.store_id = chat.store_id
+//             WHERE chat.chat_id = ?
+//             ORDER BY timestamp Desc
+//             Limit 1;`
+//
+//     let [lastMessage, fields] = await database.query(query, [chatId])
+//     return lastMessage
+//
+// }
+// exports.getLastMessage = getLastMessage
+// getChatUserinfo(2).then(console.log)
+
+
 
 /***   Maps  */
 
