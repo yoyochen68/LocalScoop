@@ -67,13 +67,15 @@ exports.getProductsByStoreId = getProductsByStoreId
 
 
 /** 
- * get all the orders by the giving store id in the order table
+ * NEEDS TO BE REWRITTEN  asdf
+ *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
+
+
 async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
-
 
     let orders = await database.query(query, [store_id]);
     return orders[0];
@@ -82,6 +84,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
+ * NEEDS TO BE REWRITTEN  asdf
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
@@ -102,6 +105,27 @@ exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStor
 
 
 
+// select p.product_id, s.store_id, p.product_name, o.order_id, c.cart_id, o.totalAmount,o.order_status_id,o.order_timestamp,o.delivery_address,c.buyer_id, pp.photo_file_path
+// from `order` as o
+// left join cart as c
+// on o.cart_id = c.cart_id
+// left join cart_product as cp
+// on c.cart_id = cp.cart_id
+// left join product as p 
+// on cp.product_id = p.product_id
+// left join product_photo as pp
+// on p.product_id = pp.product_id
+// left join store as s
+// on s.store_id = p.store_id
+// where s.store_id = 1;
+
+
+
+
+
+
+
+
 async function authenticateShopOwner(store_email, store_password) {
     let query = `
         SELECT * 
@@ -114,7 +138,6 @@ async function authenticateShopOwner(store_email, store_password) {
 exports.authenticateShopOwner = authenticateShopOwner
 // authenticateShopOwner("localscoop@gmail.com", "localscoop").then(console.log)
 // authenticateShopOwner("local", "localsc").then(console.log)
-
 
 
 
@@ -229,6 +252,10 @@ exports.addShop = addShop
 
 
 
+
+
+
+
 /**
  * @param store_id
  * @param store_address
@@ -284,6 +311,9 @@ exports.getCategoryIdByCategoryName = getCategoryIdByCategoryName
  */
 async function updateShopCategoryByStoreId(store_id, categoryNameList) {
 
+    console.log('store_id:    ' + store_id)
+    console.log('category name list:   ' + categoryNameList)
+
 
     let catIdList = await getCategoryIdByCategoryName(categoryNameList)
     let query = `
@@ -328,7 +358,6 @@ exports.updateShopDeliveryByStoreId = updateShopDeliveryByStoreId
  * @param photo_path
  */
 async function updateShopPhotoByStoreId(store_id, photo_path = "") {
-    console.log('update shop photo with the id')
     let query = `
     INSERT INTO store_photo(store_id, photo_file_path) 
     VALUE(?, ?)`
@@ -472,7 +501,8 @@ exports.storesAndImagesViews = storesAndImagesViews
 //======yasmina code for add to cart===
 
 async function getCartIdByBuyerId(buyerId) {
-    let query = ` SELECT cart_id
+    let query = `
+        SELECT cart_id
         FROM cart
         WHERE buyer_id = ? AND purchased = "no" `
     const [buyerActiveCartId] = await database.query(query, [buyerId])
@@ -481,13 +511,14 @@ async function getCartIdByBuyerId(buyerId) {
         return buyerActiveCartId[0]['cart_id']
     } else {
         let addNewCartquery = `INSERT INTO cart(buyer_id) VALUE (?)`
-        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId])
+        const [buyerActiveCartId] = await database.query(addNewCartquery, [buyerId]) 
         let cart_id = buyerActiveCartId.insertId
         return cart_id;
     }
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
+// getCartIdByBuyerId(2).then(console.log)
 
 
 
@@ -517,7 +548,6 @@ async function addToCart(buyerId, productId) {
     await database.query(query, [cartId, productId])
     return getCartItemsCount(buyerId)
     // later you can substitute it with better return value
-
 }
 
 exports.addToCart = addToCart
@@ -531,9 +561,10 @@ exports.addToCart = addToCart
 async function getCartItemsCount(buyerId) {
     let cartId = await getCartIdByBuyerId(buyerId);
 
-    let query = ` SELECT SUM(product_quantity) AS product_quantity
-    FROM cart_product
-    WHERE cart_id = ?;`
+    let query = ` 
+        SELECT SUM(product_quantity) AS product_quantity
+        FROM cart_product
+        WHERE cart_id = ?;`
 
     const [itemsCountObject, fields] = await database.query(query, [cartId])
     return itemsCountObject[0].product_quantity
@@ -541,14 +572,16 @@ async function getCartItemsCount(buyerId) {
 }
 exports.getCartItemsCount = getCartItemsCount
 
-// getCartItemsCount(1).then(console.log)
+
+// getCartItemsCount(3).then(console.log)
+
+
 
 
 //====YOYO CODE FOR ADD TO CART======
 
 
 async function getCartItemsByBuyer(buyer_id) {
-
     let query = `
         select cp.cart_product_id,b.buyer_id,c.cart_id,cp.cart_product_id,p.product_id, p.product_name,p.product_price,cp.product_quantity,c.purchased,p.image_file_paths
         from buyer as b
@@ -771,27 +804,80 @@ exports.searchProduct = searchProduct
 // searchProduct("s").then(console.log)
 
 
+//=============Buyer=============
 
+async function addBuyer(buyer_name, buyer_lastname="", buyer_phone_number, buyer_email, buyer_password) {
+    let query = `
+    INSERT INTO buyer (buyer_firstname, buyer_lastname, buyer_phone_number, buyer_email, buyer_password) 
+    VALUES ( ?, ?, ?, ?, ?);`;
+
+    let newBuyerInfo = await database.query(query, [buyer_name, buyer_lastname, buyer_phone_number, buyer_email, buyer_password]);
+    let newBuyerId = newBuyerInfo[0].insertId
+
+    // console.log(newStoreId)
+    return getBuyer(newBuyerId)
+}
+exports.addBuyer = addBuyer
 
 
 
 // -----------------------------//Chat FUNCTIONs Needed----------------------------------------------
-//
-//
-//
-// async function createChat(buyerId, storeId) {
-//
-// }
-//
-// exports.createRoom = createRoom
-//
-//
-//
-//
+
+
+async function chatExist(buyerId, storeId) {
+    let query  = `
+   
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ? AND chat.store_id = ?;
+   `
+    let [theChat, fields] = await database.query(query, [buyerId, storeId])
+    console.log("chatExist: ",theChat.length === 1)
+    return theChat.length === 1
+    
+
+}
+exports.chatExist = chatExist
+// chatExist(1,3).then(console.log)
+
+
+
+async function createChat(buyerId, storeId) {
+    let query  = `
+    INSERT INTO chat (chat_name, buyer_id, store_id)
+    VALUES (?, ?, ?);`
+
+    await database.query(query, [buyerId.toString()+ storeId.toString(),buyerId, storeId])
+    console.log("chat has been created")
+
+}
+
+exports.createChat = createChat
+
+
+
+
+
+
+async function getChat(buyerId, storeId) {
+    let query  = `
+    SELECT * FROM localscoop.chat
+    WHERE chat.buyer_id = ? AND chat.store_id = ?;
+   `
+    let [theChat, fields] = await database.query(query, [buyerId, storeId])
+    return theChat[0]
+}
+exports.getChat = getChat
+
+
+
 
 async function getBuyerChats(buyerId) {
-    let query = `
-    SELECT * FROM localscoop.chat
+
+    let query=`
+    SELECT chat.* , storesandimages.store_name, storesandimages.image_file_paths
+    FROM chat
+    JOIN store ON chat.store_id = store.store_id
+    JOIN storesandimages ON store.store_id=storesandimages.store_id
     WHERE chat.buyer_id = ?;`
 
     let [buyerChat, fields] = await database.query(query, [buyerId])
@@ -801,46 +887,163 @@ async function getBuyerChats(buyerId) {
 exports.getBuyerChats = getBuyerChats
 
 
-async function getSellerChats(storeId) {
-    let query = `
-    SELECT * FROM localscoop.chat
-    WHERE chat.store_id = ?;`
 
-    let [storeChat, fields] = await database.query(query, [buyerId])
+async function getStoreChats(storeId) {
+    let query= `
+    SELECT chat.* , buyer.buyer_firstname, buyer.buyer_profile_photo
+    FROM chat
+    LEFT JOIN buyer ON chat.buyer_id = buyer.buyer_id
+    WHERE chat.store_id = ?`
+
+    let [storeChat, fields] = await database.query(query, [storeId])
     return storeChat
 }
 
-exports.getSellerChats = getSellerChats
+exports.getStoreChats = getStoreChats
+
+
+
+
+async function chatUsersName(groupId) {
+
+    let query =`select chat.chat_id , buyer.buyer_firstname AS "buyerName", store.store_name AS "storeName"
+    from chat
+    left join buyer
+    on chat.buyer_id = buyer.buyer_id
+    left join store
+    on chat.store_id = store.store_id
+    where chat_id= ?`
+
+    let [chatUsers, fields] = await database.query(query, [groupId])
+    return chatUsers[0]
+
+}
+exports.chatUsersName = chatUsersName
+// chatUsersName(1).then(console.log)
+
+
+
+async function addStoreChatContent(chatId, msgObj) {
+
+    let query  = `
+    INSERT INTO store_messages (chat_id, text, timestamp)
+    VALUES (?,?,?);`
+
+        await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
+
+}
+
+exports.addStoreChatContent = addStoreChatContent
+
+
+
+
+async function addBuyerChatContent(chatId, msgObj) {
+
+    let query  = `
+    INSERT INTO buyer_messages (chat_id, text, timestamp)
+    VALUES (?,?,?);`
+
+    await database.query(query, [chatId, msgObj.msg, msgObj.timestamp])
+
+}
+
+exports.addBuyerChatContent = addBuyerChatContent
+
+
+
+
+async function getStoreIdFromProductId (productId) {
+
+    let query  = `
+    SELECT store_id FROM localscoop.product
+     WHERE product_id = ?;`
+
+    let [storeIdObject, fields] = await database.query(query, [productId])
+    return storeIdObject[0].store_id
+
+}
+
+exports.getStoreIdFromProductId = getStoreIdFromProductId
+// getStoreIdFromProductId(3).then(console.log)
+
+
+async function getChatContent(chatId) {
+
+    let query  =
+    
+             ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+                FROM buyer_messages 
+                JOIN chat on chat.chat_id = buyer_messages.chat_id
+                JOIN buyer ON buyer.buyer_id = chat.buyer_id
+                WHERE chat.chat_id = ?
+                UNION
+                select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
+                FROM store_messages 
+                JOIN chat on chat.chat_id = store_messages.chat_id
+                JOIN store ON store.store_id = chat.store_id
+                WHERE chat.chat_id = ?  
+                ORDER BY timestamp asc;`
+             
+
+    let [AllChats, fields] = await database.query(query, [chatId, chatId])
+    return AllChats
+
+}
+
+
+exports.getChatContent = getChatContent
+
+// getChatContent(2).then(console.log)
 
 
 
 
 
-// async function getChatContent(chatId) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
-//
-//
-//
-//
-//
-// async function addStoreChatContent(chatId, storId, text) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
-//
-//
-//
-//
-//
-// async function addBuyerChatContent(chatId, buyerId, text) {
-//
-// }
-//
-// exports.getChatContent = getChatContent
+
+//showing chat  users names, ids and their photos 
+async function getChatUserinfo(chatId) {
+
+    let query  =
+        ` select chat.chat_id as chat_id, chat.buyer_id, buyer.buyer_firstname AS "buyer_name" , buyer.buyer_profile_photo AS "buyer_image",  
+            chat.store_id, storesandimages.store_name AS "store_name", storesandimages.image_file_paths AS "store_images"
+            FROM chat 
+            JOIN storesandimages on storesandimages.store_id = chat.store_id 
+            JOIN buyer ON buyer.buyer_id = chat.buyer_id
+            WHERE chat.chat_id = ?`
+
+    let [chatUserInfo, fields] = await database.query(query, [chatId])
+    return chatUserInfo
+}
+exports.getChatUserinfo = getChatUserinfo
+// getChatUserinfo(2).then(console.log)
+
+
+
+async function getLastMessage(chatId) {
+    let query  =
+        ` select buyer_messages.buyer_messages_id as id, buyer_messages.text, buyer_messages.timestamp,  buyer.buyer_firstname as username
+            FROM buyer_messages
+            JOIN chat on chat.chat_id = buyer_messages.chat_id
+            JOIN buyer ON buyer.buyer_id = chat.buyer_id
+            WHERE chat.chat_id = ?
+            UNION
+            select store_messages.store_messages_id as id, store_messages.text, store_messages.timestamp,  store.store_name as username
+            FROM store_messages
+            JOIN chat on chat.chat_id = store_messages.chat_id
+            JOIN store ON store.store_id = chat.store_id
+            WHERE chat.chat_id = ?
+            ORDER BY timestamp Desc
+            Limit 1;`
+
+    let [lastMessage, fields] = await database.query(query, [chatId])
+    return lastMessage
+
+}
+exports.getLastMessage = getLastMessage
+// getChatUserinfo(2).then(console.log)
+
+
 
 
 
@@ -873,3 +1076,22 @@ exports.getSellerChats = getSellerChats
 // }
 // exports.getCartItemByProduct = getCartItemByProduct
 // getCartItemByProduct(1,1).then(console.log)
+
+/***   Maps  */
+
+async function storesAndCategoryNames(){
+    let query = `
+        SELECT store.store_id, 
+        store.store_name, store.store_address, 
+        store.store_phone_number, store.rating, 
+        store.coordinates, category.category_name
+        FROM store
+        LEFT JOIN store_category ON store.store_id = store_category.store_id
+        LEFT JOIN category ON store_category.category_id = category.category_id`
+
+    let result =  await database.query(query)
+    console.log(result[0] + '\n')
+    return result[0]
+}
+exports.storesAndCategoryNames = storesAndCategoryNames
+
