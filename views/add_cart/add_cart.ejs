@@ -117,7 +117,8 @@
                 </div>
                 <div class="bag">
                     <a href="/shopping_cart/shopping_cart">
-                        <% if(cartQuantity !==0 ){ %>
+                        <% if(cartQuantity !==0 && cartQuantity !==null ){ %>
+                        
                             <div class="dot">
                                 <%= cartQuantity %>
                             </div>
@@ -213,7 +214,7 @@
         document.querySelector(".addToCartBtn").addEventListener("click", () => {
             axios.post('/add_cart/add_cart/<%= productInfo.product_id %>')
                 .then(response => {
-                    document.querySelector(".dot").innerHTML = response.data.quantity
+                    document.querySelector(".dot").innerHTML = response.data.cartQuantity
                     // console.log(cartItemsTotal, "the item has been added to the bag ")
                 })
                 .catch(error => {
