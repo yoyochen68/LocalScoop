@@ -54,6 +54,7 @@ router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
 
 router.get("/orders_2", help.sellerAuthorized, async (req, res) => {
     let seller_id = req.session.seller.seller_id
+    
     let productListInfo = [
         { itemName: "Ultra Boost 912", deliveryStatus: "Pending Delivery", feedbackStatus: "", time: "Today" },
         { itemName: "Nike AirMax", deliveryStatus: "Delivered", feedbackStatus: "You have new feedback", time: "2 Days Ago" },
