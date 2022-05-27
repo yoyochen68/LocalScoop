@@ -27,16 +27,17 @@ router.post('/get_store_info', async (req, res) => {
 				<p><b>Specialty:</b> ${store.category_name}
 			</div>`
 
-		let coordinatesJSON = JSON.parse(`{ ${store.coordinates} }`)
+		console.log(store.coordinates)
+		// let coordinatesJSON = JSON.parse(`{ ${store.coordinates} }`)
 		
-		let pushObject = {
-			coordinates: coordinatesJSON,
-			content: theContent
-		}
+		// let pushObject = {
+		// 	coordinates: coordinatesJSON,
+		// 	content: theContent
+		// }
 
-		markerDataForFrontEnd.push(pushObject)
+		// markerDataForFrontEnd.push(pushObject)
 	}
-	res.status(200).send(markerDataForFrontEnd);
+	// res.status(200).send(markerDataForFrontEnd);
 })
 
 module.exports = router;
