@@ -82,7 +82,7 @@ exports.getOrdersByStoreId = getOrdersByStoreId
 
 
 /**
- * NEEDS TO BE REWRITTEN  asdf
+ * NEEDS TO BE REWRITTEN  
  * @param {number} store_id 
  * @returns array of objects, orders and info of its products by store_id 
  */
@@ -101,6 +101,21 @@ async function getOrdersWithProductsPhotosByStoreId(store_id) {
 exports.getOrdersWithProductsPhotosByStoreId = getOrdersWithProductsPhotosByStoreId
 // getOrdersWithProductsPhotosByStoreId(1).then(console.log)
 
+
+async function getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(store_id){
+    if(store_id == undefined){
+        return;
+    }
+   
+    let query = 'select * FROM `order`LEFT JOIN cart ON cart.cart_id = `order`.cart_id LEFT JOIN cart_product ON cart.cart_id = cart_product.cart_id LEFT JOIN product ON cart_product.product_id = product.product_id INNER JOIN product_photo ON product_photo.product_id = product.product_id WHERE store_id = ?'
+
+    let ordersProductsStoreInfo = await database.query(query, [store_id])
+
+    console.log(ordersProductsStoreInfo)
+
+    return ordersProductsStoreInfo
+}
+exports.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable = getOrdersWithProductsPhotosByStoreId_NoOrderProductTable
 
 
 async function authenticateShopOwner(store_email, store_password) {

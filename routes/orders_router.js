@@ -25,14 +25,18 @@ let DateTime = luxon.DateTime;
 
 router.get("/orders_1", help.sellerAuthorized, async(req, res) => {
     let storeId = req.session;
-    // if user not logged in, redirect to login page
-    // if(storeId == undefined){
-    //     res.redirect("/")
-    // }
-    let seller_id = req.session.seller.seller_id
+    
+    //if user not logged in, redirect to login page
+    if(storeId == undefined){
+        res.redirect("/")
+    }
 
-    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id)
+    let seller_id = req.session.seller.seller_id
+    
+    // let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId(seller_id)
+    let carouselSliderData = await mysqlDB.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(2)
     console.log(carouselSliderData)
+    
     // loop through all orders, take timestamp, calculate how long ago it was, write to {}
     for(let order of carouselSliderData){
         let timestamp = +order.product_timestamp;
