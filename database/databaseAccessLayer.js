@@ -71,6 +71,8 @@ exports.getProductsByStoreId = getProductsByStoreId
  *  get all the orders by the giving store id in the order table
  * @param {number} store_id. 
  */
+
+
 async function getOrdersByStoreId(store_id) {
     // has to be single line. because we used a sql keyword as table name. SO we cannot use backticks to wrap the string
     let query = "select * from `order` WHERE store_id = ?";
@@ -116,6 +118,27 @@ async function getOrdersWithProductsPhotosByStoreId_NoOrderProductTable(store_id
     return ordersProductsStoreInfo
 }
 exports.getOrdersWithProductsPhotosByStoreId_NoOrderProductTable = getOrdersWithProductsPhotosByStoreId_NoOrderProductTable
+
+
+// select p.product_id, s.store_id, p.product_name, o.order_id, c.cart_id, o.totalAmount,o.order_status_id,o.order_timestamp,o.delivery_address,c.buyer_id, pp.photo_file_path
+// from `order` as o
+// left join cart as c
+// on o.cart_id = c.cart_id
+// left join cart_product as cp
+// on c.cart_id = cp.cart_id
+// left join product as p 
+// on cp.product_id = p.product_id
+// left join product_photo as pp
+// on p.product_id = pp.product_id
+// left join store as s
+// on s.store_id = p.store_id
+// where s.store_id = 1;
+
+
+
+
+
+
 
 
 async function authenticateShopOwner(store_email, store_password) {
@@ -510,7 +533,7 @@ async function getCartIdByBuyerId(buyerId) {
 }
 exports.getCartIdByBuyerId = getCartIdByBuyerId
 // getCartIdByBuyerId(3).then((res) => console.log("useful", res))
-// getCartIdByBuyerId(3).then(console.log)
+// getCartIdByBuyerId(2).then(console.log)
 
 
 
@@ -563,6 +586,10 @@ async function getCartItemsCount(buyerId) {
 
 }
 exports.getCartItemsCount = getCartItemsCount
+
+
+// getCartItemsCount(3).then(console.log)
+
 
 
 
