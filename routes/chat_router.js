@@ -41,17 +41,17 @@ router.get("/create/:id",  async (req, res) => {
 router.get("/store", help.sellerAuthorized,  async (req, res) => {
 
     let storeId = req.session.seller.seller_id
-    let buyerId = req.session.buyer.buyer_id
+    // let buyerId = req.session.buyer.buyer_id
 
 
     // Geting the chatrooms related to the store id
     let storeChatList = await mysqlDB.getStoreChats(storeId)
-    let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
+    // let cartQuantity = await mysqlDB.getCartItemsCount(buyerId)
 
     console.log(storeChatList)
 
 
-    res.render("chat/store_index",{storeChatList:storeChatList, cartQuantity});
+    res.render("chat/store_index",{storeChatList:storeChatList});
 
 })
 
@@ -81,7 +81,7 @@ router.get("/buyer",async (req, res) => {
 
 
 
-
+//--------------------------------------------------------------------------
 router.get("/room/:id",  async (req, res) => {
     req.session.authenticated = true
 
