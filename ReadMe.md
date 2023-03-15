@@ -40,7 +40,7 @@ The LocalScope app consists of 14-20 responsive pages, including:
 * Map
 
 
-## UX/UI Highlight
+## Highlight
 
 <br>
 <div align="center">
